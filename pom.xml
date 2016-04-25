@@ -26,7 +26,7 @@
 
     <modules>
         <module>home</module>
-        <!--<module>solr</module>-->
+        <!-- <module>solr</module> -->
         <module>webapp</module>
     </modules>
 
