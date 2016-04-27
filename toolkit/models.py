@@ -7,9 +7,10 @@ from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.namespace import RDF, RDFS, XSD, FOAF, OWL
 
-import converis
-from namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
+from converis import client
+from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
 
+FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
 DATA_NAMESPACE = D
 
 logger = logging.getLogger("converis_client")
@@ -29,7 +30,7 @@ def pub_uri(cid):
 def area_uri(cid):
     return D['c' + cid]
 
-class BaseModel(converis.BaseEntity):
+class BaseModel(client.BaseEntity):
     @property
     def vid(self):
         """
@@ -76,21 +77,21 @@ class Person(BaseModel):
         then just add as a data attribute.
         """
         g = Graph()
-        # for card_id in converis.get_related_ids('Card', self.cid, "PERS_has_CARD"):
+        # for card_id in client.get_related_ids('Card', self.cid, "PERS_has_CARD"):
         #     pos_obj = Position(cid=card_id)
         #     g.add((self.uri, VIVO.relatedBy, pos_obj.uri))
         # return g
-        cards = converis.RelatedObject('Person', self.cid, 'PERS_has_CARD')
+        cards = client.RelatedObject('Person', self.cid, 'PERS_has_CARD')
         for card in cards:
             try:
                 # Check for pub tracking cards first.
                 ptype = card.positiontype.get('cid')
                 if ptype == '12166':
-                    g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
+                    g.add((self.uri, client.pubCardId, Literal(card.cid)))
                     continue
             except AttributeError:
                 pass
-            g += converis.to_graph(card, Position)
+            g += client.to_graph(card, Position)
             g.add((self.uri, VIVO.relatedBy, card_uri(card.cid)))
         return g
 
@@ -179,7 +180,7 @@ class Position(BaseModel):
 
     def _date(self, dtype, dv):
         g = Graph()
-        date_obj = converis.convert_date(dv)
+        date_obj = client.convert_date(dv)
         date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
         de = Resource(g, date_uri)
         de.set(RDF.type, VIVO.DateTimeValue)
@@ -256,7 +257,7 @@ class Organization(BaseModel):
         Get sub-organizations.
         """
         out = []
-        for org in converis.get_related_ids("Organisation", self.cid, "ORGA_has_child_ORGA"):
+        for org in client.get_related_ids("Organisation", self.cid, "ORGA_has_child_ORGA"):
             out.append(self.related_uri(org))
         return out
 
@@ -265,12 +266,11 @@ class Organization(BaseModel):
         # skip these orgs
         if self.cid in ['494698', '494815']:
             return g
-        for card in converis.get_related_ids('Card', self.cid, 'CARD_has_ORGA'):
+        for card in client.get_related_ids('Card', self.cid, 'CARD_has_ORGA'):
             g.add((self.uri, VIVO.relatedBy, card_uri(card)))
         return g
 
     def get_url(self):
-        FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
         g = Graph()
         try:
             if self.cfuri is not None:
@@ -280,7 +280,6 @@ class Organization(BaseModel):
             return g
 
     def get_type(self):
-        FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
         m = {
             '11739': FHD.CoreFacilities,
             '11734': FHD.Department,
@@ -308,7 +307,7 @@ class Organization(BaseModel):
             o.set(VIVO.overview, Literal(self.cfresact))
         for child in self.get_children():
             # Has sub-organization
-            o.set(OBO['BFO_0000051'], child)
+            o.add(OBO['BFO_0000051'], child)
         # Get positions for this org.
         g += self.get_positions()
 
@@ -358,17 +357,17 @@ class Publication(BaseModel):
 
     def data_properties(self):
         props = [
-            ('srcauthors', CONVERIS.authorList),
+            ('srcauthors', client.authorList),
             ('doi', BIBO.doi),
             ('pmid', BIBO.pmid),
-            ('isiid', CONVERIS.wosId),
+            ('isiid', client.wosId),
             ('cfstartpage', BIBO.start),
             ('cfendpage', BIBO.end),
             ('cfabstr', BIBO.abstract),
             ('cfvol', BIBO.volume),
             ('cfissue', BIBO.issue),
             ('cftotalpages', BIBO.numPages),
-            ('shortdescription', CONVERIS.citationText)
+            ('shortdescription', client.citationText)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -415,8 +414,8 @@ class Publication(BaseModel):
 
     def pub_cards(self):
         g = Graph()
-        for card in converis.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
-            g.add((self.uri, CONVERIS.pubCardId, Literal(card)))
+        for card in client.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
+            g.add((self.uri, client.pubCardId, Literal(card)))
         return g
 
 
@@ -443,14 +442,14 @@ class Area(BaseModel):
 
     def has_researchers(self):
         g = Graph()
-        for person in converis.get_related_ids('Person', self.cid, 'PERS_has_AREA'):
+        for person in client.get_related_ids('Person', self.cid, 'PERS_has_AREA'):
             puri = person_uri(person)
             g.add((self.uri, VIVO.researchAreaOf, puri))
         return g
 
     def get_narrower(self):
         g = Graph()
-        for area in converis.get_related_ids('Area', self.cid, 'AREA_has_child_AREA'):
+        for area in client.get_related_ids('Area', self.cid, 'AREA_has_child_AREA'):
             narrow = area_uri(area)
             g.add((self.uri, SKOS.narrower, norrow))
         return g
@@ -469,8 +468,8 @@ class Area(BaseModel):
 
 def pub_to_card(card_id):
     g = Graph()
-    for pub in converis.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
+    for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
         #ashipuri = D['aship-{}-{}'.format(pub, self.cid)]
         puri = pub_uri(pub)
-        g.add((puri, CONVERIS.pubCardId, Literal(card_id)))
+        g.add((puri, client.pubCardId, Literal(card_id)))
     return g
