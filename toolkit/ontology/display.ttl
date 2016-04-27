@@ -1,0 +1,94 @@
+@prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix vivo:  <http://vivoweb.org/ontology/core#> .
+@prefix vpublic: <http://vitro.mannlib.cornell.edu/ns/vitro/public#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix cg:  <http://vivoweb.org/ontology#> .
+
+<http://vivo.fredhutch.org/ontology/display#>
+        a                          owl:Ontology ;
+        rdfs:label                 "FredHutch Display"@en-US ;
+        vitro:ontologyPrefixAnnot  "fhd"^^xsd:string .
+
+fhd:class-group-internal-orgs
+        a                       vitro:ClassGroup , owl:Thing ;
+        rdfs:label              "Fred Hutch organizations"@en-US ;
+        vitro:displayRank       4 ;
+        vitro:modTime           "2016-04-26T15:32:14"^^xsd:dateTime ;
+        vitro:mostSpecificType  vitro:ClassGroup .
+
+fhd:class-group-organizations
+        a                       vitro:ClassGroup ;
+        rdfs:label              "Fred Hutch organizations"@en-US ;
+        vitro:displayRank       4 ;
+        vitro:mostSpecificType  vitro:ClassGroup .
+
+fhd:Organization a          owl:Class ;
+        rdfs:label               "Organization"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          foaf:Organization .
+
+fhd:InternalOrganization a          owl:Class ;
+        rdfs:label               "Internal Organization"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:Organization .
+
+
+fhd:CoreFacilities a          owl:Class ;
+        rdfs:label               "Core Facilities"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:Department a          owl:Class ;
+        rdfs:label               "Department"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:Division a          owl:Class ;
+        rdfs:label               "Division"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:Faculty a          owl:Class ;
+        rdfs:label               "Faculty"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:Group a          owl:Class ;
+        rdfs:label               "Group"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:Lab a          owl:Class ;
+        rdfs:label               "Lab"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:Program a          owl:Class ;
+        rdfs:label               "Program"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
+fhd:ScientificInitiative a          owl:Class ;
+        rdfs:label               "Scientific Initiative"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf         fhd:InternalOrganization .
+
+fhd:SharedResource  a          owl:Class ;
+        rdfs:label               "Shared Resource"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf         fhd:InternalOrganization .
+
+fhd:Study  a          owl:Class ;
+        rdfs:label               "Study"@en-US ;
+        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        rdfs:subClassOf         fhd:InternalOrganization .
+
+
+fhd:url a owl:DatatypeProperty ;
+        rdfs:label "url" .
