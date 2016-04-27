@@ -4,3 +4,8 @@ classpath
 target/
 .idea/
 hutch.xml
+
+#toolkit
+.env
+.staging-env
+*pyc
