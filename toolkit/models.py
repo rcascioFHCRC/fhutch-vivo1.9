@@ -296,6 +296,34 @@ class Organization(BaseModel):
         oty = m.get(otype, FHD.Organization)
         return oty
 
+    def add_vcard_weblink(self):
+        """
+        Build statements for weblinks in VIVO.
+        :return: rdflib.Graph
+        """
+        g = Graph()
+        try:
+            if self.cfuri is not None:
+                url = self.cfuri
+        except AttributeError:
+            return g
+
+        # vcard individual for org
+        vci_uri = D['vcard-individual-org-' + self.cid]
+        g.add((vci_uri, RDF.type, VCARD.Individual))
+
+        # vcard URL
+        vcu_uri = D['vcard-url-org-' + self.cid]
+        g.add((vcu_uri, RDF.type, VCARD.URL))
+        g.add((vcu_uri, RDFS.label, Literal(u"homepage")))
+        g.add((vcu_uri, VCARD.url, Literal(url)))
+
+        # Relate vcard individual to url
+        g.add((vci_uri, VCARD.hasURL, vcu_uri))
+        # Relate web link and org
+        g.add((self.uri, OBO['ARG_2000028'], vci_uri))
+        return g
+
 
     def to_rdf(self):
         g = Graph()
@@ -311,7 +339,7 @@ class Organization(BaseModel):
         # Get positions for this org.
         g += self.get_positions()
 
-        g += self.get_url()
+        g += self.add_vcard_weblink()
         return g
 
 
