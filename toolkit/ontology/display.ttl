@@ -22,6 +22,13 @@ fhd:class-group-internal-orgs
         vitro:modTime           "2016-04-26T15:32:14"^^xsd:dateTime ;
         vitro:mostSpecificType  vitro:ClassGroup .
 
+fhd:class-group-expertise
+        a                       vitro:ClassGroup , owl:Thing ;
+        rdfs:label              "Fred Hutch expertise"@en-US ;
+        vitro:displayRank       2 ;
+        vitro:modTime           "2016-04-26T15:32:14"^^xsd:dateTime ;
+        vitro:mostSpecificType  vitro:ClassGroup .
+
 fhd:class-group-organizations
         a                       vitro:ClassGroup ;
         rdfs:label              "Fred Hutch organizations"@en-US ;
@@ -89,6 +96,20 @@ fhd:Study  a          owl:Class ;
         vitro:inClassGroup      fhd:class-group-internal-orgs ;
         rdfs:subClassOf         fhd:InternalOrganization .
 
+fhd:Expertise  a          owl:Class ;
+        rdfs:label               "Expertise"@en-US ;
+        vitro:inClassGroup      fhd:class-group-expertise ;
+        rdfs:subClassOf         skos:Concept .
+
+fhd:ResearchClinicalTopics  a          owl:Class ;
+        rdfs:label               "Research and Clinical Topics"@en-US ;
+        vitro:inClassGroup      fhd:class-group-expertise ;
+        rdfs:subClassOf         fhd:Expertise .
+
+fhd:Disciplines  a          owl:Class ;
+        rdfs:label               "Disciplines"@en-US ;
+        vitro:inClassGroup      fhd:class-group-expertise ;
+        rdfs:subClassOf         fhd:Expertise .
 
 fhd:url a owl:DatatypeProperty ;
         rdfs:label "url" .

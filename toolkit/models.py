@@ -466,7 +466,7 @@ class Publication(BaseModel):
         return g
 
 
-class Area(BaseModel):
+class Expertise(BaseModel):
 
     def has_researchers(self):
         g = Graph()
@@ -479,17 +479,39 @@ class Area(BaseModel):
         g = Graph()
         for area in client.get_related_ids('Area', self.cid, 'AREA_has_child_AREA'):
             narrow = area_uri(area)
-            g.add((self.uri, SKOS.narrower, norrow))
+            g.add((self.uri, SKOS.narrower, narrow))
+        return g
+
+    def add_primary_type(self):
+        """
+        Use short description to identify what tree
+        the term is in.
+
+        Should we skip the parent concepts so they
+        don't appear in the browse?
+
+        """
+        g = Graph()
+        sd = self.shortdescription
+        etype = FHD.Expertise
+        if "Research and Clinical Topics" in sd:
+            etype = FHD.ResearchClinicalTopics
+        elif "Disciplines" in sd:
+            etype = FHD.Disciplines
+        g.add((self.uri, RDF.type, etype))
         return g
   
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-        r.set(RDF.type, SKOS.Concept)
         r.set(RDFS.label, Literal(self.name))
         r.set(CONVERIS.converisId, Literal(self.cid))
 
+        # Set local class
+        g += self.add_primary_type()
+        # Get related researchers
         g += self.has_researchers()
+        # Ger narrower terms.
         g += self.get_narrower()
 
         return g
