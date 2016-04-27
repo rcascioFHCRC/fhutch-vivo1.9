@@ -1,14 +1,19 @@
 """
 VIVO models
 """
+import hashlib
 import logging
+import os
 
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.namespace import RDF, RDFS, XSD, FOAF, OWL
 
 from converis import client
+from converis.namespaces import rq_prefixes
 from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
+
+from converis.backend import SyncVStore
 
 FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
 DATA_NAMESPACE = D
@@ -29,6 +34,10 @@ def pub_uri(cid):
 
 def area_uri(cid):
     return D['c' + cid]
+
+def hash_uri(prefix, value):
+    return D[prefix + '-' + hashlib.md5(value).hexdigest()]
+
 
 class BaseModel(client.BaseEntity):
     @property
@@ -83,14 +92,16 @@ class Person(BaseModel):
         # return g
         cards = client.RelatedObject('Person', self.cid, 'PERS_has_CARD')
         for card in cards:
-            try:
-                # Check for pub tracking cards first.
-                ptype = card.positiontype.get('cid')
-                if ptype == '12166':
-                    g.add((self.uri, client.pubCardId, Literal(card.cid)))
-                    continue
-            except AttributeError:
-                pass
+            # Check for pub tracking cards.
+            #import ipdb; ipdb.set_trace()
+            if (hasattr(card, 'positiontype') is True) and\
+                 (card.positiontype.get('cid') == '12166'):
+                g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
+                continue
+            # Skip external cards for now
+            if (hasattr(card, 'typeofcard') is True) and\
+                 (card.typeofcard.get('cid') == '12007'):
+                continue
             g += client.to_graph(card, Position)
             g.add((self.uri, VIVO.relatedBy, card_uri(card.cid)))
         return g
@@ -359,7 +370,7 @@ class Concept(BaseModel):
 
 class Publication(BaseModel):
 
-    def get_type(self, default=BIBO.Document):
+    def get_type(self, default=BIBO.AcademicArticle):
         """
         Assign a publication type.
         Based on Fred Hutch types.
@@ -380,22 +391,22 @@ class Publication(BaseModel):
         }
         if hasattr(self, 'publicationtype'):
             ctype = self.publicationtype['value'].strip()
-            return ptypes.get(ctype, BIBO.Article)
+            return ptypes.get(ctype, default)
         return default
 
     def data_properties(self):
         props = [
-            ('srcauthors', client.authorList),
+            ('srcauthors', CONVERIS.authorList),
             ('doi', BIBO.doi),
             ('pmid', BIBO.pmid),
-            ('isiid', client.wosId),
+            ('isiid', CONVERIS.wosId),
             ('cfstartpage', BIBO.start),
             ('cfendpage', BIBO.end),
             ('cfabstr', BIBO.abstract),
             ('cfvol', BIBO.volume),
             ('cfissue', BIBO.issue),
             ('cftotalpages', BIBO.numPages),
-            ('shortdescription', client.citationText)
+            ('shortdescription', CONVERIS.citationText)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -443,7 +454,7 @@ class Publication(BaseModel):
     def pub_cards(self):
         g = Graph()
         for card in client.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
-            g.add((self.uri, client.pubCardId, Literal(card)))
+            g.add((self.uri, CONVERIS.pubCardId, Literal(card)))
         return g
 
 
@@ -521,5 +532,34 @@ def pub_to_card(card_id):
     for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
         #ashipuri = D['aship-{}-{}'.format(pub, self.cid)]
         puri = pub_uri(pub)
-        g.add((puri, client.pubCardId, Literal(card_id)))
+        g.add((puri, CONVERIS.pubCardId, Literal(card_id)))
+    return g
+
+
+def create_authorships():
+    q = """
+    select DISTINCT ?person ?publication
+    where {
+        ?person a foaf:Person ;
+                converis:pubCardId ?card .
+        ?publication a bibo:Document ;
+            converis:pubCardId ?card .
+    }
+    """
+    #Define the VIVO store
+    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
+    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
+    vstore = SyncVStore(
+                os.environ['VIVO_EMAIL'],
+                os.environ['VIVO_PASSWORD']
+            )
+    vstore.open((query_endpoint, update_endpoint))
+
+    g = Graph()
+    query = rq_prefixes + q
+    for row in vstore.query(query):
+        uri = hash_uri("authorship", row.person.toPython() + row.publication.toPython())
+        g.add((uri, RDF.type, VIVO.Authorship))
+        g.add((uri, VIVO.relates, row.person))
+        g.add((uri, VIVO.relates, row.publication))
     return g

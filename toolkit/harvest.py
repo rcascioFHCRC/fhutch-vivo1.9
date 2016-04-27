@@ -2,8 +2,10 @@ import logging
 
 from converis import backend
 from converis import client
-from converis import models
 from converis.namespaces import D, VIVO, CONVERIS
+
+# local models
+import models
 
 from rdflib import Graph, Literal
 
@@ -24,18 +26,13 @@ def get_areas():
     <data xmlns="http://converis/ns/webservice">
      <query>
       <filter for="Area" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-      <or>
-        <and>
-         <relation minCount="1" name="PERS_has_AREA"/>
-        </and>
-      </or>
       </filter>
      </query>
     </data>
     """
     g = Graph()
-    for done, area in enumerate(converis.filter_query(q)):
-        g += converis.to_graph(area, models.Area)
+    for done, area in enumerate(client.filter_query(q)):
+        g += client.to_graph(area, models.Expertise)
     return g
 
 
@@ -49,7 +46,7 @@ def get_pubs():
          <relation minCount="1" name="PUBL_has_CARD"/>
         </and>
         <and>
-         <attribute argument="2016" name="publYear" operator="greaterequal"/>
+         <attribute argument="2014" name="publYear" operator="greaterequal"/>
         </and>
       </and>
       </filter>
@@ -58,8 +55,8 @@ def get_pubs():
     """
     g = Graph()
     done = 0
-    for pub in converis.filter_query(q):
-        g += converis.to_graph(pub, models.Publication)
+    for pub in client.filter_query(q):
+        g += client.to_graph(pub, models.Publication)
         done += 1
     return g
 
@@ -89,7 +86,7 @@ def get_pub_cards():
     """
     g = Graph()
     done = 0
-    for card in converis.filter_query(q):
+    for card in client.filter_query(q):
         g += models.pub_to_card(card.cid)
         done += 1
     return g
@@ -118,7 +115,7 @@ def get_orgs():
     return g
 
 
-def get_people():
+def get_people(sample=False):
     q = """
     <data xmlns="http://converis/ns/webservice">
      <return>
@@ -146,48 +143,59 @@ def get_people():
     """
     g = Graph()
     done = 0
-    for person in converis.filter_query(q):
-        g += converis.to_graph(person, models.Person)
+    for person in client.filter_query(q):
+        g += client.to_graph(person, models.Person)
         done += 1
-
-    #print g.serialize(format="n3")
+        if sample is True:
+            if done >= 10:
+                break
     return g
 
 def harvest_people():
     p = get_people()
+    #print p.serialize(format='n3')
     backend.sync_updates("http://localhost/data/people", p)
 
 def harvest_pubs():
+    """
+    Get publication entities.
+    """
     p = get_pubs()
-    p += get_pub_cards()
-    print p.serialize(format='n3')
-    #backend.post_updates("http://localhost/data/pubs", p)
+    #print p.serialize(format='n3')
+    backend.sync_updates("http://localhost/data/pubs", p)
+
+def generate_authorships():
+    """
+    Run SPARQL query to generate authorships by joining
+    on converis:pubCardId.
+    """
+    g = get_pub_cards()
+    g += models.create_authorships()
+    #print g.serialize(format='n3') 
+    backend.sync_updates("http://localhost/data/authorship", g)
 
 def harvest_areas():
+    """
+    Gets all areas, narrower terms and any researchers
+    associated with it.
+    ~ 367
+    """
     a = get_areas()
     #print a.serialize(format='n3')
-    backend.post_updates("http://localhost/data/areas", a)
+    backend.sync_updates("http://localhost/data/areas", a)
 
 def harvest_orgs():
+    """
+    Fetches all internal orgs and cards associated with those
+    orgs.
+    """
     g = get_orgs()
-    print g.serialize(format='n3')
-    #backend.sync_updates("http://localhost/data/orgs", g)
+    #print g.serialize(format='n3')
+    backend.sync_updates("http://localhost/data/orgs", g)
 
 if __name__ == "__main__":
-    #people, orgs = harvest()
-    harvest_orgs()
+    #harvest_people()
+    #harvest_orgs()
     #harvest_areas()
-    #print g.serialize(format='n3')
-    #harvest_pubs()
-    #print pubs.serialize(format='n3')
-    #backend.create_authorships()
-    
-    #backend.sync_updates("http://localhost/data/orgs", orgs)
-    #backend.sync_updates("http://localhost/data/pubs", pubs)
-    # import sys
-    # pid = sys.argv[1]
-
-    # cty = converis.Entity('Person', pid)
-    # g = converis.to_graph(cty, models.Person)
-    # print g.serialize(format="n3")
-    # backend.post_updates("http://localhost/data/people", g)
+    harvest_pubs()
+    generate_authorships()
