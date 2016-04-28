@@ -86,14 +86,9 @@ class Person(BaseModel):
         then just add as a data attribute.
         """
         g = Graph()
-        # for card_id in client.get_related_ids('Card', self.cid, "PERS_has_CARD"):
-        #     pos_obj = Position(cid=card_id)
-        #     g.add((self.uri, VIVO.relatedBy, pos_obj.uri))
-        # return g
         cards = client.RelatedObject('Person', self.cid, 'PERS_has_CARD')
         for card in cards:
             # Check for pub tracking cards.
-            #import ipdb; ipdb.set_trace()
             if (hasattr(card, 'positiontype') is True) and\
                  (card.positiontype.get('cid') == '12166'):
                 g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
@@ -275,8 +270,8 @@ class Organization(BaseModel):
     def get_positions(self):
         g = Graph()
         # skip these orgs
-        if self.cid in ['494698', '494815']:
-            return g
+        #if self.cid in ['494698', '494815']:
+        #    return g
         for card in client.get_related_ids('Card', self.cid, 'CARD_has_ORGA'):
             g.add((self.uri, VIVO.relatedBy, card_uri(card)))
         return g
@@ -291,6 +286,7 @@ class Organization(BaseModel):
             return g
 
     def get_type(self):
+        # Map of Converis type of org to VIVO class.
         m = {
             '11739': FHD.CoreFacilities,
             '11734': FHD.Department,
@@ -354,20 +350,6 @@ class Organization(BaseModel):
         return g
 
 
-class Concept(BaseModel):
-    """
-    Handle research areas or concepts.
-    """
-
-    def to_rdf(self):
-        g = Graph()
-        r = Resource(g, self.uri)
-        r.set(RDF.type, SKOS.Concept)
-        r.set(RDFS.label, Literal(self.name))
-        r.set(CONVERIS.converisId, Literal(self.cid))
-        return g
-
-
 class Publication(BaseModel):
 
     def get_type(self, default=BIBO.AcademicArticle):
@@ -399,6 +381,7 @@ class Publication(BaseModel):
             ('srcauthors', CONVERIS.authorList),
             ('doi', BIBO.doi),
             ('pmid', BIBO.pmid),
+            ('pmcid', VIVO.pmcid),
             ('isiid', CONVERIS.wosId),
             ('cfstartpage', BIBO.start),
             ('cfendpage', BIBO.end),
