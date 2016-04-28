@@ -1,4 +1,5 @@
 import logging
+import logging.handlers
 
 from converis import backend
 from converis import client
@@ -20,6 +21,17 @@ logging.basicConfig(
     format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
 )
 
+# Set up a specific logger with our desired output level
+logger = logging.getLogger("converis_client")
+logger.setLevel(logging.INFO)
+
+handler = logging.handlers.RotatingFileHandler(
+    "logs/harvest.log",
+    maxBytes=10*1024*1024,
+    backupCount=5,
+)
+
+logger.addHandler(handler)
 
 def get_areas():
     q = """
@@ -46,7 +58,7 @@ def get_pubs():
          <relation minCount="1" name="PUBL_has_CARD"/>
         </and>
         <and>
-         <attribute argument="2014" name="publYear" operator="greaterequal"/>
+         <attribute argument="2009" name="publYear" operator="greaterequal"/>
         </and>
       </and>
       </filter>
@@ -74,11 +86,11 @@ def get_pub_cards():
         <and>
             <relation minCount="1" name="PUBL_has_CARD"/>
         </and>
-        <and>
+        <!-- <and>
             <relation name="PUBL_has_CARD">
                 <attribute argument="2014" name="publYear" operator="greaterequal"/>
             </relation>
-        </and>
+        </and> -->
       </and>
       </filter>
      </query>
@@ -89,6 +101,8 @@ def get_pub_cards():
     for card in client.filter_query(q):
         g += models.pub_to_card(card.cid)
         done += 1
+        if (done % 200) == 0:
+            logging.info("Publications fetched: {}.".format(done))
     return g
 
 
@@ -162,7 +176,7 @@ def harvest_pubs():
     """
     p = get_pubs()
     #print p.serialize(format='n3')
-    backend.sync_updates("http://localhost/data/pubs", p)
+    backend.post_updates("http://localhost/data/pubs", p)
 
 def generate_authorships():
     """
@@ -198,4 +212,4 @@ if __name__ == "__main__":
     #harvest_orgs()
     #harvest_areas()
     harvest_pubs()
-    generate_authorships()
+    #generate_authorships()
