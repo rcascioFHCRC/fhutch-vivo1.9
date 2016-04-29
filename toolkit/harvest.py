@@ -178,16 +178,6 @@ def harvest_pubs():
     #print p.serialize(format='n3')
     backend.post_updates("http://localhost/data/pubs", p)
 
-def generate_authorships():
-    """
-    Run SPARQL query to generate authorships by joining
-    on converis:pubCardId.
-    """
-    #g = get_pub_cards()
-    g = models.create_authorships()
-    #print g.serialize(format='n3') 
-    backend.sync_updates("http://localhost/data/authorship", g)
-
 def harvest_areas():
     """
     Gets all areas, narrower terms and any researchers
@@ -212,4 +202,3 @@ if __name__ == "__main__":
     #harvest_orgs()
     #harvest_areas()
     #harvest_pubs()
-    generate_authorships()

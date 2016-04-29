@@ -1,3 +1,8 @@
+"""
+Threaded fetch of publications going from publication card
+to pubs. E.g. /Card/1235/PUBL_has_CARD.
+"""
+
 import logging
 import logging.handlers
 import sys
@@ -76,6 +81,13 @@ def process_pub_card(cid):
     backend.sync_updates("http://localhost/data/pubs-card-{}".format(cid), g)
     #backend.post_updates("http://localhost/data/pubs", g)
 
+def generate_authorships():
+    """
+    Run SPARQL query to generate authorships by joining
+    on converis:pubCardId.
+    """
+    g = models.create_authorships()
+    backend.sync_updates("http://localhost/data/authorship", g)
 
 def get_pub_cards():
     q = """
@@ -106,3 +118,4 @@ def get_pub_cards():
 if __name__ == "__main__":
     cards = get_pub_cards()
     run_harvest(cards)
+    generate_authorships()
