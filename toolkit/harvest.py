@@ -10,11 +10,11 @@ import models
 
 from rdflib import Graph, Literal
 
-import requests_cache
-requests_cache.install_cache(
-    'converis',
-    backend='redis',
-    allowable_methods=('GET', 'PUT'))
+#import requests_cache
+#requests_cache.install_cache(
+#    'converis',
+#    backend='redis',
+#    allowable_methods=('GET', 'PUT'))
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -183,8 +183,8 @@ def generate_authorships():
     Run SPARQL query to generate authorships by joining
     on converis:pubCardId.
     """
-    g = get_pub_cards()
-    g += models.create_authorships()
+    #g = get_pub_cards()
+    g = models.create_authorships()
     #print g.serialize(format='n3') 
     backend.sync_updates("http://localhost/data/authorship", g)
 
@@ -211,5 +211,5 @@ if __name__ == "__main__":
     #harvest_people()
     #harvest_orgs()
     #harvest_areas()
-    harvest_pubs()
-    #generate_authorships()
+    #harvest_pubs()
+    generate_authorships()

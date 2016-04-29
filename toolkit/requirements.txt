@@ -1,5 +1,5 @@
-git+git@github.com:lawlesst/c2vivo.git
+git+https://github.com/lawlesst/c2vivo.git
 
 # for caching
 requests_cache
-redis
+#redis

@@ -13,11 +13,11 @@ import models
 
 from rdflib import Graph, Literal
 
-import requests_cache
-requests_cache.install_cache(
-    'converis',
-    backend='redis',
-    allowable_methods=('GET', 'PUT'))
+#import requests_cache
+#requests_cache.install_cache(
+#    'converis',
+#    backend='redis',
+#    allowable_methods=('GET', 'PUT'))
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -30,7 +30,7 @@ logger.setLevel(logging.INFO)
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
 
-THREADS = 2
+THREADS = 3
 
 def _p(msg):
     sys.stdout.write(msg + "\n")
@@ -67,12 +67,14 @@ def process_pub_card(cid):
     logging.info("Fetching pubs for card {}.".format(cid))
     g = Graph()
     for pub in client.RelatedObject('Card', cid, 'PUBL_has_CARD'):
-        pub_uri, pg = client.to_graph2(pub, models.Publication)
+        pg = client.to_graph(pub, models.Publication)
+        pub_uri = models.pub_uri(pub.cid)
         g += pg
         del pg
         g.add((pub_uri, CONVERIS.pubCardId, Literal(cid)))
     #print g.serialize(format='turtle')
     backend.sync_updates("http://localhost/data/pubs-card-{}".format(cid), g)
+    #backend.post_updates("http://localhost/data/pubs", g)
 
 
 def get_pub_cards():
