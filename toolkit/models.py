@@ -371,6 +371,21 @@ class Publication(BaseModel):
             "Conference proceedings": BIBO.Proceedings,
             "Conference proceedings article": BIBO.Proceedings,
         }
+        ptypes = {
+            '10357': FHD.ArticleAbstract,
+            '10347': FHD.Book,
+            '10346': FHD.BookChapterEntry,
+            '10242': FHD.Dataset,
+            '10341': FHD.DissertationThesis,
+            '10336': FHD.InternetCommunication,
+            '10348': FHD.Multimedia,
+            '10335': FHD.NewsItem,
+            '10358': FHD.Poster,
+            '10359': FHD.Presentation,
+            '10324': FHD.Report,
+            '10343': FHD.SoftwareCode,
+            '10323': FHD.OtherPublication
+        }
         if hasattr(self, 'publicationtype'):
             ctype = self.publicationtype['value'].strip()
             return ptypes.get(ctype, default)
