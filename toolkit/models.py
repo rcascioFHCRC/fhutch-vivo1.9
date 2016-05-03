@@ -325,7 +325,7 @@ class Organization(BaseModel):
         # vcard URL
         vcu_uri = D['vcard-url-org-' + self.cid]
         g.add((vcu_uri, RDF.type, VCARD.URL))
-        g.add((vcu_uri, RDFS.label, Literal(u"homepage")))
+        g.add((vcu_uri, RDFS.label, Literal(u"organization's website")))
         g.add((vcu_uri, VCARD.url, Literal(url)))
 
         # Relate vcard individual to url
@@ -341,8 +341,8 @@ class Organization(BaseModel):
         o.set(RDF.type, self.get_type())
         o.set(RDFS.label, Literal(self.cfname))
         o.set(CONVERIS.converisId, Literal(self.cid))
-        if hasattr(self, 'cfresact'):
-            o.set(VIVO.overview, Literal(self.cfresact))
+        if hasattr(self, 'description'):
+            o.set(VIVO.overview, Literal(self.description))
         for child in self.get_children():
             # Has sub-organization
             o.add(OBO['BFO_0000051'], child)
