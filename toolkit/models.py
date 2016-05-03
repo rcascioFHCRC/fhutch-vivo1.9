@@ -543,7 +543,7 @@ def create_authorships():
     where {
         ?person a foaf:Person ;
                 converis:pubCardId ?card .
-        ?publication a fhp:Publication ;
+        ?publication a <http://vivo.fredhutch.org/ontology/publications#Publication> ;
             converis:pubCardId ?card .
     }
     """
