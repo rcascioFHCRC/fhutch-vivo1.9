@@ -352,7 +352,7 @@ class Organization(BaseModel):
 
 class Publication(BaseModel):
 
-    def get_type(self, default=BIBO.AcademicArticle):
+    def get_type(self, default=FHD.OtherPublication):
         """
         Assign a publication type.
         Based on Fred Hutch types.
@@ -384,10 +384,10 @@ class Publication(BaseModel):
             '10359': FHD.Presentation,
             '10324': FHD.Report,
             '10343': FHD.SoftwareCode,
-            '10323': FHD.OtherPublication
+            '10323': FHD.OtherPublication,
         }
         if hasattr(self, 'publicationtype'):
-            ctype = self.publicationtype['value'].strip()
+            ctype = self.publicationtype['cid'].strip()
             return ptypes.get(ctype, default)
         return default
 
