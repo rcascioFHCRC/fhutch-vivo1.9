@@ -8,21 +8,24 @@
 @prefix vpublic: <http://vitro.mannlib.cornell.edu/ns/vitro/public#> .
 @prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
 @prefix cg:  <http://vivoweb.org/ontology#> .
+@prefix d: <http://vivo.fredhutch.org/individual/> .
 
 <http://vivo.fredhutch.org/ontology/display#>
         a                          owl:Ontology ;
         rdfs:label                 "FredHutch Display"@en-US ;
         vitro:ontologyPrefixAnnot  "fhd"^^xsd:string .
 
-fhd:class-group-internal-orgs
+d:vitroClassGroupInternalOrgs
         a                       vitro:ClassGroup , owl:Thing ;
         rdfs:label              "Fred Hutch organizations"@en-US ;
         vitro:displayRank       4 ;
         vitro:modTime           "2016-04-26T15:32:14"^^xsd:dateTime ;
         vitro:mostSpecificType  vitro:ClassGroup .
 
-fhd:class-group-expertise
+d:vitroClassGroupexpertise
         a                       vitro:ClassGroup , owl:Thing ;
         rdfs:label              "Fred Hutch expertise"@en-US ;
         vitro:displayRank       2 ;
@@ -37,79 +40,165 @@ fhd:class-group-organizations
 
 fhd:Organization a          owl:Class ;
         rdfs:label               "Organization"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          foaf:Organization .
 
 fhd:InternalOrganization a          owl:Class ;
         rdfs:label               "Internal Organization"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:Organization .
 
 
 fhd:CoreFacilities a          owl:Class ;
         rdfs:label               "Core Facilities"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:Department a          owl:Class ;
         rdfs:label               "Department"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:Division a          owl:Class ;
         rdfs:label               "Division"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:Faculty a          owl:Class ;
         rdfs:label               "Faculty"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:Group a          owl:Class ;
         rdfs:label               "Group"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:Lab a          owl:Class ;
         rdfs:label               "Lab"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:Program a          owl:Class ;
         rdfs:label               "Program"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
 fhd:ScientificInitiative a          owl:Class ;
         rdfs:label               "Scientific Initiative"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf         fhd:InternalOrganization .
 
 fhd:SharedResource  a          owl:Class ;
         rdfs:label               "Shared Resource"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf         fhd:InternalOrganization .
 
 fhd:Study  a          owl:Class ;
         rdfs:label               "Study"@en-US ;
-        vitro:inClassGroup      fhd:class-group-internal-orgs ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf         fhd:InternalOrganization .
 
 fhd:Expertise  a          owl:Class ;
         rdfs:label               "Expertise"@en-US ;
-        vitro:inClassGroup      fhd:class-group-expertise ;
+        vitro:inClassGroup      d:vitroClassGroupexpertise ;
         rdfs:subClassOf         skos:Concept .
 
 fhd:ResearchClinicalTopics  a          owl:Class ;
         rdfs:label               "Research and Clinical Topics"@en-US ;
-        vitro:inClassGroup      fhd:class-group-expertise ;
+        vitro:inClassGroup      d:vitroClassGroupexpertise ;
         rdfs:subClassOf         fhd:Expertise .
 
 fhd:Disciplines  a          owl:Class ;
         rdfs:label               "Disciplines"@en-US ;
-        vitro:inClassGroup      fhd:class-group-expertise ;
+        vitro:inClassGroup      d:vitroClassGroupexpertise ;
         rdfs:subClassOf         fhd:Expertise .
 
 fhd:url a owl:DatatypeProperty ;
         rdfs:label "url" .
+
+
+# Publications
+
+#'10357': FHD.ArticleAbstract,
+#'10347': FHD.Book,
+#'10346': FHD.BookChapterEntry,
+#'10242': FHD.Dataset,
+#'10341': FHD.DissertationThesis,
+#'10336': FHD.InternetCommunication,
+#'10348': FHD.Multimedia,
+#'10335': FHD.NewsItem,
+#'10358': FHD.Poster,
+#'10359': FHD.Presentation,
+#'10324': FHD.Report,
+#'10343': FHD.SoftwareCode,
+#'10323': FHD.OtherPublication,
+
+fhd:Publication a owl:Class ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf         obo:IAO_0000030 .
+
+fhd:ArticleAbstract a owl:Class ;
+        rdfs:label "Article or Abstract" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:Book a owl:Class ;
+        rdfs:label "Book" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:BookChapterEntry a owl:Class ;
+        rdfs:label "Book Chapter or Entry" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:DissertationThesis a owl:Class ;
+        rdfs:label "Dissertation or Thesis" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:InternetCommunication a owl:Class ;
+        rdfs:label "Internet Communication" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:Multimedia a owl:Class ;
+        rdfs:label "Multimedia" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:NewsItem a owl:Class ;
+        rdfs:label "News Item" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:Poster a owl:Class ;
+        rdfs:label "Poster" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:Dataset a owl:Class ;
+        rdfs:label "Dataset" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:Presentation a owl:Class ;
+        rdfs:label "Presentation" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:Report a owl:Class ;
+        rdfs:label "Report" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:SoftwareCode a owl:Class ;
+        rdfs:label "Software or Code" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
+
+fhd:OtherPublication a owl:Class ;
+        rdfs:label "Other Publication" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhd:Publication .
