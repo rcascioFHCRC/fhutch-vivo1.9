@@ -1,0 +1,104 @@
+@prefix fhp: <http://vivo.fredhutch.org/ontology/publications#> .
+@prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix vivo:  <http://vivoweb.org/ontology/core#> .
+@prefix vpublic: <http://vitro.mannlib.cornell.edu/ns/vitro/public#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix cg:  <http://vivoweb.org/ontology#> .
+@prefix d: <http://vivo.fredhutch.org/individual/> .
+
+<http://vivo.fredhutch.org/ontology/publications#>
+        a                          owl:Ontology ;
+        rdfs:label                 "FredHutch Publications"@en-US ;
+        vitro:ontologyPrefixAnnot  "fhp"^^xsd:string .
+
+# Publications
+
+#'10357': FHD.ArticleAbstract,
+#'10347': FHD.Book,
+#'10346': FHD.BookChapterEntry,
+#'10242': FHD.Dataset,
+#'10341': FHD.DissertationThesis,
+#'10336': FHD.InternetCommunication,
+#'10348': FHD.Multimedia,
+#'10335': FHD.NewsItem,
+#'10358': FHD.Poster,
+#'10359': FHD.Presentation,
+#'10324': FHD.Report,
+#'10343': FHD.SoftwareCode,
+#'10323': FHD.OtherPublication,
+
+fhp:Publication a owl:Class ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf         obo:IAO_0000030 .
+
+fhp:ArticleAbstract a owl:Class ;
+        rdfs:label "Article or Abstract" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:Book a owl:Class ;
+        rdfs:label "Book" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:BookChapterEntry a owl:Class ;
+        rdfs:label "Book Chapter or Entry" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:DissertationThesis a owl:Class ;
+        rdfs:label "Dissertation or Thesis" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:InternetCommunication a owl:Class ;
+        rdfs:label "Internet Communication" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:Multimedia a owl:Class ;
+        rdfs:label "Multimedia" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:NewsItem a owl:Class ;
+        rdfs:label "News Item" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:Poster a owl:Class ;
+        rdfs:label "Poster" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:Dataset a owl:Class ;
+        rdfs:label "Dataset" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:Presentation a owl:Class ;
+        rdfs:label "Presentation" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:Report a owl:Class ;
+        rdfs:label "Report" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:SoftwareCode a owl:Class ;
+        rdfs:label "Software or Code" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .
+
+fhp:OtherPublication a owl:Class ;
+        rdfs:label "Other Publication" ;
+        vitro:inClassGroup      d:vitroClassGrouppublications ;
+        rdfs:subClassOf fhp:Publication .

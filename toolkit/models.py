@@ -15,7 +15,10 @@ from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
 
 from converis.backend import SyncVStore
 
+# display classes
 FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
+# publications
+FHP = Namespace('http://vivo.fredhutch.org/ontology/publications#')
 DATA_NAMESPACE = D
 
 logger = logging.getLogger("converis_client")
@@ -280,7 +283,7 @@ class Organization(BaseModel):
         g = Graph()
         try:
             if self.cfuri is not None:
-                g.add((self.uri, FHD.url, Literal(self.cfuri)))
+                g.add((self.uri, FHP.url, Literal(self.cfuri)))
             return g
         except AttributeError:
             return g
@@ -288,19 +291,19 @@ class Organization(BaseModel):
     def get_type(self):
         # Map of Converis type of org to VIVO class.
         m = {
-            '11739': FHD.CoreFacilities,
-            '11734': FHD.Department,
-            '11736': FHD.Division,
-            '11733': FHD.Faculty,
-            '11735': FHD.Group,
-            '11738': FHD.Lab,
-            '11737': FHD.Program,
-            '11740': FHD.ScientificInitiative,
-            '11731': FHD.SharedResource,
-            '11732': FHD.Study,
+            '11739': FHP.CoreFacilities,
+            '11734': FHP.Department,
+            '11736': FHP.Division,
+            '11733': FHP.Faculty,
+            '11735': FHP.Group,
+            '11738': FHP.Lab,
+            '11737': FHP.Program,
+            '11740': FHP.ScientificInitiative,
+            '11731': FHP.SharedResource,
+            '11732': FHP.Study,
         }
         otype = self.typeoforga['cid']
-        oty = m.get(otype, FHD.Organization)
+        oty = m.get(otype, FHP.Organization)
         return oty
 
     def add_vcard_weblink(self):
@@ -352,7 +355,7 @@ class Organization(BaseModel):
 
 class Publication(BaseModel):
 
-    def get_type(self, default=FHD.OtherPublication):
+    def get_type(self, default=FHP.OtherPublication):
         """
         Assign a publication type.
         Based on Fred Hutch types.
@@ -372,19 +375,19 @@ class Publication(BaseModel):
             "Conference proceedings article": BIBO.Proceedings,
         }
         ptypes = {
-            '10357': FHD.ArticleAbstract,
-            '10347': FHD.Book,
-            '10346': FHD.BookChapterEntry,
-            '10242': FHD.Dataset,
-            '10341': FHD.DissertationThesis,
-            '10336': FHD.InternetCommunication,
-            '10348': FHD.Multimedia,
-            '10335': FHD.NewsItem,
-            '10358': FHD.Poster,
-            '10359': FHD.Presentation,
-            '10324': FHD.Report,
-            '10343': FHD.SoftwareCode,
-            '10323': FHD.OtherPublication,
+            '10357': FHP.ArticleAbstract,
+            '10347': FHP.Book,
+            '10346': FHP.BookChapterEntry,
+            '10242': FHP.Dataset,
+            '10341': FHP.DissertationThesis,
+            '10336': FHP.InternetCommunication,
+            '10348': FHP.Multimedia,
+            '10335': FHP.NewsItem,
+            '10358': FHP.Poster,
+            '10359': FHP.Presentation,
+            '10324': FHP.Report,
+            '10343': FHP.SoftwareCode,
+            '10323': FHP.OtherPublication,
         }
         if hasattr(self, 'publicationtype'):
             ctype = self.publicationtype['cid'].strip()
@@ -502,11 +505,11 @@ class Expertise(BaseModel):
         """
         g = Graph()
         sd = self.shortdescription
-        etype = FHD.Expertise
+        etype = FHP.Expertise
         if "Research and Clinical Topics" in sd:
-            etype = FHD.ResearchClinicalTopics
+            etype = FHP.ResearchClinicalTopics
         elif "Disciplines" in sd:
-            etype = FHD.Disciplines
+            etype = FHP.Disciplines
         g.add((self.uri, RDF.type, etype))
         return g
   
