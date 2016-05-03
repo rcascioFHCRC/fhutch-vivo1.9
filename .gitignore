@@ -4,6 +4,7 @@ classpath
 target/
 .idea/
 hutch.xml
+fhutch.xml
 
 #toolkit
 .env
