@@ -89,7 +89,7 @@ def generate_authorships():
     g = models.create_authorships()
     backend.sync_updates("http://localhost/data/authorship", g)
 
-def get_pub_cards():
+def get_pub_cards(sample=False):
     q = """
     <data xmlns="http://converis/ns/webservice">
     <return>
@@ -99,7 +99,7 @@ def get_pub_cards():
       <filter for="Card" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
         <and>
           <relation name="PUBL_has_CARD" minCount="1"/>
-          <attribute operator="equals" argument="12166" name="positionType"/>
+          <!-- <attribute operator="equals" argument="12166" name="positionType"/> -->
         </and>
       </filter>
      </query>
@@ -110,8 +110,9 @@ def get_pub_cards():
     out = []
     for card in client.filter_query(q):
         done += 1
-        if done >= 100:
-            break
+        if sample is True:
+            if done >= 100:
+                break
         out.append(card.cid)
     return out
 
