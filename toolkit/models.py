@@ -283,7 +283,7 @@ class Organization(BaseModel):
         g = Graph()
         try:
             if self.cfuri is not None:
-                g.add((self.uri, FHP.url, Literal(self.cfuri)))
+                g.add((self.uri, FHD.url, Literal(self.cfuri)))
             return g
         except AttributeError:
             return g
@@ -291,19 +291,19 @@ class Organization(BaseModel):
     def get_type(self):
         # Map of Converis type of org to VIVO class.
         m = {
-            '11739': FHP.CoreFacilities,
-            '11734': FHP.Department,
-            '11736': FHP.Division,
-            '11733': FHP.Faculty,
-            '11735': FHP.Group,
-            '11738': FHP.Lab,
-            '11737': FHP.Program,
-            '11740': FHP.ScientificInitiative,
-            '11731': FHP.SharedResource,
-            '11732': FHP.Study,
+            '11739': FHD.CoreFacilities,
+            '11734': FHD.Department,
+            '11736': FHD.Division,
+            '11733': FHD.Faculty,
+            '11735': FHD.Group,
+            '11738': FHD.Lab,
+            '11737': FHD.Program,
+            '11740': FHD.ScientificInitiative,
+            '11731': FHD.SharedResource,
+            '11732': FHD.Study,
         }
         otype = self.typeoforga['cid']
-        oty = m.get(otype, FHP.Organization)
+        oty = m.get(otype, FHD.Organization)
         return oty
 
     def add_vcard_weblink(self):
@@ -505,11 +505,11 @@ class Expertise(BaseModel):
         """
         g = Graph()
         sd = self.shortdescription
-        etype = FHP.Expertise
+        etype = FHD.Expertise
         if "Research and Clinical Topics" in sd:
-            etype = FHP.ResearchClinicalTopics
+            etype = FHD.ResearchClinicalTopics
         elif "Disciplines" in sd:
-            etype = FHP.Disciplines
+            etype = FHD.Disciplines
         g.add((self.uri, RDF.type, etype))
         return g
   
