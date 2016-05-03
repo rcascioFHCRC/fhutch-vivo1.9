@@ -10,3 +10,4 @@ hutch.xml
 .staging-env
 *pyc
 *log
+venv
