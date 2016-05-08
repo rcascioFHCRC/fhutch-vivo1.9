@@ -5,6 +5,10 @@ target/
 .idea/
 hutch.xml
 fhutch.xml
+*.iml
+
+#dev data
+vdata/
 
 #toolkit
 .env
