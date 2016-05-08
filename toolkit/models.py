@@ -512,7 +512,7 @@ class Expertise(BaseModel):
             etype = FHD.Disciplines
         g.add((self.uri, RDF.type, etype))
         return g
-  
+
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
@@ -527,6 +527,34 @@ class Expertise(BaseModel):
         g += self.get_narrower()
 
         return g
+
+
+class Journal(BaseModel):
+
+    def get_venue_for(self):
+        g = Graph()
+        for pub in client.get_related_ids('Journal', self.cid, 'PUBL_has_JOUR'):
+            pub_uri = pub_url(pub)
+            g.add((self.uri, VIVO.publicationVenueFor, pub_uri))
+        return g
+
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, BIBO.Journal)
+        r.set(RDFS.label, Literal(self.name))
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
+        if hasattr(self, 'issn'):
+            r.set(BIBO.issn, Literal(self.issn))
+        if hasattr(self, 'eissn'):
+            r.set(BIBO.eissn, Literal(self.eissn))
+
+        g += self.get_venue_for()
+
+        return g
+
 
 def pub_to_card(card_id):
     g = Graph()
