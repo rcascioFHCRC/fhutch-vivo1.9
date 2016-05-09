@@ -533,9 +533,9 @@ class Journal(BaseModel):
 
     def get_venue_for(self):
         g = Graph()
-        for pub in client.get_related_ids('Journal', self.cid, 'PUBL_has_JOUR'):
-            pub_uri = pub_url(pub)
-            g.add((self.uri, VIVO.publicationVenueFor, pub_uri))
+        for pub in client.get_related_ids('Publication', self.cid, 'PUBL_has_JOUR'):
+            puri = pub_uri(pub)
+            g.add((self.uri, VIVO.publicationVenueFor, puri))
         return g
 
 
