@@ -398,7 +398,7 @@ class Publication(BaseModel):
         props = [
             ('srcauthors', CONVERIS.authorList),
             ('doi', BIBO.doi),
-            ('pmid', BIBO.pmid),
+            ('pubmedid', BIBO.pmid),
             ('pmcid', VIVO.pmcid),
             ('isiid', CONVERIS.wosId),
             ('cfstartpage', BIBO.start),
