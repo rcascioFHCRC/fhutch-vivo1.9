@@ -28,19 +28,16 @@
 
     <section id="share-contact" role="region">
         <!-- Image -->
-        <#assign individualImage>
-            <@p.image individual=individual
-                      propertyGroups=propertyGroups
-                      namespaces=namespaces
-                      editable=editable
-                      showPlaceholder="always" />
-        </#assign>
-
-        <#if ( individualImage?contains('<img class="individual-photo"') )>
-            <#assign infoClass = 'class="withThumb"'/>
+        <#assign img = propertyGroups.getProperty("http://vivo.fredhutch.org/ontology/display#image")!>
+        <#if img?has_content> <#-- true when the property is in the list, even if not populated (when editing) -->
+          <#if img.statements[0]??>
+            <div id="photo-wrapper">
+              <img class="individual-photo" src="${img.statements[0].value}"/>
+            </div>
+          </#if>
+        <#else>
+        <img class="individual-photo" src="${placeholderImageUrl(individual.uri)}" title = "${i18n().no_image}" alt="${i18n().placeholder_image}" width="${imageWidth!}" />
         </#if>
-
-        <div id="photo-wrapper">${individualImage}</div>
         <!-- Contact Info -->
         <div id="individual-tools-people">
         </div>
