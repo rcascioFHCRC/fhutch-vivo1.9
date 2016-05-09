@@ -1769,3 +1769,9 @@ footer .copyright {
     display: none;
 }
 
+
+#coauthor-network-container {
+    clear:both;
+    padding-top:1em;
+}
+
