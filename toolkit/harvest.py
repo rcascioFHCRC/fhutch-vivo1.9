@@ -10,11 +10,11 @@ import models
 
 from rdflib import Graph, Literal
 
-#import requests_cache
-#requests_cache.install_cache(
-#    'converis',
-#    backend='redis',
-#    allowable_methods=('GET', 'PUT'))
+import requests_cache
+requests_cache.install_cache(
+   'converis',
+   backend='redis',
+   allowable_methods=('GET', 'PUT'))
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -165,8 +165,8 @@ def get_people(sample=False):
                 break
     return g
 
-def harvest_people():
-    p = get_people()
+def harvest_people(sample=False):
+    p = get_people(sample=sample)
     #print p.serialize(format='n3')
     backend.sync_updates("http://localhost/data/people", p)
 
@@ -197,8 +197,34 @@ def harvest_orgs():
     #print g.serialize(format='n3')
     backend.sync_updates("http://localhost/data/orgs", g)
 
+
+def harvest_journals():
+    """
+    Fetch all journals with pubs
+    """
+    q = """
+    <data xmlns="http://converis/ns/webservice">
+     <query>
+      <filter for="Journal" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+      <and>
+        <and>
+         <relation minCount="1" name="PUBL_has_JOUR"/>
+        </and>
+      </and>
+      </filter>
+     </query>
+    </data>
+    """
+    g = Graph()
+    done = 0
+    for pub in client.filter_query(q):
+        g += client.to_graph(pub, models.Journal)
+        done += 1
+    #print g.serialize(format='n3')
+    backend.sync_updates("http://localhost/data/journals", g)
+
 if __name__ == "__main__":
-    #harvest_people()
-    #harvest_orgs()
-    #harvest_areas()
-    #harvest_pubs()
+    harvest_people()
+    harvest_orgs()
+    harvest_areas()
+    harvest_journals()
