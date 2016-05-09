@@ -583,9 +583,9 @@ ul#main-nav {
 }
 /* INTRO-BLURB ------>  */
 #intro {
-    float: left;
-    width: 570px;
-    padding-bottom: 50px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 75%;
 }
 body.loggedIn #intro {
     width: 98%;
@@ -768,9 +768,10 @@ p.external-auth a.blue:hover {
 }
 /* HOME SEARCH ------>  */
 #search-home {
-    float: left;
-    width: 533px;
-    margin: 30px 0 0 0;
+    width: 60%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 2em;
 }
 #search-home h3 {
     padding: 0;

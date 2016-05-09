@@ -18,10 +18,6 @@
 <html lang="en">
     <head>
         <#include "head.ftl">
-        <#if geoFocusMapsEnabled >
-            <#include "geoFocusMapScripts.ftl">
-        </#if>
-        <script type="text/javascript" src="${urls.base}/js/homePageUtils.js?version=x"></script>
     </head>
 
     <body class="${bodyClasses!}" onload="${bodyOnload!}">
@@ -32,13 +28,16 @@
         <#include "menu.ftl">
 
         <section id="intro" role="region">
-            <h2>${i18n().intro_title}</h2>
+            <h2>Welcome to FredHutch-VIVO</h2>
 
-            <p>${i18n().intro_para1}</p>
-            <p>${i18n().intro_para2}</p>
+            <p>VIVO is a research-focused discovery tool that enables collaboration among scientists across all disciplines.</p>
 
-            <section id="search-home" role="region">
-                <h3>${i18n().intro_searchvivo} <span class="search-filter-selected">filteredSearch</span></h3>
+            <p>Browse or search information on people, departments, expertise, clinical trials, grants, and publications.</p>
+
+        </section>
+
+        <section id="search-home" role="region">
+                <h3><span class="search-filter-selected">filteredSearch</span></h3>
 
                 <fieldset>
                     <legend>${i18n().search_form}</legend>
@@ -60,49 +59,9 @@
                     </form>
                 </fieldset>
             </section> <!-- #search-home -->
-
-        </section> <!-- #intro -->
-
-        <!-- List of research classes: e.g., articles, books, collections, conference papers -->
-        <@lh.researchClasses />
-
-        <!-- List of four randomly selected faculty members -->
-        <@lh.facultyMbrHtml />
-
-        <!-- List of randomly selected academic departments -->
-        <@lh.academicDeptsHtml />
-
-        <#if geoFocusMapsEnabled >
-            <!-- Map display of researchers' areas of geographic focus. Must be enabled in runtime.properties -->
-            <@lh.geographicFocusHtml />
-        </#if>
-
-        <!-- Statistical information relating to property groups and their classes; displayed horizontally, not vertically-->
-        <@lh.allClassGroups vClassGroups! />
-
         <#include "footer.ftl">
-        <#-- builds a json object that is used by js to render the academic departments section -->
-        <@lh.listAcademicDepartments />
+
     <script>
-        var i18nStrings = {
-            researcherString: '${i18n().researcher}',
-            researchersString: '${i18n().researchers}',
-            currentlyNoResearchers: '${i18n().currently_no_researchers}',
-            countriesAndRegions: '${i18n().countries_and_regions}',
-            countriesString: '${i18n().countries}',
-            regionsString: '${i18n().regions}',
-            statesString: '${i18n().map_states_string}',
-            stateString: '${i18n().map_state_string}',
-            statewideLocations: '${i18n().statewide_locations}',
-            researchersInString: '${i18n().researchers_in}',
-            inString: '${i18n().in}',
-            noFacultyFound: '${i18n().no_faculty_found}',
-            placeholderImage: '${i18n().placeholder_image}',
-            viewAllFaculty: '${i18n().view_all_faculty}',
-            viewAllString: '${i18n().view_all}',
-            viewAllDepartments: '${i18n().view_all_departments}',
-            noDepartmentsFound: '${i18n().no_departments_found}'
-        };
         // set the 'limmit search' text and alignment
         if  ( $('input.search-homepage').css('text-align') == "right" ) {
              $('input.search-homepage').attr("value","${i18n().limit_search} \u2192");

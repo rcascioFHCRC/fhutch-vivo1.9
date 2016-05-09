@@ -74,6 +74,12 @@
       <span class="terms_privacy"><a href="http://www.fredhutch.org/en/util/terms-privacy.html">Terms of use &amp; privacy policy</a>&nbsp;|&nbsp;<a href="/en/util/conflict-of-interest.html">Conflict of interest</a></span>
     </div>
 
+    <div>
+        Powered by the <a href="http://sharedresources.fredhutch.org/core-facilities/library">Arnold Library</a>, Converis, and <a href="http://vivoweb.org">VIVO</a>.
+        <br/>
+        <a href="https://fhcrc.converis.thomsonreuters.com/converis/secure/login">Edit your profile</a>&nbsp;&nbsp;Get <a href="#">help with your profile</a>.
+    </div>
+
 </div>
 </footer>
 
