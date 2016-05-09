@@ -10,13 +10,14 @@
         PREFIX bibo: &lt;http://purl.org/ontology/bibo/&gt;
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
         PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-
         SELECT DISTINCT ?subclass
             ?authorship
             ?infoResource ?infoResourceName
             ?dateTime
             ?journal
             ?volume
+            ?doi
+            ?pmid
             ?startPage
             ?endPage
             ?publisher
@@ -34,6 +35,8 @@
             ?infoResource rdfs:label ?infoResourceName .
             OPTIONAL { ?infoResource vitro:mostSpecificType ?subclass }
             OPTIONAL { ?infoResource bibo:volume ?volume }
+            OPTIONAL { ?infoResource bibo:doi ?doi }
+            OPTIONAL { ?infoResource bibo:pmid ?pmid }
             OPTIONAL { ?infoResource bibo:pageStart ?startPage }
             OPTIONAL { ?infoResource bibo:pageEnd ?endPage }
             OPTIONAL { ?infoResource core:placeOfPublication ?locale }
@@ -91,6 +94,8 @@
             ?infoResource bibo:volume ?volume .
             ?infoResource bibo:pageStart ?startPage .
             ?infoResource bibo:pageEnd ?endPage .
+            ?infoResource bibo:doi ?doi .
+            ?infoResource bibo:pmid ?pmid .
             ?infoResource core:placeOfPublication ?locale .
             ?infoResource bibo:reproducedIn ?appearsInObj .
             ?appearsInObj rdfs:label ?appearsIn .
@@ -171,6 +176,22 @@
                 ?authorship core:relates ?infoResource .
                 ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
                 ?infoResource bibo:pageEnd ?endPage .
+            }
+            UNION
+            {
+                ?subject ?property ?authorship .
+                ?authorship a core:Authorship .
+                ?authorship core:relates ?infoResource .
+                ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
+                ?infoResource bibo:doi ?doi .
+            }
+            UNION
+            {
+                ?subject ?property ?authorship .
+                ?authorship a core:Authorship .
+                ?authorship core:relates ?infoResource .
+                ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
+                ?infoResource bibo:pmid ?pmid .
             }
             UNION
             {

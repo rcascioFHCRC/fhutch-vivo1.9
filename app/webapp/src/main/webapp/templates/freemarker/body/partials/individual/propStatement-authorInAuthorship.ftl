@@ -113,10 +113,10 @@
 
     ${resourceTitle} ${citationDetails} <@dt.yearSpan "${statement.dateTime!}" />
     <#if statement.doi?has_content>
-        <span class="pub-id-link">DOI:&nbsp;<a href="${statement.doi}"  title="View at publisher">${statement.doi}</a></span>
+        <span class="pub-id-link">DOI:&nbsp;<a href="http://doi.org/${statement.doi}"  title="View at publisher" target="external">${statement.doi}</a></span>
     </#if>
     <#if statement.pmid?has_content>
-        <span class="pub-id-link">PMID:&nbsp;<a href="${statement.pmid}"  title="View in PubMed">${statement.pmid}</a></span>
+        <span class="pub-id-link">PMID:&nbsp;<a href="http://pubmed.gov/${statement.pmid}"  title="View in PubMed" target="external">${statement.pmid}</a></span>
     </#if>
 </#if>
 </#macro>
