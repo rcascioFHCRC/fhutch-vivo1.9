@@ -20,6 +20,7 @@
   <#assign languageCount = 1>
 </#if>
 <#assign visRequestingTemplate = "foaf-person-wilma">
+<#assign imageProp = "http://vivo.fredhutch.org/ontology/display#image">
 
 <#--add the VIVO-ORCID interface -->
 <#include "individual-orcidInterface.ftl">
@@ -28,7 +29,7 @@
 
     <section id="share-contact" role="region">
         <!-- Image -->
-        <#assign img = propertyGroups.getProperty("http://vivo.fredhutch.org/ontology/display#image")!>
+        <#assign img = propertyGroups.getProperty(imageProp)!>
         <#if img?has_content> <#-- true when the property is in the list, even if not populated (when editing) -->
           <#if img.statements[0]??>
             <div id="photo-wrapper">
@@ -106,6 +107,7 @@
 	<#-- We don't want to see the first name and last name unless we might edit them. -->
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/firstName")!>
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
+	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
 </#if>
 
 <!-- Property group menu or tabs -->
