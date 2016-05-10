@@ -2,9 +2,9 @@
 Threaded fetch of publications going from publication card
 to pubs. E.g. /Card/1235/PUBL_has_CARD.
 """
-
 import logging
 import logging.handlers
+import os
 import sys
 from Queue import Queue
 from threading import Thread
@@ -18,24 +18,36 @@ import models
 
 from rdflib import Graph, Literal
 
-#import requests_cache
-#requests_cache.install_cache(
-#    'converis',
-#    backend='redis',
-#    allowable_methods=('GET', 'PUT'))
+if os.environ.get('HTTP_CACHE') == "1":
+    import requests_cache
+    requests_cache.install_cache(
+       'converis',
+       backend='redis',
+       allowable_methods=('GET', 'PUT'))
 
+# Logging setup
 logging.basicConfig(
-    level=logging.DEBUG,
-    format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
+    level=logging.INFO,
+    format='%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s'
 )
-
-# Set up a specific logger with our desired output level
-logger = logging.getLogger("converis_client")
-logger.setLevel(logging.INFO)
+# Module logging
 logging.getLogger("requests").setLevel(logging.WARNING)
 logging.getLogger("urllib3").setLevel(logging.WARNING)
+logging.getLogger("convers_client").setLevel(logging.WARNING)
 
-THREADS = 3
+logger = logging.getLogger('harvest')
+logger.setLevel(logging.INFO)
+
+handler = logging.handlers.RotatingFileHandler(
+    "logs/harvest.log",
+    maxBytes=10*1024*1024,
+    backupCount=5,
+)
+lformat = logging.Formatter("%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
+handler.setFormatter(lformat)
+logger.addHandler(handler)
+
+THREADS = os.environ.get('THREADS', 3)
 
 def _p(msg):
     sys.stdout.write(msg + "\n")
@@ -86,8 +98,10 @@ def generate_authorships():
     Run SPARQL query to generate authorships by joining
     on converis:pubCardId.
     """
+    logger.info("Generating authorships.")
     g = models.create_authorships()
     backend.sync_updates("http://localhost/data/authorship", g)
+
 
 def get_pub_cards(sample=False):
     q = """
@@ -105,6 +119,7 @@ def get_pub_cards(sample=False):
      </query>
     </data>
     """
+    logger.info("Getting publications cards.")
     g = Graph()
     done = 0
     out = []
@@ -117,6 +132,7 @@ def get_pub_cards(sample=False):
     return out
 
 if __name__ == "__main__":
+    logger.info("Starting publications harvest.")
     cards = get_pub_cards()
     run_harvest(cards)
     generate_authorships()
