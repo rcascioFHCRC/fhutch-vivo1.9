@@ -58,11 +58,11 @@
         <div class="title">${resourceTitle} <span class="pub-date"><@dt.yearSpan "${statement.dateTime!}" /></span></div>
         <#if statement.authorList?has_content>
             <div class="author-list">
-            <#assign minititle=(statement.authorList)>
-                <#if minititle?length &lt; 50>
-                ${minititle}
+            <#assign shortauthors=(statement.authorList)>
+                <#if shortauthors?length &lt; 50>
+                ${shortauthors}
                 <#else>
-                ${minititle?substring(0,50)} ...et al.
+                ${shortauthors?substring(0,50)} ...
             </#if>
             </div>
         </#if>
