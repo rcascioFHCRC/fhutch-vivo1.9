@@ -20,7 +20,8 @@ html,
 body {
     padding: 0;
     height: 100%; /* needed for container min-height */
-    font-family: "Lucida Sans Unicode","Lucida Grande", Geneva, helvetica, sans-serif;
+    /*font-family: "Lucida Sans Unicode","Lucida Grande", Geneva, helvetica, sans-serif;*/
+    font-family: "Geogrotesque-Regular",Arial,Helvetica,Sans-serif;
     height: auto !important; /* real browsers */
     height: 100%; /* IE6: treaded as min-height*/;
     min-height: 100%; /* real browsers */
