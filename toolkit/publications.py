@@ -27,7 +27,7 @@ if os.environ.get('HTTP_CACHE') == "1":
        backend='redis',
        allowable_methods=('GET', 'PUT'))
 
-THREADS = int(os.environ.get('THREADS', 3))
+THREADS = int(os.environ.get('THREADS', 5))
 
 def _p(msg):
     sys.stdout.write(msg + "\n")
@@ -113,7 +113,6 @@ def get_pub_cards(sample=False):
 
 if __name__ == "__main__":
     logger.info("Starting publications harvest.")
-    # cards = get_pub_cards()
-    # run_harvest(cards)
-    # generate_authorships()
-    client.make_error()
+    cards = get_pub_cards()
+    run_harvest(cards)
+    generate_authorships()
