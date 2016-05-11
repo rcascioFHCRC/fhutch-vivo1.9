@@ -25,77 +25,20 @@
     </script>
 <#else>
     <#local citationDetails>
-        <#if statement.subclass??>
-            <#if statement.subclass?contains("Article")>
-                <#if statement.journal??>
-                    <em>${statement.journal!}</em>.&nbsp;
-                    <#if statement.volume?? && statement.startPage?? && statement.endPage??>
-                        ${statement.volume!}:${statement.startPage!}-${statement.endPage!}.
-                    <#elseif statement.volume?? && statement.startPage??>
-                        ${statement.volume!}:${statement.startPage!}.
-                    <#elseif statement.volume??>
-                        ${statement.volume!}.
-                    <#elseif statement.startPage?? && statement.endPage??>
-                        ${statement.startPage!}-${statement.endPage!}.
-                    <#elseif statement.startPage??>
-                        ${statement.startPage!}.
-                    </#if>
+            <#if statement.journal??>
+                <em>${statement.journal!}</em>.
+                <#if statement.volume??>
+                    ${statement.volume}
                 </#if>
-            <#elseif statement.subclass?contains("Chapter")>
-                <#if statement.journal??>
-                    <em>${statement.journal!}</em>.
-                <#elseif statement.appearsIn??>
-                    <em>${statement.appearsIn!}</em>.
-                <#elseif statement.partOf??>
-                    <em>${statement.partOf!}</em>.
-                </#if>
-                <#if statement.editor??>
-                    ${i18n().editor_abbreviated}&nbsp;${statement.editor!}.&nbsp;
-                </#if>
-                <#if statement.locale?? && statement.publisher??>
-                    ${statement.locale!}:&nbsp;${statement.publisher!}.
-                <#elseif statement.locale??>
-                    ${statement.locale!}.
-                <#elseif statement.publisher??>
-                    ${statement.publisher!}.
+                <#if statement.issue??>
+                    , ${statement.issue}
                 </#if>
                 <#if statement.startPage?? && statement.endPage??>
-                    ${statement.startPage!}-${statement.endPage!}.
+                    p. ${statement.startPage!}-${statement.endPage!}.
                 <#elseif statement.startPage??>
-                    ${statement.startPage!}.
-                </#if>
-            <#elseif statement.subclass?contains("Book")>
-                <#if statement.volume?? && (statement.volume!?length > 0 )>
-                    ${i18n().volume_abbreviated}&nbsp;${statement.volume!}.&nbsp;
-                </#if>
-                <#if statement.editor??>
-                    ${i18n().editor_abbreviated}&nbsp;${statement.editor!}.&nbsp;
-                </#if>
-                <#if statement.locale?? && statement.publisher??>
-                    ${statement.locale!}:&nbsp;${statement.publisher!}.
-                <#elseif statement.locale??>
-                    ${statement.locale!}.
-                <#elseif statement.publisher??>
-                    ${statement.publisher!}.
-                </#if>
-            <#else>
-                <#if statement.journal??>
-                    <em>${statement.journal!}</em>.
-                <#elseif statement.appearsIn??>
-                    <em>${statement.appearsIn!}</em>.
-                <#elseif statement.partOf??>
-                    <em>${statement.partOf!}</em>.
-                </#if>
-                <#if statement.editor??>
-                    ${i18n().editor_abbreviated} ${statement.editor!}.&nbsp;
-                </#if>
-                <#if statement.startPage?? && statement.endPage??>
-                    ${statement.startPage!}-${statement.endPage!}.
-                <#elseif statement.startPage??>
-                    ${statement.startPage!}.
-                </#if>
+                    p. ${statement.startPage!}.
+                </#if>.
             </#if>
-        </#if>
     </#local>
 
     <#local resourceTitle>
@@ -111,12 +54,31 @@
         </#if>
     </#local>
 
-    ${resourceTitle} ${citationDetails} <@dt.yearSpan "${statement.dateTime!}" />
-    <#if statement.doi?has_content>
-        <span class="pub-id-link">DOI:&nbsp;<a href="http://doi.org/${statement.doi}"  title="View at publisher" target="external">${statement.doi}</a></span>
-    </#if>
-    <#if statement.pmid?has_content>
-        <span class="pub-id-link">PMID:&nbsp;<a href="http://pubmed.gov/${statement.pmid}"  title="View in PubMed" target="external">${statement.pmid}</a></span>
-    </#if>
+    <div class="pub-container">
+        <div class="title">${resourceTitle} <span class="pub-date"><@dt.yearSpan "${statement.dateTime!}" /></span></div>
+        <#if statement.authorList?has_content>
+            <div class="author-list">
+            <#assign minititle=(statement.authorList)>
+                <#if minititle?length &lt; 50>
+                ${minititle}
+                <#else>
+                ${minititle?substring(0,50)} ...et al.
+            </#if>
+            </div>
+        </#if>
+        ${citationDetails}
+        <div class="pub-ids">
+            <#if statement.doi?has_content>
+                <span class="pub-id-link">DOI:&nbsp;<a href="http://doi.org/${statement.doi}"  title="View at publisher" target="external">${statement.doi}</a></span>
+            </#if>
+            <#if statement.pmid?has_content>
+                <span class="pub-id-link">PMID:&nbsp;<a href="http://pubmed.gov/${statement.pmid}"  title="View in PubMed" target="external">${statement.pmid}</a></span>
+            </#if>
+            <#if statement.wosId?has_content>
+                <#-- Change WoS link to match customer code -->
+                <span class="pub-id-link">Web of Science:&nbsp;<a href="http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcApp=VIVO&SrcAuth=TRINTCEL&KeyUT=WOS:${statement.wosId}&DestLinkType=FullRecord&DestApp=WOS_CPL"  title="View in Web of Science" target="external">${statement.wosId}</a></span>
+            </#if>
+        </div>
+    </div>
 </#if>
 </#macro>

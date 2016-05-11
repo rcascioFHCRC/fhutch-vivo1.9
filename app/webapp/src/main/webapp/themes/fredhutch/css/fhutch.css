@@ -1777,3 +1777,23 @@ footer .copyright {
     padding-top:1em;
 }
 
+.pub-id-link {
+    padding-right: 1em;
+    font-size:smaller;
+}
+
+.pub-date {
+    margin-left: .25em;
+    font-size: smaller;
+}
+
+
+.pub-container .title, .pub-container .author-list {
+    margin-top:.25em;
+}
+
+.pub-container .pub-ids  {
+    margin-top: .25em;
+}
+
+
