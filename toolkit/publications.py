@@ -37,7 +37,7 @@ def harvest_service(num, harvest_q):
     """thread worker function"""
     while True:
         cid = harvest_q.get()
-        logging.info('Worker: %s card: %s' % (num, cid))
+        logger.info('Worker: %s card: %s' % (num, cid))
         process_pub_card(cid)
         harvest_q.task_done()
     return
@@ -61,7 +61,7 @@ def run_harvest(to_fetch):
 
 
 def process_pub_card(cid):
-    logging.info("Fetching pubs for card {}.".format(cid))
+    logger.info("Fetching pubs for card {}.".format(cid))
     g = Graph()
     for pub in client.RelatedObject('Card', cid, 'PUBL_has_CARD'):
         pg = client.to_graph(pub, models.Publication)
