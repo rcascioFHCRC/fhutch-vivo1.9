@@ -1,3 +1,8 @@
+"""
+Primary harvest process.
+"""
+
+import os
 import logging
 import logging.handlers
 
@@ -7,31 +12,19 @@ from converis.namespaces import D, VIVO, CONVERIS
 
 # local models
 import models
+import log_setup
 
 from rdflib import Graph, Literal
 
-import requests_cache
-requests_cache.install_cache(
-   'converis',
-   backend='redis',
-   allowable_methods=('GET', 'PUT'))
+logger = log_setup.get_logger()
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
-)
+if os.environ.get('HTTP_CACHE') == "1":
+  import requests_cache
+  requests_cache.install_cache(
+     'converis',
+     backend='redis',
+     allowable_methods=('GET', 'PUT'))
 
-# Set up a specific logger with our desired output level
-logger = logging.getLogger("converis_client")
-logger.setLevel(logging.INFO)
-
-handler = logging.handlers.RotatingFileHandler(
-    "logs/harvest.log",
-    maxBytes=10*1024*1024,
-    backupCount=5,
-)
-
-logger.addHandler(handler)
 
 def get_areas():
     q = """
@@ -166,6 +159,7 @@ def get_people(sample=False):
     return g
 
 def harvest_people(sample=False):
+    logger.info("Harvesting people.")
     p = get_people(sample=sample)
     #print p.serialize(format='n3')
     backend.sync_updates("http://localhost/data/people", p)
@@ -184,6 +178,7 @@ def harvest_areas():
     associated with it.
     ~ 367
     """
+    logger.info("Harvesting areas.")
     a = get_areas()
     #print a.serialize(format='n3')
     backend.sync_updates("http://localhost/data/areas", a)
@@ -193,6 +188,7 @@ def harvest_orgs():
     Fetches all internal orgs and cards associated with those
     orgs.
     """
+    logger.info("Harvesting orgs.")
     g = get_orgs()
     #print g.serialize(format='n3')
     backend.sync_updates("http://localhost/data/orgs", g)
@@ -202,6 +198,7 @@ def harvest_journals():
     """
     Fetch all journals with pubs
     """
+    logger.info("Harvesting journals.")
     q = """
     <data xmlns="http://converis/ns/webservice">
      <query>
@@ -224,6 +221,7 @@ def harvest_journals():
     backend.sync_updates("http://localhost/data/journals", g)
 
 if __name__ == "__main__":
+    logger.info("Starting harvest.")
     harvest_people()
     harvest_orgs()
     harvest_areas()

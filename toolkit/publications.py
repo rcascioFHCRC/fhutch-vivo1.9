@@ -2,8 +2,6 @@
 Threaded fetch of publications going from publication card
 to pubs. E.g. /Card/1235/PUBL_has_CARD.
 """
-import logging
-import logging.handlers
 import os
 import sys
 from Queue import Queue
@@ -15,8 +13,12 @@ from converis.namespaces import D, VIVO, CONVERIS
 
 # local models
 import models
+import log_setup
 
 from rdflib import Graph, Literal
+
+logger = log_setup.get_logger()
+
 
 if os.environ.get('HTTP_CACHE') == "1":
     import requests_cache
@@ -25,29 +27,7 @@ if os.environ.get('HTTP_CACHE') == "1":
        backend='redis',
        allowable_methods=('GET', 'PUT'))
 
-# Logging setup
-logging.basicConfig(
-    level=logging.INFO,
-    format='%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s'
-)
-# Module logging
-logging.getLogger("requests").setLevel(logging.WARNING)
-logging.getLogger("urllib3").setLevel(logging.WARNING)
-logging.getLogger("convers_client").setLevel(logging.WARNING)
-
-logger = logging.getLogger('harvest')
-logger.setLevel(logging.INFO)
-
-handler = logging.handlers.RotatingFileHandler(
-    "logs/harvest.log",
-    maxBytes=10*1024*1024,
-    backupCount=5,
-)
-lformat = logging.Formatter("%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s")
-handler.setFormatter(lformat)
-logger.addHandler(handler)
-
-THREADS = os.environ.get('THREADS', 3)
+THREADS = int(os.environ.get('THREADS', 3))
 
 def _p(msg):
     sys.stdout.write(msg + "\n")
@@ -133,6 +113,7 @@ def get_pub_cards(sample=False):
 
 if __name__ == "__main__":
     logger.info("Starting publications harvest.")
-    cards = get_pub_cards()
-    run_harvest(cards)
-    generate_authorships()
+    # cards = get_pub_cards()
+    # run_harvest(cards)
+    # generate_authorships()
+    client.make_error()
