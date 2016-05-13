@@ -908,7 +908,16 @@
     <servlet-name>SearchHelpController</servlet-name>
     <url-pattern>/searchHelp</url-pattern>
   </servlet-mapping>
-  
+
+  <servlet>
+    <servlet-name>OrgBrowseController</servlet-name>
+    <servlet-class>org.fredhutch.controller.OrgBrowseController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrgBrowseController</servlet-name>
+    <url-pattern>/org-browse</url-pattern>
+  </servlet-mapping>
+
   <servlet>
     <servlet-name>DeveloperAjax</servlet-name>
     <servlet-class>edu.cornell.mannlib.vitro.webapp.utils.developer.DeveloperSettingsServlet</servlet-class>

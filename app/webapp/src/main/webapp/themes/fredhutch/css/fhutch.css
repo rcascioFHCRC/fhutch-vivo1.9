@@ -1767,9 +1767,9 @@ footer .copyright {
     clear: both;
 }
 
-#developerPanel {
+/*#developerPanel {
     display: none;
-}
+}*/
 
 
 #coauthor-network-container {
@@ -1797,3 +1797,6 @@ footer .copyright {
 }
 
 
+ul.sub-org {
+    margin-left: 2em;
+}

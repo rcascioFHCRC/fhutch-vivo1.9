@@ -4,14 +4,8 @@
 
 <h2>${siteName!}</h2>
 
-<#if title?has_content>
-    <div>${title}</div>
-</#if>
-
-<#if venueName?has_content>
-    <div>${venueName}</div>
-</#if>
-
-<#if doi?has_content>
-    <div>${doi}</div>
-</#if>
+<ul>
+<#list tree as org>
+    <li>${org.name}</li>
+</#list>
+</ul>
