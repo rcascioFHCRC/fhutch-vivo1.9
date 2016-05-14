@@ -15,11 +15,29 @@
         <#list kids as sub>
             <li>
                 <a href="${sub.url}">${sub.name}</a>
+                <#assign gkids = sub.children!>
+                <#if gkids?hasContent>
+                    <ul class="sub-org">
+                        <#list gkids as sub2>
+                            <li>
+                                <a href="${sub2.url}">${sub2.name}</a>
+                                <#assign ggkids = sub2.children!>
+                                <#if ggkids?hasContent>
+                                    <ul class="sub-org">
+                                        <#list ggkids as sub3>
+                                            <li>
+                                                <a href="${sub3.url}">${sub3.name}</a>
+                                            </li>
+                                        </#list>
+                                    </ul>
+                                </#if>
+                            </li>
+                        </#list>
+                    </ul>
+                </#if>
             </li>
         </#list>
     </ul>
+
 </#list>
 </ul>
-
-
-<@dumpAll />

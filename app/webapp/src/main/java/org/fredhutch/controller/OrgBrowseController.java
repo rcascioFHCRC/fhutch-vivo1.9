@@ -11,7 +11,7 @@ import java.util.Map;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
+import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.*;
 import com.hp.hpl.jena.vocabulary.RDF;
 import com.hp.hpl.jena.vocabulary.RDFS;
@@ -41,28 +41,33 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         Property hasChild = model.createProperty(SUB_ORG_PROPERTY);
 
         log.debug("Generating org browse model");
-        Model orgModel = getOrgModel(vreq, fhcrc);
+        //Model orgModel = getOrgModel(vreq, fhcrc);
+        String rq = readQuery("orgBrowse/getStructure.rq");
+        Model orgModel = runConstruct(rq, vreq);
 
+        Resource topUri = ResourceFactory.createResource(TOP_ORG);
         //ArrayList<HashMap> subs = getChildOrgs(orgModel, fhcrc);
-        ArrayList<HashMap> orgTree = new ArrayList<HashMap>();
+        //ArrayList<HashMap> orgTree = new ArrayList<HashMap>();
 
-        ResIterator iter = orgModel.listResourcesWithProperty(RDF.type, parentResource);
-        if (iter.hasNext()) {
-            while (iter.hasNext()) {
-                HashMap thisOrg = new HashMap();
-                Resource parent = iter.nextResource();
-                String parentName = parent.getProperty(RDFS.label).getObject().toString();
-                ArrayList<HashMap> subs = getChildOrgs(orgModel, iter.nextResource(), vreq);
-                thisOrg.put("uri", parent.getURI());
-                thisOrg.put("url", getURL(parent.getURI().toString(), vreq));
-                thisOrg.put("name", parentName);
-                thisOrg.put("children", subs);
-                orgTree.add(thisOrg);
-                //Gson gson = new Gson();
-                //String json = gson.toJson(subs);
-                //System.out.println(json);
-            }
-        }
+        ArrayList<HashMap> orgTree = getChildren(orgModel, topUri, vreq);
+
+//        ResIterator iter = orgModel.listResourcesWithProperty(RDF.type, parentResource);
+//        if (iter.hasNext()) {
+//            while (iter.hasNext()) {
+//                HashMap thisOrg = new HashMap();
+//                Resource parent = iter.nextResource();
+//                String parentName = parent.getProperty(RDFS.label).getObject().toString();
+//                ArrayList<HashMap> subs = getChildOrgs(orgModel, iter.nextResource(), vreq);
+//                thisOrg.put("uri", parent.getURI());
+//                thisOrg.put("url", getURL(parent.getURI().toString(), vreq));
+//                thisOrg.put("name", parentName);
+//                thisOrg.put("children", subs);
+//                orgTree.add(thisOrg);
+//                //Gson gson = new Gson();
+//                //String json = gson.toJson(subs);
+//                //System.out.println(json);
+//            }
+//        }
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("tree", orgTree);
         body.put("title", "Organizations");
@@ -70,60 +75,126 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         return new TemplateResponseValues(TEMPLATE_DEFAULT, body);
     }
 
-    public static ArrayList<HashMap> getChildOrgs(Model model, Resource uri, VitroRequest vreq) {
-        Property hasChild = model.createProperty( TMP_NAMESPACE + "child" );
-        NodeIterator iter = model.listObjectsOfProperty(uri, hasChild);
+//    public static ArrayList<HashMap> getChildOrgs(Model model, Resource uri, VitroRequest vreq) {
+//        Property hasChild = model.createProperty( TMP_NAMESPACE + "child" );
+//        NodeIterator iter = model.listObjectsOfProperty(uri, hasChild);
+//        ArrayList<HashMap> kids = new ArrayList<HashMap>();
+//        if (iter.hasNext()) {
+//            while (iter.hasNext()) {
+//                RDFNode stmt = iter.nextNode();
+//                HashMap org = new HashMap();
+//                String ouri = stmt.toString();
+//                org.put("uri", ouri);
+//                org.put("url", getURL(ouri, vreq));
+//                org.put("name", model.getResource(ouri).getProperty(RDFS.label).getObject().toString());
+//                ArrayList<HashMap> gc = getChildOrgs(model, ResourceFactory.createResource(ouri), vreq);
+//                if (gc.isEmpty()) {
+//                    org.put("children", new ArrayList<HashMap>());
+//                    kids.add(org);
+//                    continue;
+//                } else {
+//                    org.put("children", gc);
+//                    kids.add(org);
+//                }
+//            }
+//        }
+//        return kids;
+//    }
+
+//    public static Model getOrgModel (VitroRequest vreq, Resource topUri) {
+//        final ArrayList people = new ArrayList<String>();
+//        ParameterizedSparqlString q2 = new ParameterizedSparqlString();
+//        q2.setCommandText(
+//                "CONSTRUCT {\n" +
+//                        " ?o a tmp:Parent ;\n" +
+//                        "   rdfs:label ?oName ;\n" +
+//                        "   tmp:child ?o2 .\n" +
+//                        "?o2 rdfs:label ?oName2 \n" +
+//                        "}\n" +
+//                        "WHERE {\n" +
+//                        "?o a foaf:Organization obo:BFO_0000050 ?top ;\n" +
+//                        "       rdfs:label ?oName .\n" +
+//                        "OPTIONAL {\n" +
+//                        "   ?o2 obo:BFO_0000050 ?o ;\n" +
+//                        "     rdfs:label ?oName2 .\n" +
+//                        "}\n" +
+//                "}\n"
+//        );
+//        //q2.setBaseUri("http://example.org/base#");
+//        q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+//        q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+//        q2.setNsPrefix("tmp", TMP_NAMESPACE);
+//        q2.setNsPrefix("obo", "http://purl.obolibrary.org/obo/");
+//        q2.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
+//        q2.setIri("top", topUri.toString());
+//        String query = q2.toString();
+//        log.debug("Org browse query:\n" + query);
+//
+//        Model model = ModelFactory.createDefaultModel();
+//        try {
+//            vreq.getRDFService().sparqlConstructQuery(query, model);
+//        } catch (RDFServiceException e) {
+//            e.printStackTrace();
+//        }
+//        return model;
+//    }
+
+    public static ArrayList<HashMap> getChildren(Model model, Resource parent, VitroRequest vreq) {
         ArrayList<HashMap> kids = new ArrayList<HashMap>();
-        if (iter.hasNext()) {
-            while (iter.hasNext()) {
-                RDFNode stmt = iter.nextNode();
-                HashMap org = new HashMap();
-                String ouri = stmt.toString();
-                org.put("uri", ouri);
-                org.put("url", getURL(ouri, vreq));
-                org.put("name", model.getResource(ouri).getProperty(RDFS.label).getObject().toString());
-                kids.add(org);
+        String rawQuery = readQuery("orgBrowse/getChildren.rq");
+        ParameterizedSparqlString q2 = new ParameterizedSparqlString();
+        q2.setCommandText(rawQuery);
+        q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        q2.setNsPrefix("tmp", "http://localhost/tmp#");
+        q2.setIri("parent", parent.toString());
+        String query = q2.toString();
+        QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        try {
+            ResultSet results = qexec.execSelect();
+            while ( results.hasNext() ) {
+                HashMap thisOrg = new HashMap();
+                QuerySolution soln = results.nextSolution();
+                Literal name = soln.getLiteral("name");
+                String ouri = soln.getResource("o").toString();
+                //System.out.println(name);
+                thisOrg.put("name", name.toString());
+                thisOrg.put("uri", ouri);
+                thisOrg.put("url", getURL(ouri, vreq));
+                ArrayList<HashMap> gc = getChildren(model, ResourceFactory.createResource(ouri), vreq);
+                if (gc.isEmpty()) {
+                    thisOrg.put("children", new ArrayList<HashMap>());
+                    kids.add(thisOrg);
+                } else {
+                    thisOrg.put("children", gc);
+                    kids.add(thisOrg);
+                }
             }
+        } finally {
+            qexec.close();
         }
         return kids;
     }
 
-    public static Model getOrgModel (VitroRequest vreq, Resource topUri) {
-        final ArrayList people = new ArrayList<String>();
+
+    public static Model runConstruct(String rawQuery, VitroRequest vreq) {
         ParameterizedSparqlString q2 = new ParameterizedSparqlString();
-        q2.setCommandText(
-                "CONSTRUCT {\n" +
-                        " ?o a tmp:Parent ;\n" +
-                        "   rdfs:label ?oName ;\n" +
-                        "   tmp:child ?o2 .\n" +
-                        "?o2 rdfs:label ?oName2 \n" +
-                        "}\n" +
-                        "WHERE {\n" +
-                        "?o a foaf:Organization obo:BFO_0000050 ?top ;\n" +
-                        "       rdfs:label ?oName .\n" +
-                        "OPTIONAL {\n" +
-                        "   ?o2 obo:BFO_0000050 ?o ;\n" +
-                        "     rdfs:label ?oName2 .\n" +
-                        "}\n" +
-                "}\n"
-        );
+        q2.setCommandText(rawQuery);
         //q2.setBaseUri("http://example.org/base#");
         q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
-        q2.setNsPrefix("tmp", TMP_NAMESPACE);
+        q2.setNsPrefix("tmp", "http://localhost/tmp#");
         q2.setNsPrefix("obo", "http://purl.obolibrary.org/obo/");
         q2.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
-        q2.setIri("top", topUri.toString());
         String query = q2.toString();
-        log.debug("Org browse query:\n" + query);
-
-        Model model = ModelFactory.createDefaultModel();
+        //System.out.println(query);
+        Model results = ModelFactory.createDefaultModel();
         try {
-            vreq.getRDFService().sparqlConstructQuery(query, model);
+            vreq.getRDFService().sparqlConstructQuery(query, results);
         } catch (RDFServiceException e) {
             e.printStackTrace();
         }
-        return model;
+        return results;
     }
 
     public static String readQuery( String name ) {
@@ -132,12 +203,8 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
             return Resources.toString(qurl, Charsets.UTF_8);
         } catch (IOException e) {
             e.printStackTrace();
+            return "";
         }
-    }
-
-    public static String getLocalName( String uri) {
-        Resource r = ResourceFactory.createResource(uri);
-        return r.getLocalName();
     }
 
     public static String getURL( String uri, VitroRequest vreq ) {

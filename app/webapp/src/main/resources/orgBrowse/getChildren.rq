@@ -1,0 +1,6 @@
+select ?o ?name
+where {
+    ?o tmp:parent ?parent ;
+        rdfs:label ?name
+}
+ORDER BY ?name
