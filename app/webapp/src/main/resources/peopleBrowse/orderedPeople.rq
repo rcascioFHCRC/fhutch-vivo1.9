@@ -1,0 +1,7 @@
+select ?p ?name ?picture
+where {
+    ?p a tmp:Person ;
+        rdfs:label ?name ;
+    OPTIONAL { ?p tmp:pic ?picture }
+}
+ORDER BY ?name

@@ -919,6 +919,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>PeopleBrowseController</servlet-name>
+    <servlet-class>org.fredhutch.controller.PeopleBrowseController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PeopleBrowseController</servlet-name>
+    <url-pattern>/people-browse</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>DeveloperAjax</servlet-name>
     <servlet-class>edu.cornell.mannlib.vitro.webapp.utils.developer.DeveloperSettingsServlet</servlet-class>
   </servlet>

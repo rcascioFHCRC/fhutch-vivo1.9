@@ -1801,3 +1801,17 @@ ul.sub-org {
     margin-left: 2em;
     margin-bottom: .5em;
 }
+
+ul#person-browse li {
+    margin-top: .5em;
+}
+
+ul#person-browse ul.positions {
+}
+
+ul#person-browse ul.positions li {
+}
+
+ul#person-browse img {
+    width: 100px;
+}

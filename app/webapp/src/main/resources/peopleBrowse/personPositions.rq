@@ -1,0 +1,8 @@
+select ?title ?org ?orgName
+where {
+    ?person rdfs:label ?name ;
+        tmp:position ?position .
+    ?position rdfs:label ?title ;
+            tmp:org ?org .
+    ?org rdfs:label ?orgName .
+}

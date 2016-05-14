@@ -1,0 +1,21 @@
+construct {
+    ?p a tmp:Person ;
+        rdfs:label ?name ;
+        tmp:pic ?picture ;
+        tmp:position ?position .
+    ?position rdfs:label ?title ;
+        tmp:org ?org.
+    ?org rdfs:label ?orgName .
+}
+where {
+    ?p a foaf:Person ;
+        rdfs:label ?name ;
+        vivo:relatedBy ?position .
+    OPTIONAL {?p fhd:image ?picture }
+    ?position a vivo:Position ;
+            rdfs:label ?title ;
+            vivo:relates ?org .
+    ?org a foaf:Organization ;
+         rdfs:label ?orgName .
+    FILTER REGEX(?name, ?startswith, "i")
+}
