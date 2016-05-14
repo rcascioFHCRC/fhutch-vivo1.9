@@ -6,22 +6,25 @@
 
 
 
-<ul class="org-browse">
+<ul class="org-browse tree-list">
 <#list tree as org>
-    <li><h3><a href="${org.url}">${org.name}</a></h3></li>
-
+    <li>
+        <h3>
+            <a href="${org.url}">${org.name}</a>
+        </h3>
+    </li>
     <#assign kids = org.children!>
     <ul class="sub-org">
         <#list kids as sub>
+        <#assign gkids = sub.children!>
             <li>
                 <a href="${sub.url}">${sub.name}</a>
-                <#assign gkids = sub.children!>
                 <#if gkids?hasContent>
                     <ul class="sub-org">
                         <#list gkids as sub2>
+                            <#assign ggkids = sub2.children!>
                             <li>
                                 <a href="${sub2.url}">${sub2.name}</a>
-                                <#assign ggkids = sub2.children!>
                                 <#if ggkids?hasContent>
                                     <ul class="sub-org">
                                         <#list ggkids as sub3>
