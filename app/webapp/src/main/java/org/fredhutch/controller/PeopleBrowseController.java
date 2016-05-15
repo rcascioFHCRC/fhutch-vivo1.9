@@ -34,13 +34,20 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
     @Override
     protected ResponseValues processRequest(VitroRequest vreq) {
         log.debug("Generating the person browse model");
-        //Get the tmp model for org structure
-        String rq = prepModelQuery("a");
+        String letter = vreq.getParameter("letter");
+        if ( letter == null ) {
+            letter = "a";
+        }
+        //Get the tmp model for people and positions
+        String rq = prepModelQuery(letter);
         Model positionsModel = runConstruct(rq, vreq);
 
         ArrayList<HashMap> people = getPeople(positionsModel, vreq);
 
         Map<String, Object> body = new HashMap<String, Object>();
+        char[] alphabet = "abcdefghijklmnopqrstuvwxyz".toCharArray();
+        body.put("alphabet", alphabet);
+        body.put("letter", letter);
         body.put("people", people);
         body.put("title", "People");
         return new TemplateResponseValues(TEMPLATE, body);
@@ -67,7 +74,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
                 thisPerson.put("name", name.toString());
                 thisPerson.put("uri", person.toString());
                 thisPerson.put("url", getURL(person.toString(), vreq));
-                thisPerson.put("picture", soln.getLiteral("picture").toString());
+                thisPerson.put("picture", soln.getLiteral("picture"));
                 thisPerson.put("positions", getPositions(positionsModel, person, vreq));
                 people.add(thisPerson);
 

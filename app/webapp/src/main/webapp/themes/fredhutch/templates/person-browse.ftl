@@ -4,24 +4,58 @@
 
 <h2>${title}</h2>
 
-
-<ul id="person-browse"
-<#list people as person>
-    <li>
-        <h4>
-        <#if (person.picture)?hasContent>
-            <img src="${person.picture}"/>
-        </#if>
-        ${person.name}</h4>
-    </li>
-    <#assign positions = person.positions!>
-    <#if positions?hasContent>
-    <ul class="positions">
-        <#list positions as pos>
-            <li>${pos.title}, <a href="${pos.url}">${pos.orgName}</a></li>
+<div id="alpha-browse">
+    <p>Select a litter to display a list of researchers.</p>
+    <ul>
+        <#list alphabet as alpha>
+        <li>
+            <#if alpha == letter>
+                ${alpha?upperCase}
+            <#else>
+                <a href="?letter=${alpha}">${alpha?upperCase}</a>
+            </#if>
+        </li>
         </#list>
     </ul>
-    <hr/>
-    </#if>
+</div>
+<hr/>
+
+<#-- <div class="sidebar">
+    <form action="/vivo/search" name="search" role="search" accept-charset="UTF-8" method="POST">
+        <fieldset>
+            <legend>Search for researchers</legend>
+                <input type="text" name="querytext" class="search-vivo" autocapitalize="off">
+                <input type="hidden" name="type" value="http://xmlns.com/foaf/0.1/Person">
+        </fieldset>
+        <input type="submit" value="Search" class="search">
+     </form>
+</div> -->
+
+<div id="person-browse">
+<#list people as person>
+    <div class="overview">
+        <div class="img-wrapper">
+            <#if (person.picture)?hasContent>
+                    <img class="thumbnail img-circle" src="${person.picture}"/>
+            </#if>
+        </div>
+        <div class="details">
+            <div class="name">
+                <a href="${person.url}">${person.name}</a>
+            </div>
+            <#assign positions = person.positions!>
+            <#if positions?hasContent>
+            <div class="positions">
+                <ul>
+                    <#list positions as pos>
+                        <li>${pos.title}, <a href="${pos.url}">${pos.orgName}</a></li>
+                    </#list>
+                </ul>
+            </div>
+        </div>
+        <div class="clear"></div>
+        </#if>
+    </div>
 </#list>
-</ul>
+</div>
+</div>

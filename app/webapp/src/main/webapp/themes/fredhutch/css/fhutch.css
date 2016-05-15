@@ -1802,16 +1802,64 @@ ul.sub-org {
     margin-bottom: .5em;
 }
 
-ul#person-browse li {
-    margin-top: .5em;
+/*person browse */
+
+#person-browse .overview {
+    padding: .5em;
+    margin: 2em;
 }
 
-ul#person-browse ul.positions {
+#person-browse .name {
+    font-size: larger;
 }
 
-ul#person-browse ul.positions li {
+#person-browse .thumbnail {
+    float:left;
+    width: 125px;
 }
 
-ul#person-browse img {
-    width: 100px;
+#person-browse .img-wrapper {
+    float: left;
+    width: 10%;
+}
+
+#person-browse .details {
+    margin-left: 150px;
+
+}
+
+#person-browse .positions ul li {
+    list-style-type: none;
+    color: #123054;
+}
+
+.sidebar {
+    float: right;
+    width: 30%;
+    background-color: #CCC;
+    margin-right: 1em;
+    min-height: 400px;
+}
+
+.clear
+{
+    clear: both;
+}
+
+.img-circle {
+    border-radius: 50%;
+}
+
+
+#alpha-browse ul {
+    padding: 0;
+}
+
+#alpha-browse ul li {
+    display: inline;
+    padding-right: .5em;
+}
+
+#alpha-browse a {
+    font-weight: bolder;
 }
