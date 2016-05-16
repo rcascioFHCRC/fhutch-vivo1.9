@@ -102,6 +102,16 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
+  <!-- cache people browse -->
+  <filter>
+    <filter-name>People browse cache filter</filter-name>
+    <filter-class>org.fredhutch.filters.BrowseCacheFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>People browse cache filter</filter-name>
+    <url-pattern>/people-browse</url-pattern>
+  </filter-mapping>
+
   <filter>
     <filter-name>JSession Strip Filter</filter-name>
     <filter-class>edu.cornell.mannlib.vitro.webapp.filters.JSessionStripFilter</filter-class>
