@@ -6,3 +6,4 @@ where {
             tmp:org ?org .
     ?org rdfs:label ?orgName .
 }
+ORDER BY ?orgName

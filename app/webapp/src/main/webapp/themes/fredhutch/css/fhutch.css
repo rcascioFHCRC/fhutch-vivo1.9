@@ -1851,15 +1851,16 @@ ul.sub-org {
 }
 
 
-#alpha-browse ul {
+.alpha-browse ul {
     padding: 0;
 }
 
-#alpha-browse ul li {
+.alpha-browse ul li {
     display: inline;
     padding-right: .5em;
 }
 
-#alpha-browse a {
+.alpha-browse a {
     font-weight: bolder;
 }
+

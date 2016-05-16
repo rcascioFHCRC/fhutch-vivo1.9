@@ -4,8 +4,8 @@
 
 <h2>${title}</h2>
 
-<div id="alpha-browse">
-    <p>Select a litter to display a list of researchers.</p>
+<div class="alpha-browse">
+    <p>Select a letter to display a list of researchers.</p>
     <ul>
         <#list alphabet as alpha>
         <li>
@@ -31,31 +31,31 @@
      </form>
 </div> -->
 
-<div id="person-browse">
-<#list people as person>
-    <div class="overview">
-        <div class="img-wrapper">
-            <#if (person.picture)?hasContent>
-                    <img class="thumbnail img-circle" src="${person.picture}"/>
+    <div id="person-browse">
+    <#list people as person>
+        <div class="overview">
+            <div class="img-wrapper">
+                <#if (person.picture)?hasContent>
+                        <img class="thumbnail img-circle" src="${person.picture}"/>
+                </#if>
+            </div>
+            <div class="details">
+                <div class="name">
+                    <a href="${person.url}">${person.name}</a>
+                </div>
+                <#assign positions = person.positions!>
+                <#if positions?hasContent>
+                <div class="positions">
+                    <ul>
+                        <#list positions as pos>
+                            <li>${pos.title}, <a href="${pos.url}">${pos.orgName}</a></li>
+                        </#list>
+                    </ul>
+                </div>
+            </div>
+            <div class="clear"></div>
             </#if>
         </div>
-        <div class="details">
-            <div class="name">
-                <a href="${person.url}">${person.name}</a>
-            </div>
-            <#assign positions = person.positions!>
-            <#if positions?hasContent>
-            <div class="positions">
-                <ul>
-                    <#list positions as pos>
-                        <li>${pos.title}, <a href="${pos.url}">${pos.orgName}</a></li>
-                    </#list>
-                </ul>
-            </div>
-        </div>
-        <div class="clear"></div>
-        </#if>
+    </#list>
     </div>
-</#list>
-</div>
 </div>
