@@ -12,7 +12,7 @@
             <#if alpha == letter>
                 ${alpha?upperCase}
             <#else>
-                <a href="./${alpha}">${alpha?upperCase}</a>
+                <a href="${alpha}">${alpha?upperCase}</a>
             </#if>
         </li>
         </#list>
