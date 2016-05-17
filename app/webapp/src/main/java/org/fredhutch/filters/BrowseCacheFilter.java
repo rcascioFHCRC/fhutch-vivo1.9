@@ -1,5 +1,6 @@
 package org.fredhutch.filters;
 
+import edu.cornell.mannlib.vitro.webapp.config.ConfigurationProperties;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -14,11 +15,15 @@ import java.util.Calendar;
  */
 public class BrowseCacheFilter implements Filter {
     private static final Log log = LogFactory.getLog(BrowseCacheFilter.class);
-    private static final Boolean cacheBrowse = true;
-    FilterConfig filterConfig = null;
+    private static final String PROPERTY_ENABLE_CACHING = "http.createCacheHeaders";
 
-    public void init(FilterConfig filterConfig) throws ServletException {
-        this.filterConfig = filterConfig;
+    private ServletContext ctx;
+    private boolean enabled;
+
+    public void init(FilterConfig fc) throws ServletException {
+        ctx = fc.getServletContext();
+        ConfigurationProperties props = ConfigurationProperties.getBean(ctx);
+        enabled = Boolean.valueOf(props.getProperty(PROPERTY_ENABLE_CACHING));
     }
 
     public void destroy() {
@@ -29,29 +34,26 @@ public class BrowseCacheFilter implements Filter {
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
-        //Build etag from full request URL and the letter.
-        String letter = "a";
-        String[] pathParts = req.getPathInfo().split("/");
-        if (pathParts.length >= 1) {
-            letter = pathParts[1];
-        }
-        String path = "vpbpeople";
-        String params = letter;
-        String thisEtag = cacheKey(path + params);
+        //Build etag from full request URL.
+        String url = ((HttpServletRequest)request).getRequestURL().toString();
+        String thisEtag = cacheKey(url);
         log.debug("Generated etag: " + thisEtag);
         // check cache
         if (shouldCache(req, thisEtag)) {
             resp.addHeader("ETag", thisEtag);
             resp.sendError(HttpServletResponse.SC_NOT_MODIFIED, "Not Modified");
         } else {
-            resp.addHeader("ETag", thisEtag);
+            //Should we send cache headers?
+            if (shouldCache(req, thisEtag)) {
+                resp.addHeader("ETag", thisEtag);
+            }
         }
         chain.doFilter(req, resp);
 
     }
 
     private Boolean shouldCache(HttpServletRequest request, String thisEtag) {
-        if (cacheBrowse.equals(false)) {
+        if (enabled == false) {
             return false;
         }
         else if (!isConditionalRequest(request)) {
@@ -72,8 +74,10 @@ public class BrowseCacheFilter implements Filter {
     }
 
     private static String cacheKey(String value) {
-        Integer week = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
-        return week.toString() + value;
+        Integer day = Calendar.getInstance().get(Calendar.DAY_OF_YEAR);
+        //convert date value to string and the incoming value to a
+        //string of the hash code.
+        return day.toString() + String.valueOf(value.hashCode());
     }
 
     private boolean isConditionalRequest(HttpServletRequest req) {
@@ -81,19 +85,6 @@ public class BrowseCacheFilter implements Filter {
             return false;
         } else {
             return true;
-        }
-    }
-
-    /*
-        Calculate an ETAG for the incoming request and return true/false
-        if this request should not be regenerated.
-     */
-    private static Boolean cached(String existing, String etag) {
-        String key = cacheKey(existing);
-        if ( key.equals(existing) ) {
-            return true;
-        } else {
-            return false;
         }
     }
 

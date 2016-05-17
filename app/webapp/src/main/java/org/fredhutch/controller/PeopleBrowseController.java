@@ -38,9 +38,12 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
 //        if ( letter == null ) {
 //            letter = "a";
 //        }
-        String[] pathParts = vreq.getPathInfo().split("/");
-        if (pathParts.length >= 1) {
-            letter = pathParts[1];
+        String path = vreq.getPathInfo();
+        if (path != null) {
+            String[] pathParts = path.split("/");
+            if (pathParts.length >= 1) {
+                letter = pathParts[1];
+            }
         }
         //Get the tmp model for people and positions
         String rq = prepModelQuery(letter);

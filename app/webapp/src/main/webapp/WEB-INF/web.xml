@@ -104,12 +104,16 @@
 
   <!-- cache people browse -->
   <filter>
-    <filter-name>People browse cache filter</filter-name>
+    <filter-name>Browse cache filter</filter-name>
     <filter-class>org.fredhutch.filters.BrowseCacheFilter</filter-class>
   </filter>
   <filter-mapping>
-    <filter-name>People browse cache filter</filter-name>
+    <filter-name>Browse cache filter</filter-name>
     <url-pattern>/people-browse/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>Browse cache filter</filter-name>
+    <url-pattern>/org-browse/*</url-pattern>
   </filter-mapping>
 
   <filter>
