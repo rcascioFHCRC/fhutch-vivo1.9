@@ -56,6 +56,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
         body.put("alphabet", alphabet);
         body.put("letter", letter);
         body.put("people", people);
+        body.put("baseUrl", UrlBuilder.getUrl("people-browse"));
         body.put("title", "People");
         return new TemplateResponseValues(TEMPLATE, body);
     }

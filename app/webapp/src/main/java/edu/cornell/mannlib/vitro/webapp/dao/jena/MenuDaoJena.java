@@ -87,6 +87,9 @@ public class MenuDaoJena extends JenaBaseDao implements MenuDao {
             menu.addItem("Home", "/", isActive(url, "/"));
             menu.addItem("People", "/people-browse", isActive(url, "/people-browse"));
             menu.addItem("Organizations", "/org-browse", isActive(url, "/org-browse"));
+            seenMenuItems.add(VitroVocabulary.DISPLAY + "HomeMenuItem");
+            seenMenuItems.add(VitroVocabulary.DISPLAY + "PeopleMenuItem");
+            seenMenuItems.add(VitroVocabulary.DISPLAY + "OrganizationsMenuItem");
 
             ResultSet results =qexec.execSelect();
             for( ; results.hasNext();){
