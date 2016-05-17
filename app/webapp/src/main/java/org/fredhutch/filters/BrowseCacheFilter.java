@@ -30,8 +30,13 @@ public class BrowseCacheFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
 
         //Build etag from full request URL and the letter.
-        String path = req.getRequestURL().toString();
-        String params = req.getParameter("letter");
+        String letter = "a";
+        String[] pathParts = req.getPathInfo().split("/");
+        if (pathParts.length >= 1) {
+            letter = pathParts[1];
+        }
+        String path = "vpbpeople";
+        String params = letter;
         String thisEtag = cacheKey(path + params);
         log.debug("Generated etag: " + thisEtag);
         // check cache

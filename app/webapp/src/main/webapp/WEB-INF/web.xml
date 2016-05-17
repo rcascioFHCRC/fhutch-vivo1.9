@@ -109,7 +109,7 @@
   </filter>
   <filter-mapping>
     <filter-name>People browse cache filter</filter-name>
-    <url-pattern>/people-browse</url-pattern>
+    <url-pattern>/people-browse/*</url-pattern>
   </filter-mapping>
 
   <filter>
@@ -934,7 +934,7 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>PeopleBrowseController</servlet-name>
-    <url-pattern>/people-browse</url-pattern>
+    <url-pattern>/people-browse/*</url-pattern>
   </servlet-mapping>
 
   <servlet>

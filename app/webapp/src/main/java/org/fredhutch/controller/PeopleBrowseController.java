@@ -34,9 +34,13 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
     @Override
     protected ResponseValues processRequest(VitroRequest vreq) {
         log.debug("Generating the person browse model");
-        String letter = vreq.getParameter("letter");
-        if ( letter == null ) {
-            letter = "a";
+        String letter = "a";
+//        if ( letter == null ) {
+//            letter = "a";
+//        }
+        String[] pathParts = vreq.getPathInfo().split("/");
+        if (pathParts.length >= 1) {
+            letter = pathParts[1];
         }
         //Get the tmp model for people and positions
         String rq = prepModelQuery(letter);
@@ -95,7 +99,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
         q2.setNsPrefix("tmp", TMP_NAMESPACE);
         q2.setIri("person", person.toString());
         String query = q2.toString();
-        log.debug("Positoins query:\n" + query);
+        log.debug("Positions query:\n" + query);
         QueryExecution qexec = QueryExecutionFactory.create(query, model);
         try {
             ResultSet results = qexec.execSelect();
