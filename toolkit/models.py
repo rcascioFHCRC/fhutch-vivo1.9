@@ -38,6 +38,9 @@ def pub_uri(cid):
 def area_uri(cid):
     return D['c' + cid]
 
+def journal_uri(cid):
+    return D['c' + cid]
+
 def hash_uri(prefix, value):
     return D[prefix + '-' + hashlib.md5(value).hexdigest()]
 
@@ -551,7 +554,77 @@ class Journal(BaseModel):
         if hasattr(self, 'eissn'):
             r.set(BIBO.eissn, Literal(self.eissn))
 
-        g += self.get_venue_for()
+        #g += self.get_venue_for()
+
+        return g
+
+
+class News(BaseModel):
+
+    def add_vcard_weblink(self):
+        """
+        Build statements for weblinks in VIVO.
+        :return: rdflib.Graph
+        """
+        g = Graph()
+        try:
+            if self.url is not None:
+                url = self.url
+        except AttributeError:
+            return g
+
+        # vcard individual for org
+        vci_uri = D['vcard-individual-news-' + self.cid]
+        g.add((vci_uri, RDF.type, VCARD.Individual))
+
+        # vcard URL
+        vcu_uri = D['vcard-url-news-' + self.cid]
+        g.add((vcu_uri, RDF.type, VCARD.URL))
+        g.add((vcu_uri, RDFS.label, Literal(u"view item")))
+        g.add((vcu_uri, VCARD.url, Literal(url)))
+
+        # Relate vcard individual to url
+        g.add((vci_uri, VCARD.hasURL, vcu_uri))
+        # Relate web link and org
+        g.add((self.uri, OBO['ARG_2000028'], vci_uri))
+        return g
+
+    def get_news_subject(self):
+        g = Graph()
+        for person in client.get_related_ids('Person', self.cid, 'NEWS_has_PERS'):
+            puri = person_uri(person)
+            g.add((self.uri, FHD.subject, puri))
+        return g
+
+    def get_features(self):
+        g = Graph()
+        for pub in client.get_related_ids('Publication', self.cid, 'NEWS_has_PUBL'):
+            puri = pub_uri(pub)
+            g.add((self.uri, FHD.features, puri))
+        return g
+
+    def add_date(self):
+        g = Graph()
+        if hasattr(self, 'publishedon'):
+            date_obj = client.convert_date(self.publishedon)
+            g.add((self.uri, FHD.publishedOn, Literal(date_obj, datatype=XSD.date)))
+        return g
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, FHD.News)
+        r.set(RDFS.label, Literal(self.title))
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
+        if hasattr(self, 'url'):
+            r.set(FHD.url, Literal(self.url))
+
+        g += self.get_news_subject()
+        g += self.get_features()
+        g += self.add_date()
+
+        g += self.add_vcard_weblink()
 
         return g
 

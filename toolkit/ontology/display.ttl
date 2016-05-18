@@ -127,3 +127,50 @@ fhd:image a owl:DatatypeProperty ;
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
+
+
+# News
+
+fhd:News  a owl:Class ;
+        rdfs:label "News"@en-US .
+
+fhd:HutchNews  a owl:Class ;
+         rdfs:subClassOf fhd:News ;
+        rdfs:label "Fred Hutch News and Press Releases"@en-US .
+
+fhd:MediaCoverage  a owl:Class ;
+        rdfs:subClassOf fhd:News ;
+        rdfs:label "Media Converage"@en-US .
+
+fhd:subject a owl:ObjectProperty ;
+        rdfs:label "subject"@en-US ;
+        rdfs:domain fhd:News ;
+        rdfs:range foaf:Person ;
+        owl:inverseOf fhd:subjectOf .
+
+fhd:subjectOf a owl:ObjectProperty ;
+        rdfs:label "subject of"@en-US ;
+        rdfs:domain foaf:Person ;
+        rdfs:range fhd:News ;
+        owl:inverseOf fhd:subject .
+
+fhd:features a owl:ObjectProperty ;
+        rdfs:label "features"@en-US ;
+        rdfs:domain fhd:News ;
+        rdfs:range bibo:Document ;
+        owl:inverseOf fhd:featuredIn .
+
+fhd:featuredIn a owl:ObjectProperty ;
+        rdfs:label "featured in"@en-US ;
+        rdfs:domain bibo:Document ;
+        rdfs:range fhd:News ;
+        owl:inverseOf fhd:fea .
+
+fhd:publishedOn a owl:DatatypeProperty ;
+    rdfs:label "published date"@en-US ;
+    rdfs:domain fhd:News ;
+    rdfs:range xsd:dateTime .
+
+fhd:url a owl:DatatypeProperty ;
+    rdfs:label "url"@en-US ;
+    rdfs:range xsd:string .
