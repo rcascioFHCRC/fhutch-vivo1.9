@@ -16,7 +16,7 @@
 <#-- Handle fhdisplay urls -->
 <#assign webpage = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#url")!>
 <#if webpage?has_content>
-<ul class="individual-urls">
-    <a href="${webpage.statements[0].value}">${webpage.statements[0].value}</a>
+<ul class="individual-urls" role="list">
+    <li role="list-item"><a href="${webpage.statements[0].value}">${webpage.statements[0].value}</a></li>
 </ul>
 </#if>
