@@ -127,3 +127,60 @@ fhd:image a owl:DatatypeProperty ;
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
+
+
+# News
+
+d:vitroClassGroupNews
+        a                       vitro:ClassGroup , owl:Thing ;
+        rdfs:label              "news"@en-US ;
+        vitro:displayRank       5 ;
+        vitro:modTime           "2016-05-18T11:43:05"^^xsd:dateTime ;
+        vitro:mostSpecificType  vitro:ClassGroup .
+
+fhd:News  a owl:Class ;
+        rdfs:label "News"@en-US ;
+        vitro:inClassGroup  d:vitroClassGroupNews .
+
+fhd:HutchNews  a owl:Class ;
+         rdfs:subClassOf fhd:News ;
+        rdfs:label "Fred Hutch News and Press Releases"@en-US ;
+        vitro:inClassGroup  d:vitroClassGroupNews .
+
+fhd:MediaCoverage  a owl:Class ;
+        rdfs:subClassOf fhd:News ;
+        rdfs:label "Media Coverage"@en-US ;
+        vitro:inClassGroup  d:vitroClassGroupNews .
+
+fhd:featuresResearcher a owl:ObjectProperty ;
+        rdfs:label "features"@en-US ;
+        rdfs:domain fhd:News ;
+        rdfs:range foaf:Person ;
+        owl:inverseOf fhd:featuredResearcherIn .
+
+fhd:featuredResearcherIn a owl:ObjectProperty ;
+        rdfs:label "featured in"@en-US ;
+        rdfs:domain foaf:Person ;
+        rdfs:range fhd:News ;
+        owl:inverseOf fhd:featuresResearcher .
+
+fhd:featuresPublication a owl:ObjectProperty ;
+        rdfs:label "feature publication"@en-US ;
+        rdfs:domain fhd:News ;
+        rdfs:range bibo:Document ;
+        owl:inverseOf fhd:featuredPublicationIn .
+
+fhd:featuredPublicationIn a owl:ObjectProperty ;
+        rdfs:label "featured publication in"@en-US ;
+        rdfs:domain bibo:Document ;
+        rdfs:range fhd:News ;
+        owl:inverseOf fhd:featuresPublication .
+
+fhd:publishedOn a owl:DatatypeProperty ;
+    rdfs:label "published date"@en-US ;
+    rdfs:domain fhd:News ;
+    rdfs:range xsd:dateTime .
+
+fhd:url a owl:DatatypeProperty ;
+    rdfs:label "url"@en-US ;
+    rdfs:range xsd:string .

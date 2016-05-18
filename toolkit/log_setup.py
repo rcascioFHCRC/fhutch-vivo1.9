@@ -1,7 +1,7 @@
 import logging
 import logging.handlers
 
-def get_logger():
+def get_logger(client_level=logging.WARNING):
     # For console logging.
     logging.basicConfig(
         level=logging.INFO,
@@ -22,7 +22,7 @@ def get_logger():
     
     # Converis client
     client_logger = logging.getLogger("converis_client")
-    client_logger.setLevel(logging.WARNING)
+    client_logger.setLevel(client_level)
     client_logger.addHandler(handler)
 
     # Harvest scripts logging
