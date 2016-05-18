@@ -561,6 +561,18 @@ class Journal(BaseModel):
 
 class News(BaseModel):
 
+    def get_type(self, default=FHD.News):
+        """
+        """
+        ntypes = {
+            '10267': FHD.HutchNews,
+            '10268': FHD.MediaCoverage,
+        }
+        if hasattr(self, 'typeofnews'):
+            ctype = self.typeofnews['cid'].strip()
+            return ntypes.get(ctype, default)
+        return default
+
     def add_vcard_weblink(self):
         """
         Build statements for weblinks in VIVO.
@@ -593,14 +605,14 @@ class News(BaseModel):
         g = Graph()
         for person in client.get_related_ids('Person', self.cid, 'NEWS_has_PERS'):
             puri = person_uri(person)
-            g.add((self.uri, FHD.subject, puri))
+            g.add((self.uri, FHD.featuresResearcher, puri))
         return g
 
     def get_features(self):
         g = Graph()
         for pub in client.get_related_ids('Publication', self.cid, 'NEWS_has_PUBL'):
             puri = pub_uri(pub)
-            g.add((self.uri, FHD.features, puri))
+            g.add((self.uri, FHD.featuresPublication, puri))
         return g
 
     def add_date(self):
@@ -613,7 +625,7 @@ class News(BaseModel):
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-        r.set(RDF.type, FHD.News)
+        r.set(RDF.type, self.get_type())
         r.set(RDFS.label, Literal(self.title))
         r.set(CONVERIS.converisId, Literal(self.cid))
 
@@ -624,7 +636,7 @@ class News(BaseModel):
         g += self.get_features()
         g += self.add_date()
 
-        g += self.add_vcard_weblink()
+        #g += self.add_vcard_weblink()
 
         return g
 
