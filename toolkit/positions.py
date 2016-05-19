@@ -66,8 +66,11 @@ class PositionsHarvest(object):
         #_p("Processing {} {}".format(start, stop))
         #self.total += 1
         rsp = client.EntityFilter(self.query, start=start, stop=stop)
-        for pub in rsp:
-            g = client.to_graph(pub, models.Position)
+        for card in rsp:
+            if (hasattr(card, 'positiontype') is True) and\
+                 (card.positiontype.get('cid') == '12166'):
+                continue
+            g = client.to_graph(card, models.Position)
             self.graph += g
             del g
 
@@ -124,9 +127,9 @@ query = """
     <and>
       <attribute operator="equals" argument="11288" name="currentPosition"/>
       <attribute operator="equals" argument="12006" name="typeOfCard"/>
-      <attribute operator="notequals" argument="12171" name="positionType"/>
+      <!--<attribute operator="notequals" argument="12171" name="positionType"/>-->
       <attribute operator="notequals" argument="12166" name="positionType"/>
-      <attribute operator="notequals" argument="12168" name="positionType"/>
+      <!-- <attribute operator="notequals" argument="12168" name="positionType"/> -->
     </and>
   </filter>
  </query>
