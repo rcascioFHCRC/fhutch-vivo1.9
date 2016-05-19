@@ -103,6 +103,10 @@ class Person(BaseModel):
             if (hasattr(card, 'typeofcard') is True) and\
                  (card.typeofcard.get('cid') == '12007'):
                 continue
+            # Skip cards that aren't current
+            if (hasattr(card, 'currentposition') is True) and\
+                 (card.currentposition.get('cid') != '11288'):
+                continue
             g += client.to_graph(card, Position)
             g.add((self.uri, VIVO.relatedBy, card_uri(card.cid)))
         return g
@@ -236,6 +240,15 @@ class Position(BaseModel):
             g.add((self.uri, VIVO.relates, person_uri(person)))
         return g
 
+    def get_orgs(self):
+        """
+        Get orgs for the positions.
+        """
+        g = Graph()
+        for org in client.get_related_ids('Organisation', self.cid, 'CARD_has_ORGA'):
+            g.add((self.uri, VIVO.relates, org_uri(org)))
+        return g
+
 
     def to_rdf(self):
         g = Graph()
@@ -271,6 +284,8 @@ class Position(BaseModel):
 
         # map to people
         g += self.get_people()
+        # map to orgs
+        g += self.get_orgs()
 
         return g
 
