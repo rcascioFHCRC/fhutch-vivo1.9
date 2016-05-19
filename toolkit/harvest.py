@@ -222,7 +222,7 @@ def harvest_journals():
 
 if __name__ == "__main__":
     logger.info("Starting harvest.")
-    harvest_people()
+    #harvest_people()
     harvest_orgs()
     harvest_areas()
     harvest_journals()
