@@ -151,7 +151,7 @@ class Person(BaseModel):
             g.add((vci_uri, VCARD.hasEmail, URIRef(self.vcard_email_uri)))
 
         # positions
-        g += self.get_positions()
+        #g += self.get_positions()
 
         return g
 
@@ -224,6 +224,19 @@ class Position(BaseModel):
         return dti_uri, g
 
 
+    def get_people(self):
+        """
+        Add positions. If position is a pub-tracking card
+        then just add as a data attribute.
+        """
+        g = Graph()
+        people = client.get_related_ids('Person', self.cid, 'PERS_has_CARD')
+        for person in people:
+            # A position relates a person
+            g.add((self.uri, VIVO.relates, person_uri(person)))
+        return g
+
+
     def to_rdf(self):
         g = Graph()
         e = Resource(g, self.uri)
@@ -255,6 +268,10 @@ class Position(BaseModel):
             e.set(VIVO.dateTimeInterval, dti_uri)
         except TypeError:
             pass
+
+        # map to people
+        g += self.get_people()
+
         return g
 
 
