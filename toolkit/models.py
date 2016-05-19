@@ -554,7 +554,7 @@ class Journal(BaseModel):
         if hasattr(self, 'eissn'):
             r.set(BIBO.eissn, Literal(self.eissn))
 
-        #g += self.get_venue_for()
+        g += self.get_venue_for()
 
         return g
 
