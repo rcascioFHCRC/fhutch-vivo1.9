@@ -14,7 +14,7 @@ def chunk_pages(max):
 
 class ThreadedHarvest(object):
 
-    def __init__(self, q, vmodel, named_graph, threads=5):
+    def __init__(self, q, vmodel, threads=5):
         self.query = q
         self.graph = Graph()
         self.threads = threads
