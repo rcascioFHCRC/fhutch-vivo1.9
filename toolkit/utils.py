@@ -5,6 +5,9 @@ from Queue import Queue
 from threading import Thread
 
 from converis import client
+from converis import backend
+
+logger = logging.getLogger("harvest")
 
 def chunk_pages(max):
     chunk_size = 100
@@ -18,12 +21,13 @@ class ThreadedHarvest(object):
         self.query = q
         self.graph = Graph()
         self.threads = threads
+        logger.info("Threaded harvest of {}.".format(vmodel.__name__))
         self.vmodel = None
 
     def get_total(self):
         rsp = client.EntityFilter(self.query, start=0, stop=1)
         total = rsp.number
-        logging.info("Total objects found: {}.".format(total))
+        logger.info("Total objects found: {}.".format(total))
         return total
 
     def get_pages(self):
@@ -36,6 +40,7 @@ class ThreadedHarvest(object):
 
     def process(self, pair):
         start, stop = pair
+        logging.info("Processing set {} to {}.".format(start, stop))
         rsp = client.EntityFilter(self.query, start=start, stop=stop)
         for pub in rsp:
             self.graph += client.to_graph(pub, self.vmodel)
@@ -45,7 +50,7 @@ class ThreadedHarvest(object):
         """thread worker function"""
         while True:
             cid = harvest_q.get()
-            logging.info('Worker: %s. Set: %s' % (num, cid))
+            logger.info('Worker: %s. Set: %s' % (num, cid))
             value = self.process(cid)
             harvest_q.task_done()
         return
@@ -65,19 +70,19 @@ class ThreadedHarvest(object):
         for st_sp in pages:
             harvest_queue.put(st_sp)
 
-        logging.debug('Harvest initialized')
+        logger.debug('Harvest initialized')
         harvest_queue.join()
-        logging.info("Threads complete.")
+        logger.info("Threads complete.")
 
 
     def post_updates(self, named_graph):
         if named_graph is None:
             raise Exception("No named graph provided")
-        logging.info("Posting updates with {} triples.".format(len(self.graph)))
+        logger.info("Posting updates with {} triples.".format(len(self.graph)))
         backend.post_updates(named_graph, self.graph)
 
     def sync_updates(self, named_graph):
         if named_graph is None:
             raise Exception("No named graph provided")
-        logging.info("Syncing updates with {} triples.".format(len(self.graph)))
+        logger.info("Syncing updates with {} triples.".format(len(self.graph)))
         backend.sync_updates(named_graph, self.graph)
