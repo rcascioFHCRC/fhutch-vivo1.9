@@ -9,13 +9,13 @@ from converis import backend
 
 logger = logging.getLogger("harvest")
 
-def chunk_pages(max):
-    chunk_size = 100
+def chunk_pages(max, chunk_size=100):
     for x in range(1, max, chunk_size):
         yield (x, (x + chunk_size) - 1)
 
 
 class ThreadedHarvest(object):
+    page_size = 100
 
     def __init__(self, q, vmodel, threads=5):
         self.query = q
@@ -33,7 +33,7 @@ class ThreadedHarvest(object):
     def get_pages(self):
         mx = self.get_total()
         out = []
-        for start, stop in chunk_pages(mx):
+        for start, stop in chunk_pages(mx, chunk_size=self.page_size):
             out.append((start, stop))
         return out
 
