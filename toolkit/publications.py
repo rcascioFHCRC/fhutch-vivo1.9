@@ -15,10 +15,11 @@ from converis.namespaces import D, VIVO, CONVERIS
 # local models
 import models
 import log_setup
+from utils import ThreadedHarvest
 
 from rdflib import Graph, Literal
 
-logger = log_setup.get_logger(client_level=logging.DEBUG)
+logger = log_setup.get_logger()
 
 
 if os.environ.get('HTTP_CACHE') == "1":
@@ -120,91 +121,22 @@ def get_pub_cards(sample=False):
     return out
 
 
-def chunk_pages(max):
-    chunk_size = 100
-    for x in range(1, max, chunk_size):
-        yield (x, (x + chunk_size) - 1)
+class PubHarvest(ThreadedHarvest):
 
-
-class PubHarvest(object):
-
-    def __init__(self, q, threads=5):
+    def __init__(self, q, vmodel, threads=5):
         self.query = q
+        self.vmodel = vmodel
         self.graph = Graph()
         self.threads = threads
-        self.named_graph = "http://localhost/data/publications"
 
-    def get_total(self):
-        rsp = client.EntityFilter(self.query, start=0, stop=1)
-        total = rsp.number
-        logging.info("Total pubs found: {}.".format(total))
-        return total
-
-    def get_pages(self):
-        mx = self.get_total()
-        out = []
-        for start, stop in chunk_pages(mx):
-            out.append((start, stop))
-        return out
-
-
-    def process(self, pair):
-        start, stop = pair
-        #_p("Processing {} {}".format(start, stop))
-        #self.total += 1
-        rsp = client.EntityFilter(self.query, start=start, stop=stop)
-        for pub in rsp:
-            g = client.to_graph(pub, models.Publication)
-            self.graph += g
-            del g
-
-
-    def harvest_service(self, num, harvest_q):
-        """thread worker function"""
-        while True:
-            cid = harvest_q.get()
-            logger.info('Worker: %s pub set: %s' % (num, cid))
-            value = self.process(cid)
-            harvest_q.task_done()
-        return
-
-
-    def run_harvest(self):
-        num_fetch_threads = self.threads
-        harvest_queue = Queue()
-        # Set up some threads to fetch the enclosures
-        for i in range(num_fetch_threads):
-            worker = Thread(target=self.harvest_service, args=(i, harvest_queue,))
-            worker.setDaemon(True)
-            worker.start()
-
-        pages = self.get_pages()
-        for st_sp in pages:
-            harvest_queue.put(st_sp)
-
-        logger.debug('Harvest initialized')
-        harvest_queue.join()
-        logger.info("Threads complete.")
-
-
-    def post_updates(self):
-        logger.info("Posting updates with {} triples.".format(len(self.graph)))
-        backend.post_updates(self.named_graph, self.graph)
-
-    def sync_updates(self):
-        logger.info("Syncing updates with {} triples.".format(len(self.graph)))
-        backend.sync_updates(self.named_graph, self.graph)
-
-
-def pub_harvest(query, sync=False):
-    ph = PubHarvest(query)
+def pub_harvest(query):
+    ng = "http://localhost/data/publications"
+    ph = PubHarvest(query, models.Publication)
     #Threaded harvest
     ph.run_harvest()
+    logger.info("Harvest finished. Syncing to vstore.")
     # Send the updates to VIVO
-    if sync is True:
-        ph.sync_updates()
-    else:
-        ph.post_updates()
+    ph.post_updates(ng)
 
 
 def harvest_sets():
