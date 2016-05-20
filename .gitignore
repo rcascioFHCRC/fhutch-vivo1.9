@@ -15,6 +15,7 @@ vdata/
 .staging-env
 *pyc
 *log
+*log*
 venv
 
 pictures/

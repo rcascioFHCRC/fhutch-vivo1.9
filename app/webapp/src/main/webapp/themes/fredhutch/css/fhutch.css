@@ -1739,6 +1739,7 @@ span.subclassExpandMinus {
 footer {
     border-top: 2px #e9e9e9 solid;
     padding: 2em;
+    width: 980px;
 }
 
 footer a {
@@ -1748,7 +1749,6 @@ footer a {
 footer h3 {
     font-size: larger;
     color: #123054;
-    font-size: .875rem;
 }
 
 footer .other_sites, footer .ccc_nci_logos {
@@ -1766,6 +1766,34 @@ footer .copyright {
     margin-top: 1em;
     clear: both;
 }
+
+footer .column {
+    float: left;
+    width: 18%;
+    margin-left: 10px;
+    line-height: 1.1em;
+    font-size: 12px;
+}
+
+footer .column a {
+    margin: 0;
+    padding: 0;
+}
+
+footer .accred {
+    width: 20%;
+}
+
+footer .accred img {}
+#aahrpp_accreditation{overflow:hidden;line-height:12px;line-height:.75rem}
+
+footer .social {
+    float: right;
+}
+
+div.donateButton{height:42px;height:2.635rem;line-height:40.8px;line-height:2.55rem}
+div.donateButton a.donate_button{background-color:#89c348;color:white;text-decoration:none;text-transform:uppercase;font-size:12px;font-size:.75rem;letter-spacing:.08em;font-family:'Geogrotesque-Semibold',Arial,Helvetica,sans-serif;display:inline-block;height:100%;padding:0 1em;font-weight:normal}
+div.donateButton a.donate_button:hover{background-color:#73ad33}
 
 /*#developerPanel {
     display: none;
@@ -1797,9 +1825,25 @@ footer .copyright {
 }
 
 
+/* org browse */
+
+.org-browse-header h2 {
+    display: inline;
+}
+
 ul.sub-org {
     margin-left: 2em;
     margin-bottom: .5em;
+}
+
+.aside {
+    float: right;
+    margin-right: 30%;
+    margin-top: 1em;
+}
+
+.aside a {
+    color: #064d68;
 }
 
 /*person browse */
@@ -1864,3 +1908,42 @@ ul.sub-org {
     font-weight: bolder;
 }
 
+.top-org {
+    margin-top: 1em;
+}
+
+span.tree-toggler {
+    margin-left: 1em;
+    color:#89c348;
+}
+
+
+.chevron::before {
+    margin-top: 5px;
+    border-style: solid;
+    border-width: 0.25em 0.25em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.25em;
+    left: 0.15em;
+    position: relative;
+    top: 0.15em;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: 0.25em;
+}
+
+.chevron.right:before {
+    left: 0;
+    transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+    top: 0;
+    transform: rotate(135deg);
+}
+
+.chevron.left:before {
+    left: 0.25em;
+    transform: rotate(-135deg);
+}

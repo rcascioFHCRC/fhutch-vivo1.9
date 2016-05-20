@@ -2,45 +2,44 @@
 
 <#-- Template for the body of the org browse page -->
 
+<div class="org-browse-header">
 <h2>${title}</h2>
+<span class="aside"><a href="./organizations">Browse by organization type</a></span>
+</div>
 
 
-
-<ul class="org-browse tree-list">
 <#list tree as org>
-    <li>
-        <h3>
-            <a href="${org.url}">${org.name}</a>
-        </h3>
+<ul id="tree-level-${org?index}">
+    <li class="top-org"><a href="${org.url}">${org.name}</a><span class="tree-toggler chevron bottom"></span>
+        <#assign kids = org.children!>
+        <ul class="sub-org tree">
+            <#list kids as sub>
+            <#assign gkids = sub.children!>
+                <li><a href="${sub.url}">${sub.name}</a><#if gkids?hasContent><span class="tree-toggler chevron bottom"></span></#if>
+                    <#if gkids?hasContent>
+                        <ul class="sub-org tree">
+                            <#list gkids as sub2>
+                                <#assign ggkids = sub2.children!>
+                                <li><a href="${sub2.url}">${sub2.name}</a><#if ggkids?hasContent><span class="tree-toggler chevron bottom"></span></#if>
+                                    <#if ggkids?hasContent>
+                                        <ul class="sub-org tree">
+                                            <#list ggkids as sub3>
+                                                <li>
+                                                    <a href="${sub3.url}">${sub3.name}</a>
+                                                </li>
+                                            </#list>
+                                        </ul>
+                                    </#if>
+                                </li>
+                            </#list>
+                        </ul>
+                    </#if>
+                </li>
+            </#list>
+        </ul>
     </li>
-    <#assign kids = org.children!>
-    <ul class="sub-org">
-        <#list kids as sub>
-        <#assign gkids = sub.children!>
-            <li>
-                <a href="${sub.url}">${sub.name}</a>
-                <#if gkids?hasContent>
-                    <ul class="sub-org">
-                        <#list gkids as sub2>
-                            <#assign ggkids = sub2.children!>
-                            <li>
-                                <a href="${sub2.url}">${sub2.name}</a>
-                                <#if ggkids?hasContent>
-                                    <ul class="sub-org">
-                                        <#list ggkids as sub3>
-                                            <li>
-                                                <a href="${sub3.url}">${sub3.name}</a>
-                                            </li>
-                                        </#list>
-                                    </ul>
-                                </#if>
-                            </li>
-                        </#list>
-                    </ul>
-                </#if>
-            </li>
-        </#list>
-    </ul>
-
 </#list>
 </ul>
+
+${scripts.add('<script type="text/javascript" src="${urls.base}/js/fhBrowse.js"></script>')}
+
