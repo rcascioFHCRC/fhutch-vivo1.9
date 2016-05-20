@@ -1908,6 +1908,13 @@ ul.sub-org {
     font-weight: bolder;
 }
 
+/*Tree view modified from
+http://bootsnipp.com/snippets/featured/collapsible-tree-menu
+
+Chevron css modified from
+https://codepen.io/jonneal/pen/kptBs
+*/
+
 .top-org {
     margin-top: 1em;
 }

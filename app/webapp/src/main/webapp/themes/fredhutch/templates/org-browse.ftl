@@ -3,15 +3,15 @@
 <#-- Template for the body of the org browse page -->
 
 <div class="org-browse-header">
-<h2>${title}</h2>
-<span class="aside"><a href="./organizations">Browse by organization type</a></span>
+    <h2>${title}</h2>
+    <span class="aside"><a href="./organizations">Browse by organization type</a></span>
 </div>
 
 
 <#list tree as org>
-<ul id="tree-level-${org?index}">
-    <li class="top-org"><a href="${org.url}">${org.name}</a><span class="tree-toggler chevron bottom"></span>
-        <#assign kids = org.children!>
+<#assign kids = org.children!>
+<ul>
+    <li class="top-org"><a href="${org.url}">${org.name}</a><#if kids?hasContent><span class="tree-toggler chevron bottom"></span></#if>
         <ul class="sub-org tree">
             <#list kids as sub>
             <#assign gkids = sub.children!>
