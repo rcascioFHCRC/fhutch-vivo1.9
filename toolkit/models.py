@@ -19,6 +19,9 @@ from converis.backend import SyncVStore
 FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
 # publications
 FHP = Namespace('http://vivo.fredhutch.org/ontology/publications#')
+# trials
+FHCT = Namespace('http://vivo.fredhutch.org/ontology/clinicaltrials#')
+
 DATA_NAMESPACE = D
 
 logger = logging.getLogger("converis_client")
@@ -709,3 +712,36 @@ def create_authorships():
         g.add((uri, VIVO.relates, row.person))
         g.add((uri, VIVO.relates, row.publication))
     return g
+
+
+class ClinicalTrial(BaseModel):
+
+    def get_sponsors(self):
+        g = Graph()
+        for org in client.get_related_ids('Organisation', self.cid, 'CLIN_has_ORGA'):
+            ouri = org_uri(org)
+            g.add((self.uri, FHCT.hasSponsor, ouri))
+        return g
+
+    def get_pubs(self):
+        g = Graph()
+        for pub in client.get_related_ids('Publication', self.cid, 'CLIN_has_PUBL'):
+            uri = pub_uri(pub)
+            g.add((self.uri, FHCT.trialPublication, uri))
+        return g
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, FHCT.ClinicalTrial)
+        r.set(RDFS.label, Literal(self.brieftitle))
+        r.set(FHCT.officialTitle, Literal(self.officialtitle))
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
+        r.set(FHCT.nctNumber, Literal(self.nctnumber))
+        r.set(FHD.url, Literal(self.url))
+
+        g += self.get_sponsors()
+        g += self.get_pubs()
+
+        return g
