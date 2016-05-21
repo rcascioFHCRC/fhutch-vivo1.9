@@ -48,26 +48,27 @@ a#view {
 
   function tip(point) {
     console.debug(point);
-    var vivo = "http://localhost:8080/vivo/display/"
+    var vivo = "./display?uri=";
     var index = _.indexOf(_.pluck(expertiseData, 'name'), point);
     var meta = expertiseData[index];
     console.debug(meta);
-    var url = vivo + meta.uri.split('/').slice(-1)[0]
+    var url = vivo + meta.uri;
     return "<a href=\"" + url + "\" id=\"view\">View researchers</a></h1>";
   }
 
   // instantiate d3plus
   var visualization = d3plus.viz()
-    .container("#viz")  // container DIV to hold the visualization
-    .data(expertiseData)  // data to use with the visualization
-    .type("tree_map")   // visualization type
+    .container("#viz")
+    .data(expertiseData)
+    .type("tree_map")
+    .font({"family": "\"Geogrotesque-Regular\",Arial,Helvetica,Sans-serif"})
     .id(["group", "name"])
     .size("researchers")      // sizing of blocks
     .tooltip({"share": false, "html": tip, "large": 300, "stacked": true})
     .title({
       "sub": {
-        "font": {"size": 18, "color": "navy", "family": "\"Geogrotesque-Regular\",Arial,Helvetica,Sans-serif"}
+        "font": {"size": 18, "color": "navy"}
       }
     })
-    .draw()             // finally, draw the visualization!
+    .draw()
 </script>
