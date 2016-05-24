@@ -252,11 +252,30 @@ class Position(BaseModel):
             g.add((self.uri, VIVO.relates, org_uri(org)))
         return g
 
+    def add_type_rank(self):
+        """
+        Position type.
+        """
+        g = Graph()
+        r = Resource(g, self.uri)
+        ptype = self.positiontype['cid']
+        # Leadership
+        if ptype == '12169':
+            r.set(RDF.type, VIVO.FacultyAdministrativePosition)
+            r.set(VIVO.rank, Literal(10, datatype=XSD.integer))
+        # Faculty
+        elif ptype == '12167':
+            r.set(RDF.type, VIVO.FacultyPosition)
+            r.set(VIVO.rank, Literal(20, datatype=XSD.integer))
+        else:
+            r.set(RDF.type, VIVO.Position)
+            r.set(VIVO.rank, Literal(30, datatype=XSD.integer))
+        return g
 
     def to_rdf(self):
         g = Graph()
+        g += self.add_type_rank()
         e = Resource(g, self.uri)
-        e.set(RDF.type, VIVO.Position)
         e.set(CONVERIS.converisId, Literal(self.cid))
         # Check jobtitle and function for position name.
         if hasattr(self, 'jobtitle'):
