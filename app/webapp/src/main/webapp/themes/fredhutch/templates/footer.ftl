@@ -3,76 +3,90 @@
 </div> <!-- #wrapper-content -->
 
 <footer>
-    <div class="other_sites">
-        <h3>Quick Links</h3>
-        <p>
-            <a href="http://www.fredhutch.org/en/about.html" target="_blank">About Us</a><br />
-            <a href="http://www.fredhutch.org/en/treatment/clinical-trials.html" target="_blank">Clinical Trials</a><br />
-            <a href="http://www.fredhutch.org/en/contact-us.html" target="_blank">Contact Us</a><br />
-            <a href="http://www.fredhutch.org/en/education-training.html" target="_blank">Education &amp; Training</a><br />
-            <a href="http://es.fhcrc.org/" target="_blank">Espanol</a><br />
-            <a href="http://extranet.fhcrc.org/EN/" target="_blank">Extranet</a><br />
-            <a href="https://lwvpn.fhcrc.org/" target="_blank">Governance</a><br />
-            <a href="http://www.fredhutch.org/en/labs.html">Programs &amp; Projects</a><br />
-            <a href="http://labs.fhcrc.org/" target="_blank">Lab Sites</a><br />
-            <a href="http://www.fredhutch.org/en/redirect-stubs/office-sponsored-research.html" target="_blank">Office of Sponsored Research</a><br />
-            <a href="http://sharedresources.fhcrc.org/" target="_blank">Shared Resources</a>
-        </p>
+    <div class="column">
+        <h3>Quick Links<a href="/en/about.html"></a></h3>
+
+        <p><a href="http://www.fredhutch.org/en/about.html">About Us</a><br />
+        <a href="http://www.cancerconsortium.org/en.html" target="_blank">Cancer Consortium</a><br />
+        <a href="http://www.fredhutch.org/en/treatment/clinical-trials.html">Clinical Trials</a><br />
+        <a href="http://www.fredhutch.org/en/contact-us.html">Contact Us</a><br />
+        <a href="http://www.fredhutch.org/en/education-training.html">Education &amp; Training</a><br />
+        <a target="_blank" href="http://extranet.fhcrc.org/EN/">Extranet</a><br />
+        <a href="http://www.fredhutch.org/shopfredhutch" target="_blank">Fred Hutch Store</a><br />
+        <a href="http://www.fredhutch.org/en/about/government-relations.html">Government Relations</a><br />
+        <a target="_blank" href="https://lwvpn.fhcrc.org/">Governance</a><br />
+        <a href="http://www.fredhutch.org/en/labs.html">Programs &amp; Projects</a><br />
+        <a target="_blank" href="http://labs.fhcrc.org/">Lab Sites</a><br />
+        <a target="_blank" href="http://www.fredhutch.org/en/redirect-stubs/office-sponsored-research.html">Office of Sponsored Research</a><br />
+        <a target="_blank" href="http://sharedresources.fredhutch.org/">Shared Resources</a><br />
+        <a href="http://www.fredhutch.org/en/about/share-your-story.html">Share Your Story</a><br />
+        <a href="http://www.fredhutch.org/en/contact-us/visit-us/visitor-center.html">Visitor Center</a></p>
     </div>
 
-    <div class="other_sites">
-        <h3>Information For</h3>
-        <p>
-            <a href="http://www.fredhutch.org/en/redirect-stubs/community.html" target="_blank">Community</a><br />
-            <a href="http://www.fredhutch.org/en/redirect-stubs/donors-volunteers.html" target="_blank">Donors &amp; Volunteers</a><br />
-            <a href="http://www.fredhutch.org/en/redirect-stubs/educators-students.html" target="_blank">Educators &amp; Students</a><br />
-            <a href="http://www.fredhutch.org/en/employees.html" target="_blank">Employees</a><br />
-            <a href="http://www.fredhutch.org/en/diseases/technology-transfer.html" target="_blank">Industry Partnerships</a><br />
-            <a href="http://www.fredhutch.org/en/redirect-stubs/news-media.html" target="_blank">News Media</a><br />
-            <a href="http://www.fredhutch.org/en/redirect-stubs/patients-families.html" target="_blank">Patients &amp; Families</a><br />
-            <a href="http://www.fredhutch.org/en/health-professionals.html" target="_blank">Physicians &amp; Health Professionals</a><br />
-            <a href="http://www.fredhutch.org/en/education-training/postdoctoral-fellows.html" target="_blank">Postdoctoral Fellows</a><br />
-            <a href="http://www.fredhutch.org/en/redirect-stubs/science-professionals.html" target="_blank">Science Professionals</a>
-        </p>
-    </div>
-    <div class="other_sites">
-        <h3>Employee Links</h3>
-        <p>
-            <a href="https://centernet.fhcrc.org/CN/" target="_blank">CenterNet</a><br />
-            <a href="http://www.fredhutch.org/en/employees.html" target="_blank">Check Email</a><br />
-            <a href="http://www.fredhutch.org/en/employees.html" target="_blank">Employee Page</a><br />
-            <a href="http://www.fredhutch.org/content/dam/public/employees/WebVPN_Quick_Guide.pdf" target="_blank">WebVPN</a>
-        </p>
+
+    <div class="column">
+        <div class="text parbase footer_text_column_2">
+            <h3>Information For</h3>
+
+            <p><a href="http://www.fredhutch.org/en/redirect-stubs/community.html">Community<br />
+             </a><a href="http://www.fredhutch.org/en/about/government-relations.html">Government Relations</a><br />
+            <a href="http://www.fredhutch.org/en/redirect-stubs/donors-volunteers.html">Donors &amp; Volunteers</a><br />
+            <a href="http://www.fredhutch.org/en/redirect-stubs/educators-students.html">Educators &amp; Students</a><br />
+            <a href="http://www.fredhutch.org/en/employees.html">Employees</a><br />
+            <a href="http://www.fredhutch.org/en/diseases/technology-transfer.html">Industry Partnerships</a><br />
+            <a href="http://www.fredhutch.org/en/redirect-stubs/news-media.html">News Media</a><br />
+            <a href="http://www.fredhutch.org/en/redirect-stubs/patients-families.html">Patients &amp; Families</a><br />
+            <a href="http://www.fredhutch.org/en/health-professionals.html">Physicians &amp; Health Professionals</a><br />
+            <a href="http://www.fredhutch.org/en/education-training/postdoctoral-fellows.html">Postdoctoral Fellows</a><br />
+            <a href="http://www.fredhutch.org/en/redirect-stubs/science-professionals.html">Science Professionals</a><br />
+         </p>
+        </div>
+
     </div>
 
-    <div class="ccc_nci_logos">
-        <a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo_2016.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a>
-        <a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a>
-        <a href="http://www.nccn.org/" target="_blank"><img id="nci_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_nci_logo.png" alt="National Comprehensive Cancer Network"></a>
-        <p id="accreditation">Fred Hutch is accredited by the Association for the Accreditation of Human Research Protection Programs (AAHRPP)</p>
-    </div>
+    <div class="column">
+        <div class="text parbase footer_text_column_3">
+            <h3>Employee Links</h3>
 
-    <div class="social_media">
-        <h3>Follow Us</h3>
-        <img id="social_media_icons_footer" src="http://www.fredhutch.org/etc/designs/public/img/icons/socialmedia_footer.png" alt="Social media icons" usemap="#socialmap">
-        <map name="socialmap">
-            <area shape="rect" coords="0,0,28,28" href="http://www.facebook.com/HutchinsonCenter" target="_blank" alt="Like Fred Hutch on Facebook"></area>
-            <area shape="rect" coords="28,0,56,28" href="http://twitter.com/fredhutch" target="_blank" alt="Follow Fred Hutch on Twitter"></area>
-            <area shape="rect" coords="56,0,83,28" href="http://plus.google.com/+fredhutch/videos" target="_blank" alt="View the Fred Hutch YouTube channel"></area>
-            <area shape="rect" coords="83,0,111,28" href="http://www.pinterest.com/fredhutch/" target="_blank" alt="Pin from the Fred Hutch boards on Pinterest"></area>
-            <area shape="rect" coords="111,0,139,28" href="http://instagram.com/FredHutch" target="_blank" alt="Check out Fred Hutch photos on Instagram"></area>
-            <area shape="rect" coords="139,0,166,28" href="https://plus.google.com/+fredhutch" target="_blank" alt="Follow Fred Hutch on Google+"></area>
-        </map>
-        <div class="footer_donate_button donateButton">
-            <a class="donate_button" href="http://www.fredhutch.org/en/redirect-stubs/donate.html" target="_blank">Donate Now</a>
+            <p><a href="https://centernet.fhcrc.org/CN/" target="_blank">CenterNet</a><br />
+            <a href="https://exchange.fhcrc.org/logon.html" target="_blank">Check Email</a><br />
+            <a href="http://www.fredhutch.org/en/employees.html">Employee Page</a><br />
+            <a href="https://centernet.fhcrc.org/CN/center/webvpn/" target="_blank">WebVPN</a></p>
         </div>
     </div>
 
-    <div id="copyright" class="copyright">
-      Fred Hutchinson Cancer Research Center | 1100 Fairview Ave. N., P.O. Box 19024, Seattle, WA 98109<br/>
-      &copy; 2016 Fred Hutchinson Cancer Research Center, <span class="nobreak">a 501(c)(3) nonprofit organization.</span><br/>
-      <span class="terms_privacy"><a href="http://www.fredhutch.org/en/util/terms-privacy.html">Terms of use &amp; privacy policy</a>&nbsp;|&nbsp;<a href="/en/util/conflict-of-interest.html">Conflict of interest</a></span>
+    <div class="column accred">
+            <h3></h3>
+            <p><a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo_2016.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a></p>
+            <p><a href="http://www.nccn.org/" target="_blank"><img id="nci_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_nci_logo.png" alt="National Comprehensive Cancer Network"></a></p>
+            <p><a href="http://www.aahrpp.org/" target="_blank"><img id="aahrpp_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/aahrpp_logo_footer.png" alt="AAHRPP logo"></a></p>
+            <p id="aahrpp_accreditation">Accredited by the Association for the Accreditation of Human Research Protection Programs</p>
     </div>
+
+    <div class="column social">
+            <h3>Follow Us</h3>
+            <img id="social_media_icons_footer" src="http://www.fredhutch.org/etc/designs/public/img/icons/socialmedia_footer.png" alt="Social media icons" usemap="#socialmap">
+            <map name="socialmap">
+                <area shape="rect" coords="0,0,28,28" href="http://www.facebook.com/HutchinsonCenter" target="_blank" alt="Like Fred Hutch on Facebook"></area>
+                <area shape="rect" coords="28,0,56,28" href="http://twitter.com/fredhutch" target="_blank" alt="Follow Fred Hutch on Twitter"></area>
+                <area shape="rect" coords="56,0,83,28" href="https://www.youtube.com/channel/UCnWBh22UKMHF4VRKdsQvZqg/featured" target="_blank" alt="View the Fred Hutch YouTube channel"></area>
+                <area shape="rect" coords="83,0,111,28" href="http://www.pinterest.com/fredhutch/" target="_blank" alt="Pin from the Fred Hutch boards on Pinterest"></area>
+                <area shape="rect" coords="111,0,139,28" href="http://instagram.com/FredHutch" target="_blank" alt="Check out Fred Hutch photos on Instagram"></area>
+                <area shape="rect" coords="139,0,166,28" href="https://plus.google.com/+fredhutch" target="_blank" alt="Follow Fred Hutch on Google+"></area>
+            </map>
+
+            <div class="footer_donate_button donateButton">
+               <a class="donate_button" href="https://secure2.convio.net/fhcrc/site/Donation2?df_id=7343&amp;7343.donation=form1&amp;s_src=DNA16&amp;s_subsrc=aegeo16111">Donate Now</a>
+            </div>
+
+    </div>
+
+     <div id="copyright" class="copyright">
+      Fred Hutchinson Cancer Research Center | 1100 Fairview Ave. N., Seattle, WA 98109<br/>
+      &copy; 2016 Fred Hutchinson Cancer Research Center, <span class="nobreak">a 501(c)(3) nonprofit organization.</span><br/>
+      <span class="terms_privacy"><a href="http://www.fredhutch.org/en/util/terms-privacy.html">Terms of use &amp; privacy policy</a>&nbsp;|&nbsp;<a href="http://www.fredhutch.org/en/util/conflict-of-interest.html">Conflict of interest</a></span>
+     </div>
+
 
     <div>
         Powered by the <a href="http://sharedresources.fredhutch.org/core-facilities/library">Arnold Library</a>, Converis, and <a href="http://vivoweb.org">VIVO</a>.
@@ -80,7 +94,6 @@
         <a href="https://fhcrc.converis.thomsonreuters.com/converis/secure/login">Edit your profile</a>&nbsp;&nbsp;Get <a href="#">help with your profile</a>.
     </div>
 
-</div>
 </footer>
 
 <#include "scripts.ftl">
