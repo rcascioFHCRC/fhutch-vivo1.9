@@ -78,9 +78,12 @@ class PeopleHarvest(object):
         #self.total += 1
         rsp = client.EntityFilter(self.query, start=start, stop=stop)
         for ety in rsp:
-            g = client.to_graph(ety, models.Person)
-            self.graph += g
-            del g
+            item = client.Entity('Person', ety.cid)
+            if hasattr(item, 'fhpersontype'):
+                if item.fhpersontype['cid'] == '6019159':
+                    g = client.to_graph(item, models.Person)
+                    self.graph += g
+                    del g
 
 
     def harvest_service(self, num, harvest_q):
@@ -123,7 +126,8 @@ class PeopleHarvest(object):
 query = """
     <data xmlns="http://converis/ns/webservice">
      <return>
-      <attributes>
+      <attributes/>  
+      <!--<attributes>
        <attribute name="Short description"/>
        <attribute name="cfFamilyNames"/>
        <attribute name="cfFirstNames"/>
@@ -132,7 +136,7 @@ query = """
        <attribute name="ORCID"/>
        <attribute name="academicTitle"/>
        <attribute name="cfResInt"/>
-      </attributes>
+      </attributes>-->
      </return>
      <query>
       <filter for="Person" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">

@@ -258,7 +258,10 @@ class Position(BaseModel):
         """
         g = Graph()
         r = Resource(g, self.uri)
-        ptype = self.positiontype['cid']
+        try:
+            ptype = self.positiontype['cid']
+        except AttributeError:
+            return g
         # Leadership
         if ptype == '12169':
             r.set(RDF.type, VIVO.FacultyAdministrativePosition)
