@@ -1,4 +1,4 @@
-select ?title ?org ?orgName
+select distinct ?title ?org ?orgName
 where {
     ?person rdfs:label ?name ;
         tmp:position ?position .
