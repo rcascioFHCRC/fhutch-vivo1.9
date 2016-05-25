@@ -19,7 +19,7 @@ from utils import ThreadedHarvest
 
 from rdflib import Graph, Literal
 
-logger = log_setup.get_logger()
+logger = log_setup.get_logger(client_level=logging.DEBUG)
 
 
 if os.environ.get('HTTP_CACHE') == "1":
@@ -71,13 +71,10 @@ def process_pub_card(card):
     logger.info("Fetching people and pubs for card {}.".format(card))
     g = Graph()
     # Relate pub to card
-    for pub in client.get_related_ids('Publication', card, 'PUBL_has_CARD'):
-        pub_uri = models.pub_uri(pub)
+    for pub in client.get_related_entities('Publication', card, 'PUBL_has_CARD'):
+        pub_uri = models.pub_uri(pub.cid)
         g.add((pub_uri, CONVERIS.pubCardId, Literal(card)))
-    # Relate card to pub
-    for person in client.get_related_ids('Person', card, 'PERS_has_CARD'):
-        puri = models.person_uri(person)
-        g.add((puri, CONVERIS.pubCardId, Literal(card)))
+        g += client.to_graph(pub, models.Publication)
     backend.sync_updates("http://localhost/data/pubs-card-{}".format(card), g)
     return
 
@@ -166,14 +163,9 @@ def harvest_sets():
 
 
 if __name__ == "__main__":
-    #pub_harvest(all_pubs)
-    harvest_sets()
-
     logger.info("Starting publications relations harvest.")
-
     # get pub cards
     cards = get_pub_cards()
-    run_pub_card_harvest(cards)
-
+    run_pub_card_harvest(cards[:20])
     # Make authorships using card ids.
     generate_authorships()
