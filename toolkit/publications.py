@@ -166,6 +166,6 @@ if __name__ == "__main__":
     logger.info("Starting publications relations harvest.")
     # get pub cards
     cards = get_pub_cards()
-    run_pub_card_harvest(cards[:20])
+    run_pub_card_harvest(cards)
     # Make authorships using card ids.
     generate_authorships()
