@@ -1,10 +1,11 @@
 """
-Primary harvest process.
+Clinical trials from file for now..
 """
-
+import csv
 import os
 import logging
 import logging.handlers
+import sys
 
 from converis import backend
 from converis import client
@@ -26,7 +27,7 @@ if os.environ.get('HTTP_CACHE') == "1":
      allowable_methods=('GET', 'PUT'))
 
 
-def get_trials():
+def get_trials(trials):
     q = """
     <data xmlns="http://converis/ns/webservice">
      <query>
@@ -41,21 +42,25 @@ def get_trials():
     # org = client.Entity('Organisation', '148339')
     # g += client.to_graph(org, models.Organization)
     #for done, trial in enumerate(client.filter_query(q)):
-    for ct in ['5919557', '5920037', '6017368']:
+    for ct in trials:
       trial = client.Entity('ClinicalTrial', ct)
       g += client.to_graph(trial, models.ClinicalTrial)
     return g
 
 
-def harvest():
+def harvest(trials):
     """
     """
     logger.info("Harvesting clinical trials.")
-    g = get_trials()
+    g = get_trials(trials)
     print g.serialize(format='n3')
     backend.sync_updates("http://localhost/data/trials", g)
 
 
 if __name__ == "__main__":
     logger.info("Starting harvest.")
-    harvest()
+    cts = []
+    with open(sys.argv[1]) as inf:
+        for row in csv.DictReader(inf):
+            cts.append(row.get('c_id'))
+    harvest(cts)
