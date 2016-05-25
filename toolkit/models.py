@@ -158,7 +158,7 @@ class Person(BaseModel):
             g.add((vci_uri, VCARD.hasEmail, URIRef(self.vcard_email_uri)))
 
         # positions
-        #g += self.get_positions()
+        g += self.get_positions()
 
         return g
 
