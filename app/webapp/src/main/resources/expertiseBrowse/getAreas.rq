@@ -1,0 +1,14 @@
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX vivo: <http://vivoweb.org/ontology/core#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+select distinct ?top ?ex ?label (count(?r) as ?total)
+where {
+    ?r a foaf:Person ;
+        vivo:hasResearchArea ?ex .
+    ?ex skos:broader ?top ;
+        rdfs:label ?label .
+   VALUES ?top { <http://vivo.fredhutch.org/individual/c3360927>  <http://vivo.fredhutch.org/individual/c3363613>  }
+}
+GROUP BY ?top ?ex ?label

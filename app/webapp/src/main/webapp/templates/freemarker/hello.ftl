@@ -4,8 +4,4 @@
 
 <h2>${siteName!}</h2>
 
-<ul>
-<#list tree as org>
-    <li>${org.name}</li>
-</#list>
-</ul>
+<h3>${title!}</h3>

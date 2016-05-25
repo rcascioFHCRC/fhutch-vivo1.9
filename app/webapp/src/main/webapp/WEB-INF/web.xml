@@ -942,6 +942,15 @@
   </servlet-mapping>
 
   <servlet>
+    <servlet-name>ExpertiseBrowseController</servlet-name>
+    <servlet-class>org.fredhutch.controller.ExpertiseBrowseController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ExpertiseBrowseController</servlet-name>
+    <url-pattern>/expertise-browse/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
     <servlet-name>DeveloperAjax</servlet-name>
     <servlet-class>edu.cornell.mannlib.vitro.webapp.utils.developer.DeveloperSettingsServlet</servlet-class>
   </servlet>
