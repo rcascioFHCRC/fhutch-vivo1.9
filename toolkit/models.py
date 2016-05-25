@@ -736,6 +736,29 @@ def create_authorships():
     return g
 
 
+def get_pub_cards():
+    q = """
+    select DISTINCT ?card
+    where {
+        ?person a foaf:Person ;
+            converis:pubCardId ?card .
+    }
+    """
+    #Define the VIVO store
+    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
+    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
+    vstore = SyncVStore(
+                os.environ['VIVO_EMAIL'],
+                os.environ['VIVO_PASSWORD']
+            )
+    vstore.open((query_endpoint, update_endpoint))
+
+    query = rq_prefixes + q
+    out = []
+    for row in vstore.query(query):
+        out.append(row.card.toPython())
+    return set(out)
+
 class ClinicalTrial(BaseModel):
 
     def get_sponsors(self):
@@ -756,9 +779,16 @@ class ClinicalTrial(BaseModel):
         g = Graph()
         r = Resource(g, self.uri)
         r.set(RDF.type, FHCT.ClinicalTrial)
-        r.set(RDFS.label, Literal(self.brieftitle))
+        try:
+            r.set(RDFS.label, Literal(self.brieftitle))
+        except AttributeError:
+            logger.warning("No brief title found for trial {}".format(self.cid))
+            return Graph()
         r.set(FHCT.officialTitle, Literal(self.officialtitle))
         r.set(CONVERIS.converisId, Literal(self.cid))
+
+        if hasattr(self, "briefsummary"):
+            r.set(VIVO.overview, Literal(self.briefsummary))
 
         r.set(FHCT.nctNumber, Literal(self.nctnumber))
         r.set(FHD.url, Literal(self.url))
