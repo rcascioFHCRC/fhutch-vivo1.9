@@ -4,6 +4,7 @@ construct {
         tmp:pic ?picture ;
         tmp:position ?position .
     ?position rdfs:label ?title ;
+	tmp:rank ?rank ;
         tmp:org ?org.
     ?org rdfs:label ?orgName .
 }
@@ -14,6 +15,7 @@ where {
     OPTIONAL {?p fhd:image ?picture }
     ?position a vivo:Position ;
             rdfs:label ?title ;
+	    vivo:rank ?rank ;
             vivo:relates ?org .
     ?org a foaf:Organization ;
          rdfs:label ?orgName .

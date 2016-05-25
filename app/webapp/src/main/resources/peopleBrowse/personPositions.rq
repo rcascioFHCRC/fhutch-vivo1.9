@@ -3,7 +3,8 @@ where {
     ?person rdfs:label ?name ;
         tmp:position ?position .
     ?position rdfs:label ?title ;
+	    tmp:rank ?rank ;
             tmp:org ?org .
     ?org rdfs:label ?orgName .
 }
-ORDER BY ?orgName
+ORDER BY ?rank ?orgName
