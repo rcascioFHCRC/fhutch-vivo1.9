@@ -22,6 +22,7 @@ if os.environ.get('HTTP_CACHE') == "1":
      backend='redis',
      allowable_methods=('GET', 'PUT'))
 
+THREADS = os.environ['THREADS']
 
 internal = """
 <data xmlns="http://converis/ns/webservice">
@@ -37,7 +38,7 @@ internal = """
 
 class OrgaHarvest(ThreadedHarvest):
 
-    def __init__(self, q, vmodel, threads=5):
+    def __init__(self, q, vmodel, threads=THREADS):
         self.query = q
         self.graph = Graph()
         self.threads = threads
