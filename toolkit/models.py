@@ -261,7 +261,7 @@ class Position(BaseModel):
         try:
             ptype = self.positiontype['cid']
         except AttributeError:
-            return g
+            ptype = None
         # Leadership
         if ptype == '12169':
             r.set(RDF.type, VIVO.FacultyAdministrativePosition)
@@ -308,9 +308,11 @@ class Position(BaseModel):
             pass
 
         # map to people
-        g += self.get_people()
+        #g += self.get_people()
         # map to orgs
-        g += self.get_orgs()
+        #g += self.get_orgs()
+        # people go to positions
+        # orgs go to positions
 
         return g
 
