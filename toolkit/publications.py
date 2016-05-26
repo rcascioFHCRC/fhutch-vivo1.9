@@ -34,6 +34,31 @@ THREADS = int(os.environ.get('THREADS', 5))
 def _p(msg):
     sys.stdout.write(msg + "\n")
 
+def harvest_sets():
+    pq = """
+    <data xmlns="http://converis/ns/webservice">
+     <query>
+      <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+      <and>
+        <and>
+         <relation minCount="1" name="PUBL_has_CARD"/>
+        </and>
+        <and>
+         <attribute argument="{stop}" name="publYear" operator="lessequal"/>
+         <attribute argument="{start}" name="publYear" operator="greater"/>
+        </and>
+      </and>
+      </filter>
+     </query>
+    </data>
+    """
+    #ps = [(1940, 1985), (1985, 1995), (1995, 2000), (2000, 2005), (2005, 2010), (2010, 2012), (2012, 2014), (2014, 2016)]
+    ps = [(2005, 2010), (2010, 2016)]
+    for start, stop in ps:
+        logger.info("Harvesting pubs from {} to {}".format(start, stop))
+        query = pq.format(**dict(start=start, stop=stop))
+        pub_harvest(query)
+
 
 def harvest_service(num, harvest_q):
     """thread worker function"""
@@ -68,7 +93,7 @@ def process_pub_card(card):
     We should maybe just generate the authorship here too and eliminate the need
     for the post-ingest query.
     """
-    logger.info("Fetching people and pubs for card {}.".format(card))
+    logger.info("Fetching pubs for card {}.".format(card))
     g = Graph()
     # Relate pub to card
     for pub in client.get_related_entities('Publication', card, 'PUBL_has_CARD'):
@@ -90,31 +115,15 @@ def generate_authorships():
 
 
 def get_pub_cards(sample=False):
-    q = """
-    <data xmlns="http://converis/ns/webservice">
-    <return>
-    <attributes/>
-    </return>
-     <query>
-      <filter for="Card" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-        <and>
-          <relation name="PUBL_has_CARD" minCount="1"/>
-          <!-- <attribute operator="equals" argument="12166" name="positionType"/> -->
-        </and>
-      </filter>
-     </query>
-    </data>
-    """
     logger.info("Getting publications cards.")
-    g = Graph()
     done = 0
     out = []
-    for card in client.filter_query(q):
+    for card in models.get_pub_cards():
         done += 1
         if sample is True:
             if done >= 100:
                 break
-        out.append(card.cid)
+        out.append(card)
     return out
 
 
@@ -136,30 +145,6 @@ def pub_harvest(query):
     ph.post_updates(ng)
 
 
-def harvest_sets():
-    pq = """
-    <data xmlns="http://converis/ns/webservice">
-     <query>
-      <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-      <and>
-        <and>
-         <relation minCount="1" name="PUBL_has_CARD"/>
-        </and>
-        <and>
-         <attribute argument="{stop}" name="publYear" operator="lessequal"/>
-         <attribute argument="{start}" name="publYear" operator="greater"/>
-        </and>
-      </and>
-      </filter>
-     </query>
-    </data>
-    """
-    #ps = [(1940, 1985), (1985, 1995), (1995, 2000), (2000, 2005), (2005, 2010), (2010, 2012), (2012, 2014), (2014, 2016)]
-    ps = [(2005, 2010), (2010, 2016)]
-    for start, stop in ps:
-        logger.info("Harvesting pubs from {} to {}".format(start, stop))
-        query = pq.format(**dict(start=start, stop=stop))
-        pub_harvest(query)
 
 
 if __name__ == "__main__":
