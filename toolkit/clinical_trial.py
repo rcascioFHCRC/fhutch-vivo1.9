@@ -17,7 +17,7 @@ import log_setup
 
 from rdflib import Graph, Literal
 
-logger = log_setup.get_logger(client_level=logging.DEBUG)
+logger = log_setup.get_logger()
 
 if os.environ.get('HTTP_CACHE') == "1":
   import requests_cache
@@ -53,7 +53,7 @@ def harvest(trials):
     """
     logger.info("Harvesting clinical trials.")
     g = get_trials(trials)
-    print g.serialize(format='n3')
+    #print g.serialize(format='n3')
     backend.sync_updates("http://localhost/data/trials", g)
 
 
@@ -64,3 +64,4 @@ if __name__ == "__main__":
         for row in csv.DictReader(inf):
             cts.append(row.get('c_id'))
     harvest(cts)
+    logger.info("Clinical trial harvest finished.")
