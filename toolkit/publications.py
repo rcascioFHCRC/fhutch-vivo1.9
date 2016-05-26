@@ -31,9 +31,6 @@ if os.environ.get('HTTP_CACHE') == "1":
 
 THREADS = int(os.environ.get('THREADS', 5))
 
-def _p(msg):
-    sys.stdout.write(msg + "\n")
-
 def harvest_sets():
     pq = """
     <data xmlns="http://converis/ns/webservice">
@@ -82,10 +79,8 @@ def run_pub_card_harvest(to_fetch):
     for card in to_fetch:
         harvest_queue.put(card)
 
-    _p('*** Main thread waiting')
     harvest_queue.join()
-    _p('*** Done')
-
+    logger.info("Harvest complete")
 
 def process_pub_card(card):
     """
