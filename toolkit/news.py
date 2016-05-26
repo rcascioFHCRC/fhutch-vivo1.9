@@ -53,4 +53,4 @@ def harvest_news(sample=False):
 
 if __name__ == "__main__":
     logger.info("Starting harvest.")
-    harvest_news(sample=True)
+    harvest_news()
