@@ -566,12 +566,13 @@ class Expertise(BaseModel):
 
         """
         g = Graph()
-        sd = self.shortdescription
         etype = FHD.Expertise
-        if "Research and Clinical Topics" in sd:
-            etype = FHD.ResearchClinicalTopics
-        elif "Disciplines" in sd:
-            etype = FHD.Disciplines
+        if hasattr(self, "shortdesription"):
+            sd = self.shortdescription
+            if "Research and Clinical Topics" in sd:
+                etype = FHD.ResearchClinicalTopics
+            elif "Disciplines" in sd:
+                etype = FHD.Disciplines
         g.add((self.uri, RDF.type, etype))
         return g
 
