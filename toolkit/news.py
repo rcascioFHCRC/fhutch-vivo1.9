@@ -47,7 +47,7 @@ def harvest_news(sample=False):
         done += 1
         if (sample is True) and (done >= 20):
             break
-    print g.serialize(format='n3')
+    #print g.serialize(format='n3')
     backend.sync_updates("http://localhost/data/news", g)
 
 
