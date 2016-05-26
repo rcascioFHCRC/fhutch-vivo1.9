@@ -31,6 +31,7 @@ journals_q = """
   <and>
     <and>
      <relation minCount="1" name="PUBL_has_JOUR"/>
+     <attribute argument="19.05.2016" name="Updated on" operator="greaterequal"/>
     </and>
   </and>
   </filter>
@@ -52,7 +53,7 @@ def harvest():
     jh = JournalHarvest(journals_q, models.Journal)
     jh.run_harvest()
     logger.info("Harvest finished. Syncing to vstore.")
-    jh.sync_updates(ng)
+    jh.post_updates(ng)
 
 
 if __name__ == "__main__":
