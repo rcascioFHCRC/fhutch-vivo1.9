@@ -22,7 +22,7 @@ if os.environ.get('HTTP_CACHE') == "1":
      backend='redis',
      allowable_methods=('GET', 'PUT'))
 
-THREADS = os.environ['THREADS']
+THREADS = int(os.environ['THREADS'])
 
 internal = """
 <data xmlns="http://converis/ns/webservice">
