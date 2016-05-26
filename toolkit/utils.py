@@ -42,8 +42,8 @@ class ThreadedHarvest(object):
         start, stop = pair
         logging.info("Processing set {} to {}.".format(start, stop))
         rsp = client.EntityFilter(self.query, start=start, stop=stop)
-        for pub in rsp:
-            self.graph += client.to_graph(pub, self.vmodel)
+        for ety in rsp:
+            self.graph += client.to_graph(ety, self.vmodel)
 
 
     def harvest_service(self, num, harvest_q):
