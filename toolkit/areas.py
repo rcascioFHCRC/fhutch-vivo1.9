@@ -34,7 +34,7 @@ query = """
 
 class AreaHarvest(ThreadedHarvest):
 
-    def __init__(self, q, vmodel, threads=5):
+    def __init__(self, q, vmodel, threads=3):
         self.query = q
         self.graph = Graph()
         self.threads = threads
