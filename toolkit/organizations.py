@@ -50,7 +50,7 @@ def harvest():
     ng = "http://localhost/data/orgs"
     jh = OrgaHarvest(internal, models.Organization)
     jh.run_harvest()
-    logger.info("Harvest finished. Syncing to vstore.")
+    logger.info("Org harvest finished. Syncing to vstore.")
     jh.sync_updates(ng)
 
 
