@@ -149,3 +149,4 @@ if __name__ == "__main__":
     run_pub_card_harvest(cards)
     # Make authorships using card ids.
     generate_authorships()
+    logger.info("Pub harvest complete.")
