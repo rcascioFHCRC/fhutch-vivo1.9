@@ -27,6 +27,8 @@ query = """
 <data xmlns="http://converis/ns/webservice">
 <query>
 <filter for="Area" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+<relation minCount="1" name="PERS_has_AREA">
+</relation>
 </filter>
 </query>
 </data>
