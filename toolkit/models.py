@@ -103,9 +103,9 @@ class Person(BaseModel):
                 g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
                 continue
             # Skip external cards for now
-            if (hasattr(card, 'typeofcard') is True) and\
-                 (card.typeofcard.get('cid') == '12007'):
-                continue
+            #if (hasattr(card, 'typeofcard') is True) and\
+            #     (card.typeofcard.get('cid') == '12007'):
+            #    continue
             # Skip cards that aren't current
             if (hasattr(card, 'currentposition') is True) and\
                  (card.currentposition.get('cid') != '11288'):
@@ -130,11 +130,7 @@ class Person(BaseModel):
         if hasattr(self, 'cfresint'):
             p.set(VIVO.researchOverview, Literal(self.cfresint))
         if hasattr(self, 'orcid'):
-            p.set(VIVO.orcidId, self.orcid_uri)
-            # Confirm the orcid
-            g.add((self.orcid_uri, RDF.type, OWL.Thing))
-            # Todo - review if we want to confirm all orcids
-            g.add((self.orcid_uri, VIVO.confirmedOrcidId, self.uri))
+            p.set(FHD.orcid, Literal(self.orcid))
 
         # Vcard individual
         vci_uri = URIRef(self.vcard_uri)
@@ -766,9 +762,10 @@ class ClinicalTrial(BaseModel):
 
     def get_sponsors(self):
         g = Graph()
-        for org in client.get_related_ids('Organisation', self.cid, 'CLIN_has_ORGA'):
-            ouri = org_uri(org)
+        for org in client.get_related_entities('Organisation', self.cid, 'CLIN_has_ORGA'):
+            ouri = org_uri(org.cid)
             g.add((self.uri, FHCT.hasSponsor, ouri))
+            g += client.to_graph(org, Organization)
         return g
 
     def get_pubs(self):
@@ -776,6 +773,13 @@ class ClinicalTrial(BaseModel):
         for pub in client.get_related_ids('Publication', self.cid, 'CLIN_has_PUBL'):
             uri = pub_uri(pub)
             g.add((self.uri, FHCT.trialPublication, uri))
+        return g
+
+    def get_investigators(self):
+        g = Graph()
+        for pub in client.get_related_ids('Person', self.cid, 'CLIN_has_PERS'):
+            uri = pub_uri(pub)
+            g.add((self.uri, FHCT.hasInvestigator, uri))
         return g
 
     def to_rdf(self):
@@ -798,5 +802,6 @@ class ClinicalTrial(BaseModel):
 
         g += self.get_sponsors()
         g += self.get_pubs()
+        g += self.get_investigators()
 
         return g
