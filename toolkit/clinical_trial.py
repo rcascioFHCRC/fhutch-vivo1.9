@@ -62,6 +62,10 @@ if __name__ == "__main__":
     cts = []
     with open(sys.argv[1]) as inf:
         for row in csv.DictReader(inf):
-            cts.append(row.get('c_id'))
+            cid = row.get('c_id')
+            # skip this dup
+            if cid == '5920130':
+                continue
+            cts.append(cid)
     harvest(cts)
     logger.info("Clinical trial harvest finished.")
