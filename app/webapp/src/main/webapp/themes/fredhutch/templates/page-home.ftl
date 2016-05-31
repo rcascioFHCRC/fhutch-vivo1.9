@@ -30,7 +30,7 @@
         <section id="intro" role="region">
             <h2>Welcome to FredHutch-VIVO</h2>
 
-            <p>VIVO is a research-focused discovery tool that enables collaboration among scientists across all disciplines.</p>
+            <p>VIVO is a research-focused discovery tool that provides detailed information about our scientists and physicians.  Learn more about our efforts to generate new scientific discoveries and translate them into effective medical practices, therapies and public health approaches.</p>
 
             <p>Browse or search information on people, departments, expertise, clinical trials, grants, and publications.</p>
 
