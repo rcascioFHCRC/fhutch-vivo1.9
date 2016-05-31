@@ -62,7 +62,7 @@ a#view {
     .data(expertiseData)
     .type("tree_map")
     .font({"family": "\"Geogrotesque-Regular\",Arial,Helvetica,Sans-serif"})
-    .id(["group", "name"])
+    .id(["name"])
     .size("researchers")      // sizing of blocks
     .tooltip({"share": false, "html": tip, "large": 300, "stacked": true})
     .title({

@@ -75,19 +75,11 @@ public class ExpertiseBrowseController extends FreemarkerHttpServlet {
     private static JSONObject prepResult(QuerySolution qs) throws JSONException {
         JSONObject thisArea = new JSONObject();
         Literal name = qs.getLiteral("label");
-        Resource top = qs.getResource("top");
         Resource uri = qs.getResource("ex");
-        String group;
-        if (top.getLocalName().toString().equals("c3360927")) {
-            group = "Research and Clinical Topics";
-        } else {
-            group = "Disciplines";
-        }
         Object number = qs.getLiteral("total").getValue();
         thisArea.put("name", name);
         thisArea.put("uri", uri);
         //thisArea.put("url", getURL(uri.toString(), vreq));
-        thisArea.put("group", group);
         thisArea.put("researchers", number);
         return thisArea;
     }
