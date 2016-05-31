@@ -184,3 +184,8 @@ fhd:publishedOn a owl:DatatypeProperty ;
 fhd:url a owl:DatatypeProperty ;
     rdfs:label "url"@en-US ;
     rdfs:range xsd:string .
+
+fhd:orcid a owl:DatatypeProperty ;
+    rdfs:label "orcid"@en-US ;
+    rdfs:range xsd:string .
+
