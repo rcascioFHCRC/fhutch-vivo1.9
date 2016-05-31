@@ -61,7 +61,6 @@
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupclinicaltrials">Clinical trials</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupNews">News</a></li>
-
                         </ul>
                     </form>
                 </fieldset>
