@@ -21,6 +21,7 @@
 </#if>
 <#assign visRequestingTemplate = "foaf-person-wilma">
 <#assign imageProp = "http://vivo.fredhutch.org/ontology/display#image">
+<#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
 
 <#--add the VIVO-ORCID interface -->
 <#include "individual-orcidInterface.ftl">
@@ -43,6 +44,16 @@
         <div id="individual-tools-people">
         </div>
         <#include "individual-contactInfo.ftl">
+        <!-- orcid -->
+        <#assign orcid = propertyGroups.getProperty(orcidProp)!>
+        <#if orcid?has_content>
+          <#if orcid.statements[0]??>
+            <div id="orcid-wrapper">
+              <ul>
+              <li><a href="http://orcid.org/${orcid.statements[0].value}">${orcid.statements[0].value}</a></li>
+            </div>
+          </#if>
+        </#if>
 
         <!-- Websites -->
         <#include "individual-webpage.ftl">
@@ -108,6 +119,7 @@
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/firstName")!>
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
 	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
+  <#assign skipThis = propertyGroups.pullProperty(orcidProp)!>
 </#if>
 
 <!-- Property group menu or tabs -->
