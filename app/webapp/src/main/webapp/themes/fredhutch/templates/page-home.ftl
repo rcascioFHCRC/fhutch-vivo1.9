@@ -55,9 +55,13 @@
                         <ul id="filter-search-nav">
                             <li><a class="active" href="">${i18n().all_capitalized}</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouppeople">People</a></li>
+                            <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a>
+                            </li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</a></li>
+                            <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>
+                            <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupclinicaltrials">Clinical trials</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupNews">News</a></li>
-                            <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a></li>
+
                         </ul>
                     </form>
                 </fieldset>
