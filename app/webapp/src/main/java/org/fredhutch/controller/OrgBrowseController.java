@@ -48,6 +48,7 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("tree", orgTree);
         body.put("title", "Organizations");
+        body.put("topUrl", getURL(TOP_ORG, vreq));
         return new TemplateResponseValues(TEMPLATE, body);
     }
 
