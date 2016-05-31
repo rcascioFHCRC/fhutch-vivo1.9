@@ -103,9 +103,9 @@ class Person(BaseModel):
                 g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
                 continue
             # Skip external cards for now
-            #if (hasattr(card, 'typeofcard') is True) and\
-            #     (card.typeofcard.get('cid') == '12007'):
-            #    continue
+            if (hasattr(card, 'typeofcard') is True) and\
+                (card.typeofcard.get('cid') == '12007'):
+               continue
             # Skip cards that aren't current
             if (hasattr(card, 'currentposition') is True) and\
                  (card.currentposition.get('cid') != '11288'):
