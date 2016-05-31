@@ -43,18 +43,24 @@
         <!-- Contact Info -->
         <div id="individual-tools-people">
         </div>
-        <#include "individual-contactInfo.ftl">
-        <!-- orcid -->
-        <#assign orcid = propertyGroups.getProperty(orcidProp)!>
-        <#if orcid?has_content>
-          <#if orcid.statements[0]??>
-            <div id="orcid-wrapper">
-              <ul>
-              <li><a href="http://orcid.org/${orcid.statements[0].value}">${orcid.statements[0].value}</a></li>
-            </div>
-          </#if>
-        </#if>
-
+        <#assign primaryEmail = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Work")!>
+        <ul id="contacts">
+            <#if primaryEmail?has_content>
+                <#if primaryEmail.statements?has_content>
+                <#list primaryEmail.statements as statement>
+                  <li class="person-contact"><img src="../images/emailIconSmall.gif"/>${statement.emailAddress!}</li>
+                </#list>
+                </#if>
+              </#if>
+              <!-- orcid -->
+              <#assign orcid = propertyGroups.getProperty(orcidProp)!>
+              <#if orcid?has_content>
+                <#if orcid.statements[0]??>
+                  <li class="person-contact"><img src="https://orcid.org/sites/default/files/images/orcid_16x16(1).gif"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
+                </#if>
+              </#if>
+       
+        </ul>
         <!-- Websites -->
         <#include "individual-webpage.ftl">
     </section>
@@ -100,6 +106,8 @@
 
         <!-- Research Areas -->
         <#include "individual-researchAreas.ftl">
+
+        
 
         <div id="coauthor-network-container">
           <#include "individual-visualizationFoafPerson.ftl">

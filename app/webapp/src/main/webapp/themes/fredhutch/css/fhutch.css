@@ -1954,3 +1954,17 @@ span.tree-toggler {
     left: 0.25em;
     transform: rotate(-135deg);
 }
+
+#orcid-container {
+    font-size: small;
+    line-height: 1em;
+    margin:0;
+    padding:0;
+}
+.person-contact img {
+    margin-right: .25em;
+}
+
+ul#contacts {
+    font-size: smaller;
+}
