@@ -184,7 +184,7 @@ class Person(BaseModel):
             return None
         g = Graph()
         vt = Resource(g, self.vcard_email_uri)
-        vt.set(RDF.type, VCARD.Email)
+        vt.set(RDF.type, VCARD.Work)
         # Label probably not necessary
         vt.set(RDFS.label, Literal(self.email))
         vt.set(VCARD.email, Literal(self.email))
@@ -393,7 +393,7 @@ class Organization(BaseModel):
         return g
 
 
-    def to_rdf(self):
+    def to_rdf(self, get_all=True):
         g = Graph()
         o = Resource(g, self.uri)
         o.set(RDF.type, self.get_type())
@@ -401,11 +401,13 @@ class Organization(BaseModel):
         o.set(CONVERIS.converisId, Literal(self.cid))
         if hasattr(self, 'description'):
             o.set(VIVO.overview, Literal(self.description))
-        for child in self.get_children():
-            # Has sub-organization
-            o.add(OBO['BFO_0000051'], child)
-        # Get positions for this org.
-        g += self.get_positions()
+
+        if get_all is True:
+            for child in self.get_children():
+                # Has sub-organization
+                o.add(OBO['BFO_0000051'], child)
+            # Get positions for this org.
+            g += self.get_positions()
 
         g += self.add_vcard_weblink()
         return g
@@ -761,11 +763,19 @@ def get_pub_cards():
 class ClinicalTrial(BaseModel):
 
     def get_sponsors(self):
+        """
+        Create basic org RDF for sponsors in the event that they
+        aren't an internal org.
+        """
         g = Graph()
         for org in client.get_related_entities('Organisation', self.cid, 'CLIN_has_ORGA'):
             ouri = org_uri(org.cid)
             g.add((self.uri, FHCT.hasSponsor, ouri))
-            g += client.to_graph(org, Organization)
+            # org model
+            om = Organization(**org.__dict__)
+            # don't fetch positions for these orgs.
+            g += om.to_rdf(get_all=False)
+
         return g
 
     def get_pubs(self):
