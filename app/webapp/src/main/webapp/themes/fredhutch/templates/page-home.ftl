@@ -28,7 +28,7 @@
         <#include "menu.ftl">
 
         <section id="intro" role="region">
-            <h2>Welcome to FredHutch-VIVO</h2>
+            <h2>Welcome to Fred Hutch Researcher Profiles</h2>
 
             <p>VIVO is a research-focused discovery tool that provides detailed information about our scientists and physicians.  Learn more about our efforts to generate new scientific discoveries and translate them into effective medical practices, therapies and public health approaches.</p>
 
