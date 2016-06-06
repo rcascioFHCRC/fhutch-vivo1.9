@@ -82,6 +82,17 @@ class Person(BaseModel):
         return URIRef(DATA_NAMESPACE + "vce" + self.vid)
 
     @property
+    def _first(self):
+        """
+        Use nickname for first name if it's present per AMC.
+        """
+        if hasattr(self, 'nickname'):
+            first = self.nickname
+        else:
+            first = self.cffirstnames
+        return first
+
+    @property
     def orcid_uri(self):
         if self.orcid:
             try:
@@ -115,7 +126,7 @@ class Person(BaseModel):
         return g
 
     def _label(self):
-        l = "{}, {}".format(self.cffamilynames, self.cffirstnames)
+        l = "{}, {}".format(self.cffamilynames, self._first)
         if hasattr(self, 'middlename'):
             l + " " + self.middlename
         return l
@@ -167,7 +178,7 @@ class Person(BaseModel):
         vc.set(RDF.type, VCARD.Name)
         vc.set(RDFS.label, Literal(self._label()))
         vc.set(VCARD.familyName, Literal(self.cffamilynames))
-        vc.set(VCARD.givenName, Literal(self.cffirstnames))
+        vc.set(VCARD.givenName, Literal(self._first))
         if hasattr(self, 'middlename'):
             vc.set(VIVO.middleName, Literal(self.middlename))
         return g
