@@ -168,11 +168,10 @@
         viewRDFProfile: '${i18n().view_profile_in_rdf}',
         closeString: '${i18n().close}'
     };
+    //replace video links with
     var videos = $('h3#video').siblings('ul').children();
-    console.log(videos);
     $.each(videos, function(idx, item){
       var link = $(item).text().trim();
-      console.log(link);
       $(item).html("<li class=\"embed-video\"><iframe width=\"560px\" height=\"315\" src=\"" + link + "\"/></li>");
     });
 </script>
