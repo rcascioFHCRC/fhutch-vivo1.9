@@ -131,6 +131,9 @@ class Person(BaseModel):
             p.set(VIVO.researchOverview, Literal(self.cfresint))
         if hasattr(self, 'orcid'):
             p.set(FHD.orcid, Literal(self.orcid))
+        # clinical interests
+        if hasattr(self, 'cfClinInt'):
+            p.set(FHD.clinicalInterest, Literal(self.cfclinint))
 
         # Vcard individual
         vci_uri = URIRef(self.vcard_uri)
