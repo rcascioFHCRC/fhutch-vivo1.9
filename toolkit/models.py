@@ -132,7 +132,7 @@ class Person(BaseModel):
         if hasattr(self, 'orcid'):
             p.set(FHD.orcid, Literal(self.orcid))
         # clinical interests
-        if hasattr(self, 'cfClinInt'):
+        if hasattr(self, 'cfclinint'):
             p.set(FHD.clinicalInterest, Literal(self.cfclinint))
 
         # Vcard individual
