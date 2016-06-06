@@ -59,7 +59,7 @@
                   <li class="person-contact"><img src="https://orcid.org/sites/default/files/images/orcid_16x16(1).gif"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
                 </#if>
               </#if>
-       
+
         </ul>
         <!-- Websites -->
         <#include "individual-webpage.ftl">
@@ -107,7 +107,7 @@
         <!-- Research Areas -->
         <#include "individual-researchAreas.ftl">
 
-        
+
 
         <div id="coauthor-network-container">
           <#include "individual-visualizationFoafPerson.ftl">
@@ -168,6 +168,13 @@
         viewRDFProfile: '${i18n().view_profile_in_rdf}',
         closeString: '${i18n().close}'
     };
+    var videos = $('h3#video').siblings('ul').children();
+    console.log(videos);
+    $.each(videos, function(idx, item){
+      var link = $(item).text().trim();
+      console.log(link);
+      $(item).html("<li class=\"embed-video\"><iframe width=\"560px\" height=\"315\" src=\"" + link + "\"/></li>");
+    });
 </script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/individual/individual.css" />',

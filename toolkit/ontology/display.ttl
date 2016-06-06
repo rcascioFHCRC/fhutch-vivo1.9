@@ -193,3 +193,10 @@ fhd:clinicalInterest a owl:DatatypeProperty ;
     rdfs:label "clinical interests"@en-US ;
     rdfs:range xsd:string ;
     vitro:inClassGroup      <http://vivoweb.org/ontology#vitroPropertyGroupresearch> .
+
+fhd:video a owl:DatatypeProperty ;
+    rdfs:label "video"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inClassGroup      <http://vivoweb.org/ontology#vitroPropertyGrouplinks> .
+
+

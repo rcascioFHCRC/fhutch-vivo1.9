@@ -3,6 +3,7 @@ VIVO models
 """
 import hashlib
 import logging
+import re
 import os
 
 from rdflib import Graph, Namespace, Literal, URIRef
@@ -170,6 +171,9 @@ class Person(BaseModel):
         # positions
         g += self.get_positions()
 
+        # videos
+        g += self.get_videos()
+
         return g
 
     def _vcard_name(self):
@@ -202,6 +206,15 @@ class Person(BaseModel):
         # Label probably not necessary
         vt.set(RDFS.label, Literal(self.email))
         vt.set(VCARD.email, Literal(self.email))
+        return g
+
+    def get_videos(self):
+        g = Graph()
+        if hasattr(self, "embeddedvideos"):
+            text = self.embeddedvideos
+            for link in re.findall("&quot;(http.*)&quot; fram", self.embeddedvideos):
+                g.add((self.uri, FHD.video, Literal(link)))
+            return g
         return g
 
 

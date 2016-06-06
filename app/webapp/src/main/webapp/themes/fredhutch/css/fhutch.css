@@ -1968,3 +1968,7 @@ span.tree-toggler {
 ul#contacts {
     font-size: smaller;
 }
+
+li.embed-video {
+    margin-bottom: 2em;
+}
