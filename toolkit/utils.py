@@ -14,7 +14,7 @@ logger = logging.getLogger("harvest")
 DELAY = 1
 
 def chunk_pages(max, chunk_size=100):
-    for x in range(1, max, chunk_size):
+    for x in range(0, max, chunk_size):
         yield (x, (x + chunk_size) - 1)
 
 
@@ -72,9 +72,9 @@ class ThreadedHarvest(object):
 
         pages = self.get_pages()
         for st_sp in pages:
+            harvest_queue.put(st_sp)
             logger.info("Sleeping {} seconds between thread instantiation.".format(DELAY))
             time.sleep(DELAY)
-            harvest_queue.put(st_sp)
 
         logger.debug('Harvest initialized')
         harvest_queue.join()
