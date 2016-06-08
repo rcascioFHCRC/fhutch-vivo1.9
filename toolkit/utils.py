@@ -3,11 +3,15 @@ import os
 import sys
 from Queue import Queue
 from threading import Thread
+import time
 
 from converis import client
 from converis import backend
 
 logger = logging.getLogger("harvest")
+
+# Time to pause in between creating threads
+DELAY = 1
 
 def chunk_pages(max, chunk_size=100):
     for x in range(1, max, chunk_size):
@@ -68,6 +72,8 @@ class ThreadedHarvest(object):
 
         pages = self.get_pages()
         for st_sp in pages:
+            logger.info("Sleeping {} seconds between thread instantiation.".format(DELAY))
+            time.sleep(DELAY)
             harvest_queue.put(st_sp)
 
         logger.debug('Harvest initialized')
