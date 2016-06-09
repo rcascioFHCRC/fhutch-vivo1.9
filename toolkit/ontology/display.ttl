@@ -203,4 +203,5 @@ fhd:video a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     vitro:inClassGroup      <http://vivoweb.org/ontology#vitroPropertyGrouplinks> .
 
-
+fhp:Publication vitro:customDisplayViewAnnot
+          "individual--fhd-publication.ftl"^^xsd:string .
