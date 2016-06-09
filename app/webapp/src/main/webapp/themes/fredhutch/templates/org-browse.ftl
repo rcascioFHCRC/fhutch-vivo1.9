@@ -4,7 +4,7 @@
 
 <div class="org-browse-header">
     <h2>${title}</h2>
-    <span class="aside"><a href="./organizations">Browse by organization type</a></span>
+    <div class="aside"><a href="./organizations">Browse by organization structure</a></div>
 </div>
 
 <ul>

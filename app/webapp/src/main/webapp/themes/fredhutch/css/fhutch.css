@@ -1837,9 +1837,7 @@ ul.sub-org {
 }
 
 .aside {
-    float: right;
-    margin-right: 30%;
-    margin-top: 1em;
+    margin-top: .25em;
 }
 
 .aside a {
