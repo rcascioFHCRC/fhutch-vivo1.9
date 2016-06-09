@@ -1,5 +1,8 @@
 
-<h2>Explore areas of expertise</h2>
+<h2 class="browse-header">Explore areas of expertise</h2>
+<div class="expertise aside">
+<a href="./expertise">Browse by area of expertise</a>
+</div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 <!-- load D3js -->

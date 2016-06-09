@@ -1173,6 +1173,7 @@ ul#individual-tools-people li a {
     font-size: 1.375em;
     color: #064d68;
     font-weight: normal;
+    padding: 0;
 }
 #menupage-intro.people h2 {
     float: left;
@@ -1836,12 +1837,20 @@ ul.sub-org {
     margin-bottom: .5em;
 }
 
+h2.browse-header {
+    padding:0;
+}
+
 .aside {
     margin-top: .25em;
 }
 
 .aside a {
     color: #064d68;
+}
+
+.expertise.aside {
+    margin-bottom: 1.5em;
 }
 
 /*person browse */
