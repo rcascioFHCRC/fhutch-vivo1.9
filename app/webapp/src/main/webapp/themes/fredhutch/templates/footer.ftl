@@ -83,15 +83,16 @@
 
      <div id="copyright" class="copyright">
       Fred Hutchinson Cancer Research Center | 1100 Fairview Ave. N., Seattle, WA 98109<br/>
-      &copy; 2016 Fred Hutchinson Cancer Research Center, <span class="nobreak">a 501(c)(3) nonprofit organization.</span><br/>
-      <span class="terms_privacy"><a href="http://www.fredhutch.org/en/util/terms-privacy.html">Terms of use &amp; privacy policy</a>&nbsp;|&nbsp;<a href="http://www.fredhutch.org/en/util/conflict-of-interest.html">Conflict of interest</a></span>
+      &copy; 2016 Fred Hutchinson Cancer Research Center, <span class="nobreak">a 501(c)(3) nonprofit organization.</span>
+
+      <div class="terms_privacy"><a href="http://www.fredhutch.org/en/util/terms-privacy.html">Terms of use &amp; privacy policy</a>&nbsp;|&nbsp;<a href="http://www.fredhutch.org/en/util/conflict-of-interest.html">Conflict of interest</a></div>
      </div>
 
 
-    <div>
-        Powered by the <a href="http://sharedresources.fredhutch.org/core-facilities/library">Arnold Library</a>, Converis, and <a href="http://vivoweb.org">VIVO</a>.
-        <br/>
-        <a href="https://fhcrc.converis.thomsonreuters.com/converis/secure/login">Edit your profile</a>&nbsp;&nbsp;Get <a href="#">help with your profile</a>.
+    <div class="arnold">
+        <div>Powered by the <a href="http://sharedresources.fredhutch.org/core-facilities/library">Arnold Library</a>, Converis, and <a href="http://vivoweb.org">VIVO</a>.</div>
+
+        <div><a href="https://fhcrc.converis.thomsonreuters.com/converis/secure/login">Edit your profile</a>&nbsp;&nbsp;Get <a href="#">help with your profile</a>.</div>
     </div>
 
 </footer>

@@ -1979,3 +1979,13 @@ ul#contacts {
 li.embed-video {
     margin-bottom: 2em;
 }
+
+footer div.copyright, footer div.arnold {
+    line-height: 1.2em;
+    margin:0;
+    padding:0;
+}
+
+footer div.arnold {
+    margin-top: 1em;
+}
