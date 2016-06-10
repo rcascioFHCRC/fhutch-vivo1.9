@@ -209,11 +209,13 @@ class Person(BaseModel):
         return g
 
     def get_videos(self):
+        # URL regex from http://stackoverflow.com/a/6883094/758157
         g = Graph()
         if hasattr(self, "embeddedvideos"):
             text = self.embeddedvideos
-            for link in re.findall("&quot;(http.*)&quot; fram", self.embeddedvideos):
-                g.add((self.uri, FHD.video, Literal(link)))
+            for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
+                cl = link.rstrip('&quot;')
+                g.add((self.uri, FHD.video, Literal(cl)))
             return g
         return g
 
@@ -387,9 +389,12 @@ class Organization(BaseModel):
             '11731': FHD.SharedResource,
             '11732': FHD.Study,
         }
-        otype = self.typeoforga['cid']
-        oty = m.get(otype, FHD.Organization)
-        return oty
+        try:
+            otype = self.typeoforga['cid']
+            oty = m.get(otype, FHD.Organization)
+            return oty
+        except AttributeError:
+            return FHD.Organization
 
     def add_vcard_weblink(self):
         """
