@@ -130,7 +130,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
         q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         q2.setNsPrefix("tmp", TMP_NAMESPACE);
-        q2.setLiteral("?startswith", "^" + letter);
+        q2.setLiteral("?startswith", letter);
         return q2.toString();
     }
 

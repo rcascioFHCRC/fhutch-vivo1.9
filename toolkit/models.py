@@ -174,6 +174,9 @@ class Person(BaseModel):
         # videos
         g += self.get_videos()
 
+        # add single letter sort key for person browse
+        p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
+
         return g
 
     def _vcard_name(self):

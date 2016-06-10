@@ -189,6 +189,10 @@ fhd:orcid a owl:DatatypeProperty ;
     rdfs:label "orcid"@en-US ;
     rdfs:range xsd:string .
 
+fhd:sortLetter a owl:DatatypeProperty ;
+    rdfs:label "sort letter"@en-US ;
+    rdfs:range xsd:string .
+
 fhd:clinicalInterest a owl:DatatypeProperty ;
     rdfs:label "clinical interests"@en-US ;
     rdfs:range xsd:string ;
@@ -199,4 +203,5 @@ fhd:video a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     vitro:inClassGroup      <http://vivoweb.org/ontology#vitroPropertyGrouplinks> .
 
-
+fhp:Publication vitro:customDisplayViewAnnot
+          "individual--fhd-publication.ftl"^^xsd:string .

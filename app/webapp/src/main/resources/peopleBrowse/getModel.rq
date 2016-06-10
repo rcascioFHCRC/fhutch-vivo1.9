@@ -11,6 +11,7 @@ construct {
 where {
     ?p a foaf:Person ;
         rdfs:label ?name ;
+        fhd:sortLetter ?startswith ;
         vivo:relatedBy ?position .
     OPTIONAL {?p fhd:image ?picture }
     ?position a vivo:Position ;
@@ -19,5 +20,4 @@ where {
             vivo:relates ?org .
     ?org a foaf:Organization ;
          rdfs:label ?orgName .
-    FILTER REGEX(?name, ?startswith, "i")
 }
