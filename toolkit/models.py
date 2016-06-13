@@ -217,7 +217,7 @@ class Person(BaseModel):
         if hasattr(self, "embeddedvideos"):
             text = self.embeddedvideos
             #for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
-            for link in text.split(';')
+            for link in text.split(';'):
                 cl = link.rstrip('&quot;').strip()
                 if cl == "":
                     continue
