@@ -83,6 +83,10 @@ class Person(BaseModel):
         return URIRef(DATA_NAMESPACE + "vce" + self.vid)
 
     @property
+    def vcard_phone_uri(self):
+        return URIRef(DATA_NAMESPACE + "vcp" + self.vid)
+
+    @property
     def _first(self):
         """
         Use nickname for first name if it's present per AMC.
@@ -168,6 +172,12 @@ class Person(BaseModel):
             g += vte
             g.add((vci_uri, VCARD.hasEmail, URIRef(self.vcard_email_uri)))
 
+        # Vcard phone
+        vtp = self._vcard_phone()
+        if vtp is not None:
+            g += vtp
+            g.add((vci_uri, VCARD.hasTelephone, URIRef(self.vcard_phone_uri)))
+
         # positions
         g += self.get_positions()
 
@@ -209,6 +219,17 @@ class Person(BaseModel):
         # Label probably not necessary
         vt.set(RDFS.label, Literal(self.email))
         vt.set(VCARD.email, Literal(self.email))
+        return g
+
+    def _vcard_phone(self):
+        if not hasattr(self, 'phone'):
+            return None
+        g = Graph()
+        vt = Resource(g, self.vcard_phone_uri)
+        vt.set(RDF.type, VCARD.Voice)
+        # Label probably not necessary
+        vt.set(RDFS.label, Literal(self.phone))
+        vt.set(VCARD.telephone, Literal(self.phone))
         return g
 
     def get_videos(self):
@@ -585,6 +606,13 @@ class Expertise(BaseModel):
             g.add((self.uri, VIVO.researchAreaOf, puri))
         return g
 
+    def has_orgs(self):
+        g = Graph()
+        for org in client.get_related_ids('Organisation', self.cid, 'ORGA_has_AREA'):
+            uri = org_uri(org)
+            g.add((self.uri, VIVO.researchAreaOf, uri))
+        return g
+
     def get_narrower(self):
         g = Graph()
         for area in client.get_related_ids('Area', self.cid, 'AREA_has_child_AREA'):
@@ -622,6 +650,8 @@ class Expertise(BaseModel):
         g += self.add_primary_type()
         # Get related researchers
         g += self.has_researchers()
+        # Get related orgs
+        g += self.has_orgs()
         # Ger narrower terms.
         g += self.get_narrower()
 
