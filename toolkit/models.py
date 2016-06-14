@@ -239,7 +239,7 @@ class Person(BaseModel):
             text = self.embeddedvideos
             #for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
             for link in text.split(';'):
-                cl = link.rstrip('&quot;').strip()
+                cl = link.strip().replace('&quot;', "")
                 if cl == "":
                     continue
                 g.add((self.uri, FHD.video, Literal(cl)))
