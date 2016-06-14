@@ -4,8 +4,11 @@
 
 <div class="org-browse-header">
     <h2>${title}</h2>
-    <div class="aside"><a href="./organizations">Browse by organization structure</a></div>
+    <div class="describe"><a href="./organizations">Browse by organization type</a></div>
+    <div class="describe">Browse by organization structure</div>
 </div>
+
+
 
 <ul>
 <li class="top-org"><a href="${topUrl}">Fred Hutchinson Cancer Research Center Leadership</a></li>

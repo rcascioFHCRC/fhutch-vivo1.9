@@ -1828,8 +1828,13 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
 
 /* org browse */
 
-.org-browse-header h2 {
+div.org-browse-header h2 {
     display: inline;
+}
+
+div.org-browse-header.describe {
+    font-size: larger;
+    margin-bottom: .5em;
 }
 
 ul.sub-org {
