@@ -70,9 +70,9 @@
 <#assign nameForOtherGroup = "${i18n().other}">
 
 
-<#assign doi=gdp(doip)>
-<#assign pmid=gdp(pmidp)>
-<#assign wosId=gdp(wosp)>
+<#assign doi=gdp(doip)!>
+<#assign pmid=gdp(pmidp)!>
+<#assign wosId=gdp(wosp)!>
 
 <div class="pub-ids">
     <#if doi?has_content>
