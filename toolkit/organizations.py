@@ -43,7 +43,7 @@ class OrgaHarvest(ThreadedHarvest):
         self.graph = Graph()
         self.threads = threads
         self.vmodel = vmodel
-        self.page_size = 50
+        self.page_size = 30
 
 
 def harvest():
