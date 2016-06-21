@@ -201,13 +201,17 @@ class Person(BaseModel):
         return g
 
     def _vcard_title(self):
-        if not hasattr(self, 'academictitle'):
+        #if not hasattr(self, 'academictitle'):
+        #    return None
+        sdesc = self.shortdescription
+        title = ", ".join([sd.strip() for sd in sdesc.split(',')[1:]])
+        if title == "":
             return None
         g = Graph()
         vt = Resource(g, self.vcard_title_uri)
         vt.set(RDF.type, VCARD.Title)
-        vt.set(RDFS.label, Literal(self.academictitle))
-        vt.set(VCARD.title, Literal(self.academictitle))
+        vt.set(RDFS.label, Literal(title))
+        vt.set(VCARD.title, Literal(title))
         return g
 
     def _vcard_email(self):
