@@ -10,6 +10,8 @@ construct {
 	tmp:rank ?rank ;
         tmp:org ?org.
     ?org rdfs:label ?orgName .
+    ?org tmp:parent ?parentOrg .
+    ?parentOrg rdfs:label ?parentOrgName .
 }
 where {
     {
@@ -25,6 +27,10 @@ where {
                 vivo:relates ?org .
         ?org a foaf:Organization ;
              rdfs:label ?orgName .
+        OPTIONAL {
+            ?parentOrg obo:BFO_0000051 ?org ;
+                       rdfs:label ?parentOrgName .
+        }
     }
     UNION {
         ?p a foaf:Person ;

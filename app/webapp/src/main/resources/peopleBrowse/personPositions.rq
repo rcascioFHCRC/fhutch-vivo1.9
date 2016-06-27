@@ -1,4 +1,4 @@
-select distinct ?title ?org ?orgName
+select distinct ?title ?org ?orgName ?parentOrgName
 where {
     ?person rdfs:label ?name ;
         tmp:position ?position .
@@ -6,5 +6,9 @@ where {
 	    tmp:rank ?rank ;
             tmp:org ?org .
     ?org rdfs:label ?orgName .
+    OPTIONAL {
+        ?org tmp:parent ?parentOrg .
+        ?parentOrg rdfs:label ?parentOrgName .
+    }
 }
 ORDER BY ?rank ?orgName

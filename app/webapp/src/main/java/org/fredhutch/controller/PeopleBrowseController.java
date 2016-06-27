@@ -118,6 +118,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
                 thisPosition.put("org", orgUri);
                 thisPosition.put("orgName", soln.getLiteral("orgName").toString());
                 thisPosition.put("url", getURL(orgUri, vreq));
+                thisPosition.put("parentOrgName", soln.getLiteral("parentOrgName"));
                 positions.add(thisPosition);
             }
         } finally {
