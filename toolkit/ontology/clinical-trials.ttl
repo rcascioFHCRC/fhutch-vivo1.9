@@ -1,0 +1,82 @@
+@prefix fhct: <http://vivo.fredhutch.org/ontology/clinicaltrials#> .
+@prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix vivo:  <http://vivoweb.org/ontology/core#> .
+@prefix vpublic: <http://vitro.mannlib.cornell.edu/ns/vitro/public#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix cg:  <http://vivoweb.org/ontology#> .
+@prefix d: <http://vivo.fredhutch.org/individual/> .
+@prefix pgroup: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix pgroup_instance: <http://vivoweb.org/ontology#> .
+
+<http://vivo.fredhutch.org/ontology/clinicaltrials#>
+        a                          owl:Ontology ;
+        rdfs:label                 "FredHutch Clinical Trials"@en-US ;
+        vitro:ontologyPrefixAnnot  "fhct"^^xsd:string .
+
+# Clinical Trials
+
+fhct:ClinicalTrial a owl:Class ;
+        rdfs:label "Clinical Trial"@en-US ;
+        pgroup:inClassGroup       pgroup_instance:vitroClassGrouppublications .
+
+fhct:officialTitle a owl:DatatypeProperty ;
+    rdfs:label "official title"@en-US ;
+    rdfs:range xsd:string ;
+    pgroup:inPropertyGroupAnnot  pgroup_instance:vitroPropertyGroupoverview .
+
+
+fhct:nctNumber a owl:DatatypeProperty ;
+    rdfs:label "NCT number"@en-US ;
+    rdfs:range xsd:string ;
+    pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
+
+fhct:trialPublication a owl:ObjectProperty ;
+        rdfs:label "publication"@en-US ;
+        rdfs:domain fhct:ClinicalTrial ;
+        rdfs:range bibo:Document ;
+        owl:inverseOf fhct:outputOfTrial ;
+        pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupresearch .
+
+fhct:outputOfTrial a owl:ObjectProperty ;
+        rdfs:label "output of trial"@en-US ;
+        rdfs:domain bibo:Document ;
+        rdfs:range fhct:ClinicalTrial ;
+        owl:inverseOf fhct:trialPublication ;
+        pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupresearch .
+
+fhct:hasInvestigator a owl:ObjectProperty ;
+        rdfs:label "investigator"@en-US ;
+        rdfs:domain fhct:ClinicalTrial ;
+        rdfs:range foaf:Person ;
+        owl:inverseOf fhct:investigatorFor ;
+        pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
+
+fhct:investigatorFor a owl:ObjectProperty ;
+        rdfs:label "investigator"@en-US ;
+        rdfs:domain foaf:Person ;
+        rdfs:range fhct:ClinicalTrial ;
+        owl:inverseOf fhct:hasInvestigator ;
+        pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
+
+fhct:hasSponsor a owl:ObjectProperty ;
+        rdfs:label "sponsor"@en-US ;
+        rdfs:domain fhct:ClinicalTrial ;
+        rdfs:range foaf:Organization ;
+        owl:inverseOf fhct:sponsorFor ;
+        pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
+
+
+fhct:sponsorFor a owl:ObjectProperty ;
+        rdfs:label "sponsors"@en-US ;
+        rdfs:domain foaf:Organization ;
+        rdfs:range fhct:ClinicalTrial ;
+        owl:inverseOf fhct:hasSponsor ;
+        pgroup:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
