@@ -506,18 +506,18 @@ ul#header-nav a.log-out {
 /* SEARCH ------>  */
 #search {
     position: absolute;
-    width: 396px;
+    width: 425px;
     height: 38px;
     top: 40px;
-    right: 10px;
+    right: 39px;
     padding-top: 5px;
 }
 #search-field {
-    width: 396px;
-    height: 38px;
-    background: url(../images/search-interior-pages.png) 0 0 no-repeat;
+    width: 500px;
+    /*height: 38px;*/
+    /*background: url(../images/search-interior-pages.png) 0 0 no-repeat;*/
 }
-#search-field input.search {
+/*#search-field input.search {
     text-decoration: none;
     background-color: transparent;
     color: #fff;
@@ -540,7 +540,19 @@ input.search-vivo {
 }
 #search-form-modifier {
     display: none;
+}*/
+
+#search input[type=submit] {
+    padding:.5em .5em;
+    background:#89c348;
+    font-size: 15px;
+    color: white;
+    border:0 none;
+    cursor:pointer;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
 }
+
 /* MAIN NAVIGATION------>  */
 ul#main-nav {
     display: block;
@@ -2001,3 +2013,4 @@ footer div.copyright, footer div.arnold {
 footer div.arnold {
     margin-top: 1em;
 }
+
