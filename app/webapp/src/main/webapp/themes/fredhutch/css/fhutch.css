@@ -1842,10 +1842,6 @@ ul.sub-org {
     margin-bottom: .5em;
 }
 
-h2.browse-header {
-    padding:0;
-}
-
 .aside {
     margin-top: .25em;
 }
@@ -1856,6 +1852,60 @@ h2.browse-header {
 
 .expertise.aside {
     margin-bottom: 1.5em;
+}
+
+/*Tree view modified from
+http://bootsnipp.com/snippets/featured/collapsible-tree-menu
+
+Chevron css modified from
+https://codepen.io/jonneal/pen/kptBs
+*/
+
+#org-tree {
+    margin-top: 1em;
+}
+
+#org-tree li {
+    margin-bottom: .5em;
+}
+
+.top-org {
+}
+
+span.tree-toggler {
+    margin-left: 1em;
+    color:#89c348;
+}
+
+
+.chevron::before {
+    margin-top: 5px;
+    border-style: solid;
+    border-width: 0.25em 0.25em 0 0;
+    content: '';
+    display: inline-block;
+    height: 0.25em;
+    left: 0.15em;
+    position: relative;
+    top: 0.15em;
+    transform: rotate(-45deg);
+    vertical-align: top;
+    width: 0.25em;
+}
+
+.chevron.right:before {
+    left: 0;
+    transform: rotate(45deg);
+}
+
+.chevron.bottom:before {
+    top: 0;
+    transform: rotate(135deg);
+}
+
+.chevron.left:before {
+    left: 0.25em;
+    transform: rotate(-135deg);
 }
 
 /*person browse */
@@ -1918,53 +1968,6 @@ h2.browse-header {
 
 .alpha-browse a {
     font-weight: bolder;
-}
-
-/*Tree view modified from
-http://bootsnipp.com/snippets/featured/collapsible-tree-menu
-
-Chevron css modified from
-https://codepen.io/jonneal/pen/kptBs
-*/
-
-.top-org {
-    margin-top: 1em;
-}
-
-span.tree-toggler {
-    margin-left: 1em;
-    color:#89c348;
-}
-
-
-.chevron::before {
-    margin-top: 5px;
-    border-style: solid;
-    border-width: 0.25em 0.25em 0 0;
-    content: '';
-    display: inline-block;
-    height: 0.25em;
-    left: 0.15em;
-    position: relative;
-    top: 0.15em;
-    transform: rotate(-45deg);
-    vertical-align: top;
-    width: 0.25em;
-}
-
-.chevron.right:before {
-    left: 0;
-    transform: rotate(45deg);
-}
-
-.chevron.bottom:before {
-    top: 0;
-    transform: rotate(135deg);
-}
-
-.chevron.left:before {
-    left: 0.25em;
-    transform: rotate(-135deg);
 }
 
 #orcid-container {
