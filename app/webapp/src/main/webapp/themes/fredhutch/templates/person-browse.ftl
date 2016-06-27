@@ -53,7 +53,17 @@
                     </ul>
                 </div>
                 <#if (person.description)?hasContent>
-                    <p>${person.description}</p>
+                    <p class="description">${person.description}</p>
+                </#if>
+                <#if (person.email)?hasContent || (person.phone)?hasContent>
+                    <ul class="contact">
+                        <#if (person.phone)?hasContent>
+                            <li class="phone">Phone: ${person.phone}</li>
+                        </#if>
+                        <#if (person.email)?hasContent>
+                            <li>Email: <a href="mailto:${person.email}">${person.email}</a></li>
+                        </#if>
+                    </ul>
                 </#if>
             </div>
             <div class="clear"></div>

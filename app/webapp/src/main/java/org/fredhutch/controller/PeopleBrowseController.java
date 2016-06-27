@@ -84,6 +84,8 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
                 thisPerson.put("url", getURL(person.toString(), vreq));
                 thisPerson.put("picture", soln.getLiteral("picture"));
                 thisPerson.put("description", soln.getLiteral("description"));
+                thisPerson.put("email", soln.getLiteral("email"));
+                thisPerson.put("phone", soln.getLiteral("phone"));
                 thisPerson.put("positions", getPositions(positionsModel, person, vreq));
                 people.add(thisPerson);
 
@@ -140,6 +142,8 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
         q2.setCommandText(rawQuery);
         q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        q2.setNsPrefix("obo", "http://purl.obolibrary.org/obo/");
+        q2.setNsPrefix("vcard", "http://www.w3.org/2006/vcard/ns#");
         q2.setNsPrefix("tmp", TMP_NAMESPACE);
         q2.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
         q2.setNsPrefix("vivo", "http://vivoweb.org/ontology/core#");

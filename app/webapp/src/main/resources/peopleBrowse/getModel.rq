@@ -3,6 +3,8 @@ construct {
         rdfs:label ?name ;
         tmp:pic ?picture ;
         tmp:description ?desc ;
+        tmp:email ?email ;
+        tmp:phone ?phone ;
         tmp:position ?position .
     ?position rdfs:label ?title ;
 	tmp:rank ?rank ;
@@ -10,16 +12,33 @@ construct {
     ?org rdfs:label ?orgName .
 }
 where {
-    ?p a foaf:Person ;
-        rdfs:label ?name ;
-        fhd:sortLetter ?startswith ;
-        vivo:relatedBy ?position .
-    OPTIONAL {?p fhd:image ?picture }
-    OPTIONAL {?p fhd:briefDescription ?desc }
-    ?position a vivo:Position ;
-            rdfs:label ?title ;
-	    vivo:rank ?rank ;
-            vivo:relates ?org .
-    ?org a foaf:Organization ;
-         rdfs:label ?orgName .
+    {
+        ?p a foaf:Person ;
+            rdfs:label ?name ;
+            fhd:sortLetter ?startswith ;
+            vivo:relatedBy ?position .
+        OPTIONAL {?p fhd:image ?picture }
+        OPTIONAL {?p fhd:briefDescription ?desc }
+        ?position a vivo:Position ;
+                rdfs:label ?title ;
+            vivo:rank ?rank ;
+                vivo:relates ?org .
+        ?org a foaf:Organization ;
+             rdfs:label ?orgName .
+    }
+    UNION {
+        ?p a foaf:Person ;
+            fhd:sortLetter ?startswith .
+        ?p obo:ARG_2000028 ?vci .
+        ?vci vcard:hasEmail ?ec .
+        ?ec vcard:email ?email .
+    }
+    UNION {
+            ?p a foaf:Person ;
+                fhd:sortLetter ?startswith .
+            ?p obo:ARG_2000028 ?vci .
+            ?vci vcard:hasTelephone ?pc .
+            ?pc vcard:telephone ?phone .
+    }
+
 }

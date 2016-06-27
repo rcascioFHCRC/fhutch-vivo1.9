@@ -1939,7 +1939,7 @@ span.tree-toggler {
     color: #123054;
 }
 
-#person-browse p {
+#person-browse p.description, #person-browse ul.contact {
     margin-top: .5em;
 }
 
