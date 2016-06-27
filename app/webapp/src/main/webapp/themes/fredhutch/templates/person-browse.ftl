@@ -52,6 +52,9 @@
                         </#list>
                     </ul>
                 </div>
+                <#if (person.description)?hasContent>
+                    <p>${person.description}</p>
+                </#if>
             </div>
             <div class="clear"></div>
             </#if>

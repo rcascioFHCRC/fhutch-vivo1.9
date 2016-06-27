@@ -83,6 +83,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
                 thisPerson.put("uri", person.toString());
                 thisPerson.put("url", getURL(person.toString(), vreq));
                 thisPerson.put("picture", soln.getLiteral("picture"));
+                thisPerson.put("description", soln.getLiteral("description"));
                 thisPerson.put("positions", getPositions(positionsModel, person, vreq));
                 people.add(thisPerson);
 
