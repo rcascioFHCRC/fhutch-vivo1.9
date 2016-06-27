@@ -1939,6 +1939,10 @@ span.tree-toggler {
     color: #123054;
 }
 
+#person-browse p {
+    margin-top: .5em;
+}
+
 .sidebar {
     float: right;
     width: 30%;
