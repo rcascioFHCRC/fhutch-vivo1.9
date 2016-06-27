@@ -150,6 +150,9 @@ class Person(BaseModel):
         # clinical interests
         if hasattr(self, 'cfclinint'):
             p.set(FHD.clinicalInterest, Literal(self.cfclinint))
+        # brief description
+        if hasattr(self, 'briefdescription'):
+            p.set(FHD.briefDescription, Literal(self.briefdescription))
 
         # Vcard individual
         vci_uri = URIRef(self.vcard_uri)
