@@ -321,6 +321,7 @@ class Position(BaseModel):
             ptype = self.positiontype['cid']
         except AttributeError:
             ptype = None
+
         # Leadership
         if ptype == '12169':
             r.set(RDF.type, VIVO.FacultyAdministrativePosition)
@@ -329,12 +330,14 @@ class Position(BaseModel):
         elif ptype == '12167':
             r.set(RDF.type, VIVO.FacultyPosition)
             r.set(VIVO.rank, Literal(20, datatype=XSD.integer))
-        elif ptype == '12007':
-            r.set(RDF.type, FHD.ExternalPosition)
-            r.set(VIVO.rank, Literal(60, datatype=XSD.integer))
         else:
             r.set(RDF.type, VIVO.Position)
             r.set(VIVO.rank, Literal(30, datatype=XSD.integer))
+
+        # Look for external positions and give lower rank
+        if self.typeofcard['cid'] == '12007':
+            r.set(VIVO.rank, Literal(60, datatype=XSD.integer))
+
         return g
 
     def to_rdf(self):
