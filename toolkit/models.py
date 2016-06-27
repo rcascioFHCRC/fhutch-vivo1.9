@@ -867,10 +867,31 @@ class ClinicalTrial(BaseModel):
             g.add((self.uri, FHCT.hasInvestigator, uri))
         return g
 
+    def assign_type(self):
+        default = FHCT.Other
+        ttypes = {
+            '5340473': FHCT.ActiveNotRecruiting,
+            '5340476': FHCT.ApprovedForMarketing,
+            '5340479': FHCT.AvailableForExpandedAccess,
+            '5340482': FHCT.Completed,
+            '5340485': FHCT.EnrollingByInvitation,
+            '5340488': FHCT.NoLongerAvailableForExpandedAccess,
+            '5340491': FHCT.NotYetRecruiting,
+            '5340494': FHCT.Recruiting,
+            '5340497': FHCT.Suspended,
+            '5340500': FHCT.TemporarilyNotAvailableForExpandedAccess,
+            '5340503': FHCT.Terminated,
+            '5340506': FHCT.Withdrawn,
+        }
+        if hasattr(self, 'recruitmentstatus'):
+            ctype = self.recruitmentstatus['cid'].strip()
+            return ttypes.get(ctype, default)
+        return default
+
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-        r.set(RDF.type, FHCT.ClinicalTrial)
+        r.set(RDF.type, self.assign_type())
         try:
             r.set(RDFS.label, Literal(self.brieftitle))
         except AttributeError:
