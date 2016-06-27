@@ -29,7 +29,7 @@ internal = """
  <query>
   <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
    <and>
-    <attribute argument="12000" name="intOrExt" operator="equals"/>
+    <relation minCount="1" name="CARD_has_ORGA"/>
    </and>
   </filter>
  </query>
@@ -43,7 +43,7 @@ class OrgaHarvest(ThreadedHarvest):
         self.graph = Graph()
         self.threads = threads
         self.vmodel = vmodel
-        self.page_size = 30
+        #self.page_size = 30
 
 
 def harvest():

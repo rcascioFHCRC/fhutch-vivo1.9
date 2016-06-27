@@ -119,9 +119,9 @@ class Person(BaseModel):
                 g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
                 continue
             # Skip external cards for now
-            if (hasattr(card, 'typeofcard') is True) and\
-                (card.typeofcard.get('cid') == '12007'):
-               continue
+            # if (hasattr(card, 'typeofcard') is True) and\
+            #     (card.typeofcard.get('cid') == '12007'):
+            #    continue
             # Skip cards that aren't current
             if (hasattr(card, 'currentposition') is True) and\
                  (card.currentposition.get('cid') != '11288'):
@@ -329,6 +329,9 @@ class Position(BaseModel):
         elif ptype == '12167':
             r.set(RDF.type, VIVO.FacultyPosition)
             r.set(VIVO.rank, Literal(20, datatype=XSD.integer))
+        elif ptype == '12007':
+            r.set(RDF.type, FHD.ExternalPosition)
+            r.set(VIVO.rank, Literal(60, datatype=XSD.integer))
         else:
             r.set(RDF.type, VIVO.Position)
             r.set(VIVO.rank, Literal(30, datatype=XSD.integer))
