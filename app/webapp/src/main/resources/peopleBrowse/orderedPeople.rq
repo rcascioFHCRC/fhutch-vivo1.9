@@ -1,7 +1,8 @@
-select ?p ?name ?picture ?description ?email ?phone
+select ?p ?name ?ptitle ?picture ?description ?email ?phone
 where {
     ?p a tmp:Person ;
         rdfs:label ?name ;
+    OPTIONAL { ?p tmp:ptitle ?ptitle }
     OPTIONAL { ?p tmp:pic ?picture }
     OPTIONAL { ?p tmp:description ?description }
     OPTIONAL { ?p tmp:email ?email }

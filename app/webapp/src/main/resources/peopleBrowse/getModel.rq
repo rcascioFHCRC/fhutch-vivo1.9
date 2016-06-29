@@ -1,6 +1,7 @@
 construct {
     ?p a tmp:Person ;
         rdfs:label ?name ;
+        tmp:ptitle ?pTitle ;
         tmp:pic ?picture ;
         tmp:description ?desc ;
         tmp:email ?email ;
@@ -40,11 +41,18 @@ where {
         ?ec vcard:email ?email .
     }
     UNION {
-            ?p a foaf:Person ;
-                fhd:sortLetter ?startswith .
-            ?p obo:ARG_2000028 ?vci .
-            ?vci vcard:hasTelephone ?pc .
-            ?pc vcard:telephone ?phone .
+        ?p a foaf:Person ;
+            fhd:sortLetter ?startswith .
+        ?p obo:ARG_2000028 ?vci .
+        ?vci vcard:hasTelephone ?pc .
+        ?pc vcard:telephone ?phone .
+    }
+    UNION {
+        ?p a foaf:Person ;
+            fhd:sortLetter ?startswith .
+        ?p obo:ARG_2000028 ?vci .
+        ?vci vcard:hasTitle ?ti .
+        ?ti vcard:title ?pTitle .
     }
 
 }

@@ -80,6 +80,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
                 Literal name = soln.getLiteral("name");
                 Resource person = soln.getResource("p");
                 thisPerson.put("name", name.toString());
+                thisPerson.put("ptitle", soln.get("ptitle"));
                 thisPerson.put("uri", person.toString());
                 thisPerson.put("url", getURL(person.toString(), vreq));
                 thisPerson.put("picture", soln.getLiteral("picture"));

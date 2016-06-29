@@ -12,6 +12,9 @@
         <#if classGroup?contains("expertise")>
             <div class="aside"><a href="./expertise-browse">Explore areas of expertise</a></div>
         </#if>
+        <#if classGroup?contains("InternalOrgs")>
+            <div class="aside"><a href="./org-browse">Browse by organization structure</a></div>
+        </#if>
     </section>
 
     <#include "menupage-browse.ftl">

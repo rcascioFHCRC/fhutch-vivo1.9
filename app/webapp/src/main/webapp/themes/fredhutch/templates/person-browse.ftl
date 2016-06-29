@@ -41,7 +41,7 @@
             </div>
             <div class="details">
                 <div class="name">
-                    <a href="${person.url}">${person.name}</a>
+                    <a href="${person.url}">${person.name}<#if (person.ptitle)?hasContent>, ${person.ptitle}</#if></a>
                 </div>
                 <#assign positions = person.positions!>
                 <#if positions?hasContent>
