@@ -88,14 +88,12 @@ class Person(BaseModel):
 
     @property
     def _first(self):
-        """
-        Use nickname for first name if it's present per AMC.
-        """
+        return self.cffirstnames
+
+    @property
+    def _nickname(self):
         if hasattr(self, 'nickname'):
-            first = self.nickname
-        else:
-            first = self.cffirstnames
-        return first
+            return self.nickname
 
     @property
     def orcid_uri(self):
@@ -131,7 +129,11 @@ class Person(BaseModel):
         return g
 
     def _label(self):
-        l = "{}, {}".format(self.cffamilynames, self._first)
+        """
+        Use nickname for first name if it's present per AMC.
+        """
+        first = self._nickname or self._first
+        l = "{}, {}".format(self.cffamilynames, first)
         if hasattr(self, 'middlename'):
             l + " " + self.middlename
         return l
@@ -143,6 +145,8 @@ class Person(BaseModel):
         p.add(RDF.type, FOAF.Person)
         p.set(RDFS.label, Literal(self._label()))
         p.set(CONVERIS.converisId, Literal(self.cid))
+        if self._nickname is not None:
+            p.set(FHD.nickname, Literal(self._nickname))
         if hasattr(self, 'cfresint'):
             p.set(VIVO.researchOverview, Literal(self.cfresint))
         if hasattr(self, 'orcid'):

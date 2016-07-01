@@ -208,5 +208,10 @@ fhd:video a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     vitro:inClassGroup      <http://vivoweb.org/ontology#vitroPropertyGrouplinks> .
 
+fhd:nickname a owl:DatatypeProperty ;
+    rdfs:label "nickname"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inClassGroup     <http://vivoweb.org/ontology#vitroPropertyGroupaddress> .
+
 fhp:Publication vitro:customDisplayViewAnnot
           "individual--fhd-publication.ftl"^^xsd:string .
