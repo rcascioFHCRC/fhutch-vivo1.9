@@ -124,6 +124,7 @@
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
 	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
   <#assign skipThis = propertyGroups.pullProperty(orcidProp)!>
+  <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#briefDescription")!>
 </#if>
 
 <!-- Property group menu or tabs -->
