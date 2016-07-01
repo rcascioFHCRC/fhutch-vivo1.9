@@ -91,10 +91,6 @@
                             <@p.editingLinks "${title.localName}" "${title.name}" statement editable title.rangeUri />
                         </#list>
                     </#if>
-                    <#-- If preferredTitle is unpopulated, display mostSpecificTypes -->
-                    <#if ! (title.statements)?has_content>
-                        <@p.mostSpecificTypes individual />
-                    </#if>
                 </h1>
             </#if>
             <!-- Positions -->
