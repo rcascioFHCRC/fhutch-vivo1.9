@@ -215,3 +215,38 @@ fhd:nickname a owl:DatatypeProperty ;
 
 fhp:Publication vitro:customDisplayViewAnnot
           "individual--fhd-publication.ftl"^^xsd:string .
+
+
+
+fhd:Award  a owl:Class ;
+    rdfs:label "Award"@en-US ;
+    vitro:inClassGroup   <http://vivoweb.org/ontology#vitroPropertyGroupresearch> .
+
+fhd:awardedOn a owl:DatatypeProperty ;
+    rdfs:label "date received"@en-US ;
+    rdfs:domain fhd:Award ;
+    rdfs:range xsd:dateTime .
+
+fhd:awardee a owl:ObjectProperty ;
+    rdfs:label "awardee"@en-US ;
+    rdfs:domain fhd:Award ;
+    rdfs:range foaf:Person ;
+    owl:inverseOf fhd:awardedTo .
+
+fhd:awardedTo a owl:ObjectProperty ;
+        rdfs:label "awarded"@en-US ;
+        rdfs:domain foaf:Person ;
+        rdfs:range fhd:Award ;
+        owl:inverseOf fhd:awardee .
+
+fhd:awardedBy a owl:ObjectProperty ;
+    rdfs:label "awarded by"@en-US ;
+    rdfs:domain fhd:Award ;
+    rdfs:range foaf:Organization ;
+    owl:inverseOf fhd:awarded .
+
+fhd:awarded a owl:ObjectProperty ;
+        rdfs:label "awarded"@en-US ;
+        rdfs:domain foaf:Organization ;
+        rdfs:range fhd:Award ;
+        owl:inverseOf fhd:awards .
