@@ -125,6 +125,7 @@
 	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
   <#assign skipThis = propertyGroups.pullProperty(orcidProp)!>
   <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#briefDescription")!>
+  <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#nickname")!>
 </#if>
 
 <!-- Property group menu or tabs -->
