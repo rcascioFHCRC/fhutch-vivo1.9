@@ -32,6 +32,7 @@ where {
             ?parentOrg obo:BFO_0000051 ?org ;
                        rdfs:label ?parentOrgName .
         }
+        FILTER NOT EXISTS { ?position a fhd:FormerPosition }
     }
     UNION {
         ?p a foaf:Person ;

@@ -100,7 +100,7 @@
             ?dateTimeStartValue core:dateTime ?dateTimeStart .
             ?dateTimeInterval core:end ?dateTimeEndValue .
             ?dateTimeEndValue core:dateTime ?dateTimeEnd .
-	    ?position core:rank ?rank .
+	        ?position core:rank ?rank .
             ?position core:relates ?org .
             ?org rdfs:label ?orgName .
             ?org obo:BFO_0000050 ?middleOrg .
@@ -112,37 +112,37 @@
         {
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
             }
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position rdfs:label ?positionTitle .
             }
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:rank ?rank .
             }
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:hrJobTitle ?hrJobTitle .
             }
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position vitro:mostSpecificType ?subclass .
                 ?subclass rdfs:subClassOf core:Position .
             }
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:dateTimeInterval ?dateTimeInterval .
                 ?dateTimeInterval core:start ?dateTimeStartValue .
                 ?dateTimeStartValue core:dateTime ?dateTimeStart .
@@ -150,7 +150,7 @@
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:dateTimeInterval ?dateTimeInterval .
                 ?dateTimeInterval core:end ?dateTimeEndValue .
                 ?dateTimeEndValue core:dateTime ?dateTimeEnd .
@@ -158,7 +158,7 @@
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:relates ?org .
                 ?org a foaf:Organization .
                 ?org rdfs:label ?orgName .
@@ -166,7 +166,7 @@
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:relates ?org .
                 ?org a foaf:Organization .
                 ?org obo:BFO_0000050 ?middleOrg .
@@ -175,14 +175,13 @@
             UNION
             {
                 ?subject ?property ?position .
-                ?position a core:Position .
+                ?position a fhd:FormerPosition .
                 ?position core:relates ?org .
                 ?org a foaf:Organization .
                 ?org obo:BFO_0000050 ?middleOrg .
                 ?middleOrg obo:BFO_0000050 ?outerOrg .
                 ?outerOrg rdfs:label ?outerOrgName .
             }
-            FILTER NOT EXISTS { ?position a fhd:FormerPosition .}
         }
     </query-construct>
 
