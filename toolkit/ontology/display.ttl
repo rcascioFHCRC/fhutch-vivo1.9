@@ -250,3 +250,8 @@ fhd:awarded a owl:ObjectProperty ;
         rdfs:domain foaf:Organization ;
         rdfs:range fhd:Award ;
         owl:inverseOf fhd:awards .
+
+
+fhd:FormerPosition  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    rdfs:label "former position"@en-US .

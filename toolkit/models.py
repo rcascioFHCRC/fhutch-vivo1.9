@@ -116,16 +116,18 @@ class Person(BaseModel):
                  (card.positiontype.get('cid') == '12166'):
                 g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
                 continue
+            # Former positions
+            if (hasattr(card, 'currentposition') is True) and (card.currentposition.get('cid') == '11289'):
+                g += client.to_graph(card, FormerPosition)
+                g.add((self.uri, VIVO.relatedBy, card_uri(card.cid)))
+                continue
             # Skip external cards for now
             # if (hasattr(card, 'typeofcard') is True) and\
             #     (card.typeofcard.get('cid') == '12007'):
             #    continue
-            # Skip cards that aren't current
-            if (hasattr(card, 'currentposition') is True) and\
-                 (card.currentposition.get('cid') != '11288'):
-                continue
             g += client.to_graph(card, Position)
             g.add((self.uri, VIVO.relatedBy, card_uri(card.cid)))
+
         return g
 
     def _label(self):
@@ -383,6 +385,20 @@ class Position(BaseModel):
         # people go to positions
         # orgs go to positions
 
+        return g
+
+
+class FormerPosition(Position):
+
+    def add_type_rank(self):
+        """
+        Position type.
+        """
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, FHD.FormerPosition)
+        # former will always be last
+        r.set(VIVO.rank, Literal(75, datatype=XSD.integer))
         return g
 
 
