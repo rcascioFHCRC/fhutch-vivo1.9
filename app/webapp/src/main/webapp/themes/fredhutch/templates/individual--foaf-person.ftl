@@ -94,7 +94,7 @@
                 </h1>
             </#if>
             <!-- Positions -->
-            <#include "individual-positions.ftl">
+            <#include "person-positions.ftl">
         </header>
 
         <!-- Overview -->
