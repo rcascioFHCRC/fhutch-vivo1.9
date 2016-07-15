@@ -19,6 +19,8 @@ vdata/
 venv
 
 pictures/
+clinicaltrials.csv
+tmp_*py
 
 watch.sh
 *sublime*
