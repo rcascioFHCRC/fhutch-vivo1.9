@@ -258,6 +258,39 @@ fhd:awarded a owl:ObjectProperty ;
         owl:inverseOf fhd:awards .
 
 
+#extra positions
+
 fhd:FormerPosition  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       70 ;
     rdfs:label "former position"@en-US .
+
+fhd:Clinician  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       10 ;
+    rdfs:label "Clinician"@en-US .
+
+fhd:Emeritus  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       20 ;
+    rdfs:label "Emeritus"@en-US .
+
+fhd:EndowedChair  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot      30 ;
+    rdfs:label "Endowed Chair"@en-US .
+
+fhd:Membership  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       40 ;
+    rdfs:label "Membership"@en-US .
+
+fhd:StaffScientist  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       50 ;
+    rdfs:label "Staff Scientist"@en-US .
+
+fhd:PostDoctoral  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       60 ;
+    rdfs:label "Post Doctoral"@en-US .
