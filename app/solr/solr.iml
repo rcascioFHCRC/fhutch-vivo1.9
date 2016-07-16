@@ -8,6 +8,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="vitro-solr" />
     <orderEntry type="library" name="Maven: org.vivoweb:vitro-solr:war:1.9.0-SNAPSHOT" level="project" />
   </component>
 </module>
