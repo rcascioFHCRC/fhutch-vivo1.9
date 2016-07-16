@@ -2,19 +2,8 @@
 
 <#-- Template for the body of the org browse page -->
 
-<div class="org-browse-header">
-    <h2>${title}</h2>
-    <div><a href="./organizations">Browse by organization type</a></div>
-</div>
-
-
-<div id="org-tree">
-    <h3>Browse by organization structure</h3>
-    <ul>
-    <li class="top-org"><a href="${topUrl}">Fred Hutchinson Cancer Research Center Leadership</a></li>
-    <#list tree as org>
-    <#assign kids = org.children!>
-        <li class="top-org"><a href="${org.url}">${org.name}</a><#if kids?hasContent><span class="tree-toggler chevron bottom"></span></#if>
+<#macro branch org kids>
+  <li class="top-org"><a href="${org.url}">${org.name}</a><#if kids?hasContent><span class="tree-toggler chevron bottom"></span></#if>
             <ul class="sub-org tree">
                 <#list kids as sub>
                 <#assign gkids = sub.children!>
@@ -40,7 +29,37 @@
                     </li>
                 </#list>
             </ul>
-        </li>
+     </li>
+</#macro>
+
+<div class="org-browse-header">
+    <h2>${title}</h2>
+    <div><a href="./organizations">Browse by organization type</a></div>
+</div>
+
+<#-- <h1><@dumpAll/></h1> -->
+
+<div id="org-tree">
+    <h3>Browse by organization structure</h3>
+    <h4><a class="top-org" href="${topUrl}">Fred Hutchinson Cancer Research Center Leadership</a></h4>
+
+    <h4>Divisions</h4>
+    <ul>
+    <#list divisions as division>
+        <#assign kids = division.children!>
+        <#if kids?hasContent>
+            <@branch org=division kids=kids/>
+        </#if>
+    </#list>
+    </ul>
+
+    <h4>Scientific Initiatives</h4>
+    <ul>
+    <#list sciInit as sciI>
+        <#assign kids = sciI.children!>
+        <#if kids?hasContent>
+            <@branch org=sciI kids=kids/>
+        </#if>
     </#list>
     </ul>
 

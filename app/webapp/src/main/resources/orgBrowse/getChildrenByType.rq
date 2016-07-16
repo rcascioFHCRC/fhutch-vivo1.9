@@ -1,0 +1,7 @@
+select ?o ?name
+where {
+    ?o a ?orgType ;
+        #tmp:parent ?parent ;
+        rdfs:label ?name
+}
+ORDER BY ?name

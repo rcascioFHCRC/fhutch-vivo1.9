@@ -1,12 +1,14 @@
 construct {
-    ?o rdfs:label ?name ;
+    ?o a ?orgType ;
+        rdfs:label ?name ;
         tmp:parent ?parent .
     ?parent rdfs:label ?parentName ;
         tmp:child ?o .
 }
 where {
     ?o a foaf:Organization ;
+        a ?orgType ;
         rdfs:label ?name ;
-         obo:BFO_0000050 ?parent .
+        obo:BFO_0000050 ?parent .
     ?parent rdfs:label ?parentName .
 }
