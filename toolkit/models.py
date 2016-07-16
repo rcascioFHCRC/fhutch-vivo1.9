@@ -321,24 +321,31 @@ class Position(BaseModel):
         """
         Position type.
         """
+        pos_ranks = {
+            '12169': (VIVO.FacultyAdministrativePosition, 10),
+            '12167':  (VIVO.FacultyPosition, 20),
+            '12173': (FHD.Clinician, 40),
+            '6259451': (FHD.Emeritus, 40),
+            '6268052': (FHD.EndowedChair, 30),
+            '12172': (FHD.Membership, 40),
+            '12170': (FHD.StaffScientist, 40),
+            '12171': (FHD.Postdoctoral, 40),
+        }
+
         g = Graph()
         r = Resource(g, self.uri)
         try:
             ptype = self.positiontype['cid']
         except AttributeError:
-            ptype = None
+            ptype = 'null'
 
-        # Leadership
-        if ptype == '12169':
-            r.set(RDF.type, VIVO.FacultyAdministrativePosition)
-            r.set(VIVO.rank, Literal(10, datatype=XSD.integer))
-        # Faculty
-        elif ptype == '12167':
-            r.set(RDF.type, VIVO.FacultyPosition)
-            r.set(VIVO.rank, Literal(20, datatype=XSD.integer))
-        else:
+        vtype, rank = pos_ranks.get(ptype, (None, None))
+        if vtype is None:
             r.set(RDF.type, VIVO.Position)
-            r.set(VIVO.rank, Literal(30, datatype=XSD.integer))
+            r.set(VIVO.rank, Literal(50, datatype=XSD.integer))
+        else:
+            r.set(RDF.type, vtype)
+            r.set(VIVO.rank, Literal(rank, datatype=XSD.integer))
 
         # Look for external positions and give lower rank
         if self.typeofcard['cid'] == '12007':
