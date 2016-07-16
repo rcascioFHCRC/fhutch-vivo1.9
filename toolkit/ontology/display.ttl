@@ -1,4 +1,5 @@
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix fhp: <http://vivo.fredhutch.org/ontology/publications#> .
 @prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
@@ -91,6 +92,11 @@ fhd:ScientificInitiative a          owl:Class ;
 
 fhd:SharedResource  a          owl:Class ;
         rdfs:label               "Shared Resource"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:InternalOrganization .
+
+fhd:InterdisciplinaryResearchCenter  a          owl:Class ;
+        rdfs:label               "Interdisciplinary Research Center "@en-US ;
         vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf         fhd:InternalOrganization .
 

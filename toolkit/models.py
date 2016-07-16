@@ -448,6 +448,7 @@ class Organization(BaseModel):
             '11740': FHD.ScientificInitiative,
             '11731': FHD.SharedResource,
             '11732': FHD.Study,
+            '6398350': FHD.InterdisciplinaryResearchCenter
         }
         try:
             otype = self.typeoforga['cid']
