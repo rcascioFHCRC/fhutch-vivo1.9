@@ -215,7 +215,10 @@ class Person(BaseModel):
         sdesc = self.shortdescription
         title = ", ".join([sd.strip() for sd in sdesc.split(',')[1:]])
         if title == "":
-            return None
+            if hasattr(self, 'academictitle'):
+                title = self.academictitle
+            else:
+                return None
         g = Graph()
         vt = Resource(g, self.vcard_title_uri)
         vt.set(RDF.type, VCARD.Title)
