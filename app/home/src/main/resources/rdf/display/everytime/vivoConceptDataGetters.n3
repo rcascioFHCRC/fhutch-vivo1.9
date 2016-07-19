@@ -25,6 +25,7 @@ display:getDepartmentDataGetter
         PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
         PREFIX vivo: <http://vivoweb.org/ontology/core#>
         PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+        PREFIX obo: <http://purl.obolibrary.org/obo/>
         SELECT DISTINCT (str(?departmentLabel) AS ?deptLabel) ?dept
         WHERE {
             ?individualURI vivo:researchAreaOf ?person .
@@ -32,7 +33,9 @@ display:getDepartmentDataGetter
             ?posn a vivo:Position .
             ?posn  vivo:relates ?dept .
             ?dept a foaf:Organization .
-            ?dept rdfs:label ?departmentLabel
+            ?dept rdfs:label ?departmentLabel .
+            # org has to be sub of fhutch
+            ?dept obo:BFO_0000050 <http://vivo.fredhutch.org/individual/c638881> .
             OPTIONAL { ?posn vivo:dateTimeInterval ?dti
                      OPTIONAL { ?dti vivo:end ?end .
                                 ?end vivo:dateTime ?endDate
