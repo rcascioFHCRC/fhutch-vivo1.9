@@ -445,7 +445,7 @@ class Organization(BaseModel):
         except AttributeError:
             return g
 
-    def get_type(self):
+    def get_type(self, default=FOAF.Organization):
         # Map of Converis type of org to VIVO class.
         m = {
             '11739': FHD.CoreFacilities,
@@ -458,14 +458,16 @@ class Organization(BaseModel):
             '11740': FHD.ScientificInitiative,
             '11731': FHD.SharedResource,
             '11732': FHD.Study,
-            '6398350': FHD.InterdisciplinaryResearchCenter
+            '11742': VIVO.University,
+            '11744': VIVO.Company,
+            '6398350': FHD.InterdisciplinaryResearchCenter,
         }
         try:
             otype = self.typeoforga['cid']
-            oty = m.get(otype, FHD.Organization)
+            oty = m.get(otype, default)
             return oty
         except AttributeError:
-            return FHD.Organization
+            return default
 
     def add_vcard_weblink(self):
         """
@@ -493,6 +495,7 @@ class Organization(BaseModel):
         g.add((vci_uri, VCARD.hasURL, vcu_uri))
         # Relate web link and org
         g.add((self.uri, OBO['ARG_2000028'], vci_uri))
+
         return g
 
 
@@ -513,6 +516,12 @@ class Organization(BaseModel):
             g += self.get_positions()
 
         g += self.add_vcard_weblink()
+
+        # determine if this is an internal or external org
+        if hasattr(self, 'intorext'):
+            if self.intorext['cid'] == '12000':
+                o.add(RDF.type, FHD.InternalOrganization)
+
         return g
 
 
