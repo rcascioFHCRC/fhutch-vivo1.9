@@ -65,6 +65,14 @@ public class FredHutchPagedSearchController extends FreemarkerHttpServlet {
     private static final String PARAM_QUERY_TEXT = "querytext";
     protected static final Map<FredHutchPagedSearchController.Format, Map<FredHutchPagedSearchController.Result, String>> templateTable = setupTemplateTable();
     public static final int MAX_QUERY_LENGTH = 500;
+    public static final ArrayList<String> FACET_EXCLUDE = new ArrayList<String>() {{
+        add("http://vivo.fredhutch.org/ontology/publications#");
+        add("http://vivo.fredhutch.org/ontology/display#HutchNews");
+        add("http://www.w3.org/2004/02/skos/core#Concept");
+        add("http://xmlns.com/foaf/0.1/Organization");
+        add("http://vivo.fredhutch.org/ontology/display#InternalOrganization");
+        add("http://vivo.fredhutch.org/ontology/clinicaltrials#ClinicalTrial");
+    }};
 
     public FredHutchPagedSearchController() {
     }
@@ -347,11 +355,6 @@ public class FredHutchPagedSearchController extends FreemarkerHttpServlet {
             do {
                 if(!vClassLinks.hasNext()) {
                     classes.sort(Comparator.comparing(VClass::getName));
-//                    Collections.sort(classes, new Comparator() {
-//                        public int compare(VClass o1, VClass o2) {
-//                            return o1.compareTo(o2);
-//                        }
-//                    });
                     ArrayList vClassLinks1 = new ArrayList(classes.size());
                     Iterator ff1 = classes.iterator();
 
@@ -379,8 +382,10 @@ public class FredHutchPagedSearchController extends FreemarkerHttpServlet {
                     if(!"http://www.w3.org/2002/07/owl#Thing".equals(typeUri) && count1 != 0L) {
                         VClass ex = vclassDao.getVClassByURI(typeUri);
                         if(ex != null && !ex.isAnonymous() && ex.getName() != null && !"".equals(ex.getName()) && ex.getGroupURI() != null) {
-                            typeURItoCount.put(typeUri, Long.valueOf(count1));
-                            classes.add(ex);
+                            if(!FACET_EXCLUDE.contains(typeUri)) {
+                                typeURItoCount.put(typeUri, Long.valueOf(count1));
+                                classes.add(ex);
+                            }
                         }
                     }
                 } catch (Exception var18) {
