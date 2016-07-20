@@ -898,7 +898,7 @@
 
   <servlet>
     <servlet-name>SearchController</servlet-name>
-    <servlet-class>edu.cornell.mannlib.vitro.webapp.search.controller.PagedSearchController</servlet-class>
+    <servlet-class>org.fredhutch.controller.FredHutchPagedSearchController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>SearchController</servlet-name>
