@@ -58,24 +58,20 @@ public class FredHutchPagedSearchController extends FreemarkerHttpServlet {
     private static final String PARAM_QUERY_TEXT = "querytext";
     protected static final Map<FredHutchPagedSearchController.Format, Map<FredHutchPagedSearchController.Result, String>> templateTable = setupTemplateTable();
     public static final int MAX_QUERY_LENGTH = 500;
-//    public static final ArrayList<String> FACET_EXCLUDE = new ArrayList<String>() {{
-//        add("http://vivo.fredhutch.org/ontology/publications#Publication");
-//        add("http://vivo.fredhutch.org/ontology/display#HutchNews");
-//        add("http://www.w3.org/2004/02/skos/core#Concept");
-//        add("http://xmlns.com/foaf/0.1/Organization");
-//        add("http://vivo.fredhutch.org/ontology/display#InternalOrganization");
-//        add("http://vivo.fredhutch.org/ontology/clinicaltrials#ClinicalTrial");
-//    }};
-    public static List<String> FACET_EXCLUDE = null;
+    public static final ArrayList<String> FACET_EXCLUDE = new ArrayList<String>() {{
+        add("http://vivo.fredhutch.org/ontology/publications#Publication");
+        add("http://vivo.fredhutch.org/ontology/display#HutchNews");
+        add("http://www.w3.org/2004/02/skos/core#Concept");
+        add("http://xmlns.com/foaf/0.1/Organization");
+        add("http://vivo.fredhutch.org/ontology/display#InternalOrganization");
+        add("http://vivo.fredhutch.org/ontology/clinicaltrials#ClinicalTrial");
+    }};
 
     public FredHutchPagedSearchController() {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         VitroRequest vreq = new VitroRequest(request);
-        ConfigurationProperties configProps = ConfigurationProperties.getBean(vreq);
-        String excludes = configProps.getProperty("hutch.excludeFacetClasses");
-        FACET_EXCLUDE = new ArrayList<>(Arrays.asList(excludes.split(",")));
         boolean wasXmlRequested = this.isRequestedFormatXml(vreq);
         boolean wasCSVRequested = this.isRequestedFormatCSV(vreq);
         if(!wasXmlRequested && !wasCSVRequested) {
