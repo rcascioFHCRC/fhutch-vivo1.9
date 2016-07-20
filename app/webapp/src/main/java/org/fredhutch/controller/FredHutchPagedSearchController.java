@@ -10,6 +10,7 @@ import edu.cornell.mannlib.vitro.webapp.beans.ApplicationBean;
 import edu.cornell.mannlib.vitro.webapp.beans.Individual;
 import edu.cornell.mannlib.vitro.webapp.beans.VClass;
 import edu.cornell.mannlib.vitro.webapp.beans.VClassGroup;
+import edu.cornell.mannlib.vitro.webapp.config.ConfigurationProperties;
 import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.FreemarkerHttpServlet;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.UrlBuilder;
@@ -35,15 +36,7 @@ import edu.cornell.mannlib.vitro.webapp.web.templatemodels.searchresult.Individu
 import edu.ucsf.vitro.opensocial.OpenSocialManager;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -65,20 +58,24 @@ public class FredHutchPagedSearchController extends FreemarkerHttpServlet {
     private static final String PARAM_QUERY_TEXT = "querytext";
     protected static final Map<FredHutchPagedSearchController.Format, Map<FredHutchPagedSearchController.Result, String>> templateTable = setupTemplateTable();
     public static final int MAX_QUERY_LENGTH = 500;
-    public static final ArrayList<String> FACET_EXCLUDE = new ArrayList<String>() {{
-        add("http://vivo.fredhutch.org/ontology/publications#");
-        add("http://vivo.fredhutch.org/ontology/display#HutchNews");
-        add("http://www.w3.org/2004/02/skos/core#Concept");
-        add("http://xmlns.com/foaf/0.1/Organization");
-        add("http://vivo.fredhutch.org/ontology/display#InternalOrganization");
-        add("http://vivo.fredhutch.org/ontology/clinicaltrials#ClinicalTrial");
-    }};
+//    public static final ArrayList<String> FACET_EXCLUDE = new ArrayList<String>() {{
+//        add("http://vivo.fredhutch.org/ontology/publications#Publication");
+//        add("http://vivo.fredhutch.org/ontology/display#HutchNews");
+//        add("http://www.w3.org/2004/02/skos/core#Concept");
+//        add("http://xmlns.com/foaf/0.1/Organization");
+//        add("http://vivo.fredhutch.org/ontology/display#InternalOrganization");
+//        add("http://vivo.fredhutch.org/ontology/clinicaltrials#ClinicalTrial");
+//    }};
+    public static List<String> FACET_EXCLUDE = null;
 
     public FredHutchPagedSearchController() {
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         VitroRequest vreq = new VitroRequest(request);
+        ConfigurationProperties configProps = ConfigurationProperties.getBean(vreq);
+        String excludes = configProps.getProperty("hutch.excludeFacetClasses");
+        FACET_EXCLUDE = new ArrayList<>(Arrays.asList(excludes.split(",")));
         boolean wasXmlRequested = this.isRequestedFormatXml(vreq);
         boolean wasCSVRequested = this.isRequestedFormatCSV(vreq);
         if(!wasXmlRequested && !wasCSVRequested) {
