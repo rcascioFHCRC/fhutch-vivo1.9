@@ -39,6 +39,8 @@ fhd:class-group-organizations
         vitro:displayRank       4 ;
         vitro:mostSpecificType  vitro:ClassGroup .
 
+# Organizations
+
 fhd:Organization a          owl:Class ;
         rdfs:label               "Organization"@en-US ;
         vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
@@ -48,7 +50,6 @@ fhd:InternalOrganization a          owl:Class ;
         rdfs:label               "Internal Organization"@en-US ;
         vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf          fhd:Organization .
-
 
 fhd:CoreFacilities a          owl:Class ;
         rdfs:label               "Core Facilities"@en-US ;
@@ -104,6 +105,105 @@ fhd:Study  a          owl:Class ;
         rdfs:label               "Study"@en-US ;
         vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
         rdfs:subClassOf         fhd:InternalOrganization .
+
+# External orgs
+
+fhd:ExternalOrganization a          owl:Class ;
+        rdfs:label               "External Organization"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf          fhd:Organization .
+
+fhd:Charity  a          owl:Class ;
+        rdfs:label               "Charity"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:Consortium  a          owl:Class ;
+        rdfs:label               "Consortium"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:GovernmentInstituteAgency  a          owl:Class ;
+        rdfs:label               "Government Institute or Agency"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:Hospital  a          owl:Class ;
+        rdfs:label               "Hospital"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:HospitalDepartment  a          owl:Class ;
+        rdfs:label               "Hospital Department"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:Hospital .
+
+fhd:Industry  a          owl:Class ;
+        rdfs:label               "Industry"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:K12School  a          owl:Class ;
+        rdfs:label               "K12 School"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:LicensingBody  a          owl:Class ;
+        rdfs:label               "Licensing Body"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:NonProfit  a          owl:Class ;
+        rdfs:label               "Non-Profit"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:ProfessionalSociety  a          owl:Class ;
+        rdfs:label               "Professional Organization or Society"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:Publisher  a          owl:Class ;
+        rdfs:label               "Publisher"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:ResearchCollaborative  a          owl:Class ;
+        rdfs:label               "Research Collaborative"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:ResearchCouncil  a          owl:Class ;
+        rdfs:label               "Research Council"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:ResearchInstitute  a          owl:Class ;
+        rdfs:label               "Research Institute"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:ResearchProgram  a          owl:Class ;
+        rdfs:label               "Research Program"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:UniversityCollege  a          owl:Class ;
+        rdfs:label               "University or College"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+fhd:UniversityDepartmentSchool  a          owl:Class ;
+        rdfs:label               "University Department or School"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:UniversityCollege .
+
+fhd:UniversitySystem  a          owl:Class ;
+        rdfs:label               "University System"@en-US ;
+        vitro:inClassGroup      d:vitroClassGroupInternalOrgs ;
+        rdfs:subClassOf         fhd:ExternalOrganization .
+
+# Expertise
 
 fhd:Expertise  a          owl:Class ;
         rdfs:label               "Expertise"@en-US ;

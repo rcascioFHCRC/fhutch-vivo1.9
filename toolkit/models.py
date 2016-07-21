@@ -448,6 +448,7 @@ class Organization(BaseModel):
     def get_type(self, default=FOAF.Organization):
         # Map of Converis type of org to VIVO class.
         m = {
+            '11728': FHD.InternalOrganization,
             '11739': FHD.CoreFacilities,
             '11734': FHD.Department,
             '11736': FHD.Division,
@@ -458,9 +459,28 @@ class Organization(BaseModel):
             '11740': FHD.ScientificInitiative,
             '11731': FHD.SharedResource,
             '11732': FHD.Study,
-            '11742': VIVO.University,
-            '11744': VIVO.Company,
             '6398350': FHD.InterdisciplinaryResearchCenter,
+            #external
+            '11729': FHD.ExternalOrganization,
+            '11753': FHD.Charity,
+            '11741': FHD.Consortium,
+            '11750': FHD.GovernmentInstituteAgency,
+            '11745': FHD.Hospital,
+            '11757': FHD.HospitalDepartment,
+            '11744': FHD.Industry,
+            '6025988': FHD.K12School,
+            '11754': FHD.LicensingBody,
+            '11749': FHD.NonProfit,
+            '5058454': FHD.ProfessionalSociety,
+            '11752': FHD.Publisher,
+            '11747': FHD.ResearchCollaborative,
+            '11743': FHD.ResearchCouncil,
+            '11748': FHD.ResearchInstitute,
+            '11751': FHD.ResearchProgram,
+            '11742': FHD.UniversityCollege,
+            '11755': FHD.UniversityDepartmentSchool,
+            '11756': FHD.UniversitySystem
+
         }
         try:
             otype = self.typeoforga['cid']
