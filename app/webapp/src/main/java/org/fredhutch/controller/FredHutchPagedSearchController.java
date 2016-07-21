@@ -63,7 +63,9 @@ public class FredHutchPagedSearchController extends FreemarkerHttpServlet {
         add("http://vivo.fredhutch.org/ontology/display#HutchNews");
         add("http://www.w3.org/2004/02/skos/core#Concept");
         add("http://xmlns.com/foaf/0.1/Organization");
+        add("http://vivo.fredhutch.org/ontology/display#Organization");
         add("http://vivo.fredhutch.org/ontology/display#InternalOrganization");
+        add("http://vivo.fredhutch.org/ontology/display#ExternalOrganization");
         add("http://vivo.fredhutch.org/ontology/clinicaltrials#ClinicalTrial");
     }};
 
