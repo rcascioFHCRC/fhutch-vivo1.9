@@ -1812,9 +1812,8 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
 }*/
 
 
-#coauthor-network-container {
-    clear:both;
-    padding-top:1em;
+.ca-network {
+    margin-top: 1em;
 }
 
 .pub-id-link {

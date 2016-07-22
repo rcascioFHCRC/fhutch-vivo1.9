@@ -7,6 +7,7 @@
 
 <#include "individual-setup.ftl">
 <#import "lib-vivo-properties.ftl" as vp>
+<#import "utils/vcards.ftl" as vc>
 <#--Number of labels present-->
  <#if !labelCount??>
      <#assign labelCount = 0 >
@@ -23,8 +24,8 @@
 <#assign imageProp = "http://vivo.fredhutch.org/ontology/display#image">
 <#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
 
-<#--add the VIVO-ORCID interface -->
-<#include "individual-orcidInterface.ftl">
+<#assign vcardName = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Name")!>
+<#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Voice")!>
 
 <section itemscope itemtype="http://schema.org/Person" id="individual-intro" class="vcard person" role="region">
 
@@ -45,20 +46,34 @@
         </div>
         <#assign primaryEmail = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Work")!>
         <ul id="contacts">
+            <#if vcardName?has_content>
+              <li class="person-contact"><@vc.showFullName vcardName.statements[0] />
+              </li>
+            </#if>
+            <#if vcardPhone?has_content>
+                <#if vcardPhone.statements?has_content>
+                  <#list vcardPhone.statements as statement>
+                      <li class="person-contact">${statement.number!}</li>
+                  </#list>
+                </#if>
+            </#if>
             <#if primaryEmail?has_content>
                 <#if primaryEmail.statements?has_content>
                 <#list primaryEmail.statements as statement>
-                  <li class="person-contact"><img src="../images/emailIconSmall.gif"/>${statement.emailAddress!}</li>
+                    <li class="person-contact"><img src="../images/emailIconSmall.gif"/>${statement.emailAddress!}</li>
                 </#list>
-                </#if>
-              </#if>
+            </#if>
+            </#if>
               <!-- orcid -->
               <#assign orcid = propertyGroups.getProperty(orcidProp)!>
               <#if orcid?has_content>
                 <#if orcid.statements[0]??>
-                  <li class="person-contact"><img src="https://orcid.org/sites/default/files/images/orcid_16x16(1).gif"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
+                  <li class="person-contact"><img src="../images/orcid.gif"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
                 </#if>
               </#if>
+              <li class="ca-network">
+                <#include "utils/coauthor-viz.ftl">
+              </li>
 
         </ul>
         <!-- Websites -->
@@ -99,16 +114,8 @@
 
         <!-- Overview -->
         <#include "individual-overview.ftl">
-
         <!-- Research Areas -->
         <#include "individual-researchAreas.ftl">
-
-
-
-        <div id="coauthor-network-container">
-          <#include "individual-visualizationFoafPerson.ftl">
-        </div>
-
         <!-- Geographic Focus -->
         <#include "individual-geographicFocus.ftl">
     </section>

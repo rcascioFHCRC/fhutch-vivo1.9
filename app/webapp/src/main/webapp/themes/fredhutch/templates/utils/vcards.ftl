@@ -1,4 +1,5 @@
-<#-- Some vcard related helpers -->
+<#-- Use a macro to keep variable assignments local; otherwise the values carry over to the
+     next statement -->
 <#macro showFullName statement>
 
     <#if statement.fullName?has_content>
@@ -11,19 +12,4 @@
         <span itemprop="familyName">${statement.lastName!}</span><#if statement.suffix??>, ${statement.suffix!}</#if>
     </#if>
 
-</#macro>
-
-<#macro showEmail primaryEmail>
-    <#if primaryEmail.statements?has_content>
-        <#list primaryEmail.statements as statement>
-            <li class="person-contact"><img src="../images/emailIconSmall.gif"/>${statement.emailAddress!}</li>
-        </#list>
-    </#if>
-</#macro>
-
-
-<#macro showPhone statement>
-    <#if statement.telephone?has_content>
-        ${statement.telephone!}
-    </#if>
 </#macro>
