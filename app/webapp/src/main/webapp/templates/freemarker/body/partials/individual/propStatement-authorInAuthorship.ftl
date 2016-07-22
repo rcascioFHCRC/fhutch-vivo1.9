@@ -27,17 +27,7 @@
     <#local citationDetails>
             <#if statement.journal??>
                 <em>${statement.journal!}</em>.
-                <#if statement.volume??>
-                    ${statement.volume}
-                </#if>
-                <#if statement.issue??>
-                    , ${statement.issue}
-                </#if>
-                <#if statement.startPage?? && statement.endPage??>
-                    p. ${statement.startPage!}-${statement.endPage!}.
-                <#elseif statement.startPage??>
-                    p. ${statement.startPage!}.
-                </#if>.
+                <#if statement.volume??>${statement.volume}</#if><#if statement.issue??>, ${statement.issue}</#if><#if statement.startPage?? && statement.endPage??>. p. ${statement.startPage!}-${statement.endPage!}<#elseif statement.startPage??> p. ${statement.startPage!}</#if>.
             </#if>
     </#local>
 
