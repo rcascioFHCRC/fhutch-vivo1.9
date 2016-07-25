@@ -25,7 +25,8 @@
 <#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
 
 <#assign vcardName = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Name")!>
-<#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Voice")!>
+<#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Telephone")!>
+<#assign primaryEmail = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Work")!>
 
 <section itemscope itemtype="http://schema.org/Person" id="individual-intro" class="vcard person" role="region">
 
@@ -42,9 +43,6 @@
         <img class="individual-photo" src="${placeholderImageUrl(individual.uri)}" title = "${i18n().no_image}" alt="${i18n().placeholder_image}" width="${imageWidth!}" />
         </#if>
         <!-- Contact Info -->
-        <div id="individual-tools-people">
-        </div>
-        <#assign primaryEmail = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Work")!>
         <ul id="contacts">
             <#if vcardName?has_content>
               <li class="person-contact"><@vc.showFullName vcardName.statements[0] />
@@ -68,7 +66,7 @@
               <#assign orcid = propertyGroups.getProperty(orcidProp)!>
               <#if orcid?has_content>
                 <#if orcid.statements[0]??>
-                  <li class="person-contact"><img src="../images/orcid.gif"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
+                  <li class="person-contact"><img src="../images/orcid.png"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
                 </#if>
               </#if>
               <li class="ca-network">
