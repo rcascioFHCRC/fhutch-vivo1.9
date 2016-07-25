@@ -59,6 +59,11 @@ fhd:Division a          owl:Class ;
         vitro:inClassGroup      cg:vitroClassGrouporganizations ;
         rdfs:subClassOf          fhd:InternalOrganization .
 
+fhd:InterdisciplinaryResearchCenter a          owl:Class ;
+        rdfs:label               "Interdisciplinary Research Center"@en-US ;
+        vitro:inClassGroup      cg:vitroClassGrouporganizations ;
+        rdfs:subClassOf          fhd:InternalOrganization .
+
 fhd:Faculty a          owl:Class ;
         rdfs:label               "Faculty"@en-US ;
         vitro:inClassGroup      cg:vitroClassGrouporganizations ;
