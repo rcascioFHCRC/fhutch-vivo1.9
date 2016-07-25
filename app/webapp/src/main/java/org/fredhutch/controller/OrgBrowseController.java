@@ -34,6 +34,9 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
     public static final String CHILD_QUERY = "orgBrowse/getChildren.rq";
     public static final String CHILD_QUERY_BY_TYPE = "orgBrowse/getChildrenByType.rq";
     public static final String ORG_MODEL_QUERY = "orgBrowse/getStructure.rq";
+    public static final Resource divisionUri = ResourceFactory.createResource(FHD_PREFIX + "Division");
+    public static final Resource sciInitUri = ResourceFactory.createResource(FHD_PREFIX + "ScientificInitiative");
+    public static final Resource ircUri = ResourceFactory.createResource(FHD_PREFIX + "InterdisciplinaryResearchCenter");
 
     @Override
     protected ResponseValues processRequest(VitroRequest vreq) {
@@ -45,23 +48,31 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         //Starting with top level org uri, get orgs with
         Resource topUri = ResourceFactory.createResource(TOP_ORG);
         //Get child orgs
-        ArrayList<HashMap> orgTree = getChildren(orgModel, topUri, vreq);
+//        ArrayList<HashMap> orgTree = getChildren(orgModel, topUri, vreq);
         //Divisions and children
-        Resource divisionUri = ResourceFactory.createResource(FHD_PREFIX + "Division");
         ArrayList<HashMap> divisionTree = getChildrenByType(orgModel, divisionUri, vreq);
         //Sci initiatives
-        Resource sciInitUri = ResourceFactory.createResource(FHD_PREFIX + "ScientificInitiative");
         ArrayList<HashMap> sciITree = getChildrenByType(orgModel, sciInitUri, vreq);
+        //InterdisciplinaryResearchCenter
+        ArrayList<HashMap> ircTree = getChildrenByType(orgModel, ircUri, vreq);
 
         Map<String, Object> body = new HashMap<String, Object>();
-        body.put("tree", orgTree);
+        body.put("title", "Organizations");
+        //body.put("tree", orgTree);
         body.put("divisions", divisionTree);
         body.put("sciInit", sciITree);
-        body.put("title", "Organizations");
+        body.put("irc", ircTree);
         body.put("topUrl", getURL(TOP_ORG, vreq));
         return new TemplateResponseValues(TEMPLATE, body);
     }
 
+    /**
+     * Generic browse tree generator given a Jena model and parent URI.
+     * @param model
+     * @param parent
+     * @param vreq
+     * @return
+     */
     public static ArrayList<HashMap> getChildren(Model model, Resource parent, VitroRequest vreq) {
         ArrayList<HashMap> kids = new ArrayList<HashMap>();
         String rawQuery = readQuery(CHILD_QUERY);
@@ -81,7 +92,7 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
                 QuerySolution soln = results.nextSolution();
                 Literal name = soln.getLiteral("name");
                 String ouri = soln.getResource("o").toString();
-                thisOrg.put("name", name.toString());
+                thisOrg.put("name", name.getString());
                 thisOrg.put("uri", ouri);
                 thisOrg.put("url", getURL(ouri, vreq));
                 ArrayList<HashMap> gc = getChildren(model, ResourceFactory.createResource(ouri), vreq);
@@ -99,6 +110,14 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         return kids;
     }
 
+    /**
+     * Browse tree generator based on a type uri and RDF model
+     *
+     * @param model
+     * @param orgType
+     * @param vreq
+     * @return
+     */
     public static ArrayList<HashMap> getChildrenByType(Model model, Resource orgType, VitroRequest vreq) {
         ArrayList<HashMap> kids = new ArrayList<HashMap>();
         String rawQuery = readQuery(CHILD_QUERY_BY_TYPE);
@@ -119,7 +138,7 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
                 QuerySolution soln = results.nextSolution();
                 Literal name = soln.getLiteral("name");
                 String ouri = soln.getResource("o").toString();
-                thisOrg.put("name", name.toString());
+                thisOrg.put("name", name.getString());
                 thisOrg.put("uri", ouri);
                 thisOrg.put("url", getURL(ouri, vreq));
                 ArrayList<HashMap> gc = getChildren(model, ResourceFactory.createResource(ouri), vreq);
