@@ -142,11 +142,13 @@ class Person(BaseModel):
             duri = degree_uri(train.cid)
             train_label = train.shortdescription.replace(self.shortdescription, "")
             try:
-                degree, org, _ = re.search(re.compile("(.*)\s\([0-9]+\)\s(.*)\s\s(Degree|License|Certification|Postgraduate Training)$"), train_label).groups()
+                degree, org, _ = re.search(re.compile("(.*)\s\([0-9]+\)\s(.*)\s\s(Degree|License|Certification|Postgraduate Training|)$"), train_label).groups()
+                label = degree + ", " + org
             except AttributeError:
-                print>>sys.stderr, train.shortdescription
+                logging.warn("Failed to parse training: id {} -- {} ".format(train.cid, train.shortdescription))
+                #label = train_label
                 return g
-            g.add((duri, RDFS.label, Literal(degree + ", " + org)))
+            g.add((duri, RDFS.label, Literal(label)))
             g += client.to_graph(train, Degree)
             g.add((self.uri, VIVO.relatedBy, duri))
         return g
@@ -1091,7 +1093,10 @@ class Degree(BaseModel):
         return g
 
     def get_dti(self):
-        end = self.conferredon
+        try:
+            end = self.conferredon
+        except AttributeError:
+            end = None
         try:
             start = self.startedon
         except AttributeError:
