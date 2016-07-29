@@ -10,7 +10,7 @@
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
         PREFIX obo:   &lt;http://purl.obolibrary.org/obo/&gt;
 
-        SELECT DISTINCT
+        SELECT
             ?position
             ?positionTitle
             ?hrJobTitle
@@ -66,14 +66,6 @@
                 ?dateTimeInterval core:end ?dateTimeEndValue .
                 ?dateTimeEndValue core:dateTime ?dateTimeEnd .
             }
-
-            <collated>
-                OPTIONAL
-                {
-                    ?position vitro:mostSpecificType ?subclass .
-                    ?subclass rdfs:subClassOf core:Position .
-                }
-        </collated>
         <critical-data-required>
             FILTER ( bound(?org) )
         </critical-data-required>
@@ -92,9 +84,7 @@
         {
             ?subject ?property ?position .
             ?position rdfs:label ?positionTitle .
-            ?position vitro:mostSpecificType ?subclass .
             ?position core:hrJobTitle ?hrJobTitle .
-            ?subclass rdfs:subClassOf core:Position .
             ?position core:dateTimeInterval ?dateTimeInterval .
             ?dateTimeInterval core:start ?dateTimeStartValue .
             ?dateTimeStartValue core:dateTime ?dateTimeStart .
@@ -131,13 +121,6 @@
                 ?subject ?property ?position .
                 ?position a fhd:FormerPosition .
                 ?position core:hrJobTitle ?hrJobTitle .
-            }
-            UNION
-            {
-                ?subject ?property ?position .
-                ?position a fhd:FormerPosition .
-                ?position vitro:mostSpecificType ?subclass .
-                ?subclass rdfs:subClassOf core:Position .
             }
             UNION
             {
