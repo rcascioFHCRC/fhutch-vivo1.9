@@ -39,11 +39,7 @@
             }
 
             <collated>
-                OPTIONAL
-                {
-                    ?training vitro:mostSpecificType ?subclass .
-                    ?subclass rdfs:subClassOf fhd:EducationalTraining .
-                }
+                ?training vitro:mostSpecificType ?subclass .
             </collated>
         } ORDER BY ?subclass DESC(?dateTimeEnd)
     </query-select>
