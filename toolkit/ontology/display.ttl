@@ -392,3 +392,26 @@ fhd:PostDoctoral  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
     vitro:displayRankAnnot       60 ;
     rdfs:label "Post Doctoral"@en-US .
+
+
+# degrees / training
+
+fhd:EducationalTraining  a owl:Class ;
+    rdfs:subClassOf          skos:Concept ;
+    rdfs:label "Educational Training"@en-US .
+
+fhd:Certification  a owl:Class ;
+    rdfs:subClassOf          fhd:EducationalTraining ;
+    rdfs:label "Certification"@en-US .
+
+fhd:Degree  a owl:Class ;
+    rdfs:subClassOf          fhd:EducationalTraining ;
+    rdfs:label "Degree"@en-US .
+
+fhd:License  a owl:Class ;
+    rdfs:subClassOf          fhd:EducationalTraining ;
+    rdfs:label "License"@en-US .
+
+fhd:PostdoctoralTraining  a owl:Class ;
+    rdfs:subClassOf          fhd:EducationalTraining ;
+    rdfs:label "Postdoctoral Training"@en-US .

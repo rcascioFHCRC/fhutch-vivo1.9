@@ -4,6 +4,7 @@ VIVO models
 import hashlib
 import logging
 import re
+import sys
 import os
 
 from rdflib import Graph, Namespace, Literal, URIRef
@@ -43,6 +44,9 @@ def area_uri(cid):
     return D['c' + cid]
 
 def journal_uri(cid):
+    return D['c' + cid]
+
+def degree_uri(cid):
     return D['c' + cid]
 
 def hash_uri(prefix, value):
@@ -130,6 +134,23 @@ class Person(BaseModel):
 
         return g
 
+
+    def get_training(self):
+        g = Graph()
+        trainings = client.RelatedObject('Person', self.cid, 'EDUC_has_PERS')
+        for train in trainings:
+            duri = degree_uri(train.cid)
+            train_label = train.shortdescription.replace(self.shortdescription, "")
+            try:
+                degree, org, _ = re.search(re.compile("(.*)\s\([0-9]+\)\s(.*)\s\s(Degree|License|Certification|Postgraduate Training)$"), train_label).groups()
+            except AttributeError:
+                print>>sys.stderr, train.shortdescription
+                return g
+            g.add((duri, RDFS.label, Literal(degree + ", " + org)))
+            g += client.to_graph(train, Degree)
+            g.add((self.uri, VIVO.relatedBy, duri))
+        return g
+
     def _label(self):
         """
         Use nickname for first name if it's present per AMC.
@@ -192,6 +213,9 @@ class Person(BaseModel):
 
         # videos
         g += self.get_videos()
+
+        # degrees/training
+        g += self.get_training()
 
         # add single letter sort key for person browse
         p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
@@ -1025,5 +1049,113 @@ class ClinicalTrial(BaseModel):
         g += self.get_sponsors()
         g += self.get_pubs()
         g += self.get_investigators()
+
+        return g
+
+
+class Degree(BaseModel):
+
+    def _date(self, dtype, dv):
+        g = Graph()
+        date_obj = client.convert_date(dv)
+        date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
+        de = Resource(g, date_uri)
+        de.set(RDF.type, VIVO.DateTimeValue)
+        if date_obj is not None:
+            de.set(RDFS.label, Literal(dv))
+            de.set(
+                VIVO.dateTime,
+                Literal(date_obj, datatype=XSD.date)
+            )
+            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+        return date_uri, g
+
+    def add_date(self):
+        g = Graph()
+        if hasattr(self, "conferredon"):
+            dv = self.conferredon
+        else:
+            return g
+        date_obj = client.convert_date(dv)
+        date_uri = URIRef(DATA_NAMESPACE + 'date' + self.vid)
+        de = Resource(g, date_uri)
+        de.set(RDF.type, VIVO.DateTimeValue)
+        if date_obj is not None:
+            de.set(RDFS.label, Literal(dv))
+            de.set(
+                VIVO.dateTime,
+                Literal(date_obj, datatype=XSD.date)
+            )
+            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+        g.add((self.uri, VIVO.dateTimeValue, date_uri))
+        return g
+
+    def get_dti(self):
+        end = self.conferredon
+        try:
+            start = self.startedon
+        except AttributeError:
+            start = None
+        if (start is None) and (end is None):
+            return
+        # Date/Time Interval
+        g = Graph()
+        dti_uri = D['dti'] + self.vid
+        dti = Resource(g, dti_uri)
+        dti.set(RDF.type, VIVO.DateTimeInterval)
+        if start is not None:
+            start_uri, start_g = self._date("start", start)
+            dti.set(VIVO.start, start_uri)
+            g += start_g
+        if end is not None:
+            end_uri, end_g = self._date("end", end)
+            g += end_g
+            dti.set(VIVO.end, end_uri)
+        return dti_uri, g
+
+    def get_assigned_by(self):
+        g = Graph()
+        for org in client.RelatedObject('Education', self.cid, 'EDUC_has_ORGA'):
+            ouri = org_uri(org.cid)
+            g.add((self.uri, VIVO.assignedBy, ouri))
+            # org model
+            om = Organization(**org.__dict__)
+            # don't fetch positions for these orgs.
+            g += om.to_rdf(get_all=False)
+        return g
+
+    def assign_type(self):
+        default = FHD.EducationalTraining
+        ettypes = {
+            '10371': FHD.Certification,
+            '10368': FHD.Degree,
+            '10369': FHD.License,
+            '10370': FHD.PostdoctoralTraining,
+        }
+        if hasattr(self, 'dynamictype'):
+            ctype = self.dynamictype['cid'].strip()
+            return ettypes.get(ctype, default)
+        return default
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+
+        # Label set in person call.
+        #r.set(RDFS.label, Literal(self.shortdescription))
+        r.set(RDF.type, self.assign_type())
+
+        #r.set(VIVO.majorField, Literal(self.program))
+        #g += self.get_assigned_by()
+
+        #if hasattr(self, "")
+
+        # Add datetime interval
+        try:
+            dti_uri, dti_g = self.get_dti()
+            g += dti_g
+            r.set(VIVO.dateTimeInterval, dti_uri)
+        except TypeError:
+            pass
 
         return g
