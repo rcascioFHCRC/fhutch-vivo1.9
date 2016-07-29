@@ -11,6 +11,7 @@
         PREFIX obo:   &lt;http://purl.obolibrary.org/obo/&gt;
 
         SELECT DISTINCT
+            ?subclass
             ?position
             ?positionTitle
             ?hrJobTitle
@@ -68,16 +69,12 @@
             }
 
             <collated>
-                OPTIONAL
-                {
-                    ?position vitro:mostSpecificType ?subclass .
-                    ?subclass rdfs:subClassOf core:Position .
-                }
-        </collated>
+                ?position vitro:mostSpecificType ?subclass .
+            </collated>
         <critical-data-required>
             FILTER ( bound(?org) )
         </critical-data-required>
-        } ORDER BY ?rank DESC(?dateTimeStart)
+        } ORDER BY ?subclass ?rank DESC(?dateTimeStart)
     </query-select>
 
     <query-construct>
@@ -94,7 +91,6 @@
             ?position rdfs:label ?positionTitle .
             ?position vitro:mostSpecificType ?subclass .
             ?position core:hrJobTitle ?hrJobTitle .
-            ?subclass rdfs:subClassOf core:Position .
             ?position core:dateTimeInterval ?dateTimeInterval .
             ?dateTimeInterval core:start ?dateTimeStartValue .
             ?dateTimeStartValue core:dateTime ?dateTimeStart .

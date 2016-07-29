@@ -1458,10 +1458,10 @@ h3.internal-auth {
 }
 ul#individual-personInPosition {
     font-size: 1em;
-    list-style: url("../../../images/individual/arrow-green.gif");
+    list-style: none;
 }
 ul#individual-personInPosition li {
-    line-height: 1.8em;
+    line-height: 1.5em;
 }
 .individual-overview {
     font-size: 1em;
@@ -2012,3 +2012,9 @@ footer div.arnold {
     margin-top: 1em;
 }
 
+ul#individual-personInPosition li:last-child {
+    margin-bottom: .25em;
+}
+
+ul#individual-personInPosition h3 {
+}
