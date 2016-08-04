@@ -11,6 +11,8 @@ from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.namespace import RDF, RDFS, XSD, FOAF, OWL
 
+import bleach
+
 from converis import client
 from converis.namespaces import rq_prefixes
 from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
@@ -51,6 +53,12 @@ def degree_uri(cid):
 
 def hash_uri(prefix, value):
     return D[prefix + '-' + hashlib.md5(value).hexdigest()]
+
+
+def scrub_html(markup):
+    # allowed tags
+    tags = ['ul', 'li', 'p', 'em', 'strong']
+    return bleach.clean(markup, tags=tags, strip=True)
 
 
 class BaseModel(client.BaseEntity):
@@ -207,12 +215,14 @@ class Person(BaseModel):
         if self._nickname is not None:
             p.set(FHD.nickname, Literal(self._nickname))
         if hasattr(self, 'cfresint'):
-            p.set(VIVO.researchOverview, Literal(self.cfresint))
+            value = scrub_html(self.cfresint)
+            p.set(VIVO.researchOverview, Literal(value))
         if hasattr(self, 'orcid'):
             p.set(FHD.orcid, Literal(self.orcid))
         # clinical interests
         if hasattr(self, 'cfclinint'):
-            p.set(FHD.clinicalInterest, Literal(self.cfclinint))
+            value = scrub_html(self.cfclinint)
+            p.set(FHD.clinicalInterest, Literal(value))
         # brief description
         if hasattr(self, 'briefdescription'):
             p.set(FHD.briefDescription, Literal(self.briefdescription))

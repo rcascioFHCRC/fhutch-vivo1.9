@@ -1,4 +1,6 @@
 git+https://github.com/lawlesst/c2vivo.git
+# for cleaning markup
+bleach
 
 # for caching
 requests_cache
