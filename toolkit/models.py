@@ -65,6 +65,40 @@ class BaseModel(client.BaseEntity):
     def uri(self):
         return URIRef(D + self.vid)
 
+    def _date(self, dtype, dv):
+        g = Graph()
+        date_obj = client.convert_date(dv)
+        date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
+        de = Resource(g, date_uri)
+        de.set(RDF.type, VIVO.DateTimeValue)
+        if date_obj is not None:
+            de.set(RDFS.label, Literal(dv))
+            de.set(
+                VIVO.dateTime,
+                Literal(date_obj, datatype=XSD.date)
+            )
+            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+        return date_uri, g
+
+
+    def _dti(self, start, end):
+        if (start is None) and (end is None):
+            return
+        # Date/Time Interval
+        g = Graph()
+        dti_uri = D['dti'] + self.vid
+        dti = Resource(g, dti_uri)
+        dti.set(RDF.type, VIVO.DateTimeInterval)
+        if start is not None:
+            start_uri, start_g = self._date("start", start)
+            dti.set(VIVO.start, start_uri)
+            g += start_g
+        if end is not None:
+            end_uri, end_g = self._date("end", end)
+            g += end_g
+            dti.set(VIVO.end, end_uri)
+        return dti_uri, g
+
 
 class Person(BaseModel):
     """
@@ -977,7 +1011,22 @@ def get_pub_cards():
         out.append(row.card.toPython())
     return set(out)
 
+
 class ClinicalTrial(BaseModel):
+
+    def get_dti(self):
+        try:
+            end = self.completiondate
+        except AttributeError:
+            end = None
+        try:
+            start = self.startdate
+        except AttributeError:
+            start = None
+        if (start is None) and (end is None):
+            return
+        dti_uri, g = self._dti(start, end)
+        return dti_uri, g
 
     def get_sponsors(self):
         """
@@ -1051,6 +1100,14 @@ class ClinicalTrial(BaseModel):
         g += self.get_sponsors()
         g += self.get_pubs()
         g += self.get_investigators()
+
+        # dti
+        try:
+            dti_uri, dti_g = self.get_dti()
+            g += dti_g
+            r.set(VIVO.dateTimeInterval, dti_uri)
+        except TypeError:
+            pass
 
         return g
 
