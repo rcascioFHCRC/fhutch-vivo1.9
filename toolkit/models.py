@@ -1095,6 +1095,10 @@ class ClinicalTrial(BaseModel):
             r.set(VIVO.overview, Literal(self.briefsummary))
 
         r.set(FHCT.nctNumber, Literal(self.nctnumber))
+
+        if hasattr(self, 'studyidnumbers'):
+            r.set(FHCT.studyIDNumber, Literal(self.studyidnumbers))
+
         r.set(FHD.url, Literal(self.url))
 
         g += self.get_sponsors()

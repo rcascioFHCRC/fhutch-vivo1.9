@@ -103,6 +103,13 @@ fhct:nctNumber a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
 
+studyIDNumbers
+
+fhct:studyIDNumber a owl:DatatypeProperty ;
+    rdfs:label "study ID number"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
+
 fhct:trialPublication a owl:ObjectProperty ;
         rdfs:label "publication"@en-US ;
         rdfs:domain fhct:ClinicalTrial ;
