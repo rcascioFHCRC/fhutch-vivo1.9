@@ -1004,7 +1004,7 @@ class ClinicalTrial(BaseModel):
 
     def get_investigators(self):
         g = Graph()
-        for pub in client.get_related_ids('Person', self.cid, 'CLIN_has_PERS'):
+        for pub in client.get_related_ids('Person', self.cid, 'CLIN_has_invs_PERS'):
             uri = pub_uri(pub)
             g.add((self.uri, FHCT.hasInvestigator, uri))
         return g
