@@ -1114,41 +1114,6 @@ class ClinicalTrial(BaseModel):
 
 class Degree(BaseModel):
 
-    def _date(self, dtype, dv):
-        g = Graph()
-        date_obj = client.convert_date(dv)
-        date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
-        de = Resource(g, date_uri)
-        de.set(RDF.type, VIVO.DateTimeValue)
-        if date_obj is not None:
-            de.set(RDFS.label, Literal(dv))
-            de.set(
-                VIVO.dateTime,
-                Literal(date_obj, datatype=XSD.date)
-            )
-            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
-        return date_uri, g
-
-    def add_date(self):
-        g = Graph()
-        if hasattr(self, "conferredon"):
-            dv = self.conferredon
-        else:
-            return g
-        date_obj = client.convert_date(dv)
-        date_uri = URIRef(DATA_NAMESPACE + 'date' + self.vid)
-        de = Resource(g, date_uri)
-        de.set(RDF.type, VIVO.DateTimeValue)
-        if date_obj is not None:
-            de.set(RDFS.label, Literal(dv))
-            de.set(
-                VIVO.dateTime,
-                Literal(date_obj, datatype=XSD.date)
-            )
-            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
-        g.add((self.uri, VIVO.dateTimeValue, date_uri))
-        return g
-
     def get_dti(self):
         try:
             end = self.conferredon
@@ -1160,20 +1125,7 @@ class Degree(BaseModel):
             start = None
         if (start is None) and (end is None):
             return
-        # Date/Time Interval
-        g = Graph()
-        dti_uri = D['dti'] + self.vid
-        dti = Resource(g, dti_uri)
-        dti.set(RDF.type, VIVO.DateTimeInterval)
-        if start is not None:
-            start_uri, start_g = self._date("start", start)
-            dti.set(VIVO.start, start_uri)
-            g += start_g
-        if end is not None:
-            end_uri, end_g = self._date("end", end)
-            g += end_g
-            dti.set(VIVO.end, end_uri)
-        return dti_uri, g
+        return self._dti(start, end)
 
     def get_assigned_by(self):
         g = Graph()
