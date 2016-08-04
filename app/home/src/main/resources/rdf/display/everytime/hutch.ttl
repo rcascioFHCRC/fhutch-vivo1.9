@@ -2,10 +2,26 @@
 @prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix vivo: <http://vivoweb.org/ontology/core#> .
 @prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix vitroDisplay: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
 
 # Additional listViewConfigs
 
 fhd:awardedTo
     display:listViewConfigFile "listViewConfig-awardedTo.xml"^^<http://www.w3.org/2001/XMLSchema#string> .
+
+
+# Search prohibited
+
+vitroDisplay:SearchIndex
+    rdf:type owl:Thing ;
+    vitroDisplay:excludeClass fhd:EducationalTraining ;
+    vitroDisplay:excludeClass vivo:Position ;
+    vitroDisplay:excludeClass vivo:DateTimeValue ;
+    vitroDisplay:excludeClass vivo:DateTimeInterval ;
+    vitroDisplay:excludeClass vivo:AcademicDegree ;
+    vitroDisplay:excludeClass vivo:URLLink ;
+    vitroDisplay:excludeClass <http://vitro.mannlib.cornell.edu/ns/vitro/public#File> ;
+    vitroDisplay:excludeClass <http://vitro.mannlib.cornell.edu/ns/vitro/public#FileByteStream> .
