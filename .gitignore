@@ -5,6 +5,7 @@ target/
 .idea/
 hutch.xml
 fhutch.xml
+settings.xml
 *.iml
 
 #dev data

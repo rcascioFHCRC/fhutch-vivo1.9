@@ -2018,3 +2018,12 @@ ul#individual-personInPosition li:last-child {
 
 ul#individual-personInPosition h3 {
 }
+
+.top-offset1 {
+    margin-top: 1em!important;
+}
+
+.disclaimer {
+    font-size: small;
+    font-variant: small-caps;
+}
