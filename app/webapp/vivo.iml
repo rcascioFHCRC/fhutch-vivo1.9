@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module org.jetbrains.idea.maven.project.MavenProjectsManager.isMavenModule="true" type="JAVA_MODULE" version="4">
-  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_5" inherit-compiler-output="false">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_1_8" inherit-compiler-output="false">
     <output url="file://$MODULE_DIR$/target/classes" />
     <output-test url="file://$MODULE_DIR$/target/test-classes" />
     <content url="file://$MODULE_DIR$">
@@ -20,6 +20,7 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20140107" level="project" />
     <orderEntry type="library" name="Maven: org.vivoweb:vivo-api:1.9.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.vivoweb:vitro-api:1.9.0-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.ansell.aterms:aterm-java:1.8.2" level="project" />
     <orderEntry type="library" name="Maven: com.github.ansell.jjtraveler:jjtraveler:0.6" level="project" />
@@ -44,6 +45,14 @@
     <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:3.4.4" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:c3p0:0.9.2-pre4" level="project" />
     <orderEntry type="library" name="Maven: com.mchange:mchange-commons-java:0.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.imageio:imageio-jpeg:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.imageio:imageio-core:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.imageio:imageio-metadata:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.common:common-lang:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.common:common-io:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.common:common-image:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.imageio:imageio-tiff:3.2.1" level="project" />
+    <orderEntry type="library" name="Maven: com.twelvemonkeys.servlet:servlet:3.2.1" level="project" />
     <orderEntry type="library" name="Maven: commons-dbcp:commons-dbcp:1.4" level="project" />
     <orderEntry type="library" name="Maven: commons-pool:commons-pool:1.5.4" level="project" />
     <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.2.1" level="project" />
@@ -116,7 +125,7 @@
     <orderEntry type="library" name="Maven: org.vivoweb.dependencies:agrovocws:3.0" level="project" />
     <orderEntry type="library" name="Maven: org.vivoweb.dependencies:oim.vivo.scimapcore:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.vivoweb.dependencies:orcid-api-client:0.2" level="project" />
-    <orderEntry type="module" module-name="vivo-webapp (2)" />
+    <orderEntry type="library" name="Maven: org.vivoweb:vivo-webapp:war:1.9.0-SNAPSHOT" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
   </component>

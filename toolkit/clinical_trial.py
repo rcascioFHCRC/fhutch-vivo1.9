@@ -67,5 +67,6 @@ if __name__ == "__main__":
             if cid == '5920130':
                 continue
             cts.append(cid)
+    cts.append('5920037')
     harvest(cts)
     logger.info("Clinical trial harvest finished.")
