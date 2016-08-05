@@ -1068,6 +1068,13 @@ class ClinicalTrial(BaseModel):
             g.add((self.uri, FHCT.hasInvestigator, uri))
         return g
 
+    def get_areas(self):
+        g = Graph()
+        for area in client.get_related_ids('Area', self.cid, 'CLIN_has_AREA'):
+            uri = area_uri(area)
+            g.add((self.uri, VIVO.hasResearchArea, uri))
+        return g
+
     def assign_type(self):
         default = FHCT.Other
         ttypes = {
@@ -1114,6 +1121,7 @@ class ClinicalTrial(BaseModel):
         g += self.get_sponsors()
         g += self.get_pubs()
         g += self.get_investigators()
+        g += self.get_areas()
 
         # dti
         try:
