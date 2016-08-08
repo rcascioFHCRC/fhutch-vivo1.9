@@ -57,7 +57,7 @@ def hash_uri(prefix, value):
 
 def scrub_html(markup):
     # allowed tags
-    tags = ['ul', 'li', 'p', 'em', 'strong']
+    tags = ['a', 'ul', 'li', 'p', 'em', 'strong']
     return bleach.clean(markup, tags=tags, strip=True)
 
 
