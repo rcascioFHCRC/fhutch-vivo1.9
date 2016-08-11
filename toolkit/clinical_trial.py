@@ -15,6 +15,8 @@ from converis.namespaces import D, VIVO, CONVERIS
 import models
 import log_setup
 
+from utils import ThreadedHarvest
+
 from rdflib import Graph, Literal
 
 logger = log_setup.get_logger(client_level=logging.DEBUG)
@@ -57,16 +59,44 @@ def harvest(trials):
     backend.sync_updates("http://localhost/data/trials", g)
 
 
+query = """
+<data xmlns="http://converis/ns/webservice">
+  <return>
+  </return>
+  <query>
+    <filter for="ClinicalTrial" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+     
+    </filter>
+  </query>
+</data>
+"""
+
+class ClinicalTrialHarvest(ThreadedHarvest):
+
+    def __init__(self, q, vmodel, threads=2):
+        self.query = query
+        self.graph = Graph()
+        self.threads = threads
+        self.vmodel = vmodel
+
+def threaded_harvest():
+    ng = "http://localhost/data/trials"
+    jh = ClinicalTrialHarvest(query, models.ClinicalTrial)
+    jh.run_harvest()
+    logger.info("Harvest finished. Syncing to vstore.")
+    jh.sync_updates(ng)
+
 if __name__ == "__main__":
     logger.info("Starting harvest.")
     cts = []
-    with open(sys.argv[1]) as inf:
-        for row in csv.DictReader(inf):
-            cid = row.get('c_id')
-            # skip this dup
-            if cid == '5920130':
-                continue
-            cts.append(cid)
-    cts.append('5920037')
-    harvest(cts)
+    # with open(sys.argv[1]) as inf:
+    #     for row in csv.DictReader(inf):
+    #         cid = row.get('c_id')
+    #         # skip this dup
+    #         if cid == '5920130':
+    #             continue
+    #         cts.append(cid)
+    # cts.append('5920037')
+    # harvest(cts)
+    threaded_harvest()
     logger.info("Clinical trial harvest finished.")
