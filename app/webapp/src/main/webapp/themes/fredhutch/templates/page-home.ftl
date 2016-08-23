@@ -66,7 +66,7 @@
                 </fieldset>
             </section> <!-- #search-home -->
 
-            <section>
+            <section id="recent">
             <div class="home-box" id="home-news">
                 <h1>Recent news</h1>
             </div>
@@ -96,7 +96,7 @@
                     } else {
                         url = val.url;
                     }
-                    items.push( "<li><a href=\"" + url + "\">" + val.name + "</a>&nbsp;" + val.date + "</li>" );
+                    items.push( "<li><a href=\"" + url + "\">" + val.name + "</a>&nbsp;<span class=\"date\">" + val.date + "</span></li>" );
                 });
                 $( "<ul/>", {
                     html: items.join( "" )

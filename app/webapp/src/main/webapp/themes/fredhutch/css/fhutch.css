@@ -2028,6 +2028,10 @@ ul#individual-personInPosition h3 {
     font-variant: small-caps;
 }
 
+section#recent {
+    margin-top: 2em;
+}
+
 .home-box {
     width: 45%;
     border: 1px solid #dce4e3;
@@ -2037,9 +2041,17 @@ ul#individual-personInPosition h3 {
 }
 
 .home-box h1 {
+    font-size: 1.375em;
     color: #064d68;
+    padding: .25em;
     margin-bottom: 1em;
     border-bottom: 1px solid #dce4e3;
+}
+
+.home-box span.date {
+    padding: 0 0.4em;
+    font-size: 0.8em;
+    background: #f4f4f4;
 }
 
 .home-box li {
