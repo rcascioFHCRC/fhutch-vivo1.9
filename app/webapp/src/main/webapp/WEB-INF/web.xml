@@ -1503,6 +1503,15 @@
     <url-pattern>/expertise-browse/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>RecentItems</servlet-name>
+    <servlet-class>org.fredhutch.controller.RecentItems</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>RecentItems</servlet-name>
+    <url-pattern>/recent/*</url-pattern>
+  </servlet-mapping>
+
   <!-- ==================== mime types ============================== -->
 
   <mime-mapping>
