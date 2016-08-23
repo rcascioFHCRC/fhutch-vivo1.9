@@ -19,6 +19,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 
 
 /**
@@ -51,7 +55,12 @@ public class RecentItems extends HttpServlet {
 
     }
 
-    public static JSONArray getNewsItems(VitroRequest vreq) {
+    /**
+     *
+     * @param vreq
+     * @return JSONArray of News Items
+     */
+    private static JSONArray getNewsItems(VitroRequest vreq) {
         final JSONArray recent = new JSONArray();
         String rq = "" +
                 "SELECT ?n ?title ?url ?date \n" +
@@ -102,7 +111,8 @@ public class RecentItems extends HttpServlet {
         return item;
     }
 
-    public static JSONArray getPubItems(VitroRequest vreq) {
+    /* recent pubs */
+    private static JSONArray getPubItems(VitroRequest vreq) {
         final JSONArray recent = new JSONArray();
         String rq = "" +
                 "SELECT ?n ?title ?url ?date \n" +
@@ -111,6 +121,7 @@ public class RecentItems extends HttpServlet {
                 "       rdfs:label ?title ; \n" +
                 "       vivo:dateTimeValue ?dt .\n" +
                 "   ?dt vivo:dateTime ?date . \n" +
+                "   FILTER (?date > ?cutOff^^xsd:dateTime) \n" +
                 "} \n" +
                 "ORDER BY DESC(?date) \n" +
                 "LIMIT 10\n";
@@ -121,6 +132,8 @@ public class RecentItems extends HttpServlet {
         q2.setNsPrefix("vivo", "http://vivoweb.org/ontology/core#");
         q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        q2.setNsPrefix("xsd", "http://www.w3.org/2001/XMLSchema#");
+        q2.setLiteral("cutOff", cutOffDate());
         String query = q2.toString();
         log.debug("Recent query:\n" + query);
         try {
@@ -147,6 +160,18 @@ public class RecentItems extends HttpServlet {
             e.printStackTrace();
         }
         return recent;
+    }
+
+    /* get today -120 days to speed up pubs query
+     */
+    private static String cutOffDate() {
+        Date today = new Date();
+        Calendar cal = new GregorianCalendar();
+        cal.setTime(today);
+        cal.add(Calendar.DAY_OF_MONTH, -120);
+        Date today90 = cal.getTime();
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        return df.format(today90) + "T00:00:00Z";
     }
 }
 
