@@ -89,12 +89,15 @@
         function addRecent(name) {
             var selected = $("#home-"+ name);
             $.getJSON( "./recent/" + name, function( data ) {
-                console.debug(data);
                 var items = [];
                 $.each( data, function( key, val ) {
-                    items.push( "<li><a href=\"" + val.url + "\">" + val.name + "</a>&nbsp;" + val.date + "</li>" );
+                    if (name != "news") {
+                        url = ".." + val.url;
+                    } else {
+                        url = val.url;
+                    }
+                    items.push( "<li><a href=\"" + url + "\">" + val.name + "</a>&nbsp;" + val.date + "</li>" );
                 });
-                console.debug(items);
                 $( "<ul/>", {
                     html: items.join( "" )
                 }).appendTo( selected );
