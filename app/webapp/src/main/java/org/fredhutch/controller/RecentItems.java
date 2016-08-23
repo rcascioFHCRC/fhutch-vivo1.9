@@ -135,7 +135,7 @@ public class RecentItems extends HttpServlet {
                         Object date = qs.getLiteral("date").getValue();
                         item.put("name", name);
                         item.put("uri", uri);
-                        item.put("url", UrlBuilder.getHomeUrl() + "individual?uri=" + uri);
+                        item.put("url", UrlBuilder.getHomeUrl() + "/individual?uri=" + uri);
                         item.put("date", date.toString().substring(0, 10));
                         recent.put(item);
                     } catch (JSONException e) {
