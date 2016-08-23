@@ -65,12 +65,40 @@
                     </form>
                 </fieldset>
             </section> <!-- #search-home -->
+
+            <section>
+            <div class="home-box" id="home-news">
+                <h1>Recent news</h1>
+            </div>
+            <div class="home-box" id="home-pubs">
+                <h1>Recent publications</h1>
+            </div>
+            </section>
+
         <#include "footer.ftl">
 
     <script>
         // set the 'limmit search' text and alignment
         if  ( $('input.search-homepage').css('text-align') == "right" ) {
              $('input.search-homepage').attr("value","${i18n().limit_search} \u2192");
+        }
+
+        addRecent("news");
+        addRecent("pubs");
+
+        function addRecent(name) {
+            var selected = $("#home-"+ name);
+            $.getJSON( "./recent/" + name, function( data ) {
+                console.debug(data);
+                var items = [];
+                $.each( data, function( key, val ) {
+                    items.push( "<li><a href=\"" + val.url + "\">" + val.name + "</a>&nbsp;" + val.date + "</li>" );
+                });
+                console.debug(items);
+                $( "<ul/>", {
+                    html: items.join( "" )
+                }).appendTo( selected );
+            });
         }
     </script>
     </body>

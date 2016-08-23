@@ -2027,3 +2027,29 @@ ul#individual-personInPosition h3 {
     font-size: small;
     font-variant: small-caps;
 }
+
+.home-box {
+    width: 45%;
+    border: 1px solid #dce4e3;
+    padding: 1em;
+    padding-top: .25em;
+    margin-bottom: 1em;
+}
+
+.home-box h1 {
+    color: #064d68;
+    margin-bottom: 1em;
+    border-bottom: 1px solid #dce4e3;
+}
+
+.home-box li {
+    margin-bottom: .5em;
+}
+
+#home-news {
+    float:left;
+}
+
+#home-pubs {
+    float: right;
+}
