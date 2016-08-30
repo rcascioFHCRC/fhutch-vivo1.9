@@ -1248,9 +1248,14 @@ class Service(BaseModel):
 
     def get_org(self):
         g = Graph()
-        for org in client.get_related_ids('Organisation', self.cid, 'SERV_has_ORGA'):
-            puri = org_uri(org)
+        for org in client.RelatedObject('Service', self.cid, 'SERV_has_ORGA'):
+            puri = org_uri(org.cid)
             g.add((self.uri, VIVO.relates, puri))
+            # Fetch org details too for orgs that may not already be in system
+            # org model
+            om = Organization(**org.__dict__)
+            # don't fetch positions for these orgs.
+            g += om.to_rdf(get_all=False)
         return g
 
     def label(self):
