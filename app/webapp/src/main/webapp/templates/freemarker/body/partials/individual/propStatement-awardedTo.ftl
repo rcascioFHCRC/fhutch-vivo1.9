@@ -10,9 +10,5 @@
 
 <#macro showStatement statement>
     <#-- The query retrieves a type only for Persons. Post-processing will remove all but one. -->
-    <a href="${profileUrl(statement.uri("award"))}" title="${i18n().name}">${statement.label!statement.localName!}</a><#if statement.date??>, ${statement.date}</#if>
-    <#if statement.org??>
-        <br/>
-        <a href="${profileUrl(statement.uri("org"))}">${statement.orgName!}</a>
-    </#if>
+    <a href="${profileUrl(statement.uri("award"))}" title="${i18n().name}">${statement.label!statement.localName!}</a><#if statement.org??>, <a href="${profileUrl(statement.uri("org"))}">${statement.orgName!}</a></#if><#if statement.date??>, <span class="listDateTime">${statement.date}</span></#if>
 </#macro>
