@@ -6,6 +6,7 @@
 @prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
 @prefix vitroDisplay: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix fhs: <http://vivo.fredhutch.org/ontology/display#> .
 
 # Additional listViewConfigs
 
@@ -18,6 +19,7 @@ fhd:awardedTo
 vitroDisplay:SearchIndex
     rdf:type owl:Thing ;
     vitroDisplay:excludeClass fhd:EducationalTraining ;
+    vitroDisplay:excludeClass fhs:Service ;
     vitroDisplay:excludeClass vivo:Position ;
     vitroDisplay:excludeClass vivo:DateTimeValue ;
     vitroDisplay:excludeClass vivo:DateTimeInterval ;
