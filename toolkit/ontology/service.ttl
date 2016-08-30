@@ -1,0 +1,74 @@
+@prefix fhs: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix fhp: <http://vivo.fredhutch.org/ontology/publications#> .
+@prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
+@prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix vivo:  <http://vivoweb.org/ontology/core#> .
+@prefix vpublic: <http://vitro.mannlib.cornell.edu/ns/vitro/public#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix cg:  <http://vivoweb.org/ontology#> .
+@prefix d: <http://vivo.fredhutch.org/individual/> .
+
+
+<http://vivo.fredhutch.org/ontology/service#>
+        a                          owl:Ontology ;
+        rdfs:label                 "FredHutch Service"@en-US ;
+        vitro:ontologyPrefixAnnot  "fhs"^^xsd:string .
+
+# service
+
+fhs:Service a owl:Class ;
+    rdfs:subClassOf          owl:Thing ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Service"@en-US .
+
+fhs:ConsultantServices  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Consultant Services"@en-US .
+
+fhs:EditorialReview  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Editorial or Review"@en-US .
+
+fhs:FoundationsTrusts  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Foundations and Trusts"@en-US .
+
+fhs:Industry  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Industry"@en-US .
+
+fhs:NationalInternationalService  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "National or International Service"@en-US .
+
+
+fhs:ProfessionalHonorsSocieties  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Professional and Honors Societies"@en-US .
+
+
+fhs:UniversityInstitutionalServices  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "University or Institutional Services"@en-US .
+
