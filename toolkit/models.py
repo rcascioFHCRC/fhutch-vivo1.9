@@ -25,6 +25,8 @@ FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
 FHP = Namespace('http://vivo.fredhutch.org/ontology/publications#')
 # trials
 FHCT = Namespace('http://vivo.fredhutch.org/ontology/clinicaltrials#')
+# service
+FHS = Namespace('http://vivo.fredhutch.org/ontology/service#')
 
 DATA_NAMESPACE = D
 
@@ -1193,5 +1195,94 @@ class Degree(BaseModel):
             r.set(VIVO.dateTimeInterval, dti_uri)
         except TypeError:
             pass
+
+        return g
+
+
+class Service(BaseModel):
+
+    def get_type(self, default=FHS.Service):
+        """
+        10441
+        Consultant Services
+            
+        10443
+        Editorial or Review
+            
+        10447
+        Foundations and Trusts
+            
+        10445
+        Industry
+            
+        10446
+        National or International Service
+            
+        10444
+        Professional and Honors Societies
+            
+        10442
+        University or Institutional Services
+        """
+        ntypes = {
+            '10441': FHS.ConsultantServices,
+            '10443': FHS.EditorialReview,
+            '10447': FHS.FoundationsTrusts,
+            '10445': FHS.Industry,
+            '10446': FHS.NationalInternationalService,
+            '10444': FHS.ProfessionalHonorsSocieties,
+            '10442': FHS.UniversityInstitutionalServices
+        }
+        if hasattr(self, 'dynamictype'):
+            ctype = self.dynamictype['cid'].strip()
+            return ntypes.get(ctype, default)
+        return default
+
+
+    def get_person(self):
+        g = Graph()
+        for person in client.get_related_ids('Person', self.cid, 'SERV_has_PERS'):
+            puri = person_uri(person)
+            g.add((self.uri, VIVO.relates, puri))
+        return g
+
+    def get_org(self):
+        g = Graph()
+        for org in client.get_related_ids('Organisation', self.cid, 'SERV_has_ORGA'):
+            puri = org_uri(org)
+            g.add((self.uri, VIVO.relates, puri))
+        return g
+
+    def label(self):
+        return self.shortdescription.split('(')[0].strip()
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, self.get_type())
+        r.set(RDFS.label, Literal(self.label()))
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
+        g += self.get_person()
+        g += self.get_org()
+
+        if hasattr(self, 'startedon'):
+            start = self.startedon
+        else:
+            start = None
+
+        if hasattr(self, "endedon"):
+            end = self.endedon
+        else:
+            end = None
+        # Add datetime interval
+        try:
+            dti_uri, dti_g = self._dti(start, end)
+            g += dti_g
+            r.set(VIVO.dateTimeInterval, dti_uri)
+        except TypeError:
+            pass
+
+        #g += self.add_vcard_weblink()
 
         return g
