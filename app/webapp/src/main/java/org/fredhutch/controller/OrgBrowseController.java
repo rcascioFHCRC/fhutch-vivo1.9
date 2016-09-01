@@ -164,7 +164,7 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         q2.setNsPrefix("tmp", TMP_NAMESPACE);
         q2.setNsPrefix("obo", "http://purl.obolibrary.org/obo/");
-        q2.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
+        q2.setNsPrefix("fhd", FHD_PREFIX);
         String query = q2.toString();
         log.debug("Construct Org model:\n" + query);
         Model results = ModelFactory.createDefaultModel();

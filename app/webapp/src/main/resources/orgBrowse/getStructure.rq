@@ -6,7 +6,7 @@ construct {
         tmp:child ?o .
 }
 where {
-    ?o a foaf:Organization ;
+    ?o a fhd:InternalOrganization ;
         a ?orgType ;
         rdfs:label ?name ;
         obo:BFO_0000050 ?parent .
