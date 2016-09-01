@@ -46,7 +46,7 @@ local:journalServiceContext a :ConfigContext ;
     :qualifiedBy      fhs:Service .
 
 local:journalServiceConfig a :ObjectPropertyDisplayConfig ;
-    :listViewConfigFile "listViewConfig-journalHasService.xml"^^xsd:string ;
+    :listViewConfigFile "listViewConfig-entityHasService.xml"^^xsd:string ;
     rdfs:label "journalService"@en-US ;
     :displayName "editorial board" ;
     vitro:displayRankAnnot  2 ;
@@ -62,7 +62,7 @@ local:orgServiceContext a :ConfigContext ;
     :qualifiedBy      fhs:Service .
 
 local:orgServiceConfig a :ObjectPropertyDisplayConfig ;
-    :listViewConfigFile "listViewConfig-journalHasService.xml"^^xsd:string ;
+    :listViewConfigFile "listViewConfig-entityHasService.xml"^^xsd:string ;
     rdfs:label "orgService"@en-US ;
     :displayName "service" ;
     vitro:displayRankAnnot  2 ;
