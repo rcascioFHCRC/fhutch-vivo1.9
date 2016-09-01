@@ -1258,6 +1258,15 @@ class Service(BaseModel):
             g += om.to_rdf(get_all=False)
         return g
 
+    def get_journal(self):
+        g = Graph()
+        for jrnl in client.RelatedObject('Service', self.cid, 'SERV_has_JOUR'):
+            juri = journal_uri(jrnl.cid)
+            g.add((self.uri, VIVO.relates, juri))
+            jm = Journal(**jrnl.__dict__)
+            g += jm.to_rdf()
+        return g
+
     def label(self):
         return self.shortdescription.split('(')[0].strip()
 
@@ -1270,6 +1279,7 @@ class Service(BaseModel):
 
         g += self.get_person()
         g += self.get_org()
+        g += self.get_journal()
 
         if hasattr(self, 'startedon'):
             start = self.startedon
