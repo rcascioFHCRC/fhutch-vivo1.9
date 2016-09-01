@@ -1,4 +1,4 @@
-@prefix fhs: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
 @prefix fhp: <http://vivo.fredhutch.org/ontology/publications#> .
 @prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
 @prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
