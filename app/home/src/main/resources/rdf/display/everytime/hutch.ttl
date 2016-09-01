@@ -1,3 +1,4 @@
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix display: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
@@ -6,7 +7,14 @@
 @prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
 @prefix vitroDisplay: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
-@prefix fhs: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+
+@prefix : <http://vitro.mannlib.cornell.edu/ns/vitro/ApplicationConfiguration#> .
+@prefix local: <http://vitro.mannlib.cornell.edu/ns/vitro/siteConfig/> .
+@prefix role:  <http://vitro.mannlib.cornell.edu/ns/vitro/role#> .
+
 
 # Additional listViewConfigs
 
@@ -27,3 +35,37 @@ vitroDisplay:SearchIndex
     vitroDisplay:excludeClass vivo:URLLink ;
     vitroDisplay:excludeClass <http://vitro.mannlib.cornell.edu/ns/vitro/public#File> ;
     vitroDisplay:excludeClass <http://vitro.mannlib.cornell.edu/ns/vitro/public#FileByteStream> .
+
+
+#fauxs
+
+local:journalServiceContext a :ConfigContext ;
+    :hasConfiguration local:journalServiceConfig ;
+    :configContextFor vivo:relatedBy ;
+    :qualifiedByDomain  bibo:Journal  ;
+    :qualifiedBy      fhs:Service .
+
+local:journalServiceConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-journalHasService.xml"^^xsd:string ;
+    rdfs:label "journalService"@en-US ;
+    :displayName "editorial board" ;
+    vitro:displayRankAnnot  2 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoutreach> .
+
+
+local:orgServiceContext a :ConfigContext ;
+    :hasConfiguration local:orgServiceConfig ;
+    :configContextFor vivo:relatedBy ;
+    :qualifiedByDomain  foaf:Organization  ;
+    :qualifiedBy      fhs:Service .
+
+local:orgServiceConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-journalHasService.xml"^^xsd:string ;
+    rdfs:label "orgService"@en-US ;
+    :displayName "service" ;
+    vitro:displayRankAnnot  2 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoutreach> .

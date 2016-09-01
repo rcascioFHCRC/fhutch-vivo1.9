@@ -11,14 +11,13 @@
         PREFIX obo:   &lt;http://purl.obolibrary.org/obo/&gt;
         PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
         PREFIX fhs: &lt;http://vivo.fredhutch.org/ontology/service#&gt;
-        PREFIX bibo: &lt;http://purl.org/ontology/bibo/&gt;
 
         SELECT DISTINCT
             ?subclass
             ?service
             ?serviceName
-            ?org ?orgName
-            ?journal ?journalName
+            ?person
+            ?personName
             ?dateTimeStart ?dateTimeEnd
         WHERE
         {
@@ -26,12 +25,8 @@
             ?service a fhs:Service .
             ?service rdfs:label ?serviceName .
             OPTIONAL {
-                ?service fhs:org ?org .
-                ?org rdfs:label ?orgName .
-            }
-            OPTIONAL {
-                ?service fhs:journal ?journal .
-                ?journal rdfs:label ?journalName .
+                ?service fhs:person ?person .
+                ?person rdfs:label ?personName .
             }
             OPTIONAL
             {
@@ -60,7 +55,6 @@
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
         PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
         PREFIX fhs: &lt;http://vivo.fredhutch.org/ontology/service#&gt;
-        PREFIX bibo: &lt;http://purl.org/ontology/bibo/&gt;
 
         CONSTRUCT
         {
@@ -68,10 +62,8 @@
             ?service a fhs:Service .
             ?service rdfs:label ?serviceName .
             ?service vitro:mostSpecificType ?subclass .
-            ?service fhs:org ?org .
-            ?org rdfs:label ?orgName .
-            ?service fhs:journal ?journal .
-            ?journal rdfs:label ?journalName .
+            ?service fhs:person ?person .
+            ?person rdfs:label ?personName .
             ?service core:dateTimeInterval ?dateTimeInterval .
             ?dateTimeInterval core:start ?dateTimeStartValue .
             ?dateTimeStartValue core:dateTime ?dateTimeStart .
@@ -84,27 +76,14 @@
                 ?subject ?property ?service .
                 ?service a fhs:Service ;
                         rdfs:label ?serviceName .
+                ?service core:relates ?person .
+                ?person a foaf:Person ;
+                    rdfs:label ?personName .
             }
             UNION {
                 ?subject ?property ?service .
                 ?service a fhs:Service .
                 ?service vitro:mostSpecificType ?subclass .
-            }
-            # org 
-            UNION {
-                ?subject ?property ?service .
-                ?service a fhs:Service .
-                ?service core:relates ?org .
-                ?org a foaf:Organization ;
-                    rdfs:label ?orgName .
-            }
-            # journal 
-            UNION {
-                ?subject ?property ?service .
-                ?service a fhs:Service .
-                ?service core:relates ?journal .
-                ?journal a bibo:Journal ;
-                    rdfs:label ?journalName .
             }
             UNION
             {
@@ -125,5 +104,5 @@
         }
     </query-construct>
 
-    <template>propStatement-personHasService.ftl</template>
+    <template>propStatement-journalHasService.ftl</template>
 </list-view-config>
