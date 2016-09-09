@@ -33,6 +33,7 @@ where {
                        rdfs:label ?parentOrgName .
         }
         FILTER NOT EXISTS { ?position a fhd:FormerPosition }
+        FILTER NOT EXISTS { ?position a fhd:Membership }
     }
     UNION {
         ?p a foaf:Person ;
