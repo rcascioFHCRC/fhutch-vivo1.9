@@ -202,10 +202,23 @@ class Person(BaseModel):
         Use nickname for first name if it's present per AMC.
         """
         first = self._nickname or self._first
-        l = "{}, {}".format(self.cffamilynames, first)
+        l = u"{}, {}".format(self.cffamilynames, first)
         if hasattr(self, 'middlename'):
-            l + " " + self.middlename
+            l += u" " + self.middlename
         return l
+
+    def slug(self):
+        """
+        Create slug urls.
+        """
+        from slugify import slugify
+        return slugify(unicode(self.shortdescription.split(',')[0]))
+        first = self._nickname or self._first
+        last = self.cffamilynames
+        if hasattr(self, 'middlename'):
+            return slugify(u"{} {} {}".format(first, self.middlename, last))
+        else:
+            return slugify(u"{} {}".format(first, last))
 
 
     def to_rdf(self):
