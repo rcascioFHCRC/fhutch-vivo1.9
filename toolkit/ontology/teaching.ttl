@@ -33,7 +33,12 @@ fht:Teaching a owl:Class ;
     rdfs:label "Teaching"@en-US .
 
 fht:AdvisingMentoring a owl:Class ;
-    rdfs:subClassOf          fht:Teaching ;
+    rdfs:subClassOf          fht:TeachingLecture ;
     vitro:inClassGroup d:vitroClassGroupTeachingLectures ;
     rdfs:label "Advising & Mentoring"@en-US .
+
+fht:InvitedLecture a owl:Class ;
+    rdfs:subClassOf          fht:TeachingLecture ;
+    vitro:inClassGroup d:vitroClassGroupTeachingLectures ;
+    rdfs:label "Invited Lecture"@en-US .
 
