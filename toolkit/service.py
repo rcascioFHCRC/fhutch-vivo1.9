@@ -5,6 +5,8 @@ import os
 import logging
 import logging.handlers
 
+from converis import client
+
 # local models
 import models
 import log_setup
@@ -42,13 +44,13 @@ def harvest_service(sample=False):
     g = Graph()
     done = 0
     for item in client.filter_query(q):
-        print item.cid
+        #print item.cid
         g += client.to_graph(item, models.Service)
         done += 1
         if (sample is True) and (done >= 100):
             break
-    #print g.serialize(format='n3')
-    backend.sync_updates("http://localhost/data/service", g)
+    print g.serialize(format='n3')
+    #backend.sync_updates("http://localhost/data/service", g)
 
 service_q = """
 <data xmlns="http://converis/ns/webservice">
@@ -79,3 +81,4 @@ def harvest():
 if __name__ == "__main__":
     logger.info("Starting harvest.")
     harvest()
+    #harvest_service(sample=False)

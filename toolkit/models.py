@@ -1283,8 +1283,29 @@ class Service(BaseModel):
             g += jm.to_rdf()
         return g
 
+    def _gattrs(self, keys):
+        for key in keys:
+            if hasattr(self, key):
+                return getattr(self, key)['value']
+        return None
+
     def label(self):
-        return self.shortdescription.split('(')[0].strip()
+        """
+        Look in four different fields for role description.
+        - proSocietyRole
+        - editorshipRole
+        - committeRole
+        - roleOther
+
+        """
+        #return self.shortdescription.split('(')[0].strip()
+        role = self._gattrs(["prosocietyrole", "editorshiprole", "committeerole", "roleother"]) or "Not specified"
+        modifier = None
+        if hasattr(self, "rolemodifier"):
+            modifier = self.rolemodifier["value"]
+            return "{} {}".format(modifier, role)
+        return role
+
 
     def to_rdf(self):
         g = Graph()
