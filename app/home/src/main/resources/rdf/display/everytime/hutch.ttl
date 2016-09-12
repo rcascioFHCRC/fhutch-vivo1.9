@@ -8,6 +8,7 @@
 @prefix vitroDisplay: <http://vitro.mannlib.cornell.edu/ontologies/display/1.1#> .
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
 @prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
+@prefix fht: <http://vivo.fredhutch.org/ontology/teaching#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 
@@ -65,6 +66,22 @@ local:orgServiceConfig a :ObjectPropertyDisplayConfig ;
     :listViewConfigFile "listViewConfig-entityHasService.xml"^^xsd:string ;
     rdfs:label "orgService"@en-US ;
     :displayName "service" ;
+    vitro:displayRankAnnot  2 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoutreach> .
+
+# teaching / lectures
+local:personTeachingContext a :ConfigContext ;
+    :hasConfiguration local:personTeachingConfig ;
+    :configContextFor vivo:relatedBy ;
+    :qualifiedByDomain  foaf:Person  ;
+    :qualifiedBy      fht:Teaching .
+
+local:personTeachingConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-fauxPropertyDefault.xml"^^xsd:string ;
+    rdfs:label "personTeaching"@en-US ;
+    :displayName "teaching" ;
     vitro:displayRankAnnot  2 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;

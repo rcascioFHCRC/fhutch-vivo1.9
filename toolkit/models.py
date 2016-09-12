@@ -27,6 +27,8 @@ FHP = Namespace('http://vivo.fredhutch.org/ontology/publications#')
 FHCT = Namespace('http://vivo.fredhutch.org/ontology/clinicaltrials#')
 # service
 FHS = Namespace('http://vivo.fredhutch.org/ontology/service#')
+#teaching
+FHT = Namespace('http://vivo.fredhutch.org/ontology/teaching#')
 
 DATA_NAMESPACE = D
 
@@ -1338,3 +1340,50 @@ class Service(BaseModel):
         #g += self.add_vcard_weblink()
 
         return g
+
+
+
+class TeachingLecture(BaseModel):
+
+    def get_person(self):
+        g = Graph()
+        for person in client.get_related_ids('Person', self.cid, 'LECT_has_PERS'):
+            puri = person_uri(person)
+            g.add((self.uri, VIVO.relates, puri))
+        return g
+
+    def get_dti(self):
+        try:
+            end = self.conferredon
+        except AttributeError:
+            end = None
+        try:
+            start = self.startedon
+        except AttributeError:
+            start = None
+        if (start is None) and (end is None):
+            return
+        return self._dti(start, end)
+
+
+    def assign_type(self):
+        default = FHT.Teaching
+        ettypes = {
+            '10469': FHT.InvitedLecture,
+        }
+        if hasattr(self, 'dynamictype'):
+            ctype = self.dynamictype['cid'].strip()
+            return ettypes.get(ctype, default)
+        return default
+
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, self.assign_type())
+        r.set(RDFS.label, Literal(self.shortdescription))
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
+        g += self.get_person()
+
+        return g 

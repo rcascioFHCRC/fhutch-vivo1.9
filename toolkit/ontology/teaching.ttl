@@ -1,0 +1,39 @@
+@prefix fht: <http://vivo.fredhutch.org/ontology/teaching#> .
+@prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
+@prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
+@prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix owl:   <http://www.w3.org/2002/07/owl#> .
+@prefix rdfs:  <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:      <http://www.w3.org/2001/XMLSchema#> .
+@prefix vivo:  <http://vivoweb.org/ontology/core#> .
+@prefix vpublic: <http://vitro.mannlib.cornell.edu/ns/vitro/public#> .
+@prefix skos:  <http://www.w3.org/2004/02/skos/core#> .
+@prefix foaf:  <http://xmlns.com/foaf/0.1/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
+@prefix obo: <http://purl.obolibrary.org/obo/> .
+@prefix cg:  <http://vivoweb.org/ontology#> .
+@prefix d: <http://vivo.fredhutch.org/individual/> .
+
+
+<http://vivo.fredhutch.org/ontology/teaching#>
+        a                          owl:Ontology ;
+        rdfs:label                 "FredHutch Teaching"@en-US ;
+        vitro:ontologyPrefixAnnot  "fht"^^xsd:string .
+
+# service
+
+fht:TeachingLecture a owl:Class ;
+    rdfs:subClassOf          owl:Thing ;
+    vitro:inClassGroup d:vitroClassGroupTeachingLectures ;
+    rdfs:label "Teaching & Lectures"@en-US .
+
+fht:Teaching a owl:Class ;
+    rdfs:subClassOf          fht:TeachingLecture ;
+    vitro:inClassGroup d:vitroClassGroupTeachingLectures ;
+    rdfs:label "Teaching"@en-US .
+
+fht:AdvisingMentoring a owl:Class ;
+    rdfs:subClassOf          fht:Teaching ;
+    vitro:inClassGroup d:vitroClassGroupTeachingLectures ;
+    rdfs:label "Advising & Mentoring"@en-US .
+
