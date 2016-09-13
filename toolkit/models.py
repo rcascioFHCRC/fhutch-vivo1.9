@@ -969,13 +969,9 @@ class Award(BaseModel):
 
     def get_awarded_by(self):
         g = Graph()
-        for org in client.RelatedObject('Award', self.cid, 'AWRD_has_ORGA'):
+        for org in client.related_ids('Award', self.cid, 'AWRD_has_ORGA'):
             ouri = org_uri(org.cid)
             g.add((self.uri, FHD.awardedBy, ouri))
-            # org model
-            om = Organization(**org.__dict__)
-            # don't fetch positions for these orgs.
-            g += om.to_rdf(get_all=False)
         return g
 
     def add_date(self):
@@ -1086,13 +1082,9 @@ class ClinicalTrial(BaseModel):
         aren't an internal org.
         """
         g = Graph()
-        for org in client.get_related_entities('Organisation', self.cid, 'CLIN_has_ORGA'):
+        for org in client.get_related_ids('Organisation', self.cid, 'CLIN_has_ORGA'):
             ouri = org_uri(org.cid)
             g.add((self.uri, FHCT.hasSponsor, ouri))
-            # org model
-            om = Organization(**org.__dict__)
-            # don't fetch positions for these orgs.
-            g += om.to_rdf(get_all=False)
 
         return g
 
@@ -1193,13 +1185,9 @@ class Degree(BaseModel):
 
     def get_assigned_by(self):
         g = Graph()
-        for org in client.RelatedObject('Education', self.cid, 'EDUC_has_ORGA'):
+        for org in client.get_related_ids('Education', self.cid, 'EDUC_has_ORGA'):
             ouri = org_uri(org.cid)
             g.add((self.uri, VIVO.assignedBy, ouri))
-            # org model
-            om = Organization(**org.__dict__)
-            # don't fetch positions for these orgs.
-            g += om.to_rdf(get_all=False)
         return g
 
     def assign_type(self):
@@ -1288,14 +1276,9 @@ class Service(BaseModel):
 
     def get_org(self):
         g = Graph()
-        for org in client.RelatedObject('Service', self.cid, 'SERV_has_ORGA'):
+        for org in client.get_related_ids('Service', self.cid, 'SERV_has_ORGA'):
             puri = org_uri(org.cid)
             g.add((self.uri, VIVO.relates, puri))
-            # Fetch org details too for orgs that may not already be in system
-            # org model
-            om = Organization(**org.__dict__)
-            # don't fetch positions for these orgs.
-            g += om.to_rdf(get_all=False)
         return g
 
     def get_journal(self):
