@@ -1352,22 +1352,52 @@ class TeachingLecture(BaseModel):
             g.add((self.uri, VIVO.relates, puri))
         return g
 
+
+    def get_publ(self):
+        g = Graph()
+        pubs = client.get_related_ids('Publication', self.cid, 'LECT_has_PUBL')
+        for pub in pubs:
+            g.add((self.uri, VIVO.relates, pub_uri(pub)))
+        return g
+
+
+    def get_orgs(self):
+        g = Graph()
+        for org in client.RelatedObject('TeachingAndLect', self.cid, 'LECT_has_ORGA'):
+            puri = org_uri(org.cid)
+            g.add((self.uri, VIVO.relates, puri))
+            # Fetch org details too for orgs that may not already be in system
+            # org model
+            om = Organization(**org.__dict__)
+            # don't fetch positions for these orgs.
+            g += om.to_rdf(get_all=False)
+        return g
+
     def get_dti(self):
         try:
-            end = self.conferredon
+            end = self.startedon
         except AttributeError:
             end = None
         try:
-            start = self.startedon
+            start = self.endedon
         except AttributeError:
             start = None
         if (start is None) and (end is None):
-            return
+            return None, None
         return self._dti(start, end)
+
+    def add_date(self):
+        g = Graph()
+        on_date = self._v('occurredon')
+        if on_date is not None:
+            date_uri, dg = self._date("teaching", on_date)
+            g += dg
+            g.add((self.uri, VIVO.dateTimeValue, date_uri))
+        return g
 
 
     def assign_type(self):
-        default = FHT.Teaching
+        default = FHT.TeachingLecture
         ettypes = {
             '10469': FHT.InvitedLecture,
         }
@@ -1377,6 +1407,13 @@ class TeachingLecture(BaseModel):
         return default
 
 
+    def _v(self, attr):
+        try:
+            return getattr(self, attr)
+        except AttributeError:
+            return
+
+
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
@@ -1384,6 +1421,20 @@ class TeachingLecture(BaseModel):
         r.set(RDFS.label, Literal(self.shortdescription))
         r.set(CONVERIS.converisId, Literal(self.cid))
 
+        # related entities
         g += self.get_person()
+        g += self.get_orgs()
+        g += self.get_publ()
+
+        # some have single dates
+        g += self.add_date()
+        # some have intervals
+        # Add datetime interval
+        try:
+            dti_uri, dti_g = self._dti(self._v("startedon"), self._v("endedon"))
+            g += dti_g
+            r.set(VIVO.dateTimeInterval, dti_uri)
+        except TypeError:
+            pass
 
         return g 

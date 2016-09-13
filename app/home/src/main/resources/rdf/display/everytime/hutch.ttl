@@ -82,7 +82,75 @@ local:personTeachingConfig a :ObjectPropertyDisplayConfig ;
     :listViewConfigFile "listViewConfig-fauxPropertyDefault.xml"^^xsd:string ;
     rdfs:label "personTeaching"@en-US ;
     :displayName "teaching" ;
-    vitro:displayRankAnnot  2 ;
+    vitro:displayRankAnnot  80 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
     :propertyGroup <http://vitro.mannlib.cornell.edu/ns/default#n3452> .
+
+
+# teaching to person
+local:teachingPersonContext a :ConfigContext ;
+    :hasConfiguration local:teachingPersonConfig ;
+    :configContextFor vivo:relates ;
+    :qualifiedByDomain  fht:TeachingLecture  ;
+    :qualifiedBy      foaf:Person .
+
+local:teachingPersonConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-fauxPropertyDefault.xml"^^xsd:string ;
+    rdfs:label "teachingPerson"@en-US ;
+    :displayName "people" ;
+    vitro:displayRankAnnot  80 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupaffiliation> .
+
+
+# teaching to publication
+local:teachingPublContext a :ConfigContext ;
+    :hasConfiguration local:teachingPublConfig ;
+    :configContextFor vivo:relates ;
+    :qualifiedByDomain  fht:TeachingLecture  ;
+    :qualifiedBy      bibo:Document .
+
+local:teachingPublConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-fauxPropertyDefault.xml"^^xsd:string ;
+    rdfs:label "teachingPublication"@en-US ;
+    :displayName "publications" ;
+    vitro:displayRankAnnot  80 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoverview> .
+
+
+# teaching to org
+local:teachingOrgContext a :ConfigContext ;
+    :hasConfiguration local:teachingOrgConfig ;
+    :configContextFor vivo:relates ;
+    :qualifiedByDomain  fht:TeachingLecture  ;
+    :qualifiedBy      foaf:Organization .
+
+local:teachingOrgConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-fauxPropertyDefault.xml"^^xsd:string ;
+    rdfs:label "teachingOrganization"@en-US ;
+    :displayName "organizations" ;
+    vitro:displayRankAnnot  80 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoverview> .
+
+# dates
+local:teachingDateContext a :ConfigContext ;
+    :hasConfiguration local:teachingDateConfig ;
+    :configContextFor vivo:dateTimeValue ;
+    :qualifiedByDomain  fht:TeachingLecture  ;
+    :qualifiedBy      vivo:DateTimeValue .
+
+local:teachingDateConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "llistViewConfig-dateTimeValue.xml"^^xsd:string ;
+    rdfs:label "conferred on"@en-US ;
+    :displayName "conferred on" ;
+    vitro:displayRankAnnot  80 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoverview> .
+
