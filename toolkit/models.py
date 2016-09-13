@@ -635,6 +635,28 @@ class Organization(BaseModel):
         return g
 
 
+class RelatedOrganization(Organization):
+
+    def to_rdf(self):
+        """
+        Map orgs to RDF but don't get child orgs or positions.
+        """
+        g = Graph()
+        o = Resource(g, self.uri)
+        o.set(RDF.type, self.get_type())
+        o.set(RDFS.label, Literal(self.cfname))
+        o.set(CONVERIS.converisId, Literal(self.cid))
+        if hasattr(self, 'description'):
+            o.set(VIVO.overview, Literal(self.description))
+        g += self.add_vcard_weblink()
+
+        # determine if this is an internal or external org
+        if hasattr(self, 'intorext'):
+            if self.intorext['cid'] == '12000':
+                o.add(RDF.type, FHD.InternalOrganization)
+        return g
+
+
 class Publication(BaseModel):
 
     def get_type(self, default=FHP.OtherPublication):
@@ -1363,14 +1385,9 @@ class TeachingLecture(BaseModel):
 
     def get_orgs(self):
         g = Graph()
-        for org in client.RelatedObject('TeachingAndLect', self.cid, 'LECT_has_ORGA'):
-            puri = org_uri(org.cid)
-            g.add((self.uri, VIVO.relates, puri))
-            # Fetch org details too for orgs that may not already be in system
-            # org model
-            om = Organization(**org.__dict__)
-            # don't fetch positions for these orgs.
-            g += om.to_rdf(get_all=False)
+        orgs = client.get_related_ids('Organisation', self.cid, 'LECT_has_ORGA')
+        for org in orgs:
+            g.add((self.uri, VIVO.relates, org_uri(org)))
         return g
 
     def get_dti(self):
