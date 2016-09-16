@@ -199,7 +199,7 @@ function processProfileInformation(nameContainerID,
 				}
 			})
 			// append title if it's there
-			if ( moniker.length > 0 ) {
+			if ( ( moniker ) && ( moniker.length > 0 ) ) {
 				name = name + ", " + moniker
 			}
 		}
