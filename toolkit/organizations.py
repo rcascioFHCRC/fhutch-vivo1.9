@@ -24,13 +24,17 @@ if os.environ.get('HTTP_CACHE') == "1":
 
 THREADS = int(os.environ['THREADS'])
 
+# get orgs with cards or parent orgs that have child orgs with cards.
 internal = """
 <data xmlns="http://converis/ns/webservice">
  <query>
   <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-   <and>
+   <or>
     <relation minCount="1" name="CARD_has_ORGA"/>
-   </and>
+     <relation minCount="1" name="ORGA_has_child_ORGA">
+       <relation minCount="1" name="CARD_has_ORGA"/>
+     </relation>
+   </or>
   </filter>
  </query>
 </data>
