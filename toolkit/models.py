@@ -1403,6 +1403,8 @@ class TeachingLecture(BaseModel):
         default = FHT.TeachingLecture
         ettypes = {
             '10469': FHT.InvitedLecture,
+            '10468': FHT.AdvisingMentoring,
+            '10470': FHT.Teaching
         }
         if hasattr(self, 'dynamictype'):
             ctype = self.dynamictype['cid'].strip()
@@ -1416,12 +1418,22 @@ class TeachingLecture(BaseModel):
         except AttributeError:
             return
 
+    def label(self):
+        title = self._v("title")
+        if title is None:
+            return self.shortdescription
+        else:
+            return title
+
 
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-        r.set(RDF.type, self.assign_type())
-        r.set(RDFS.label, Literal(self.shortdescription))
+        ttype = self.assign_type()
+        if ttype == FHT.AdvisingMentoring:
+            return g
+        r.set(RDF.type, ttype)
+        r.set(RDFS.label, Literal(self.label()))
         r.set(CONVERIS.converisId, Literal(self.cid))
 
         # related entities
