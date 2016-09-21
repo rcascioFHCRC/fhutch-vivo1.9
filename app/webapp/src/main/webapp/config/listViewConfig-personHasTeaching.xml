@@ -18,6 +18,8 @@
             ?teaching
             ?teachingName
             ?org ?orgName
+            ?parentOrg ?parentOrgName
+            ?grandParentOrg ?grandParentOrgName
             ?dateTimeStart ?dateTimeEnd
             ?date
         WHERE
@@ -28,6 +30,17 @@
             OPTIONAL {
                 ?teaching fht:org ?org .
                 ?org rdfs:label ?orgName .
+            }
+            OPTIONAL {
+                ?teaching fht:org ?org .
+                ?org fht:parent ?parentOrg .
+                ?parentOrg rdfs:label ?parentOrgName .
+            }
+            OPTIONAL {
+                ?teaching fht:org ?org .
+                ?org fht:parent ?parentOrg .
+                ?parentOrg fht:grandParent ?grandParentOrg .
+                ?grandParentOrg rdfs:label ?grandParentOrgName .
             }
             OPTIONAL
             {
@@ -69,6 +82,10 @@
             ?teaching vitro:mostSpecificType ?subclass .
             ?teaching fht:org ?org .
             ?org rdfs:label ?orgName .
+            ?org fht:parent ?parentOrg .
+            ?parentOrg rdfs:label ?parentOrgName .
+            ?parentOrg fht:grandParent ?grandParentOrg .
+            ?grandParentOrg rdfs:label ?grandParentOrgName .
             ?teaching core:dateTimeInterval ?dateTimeInterval .
             ?dateTimeInterval core:start ?dateTimeStartValue .
             ?dateTimeStartValue core:dateTime ?dateTimeStart .
@@ -95,6 +112,25 @@
                 ?teaching core:relates ?org .
                 ?org a foaf:Organization ;
                     rdfs:label ?orgName .
+            }
+            # parent org 
+            UNION {
+                ?subject ?property ?teaching .
+                ?teaching a fht:Teaching .
+                ?teaching core:relates ?org .
+                ?org a foaf:Organization .
+                ?org obo:BFO_0000050 ?parentOrg .
+                ?parentOrg rdfs:label ?parentOrgName .
+            }
+            # grand-parent org 
+            UNION {
+                ?subject ?property ?teaching .
+                ?teaching a fht:Teaching .
+                ?teaching core:relates ?org .
+                ?org a foaf:Organization .
+                ?org obo:BFO_0000050 ?parentOrg .
+                ?parentOrg obo:BFO_0000050 ?grandParentOrg .
+                ?grandParentOrg rdfs:label ?grandParentOrgName .
             }
             UNION
             {
