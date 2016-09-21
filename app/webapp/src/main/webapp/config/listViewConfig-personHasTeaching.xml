@@ -48,7 +48,7 @@
             <collated>
                 ?teaching vitro:mostSpecificType ?subclass .
             </collated>
-        } ORDER BY ?subclass DESC(?dateTimeStart)
+        } ORDER BY ?subclass DESC(?date) DESC(?dateTimeStart)
     </query-select>
 
     <query-construct>
