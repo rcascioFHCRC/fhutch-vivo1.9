@@ -1276,8 +1276,8 @@ class Service(BaseModel):
 
     def get_org(self):
         g = Graph()
-        for org in client.get_related_ids('Service', self.cid, 'SERV_has_ORGA'):
-            puri = org_uri(org.cid)
+        for org in client.get_related_ids('Organisation', self.cid, 'SERV_has_ORGA'):
+            puri = org_uri(org)
             g.add((self.uri, VIVO.relates, puri))
         return g
 
