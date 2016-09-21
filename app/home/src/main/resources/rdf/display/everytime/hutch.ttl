@@ -79,7 +79,7 @@ local:personTeachingContext a :ConfigContext ;
     :qualifiedBy      fht:TeachingLecture .
 
 local:personTeachingConfig a :ObjectPropertyDisplayConfig ;
-    :listViewConfigFile "listViewConfig-fauxPropertyDefault.xml"^^xsd:string ;
+    :listViewConfigFile "listViewConfig-personHasTeaching.xml"^^xsd:string ;
     rdfs:label "personTeaching"@en-US ;
     :displayName "teaching" ;
     vitro:displayRankAnnot  80 ;
