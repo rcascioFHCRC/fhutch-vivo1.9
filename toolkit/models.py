@@ -1310,8 +1310,11 @@ class Service(BaseModel):
         modifier = None
         if hasattr(self, "rolemodifier"):
             modifier = self.rolemodifier["value"]
-            return "{} {}".format(modifier, role)
-        return role
+            role = u"{} {}".format(modifier, role)
+        if hasattr(self, "committeegroup"):
+            role += u", {}".format(self.committeegroup)
+        # strip off not specified if role is not but committee or modifier exists.
+        return role.lstrip('Not specified, ')
 
 
     def to_rdf(self):
