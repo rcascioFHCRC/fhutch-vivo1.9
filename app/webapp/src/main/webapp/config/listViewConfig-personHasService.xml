@@ -18,6 +18,7 @@
             ?service
             ?serviceName
             ?org ?orgName
+            ?parentOrg ?parentOrgName
             ?journal ?journalName
             ?dateTimeStart ?dateTimeEnd
         WHERE
@@ -28,6 +29,11 @@
             OPTIONAL {
                 ?service fhs:org ?org .
                 ?org rdfs:label ?orgName .
+            }
+            OPTIONAL {
+                ?service fhs:org ?org .
+                ?org fhs:parent ?parentOrg .
+                ?parentOrg rdfs:label ?parentOrgName .
             }
             OPTIONAL {
                 ?service fhs:journal ?journal .
@@ -70,6 +76,8 @@
             ?service vitro:mostSpecificType ?subclass .
             ?service fhs:org ?org .
             ?org rdfs:label ?orgName .
+            ?org fhs:parent ?parentOrg .
+            ?parentOrg rdfs:label ?parentOrgName .
             ?service fhs:journal ?journal .
             ?journal rdfs:label ?journalName .
             ?service core:dateTimeInterval ?dateTimeInterval .
@@ -97,6 +105,15 @@
                 ?service core:relates ?org .
                 ?org a foaf:Organization ;
                     rdfs:label ?orgName .
+            }
+            # parent org 
+            UNION {
+                ?subject ?property ?service .
+                ?service a fhs:Service .
+                ?service core:relates ?org .
+                ?org a foaf:Organization .
+                ?org obo:BFO_0000050 ?parentOrg .
+                ?parentOrg rdfs:label ?parentOrgName .
             }
             # journal 
             UNION {
