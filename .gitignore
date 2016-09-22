@@ -19,6 +19,7 @@ vdata/
 *log
 *log*
 venv
+tmp.py
 
 pictures/
 clinicaltrials.csv
