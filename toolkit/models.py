@@ -1038,7 +1038,7 @@ def create_authorships():
 
 def get_pub_cards():
     q = """
-    select DISTINCT ?card
+    select DISTINCT ?person ?card
     where {
         ?person a foaf:Person ;
             converis:pubCardId ?card .
@@ -1056,7 +1056,7 @@ def get_pub_cards():
     query = rq_prefixes + q
     out = []
     for row in vstore.query(query):
-        out.append(row.card.toPython())
+        out.append((row.person, row.card.toPython()))
     return set(out)
 
 

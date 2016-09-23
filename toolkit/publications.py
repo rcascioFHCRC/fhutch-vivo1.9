@@ -18,6 +18,7 @@ import log_setup
 from utils import ThreadedHarvest
 
 from rdflib import Graph, Literal
+from rdflib.namespace import RDF
 
 logger = log_setup.get_logger()
 
@@ -99,14 +100,7 @@ def process_pub_card(card):
     return
 
 
-def generate_authorships():
-    """
-    Run SPARQL query to generate authorships by joining
-    on converis:pubCardId.
-    """
-    logger.info("Generating authorships.")
-    g = models.create_authorships()
-    backend.sync_updates("http://localhost/data/authorship", g)
+
 
 
 def get_pub_cards(sample=False):
@@ -130,23 +124,62 @@ class PubHarvest(ThreadedHarvest):
         self.graph = Graph()
         self.threads = threads
 
-def pub_harvest(query):
+
+def pub_harvest():
+    q = """
+    <data xmlns="http://converis/ns/webservice">
+    <query>
+    <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
+    <and>
+        <and>
+            <relation direction="lefttoright" name="PUBL_has_CARD">
+                <relation direction="righttoleft"  name="PERS_has_CARD">
+                <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+                </relation>
+            </relation>
+        </and>
+    </and>
+    </filter>
+    </query>
+    </data>
+    """
+    g = Graph()
+    for item in client.filter_query(q):
+        g += client.to_graph(item, models.Publication)
     ng = "http://localhost/data/publications"
-    ph = PubHarvest(query, models.Publication)
-    #Threaded harvest
-    ph.run_harvest()
-    logger.info("Harvest finished. Syncing to vstore.")
-    # Send the updates to VIVO
-    ph.post_updates(ng)
+    backend.sync_updates(ng, g)
 
 
+def generate_authorships():
+    """
+    Run SPARQL query to generate authorships by joining
+    on converis:pubCardId.
+    """
+    g = Graph()
+    for person_uri, card_id in models.get_pub_cards():
+        for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
+            pub_uri = models.pub_uri(pub)
+            uri = models.hash_uri("authorship", person_uri.toPython() + pub_uri.toPython())
+            g.add((uri, RDF.type, VIVO.Authorship))
+            g.add((uri, VIVO.relates, person_uri))
+            g.add((uri, VIVO.relates, pub_uri))
+    backend.sync_updates("http://localhost/data/authorship", g)
 
+
+def clear_pub_cards():
+    """
+    Delete all the pubs-cards named graphs.
+    """
+    cards = get_pub_cards()
+    for card_uri, card in cards:
+        g = Graph()
+        backend.sync_updates("http://localhost/data/pubs-card-{}".format(card), g)
+    
 
 if __name__ == "__main__":
-    logger.info("Starting publications relations harvest.")
-    # get pub cards
-    cards = get_pub_cards()
-    run_pub_card_harvest(cards)
-    # Make authorships using card ids.
-    generate_authorships()
+    logger.info("Starting publications harvest.")
+    #pub_harvest()
+    logger.info("Generating authorships")
+    #generate_authorships()
     logger.info("Pub harvest complete.")
+    clear_pub_cards()
