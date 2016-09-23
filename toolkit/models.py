@@ -1113,7 +1113,7 @@ class ClinicalTrial(BaseModel):
         return g
 
     def assign_type(self):
-        default = FHCT.ClinicalTrial
+        default = FHCT.Recruiting
         ttypes = {
             '5340473': FHCT.ActiveNotRecruiting,
             '5340476': FHCT.ApprovedForMarketing,
