@@ -1086,7 +1086,7 @@ class ClinicalTrial(BaseModel):
         """
         g = Graph()
         for org in client.get_related_ids('Organisation', self.cid, 'CLIN_has_ORGA'):
-            ouri = org_uri(org.cid)
+            ouri = org_uri(org)
             g.add((self.uri, FHCT.hasSponsor, ouri))
 
         return g
@@ -1113,7 +1113,7 @@ class ClinicalTrial(BaseModel):
         return g
 
     def assign_type(self):
-        default = FHCT.Other
+        default = FHCT.ClinicalTrial
         ttypes = {
             '5340473': FHCT.ActiveNotRecruiting,
             '5340476': FHCT.ApprovedForMarketing,
@@ -1129,8 +1129,11 @@ class ClinicalTrial(BaseModel):
             '5340506': FHCT.Withdrawn,
         }
         if hasattr(self, 'recruitmentstatus'):
-            ctype = self.recruitmentstatus['cid'].strip()
-            return ttypes.get(ctype, default)
+            try:
+                ctype = self.recruitmentstatus['cid'].strip()
+                return ttypes.get(ctype, default)
+            except:
+                logger.error("Error parsing ClinicalTrial type" + self.cid)
         return default
 
     def to_rdf(self):
