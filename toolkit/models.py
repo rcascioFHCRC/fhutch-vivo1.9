@@ -799,6 +799,9 @@ class Expertise(BaseModel):
         return g
 
     def get_narrower(self):
+        """
+        This seems to have been deprecated.
+        """
         g = Graph()
         for area in client.get_related_ids('Area', self.cid, 'AREA_has_child_AREA'):
             narrow = area_uri(area)
@@ -838,7 +841,7 @@ class Expertise(BaseModel):
         # Get related orgs
         g += self.has_orgs()
         # Ger narrower terms.
-        g += self.get_narrower()
+        #g += self.get_narrower()
 
         return g
 
@@ -1038,7 +1041,7 @@ def create_authorships():
 
 def get_pub_cards():
     q = """
-    select DISTINCT ?card
+    select DISTINCT ?person ?card
     where {
         ?person a foaf:Person ;
             converis:pubCardId ?card .
@@ -1056,7 +1059,7 @@ def get_pub_cards():
     query = rq_prefixes + q
     out = []
     for row in vstore.query(query):
-        out.append(row.card.toPython())
+        out.append((row.person, row.card.toPython()))
     return set(out)
 
 
