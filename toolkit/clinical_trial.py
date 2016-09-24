@@ -19,7 +19,7 @@ from utils import ThreadedHarvest
 
 from rdflib import Graph, Literal
 
-logger = log_setup.get_logger(client_level=logging.INFO)
+logger = log_setup.get_logger()
 
 if os.environ.get('HTTP_CACHE') == "1":
   import requests_cache
