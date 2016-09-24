@@ -972,7 +972,7 @@ class Award(BaseModel):
 
     def get_awarded_by(self):
         g = Graph()
-        for org in client.related_ids('Award', self.cid, 'AWRD_has_ORGA'):
+        for org in client.get_related_ids('Award', self.cid, 'AWRD_has_ORGA'):
             ouri = org_uri(org.cid)
             g.add((self.uri, FHD.awardedBy, ouri))
         return g
@@ -1059,7 +1059,7 @@ def get_pub_cards():
     query = rq_prefixes + q
     out = []
     for row in vstore.query(query):
-        out.append((row.person, row.card.toPython()))
+        out.append(row.card.toPython())
     return set(out)
 
 
