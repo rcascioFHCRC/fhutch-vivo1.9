@@ -1039,6 +1039,34 @@ def create_authorships():
     return g
 
 
+def create_local_coauthor_flag():
+    q = """
+    select DISTINCT ?person 
+    where {
+        ?person a foaf:Person .
+        ?aship vivo:relates ?pub, ?person .
+        ?pub a <http://vivo.fredhutch.org/ontology/publications#Publication> .
+        ?aship2 vivo:relates ?pub, ?person2 .
+        ?person2 a foaf:Person .
+        FILTER (?person != ?person2)
+    }
+    """
+    #Define the VIVO store
+    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
+    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
+    vstore = SyncVStore(
+                os.environ['VIVO_EMAIL'],
+                os.environ['VIVO_PASSWORD']
+            )
+    vstore.open((query_endpoint, update_endpoint))
+
+    g = Graph()
+    query = rq_prefixes + q
+    for row in vstore.query(query):
+        g.add((row.person, FHD.hasLocalCoauthor, Literal(True)))
+    return g
+
+
 def get_pub_cards():
     q = """
     select DISTINCT ?person ?card

@@ -108,6 +108,14 @@ def generate_authorships():
     g = models.create_authorships()
     backend.sync_updates("http://localhost/data/authorship", g)
 
+def generate_local_coauthor():
+    """
+    Run SPARQL query to generate a boolean indicating that
+    the person has a local coauthor.
+    """
+    logger.info("Generating local coauthor flag.")
+    g = models.create_local_coauthor_flag()
+    backend.sync_updates("http://localhost/data/local-coauthors", g)
 
 def get_pub_cards(sample=False):
     logger.info("Getting publications cards.")
@@ -140,8 +148,6 @@ def pub_harvest(query):
     ph.post_updates(ng)
 
 
-
-
 if __name__ == "__main__":
     logger.info("Starting publications relations harvest.")
     # get pub cards
@@ -149,4 +155,6 @@ if __name__ == "__main__":
     run_pub_card_harvest(cards)
     # Make authorships using card ids.
     generate_authorships()
+    logger.info("Adding local coauthor flag.")
+    generate_local_coauthor()
     logger.info("Pub harvest complete.")

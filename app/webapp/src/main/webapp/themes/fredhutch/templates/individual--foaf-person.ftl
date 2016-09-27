@@ -23,6 +23,7 @@
 <#assign visRequestingTemplate = "foaf-person-wilma">
 <#assign imageProp = "http://vivo.fredhutch.org/ontology/display#image">
 <#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
+<#assign localCoauthorProp = "http://vivo.fredhutch.org/ontology/display#hasLocalCoauthor">
 
 <#assign vcardName = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Name")!>
 <#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Telephone")!>
@@ -69,9 +70,18 @@
                   <li class="person-contact"><img src="../images/orcid.png"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
                 </#if>
               </#if>
-              <li class="ca-network">
-                <#include "utils/coauthor-viz.ftl">
-              </li>
+              <!-- localCa -->
+              <#assign lca = propertyGroups.getProperty(localCoauthorProp)!>
+              <#if lca?has_content>
+                <#if lca.statements[0]??>
+                    <#if (lca.statements[0].value) != "false">
+                      <li class="ca-network">
+                        <#include "utils/coauthor-viz.ftl">
+                      </li>
+                    </#if>
+                    
+                  </#if>
+              </#if>
 
         </ul>
         <!-- Websites -->
