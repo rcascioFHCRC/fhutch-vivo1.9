@@ -4,6 +4,7 @@
 
 <#assign doip = "http://purl.org/ontology/bibo/doi">
 <#assign pmidp = "http://purl.org/ontology/bibo/pmid">
+<#assign pmcidp = "http://vivoweb.org/ontology/core#pmcid">
 <#assign wosp = "http://localhost/ontology/converis#wosId">
 <#global pg=propertyGroups>
 
@@ -72,6 +73,7 @@
 
 <#assign doi=gdp(doip)!>
 <#assign pmid=gdp(pmidp)!>
+<#assign pmcid=gdp(pmcidp)!>
 <#assign wosId=gdp(wosp)!>
 
 <div class="pub-ids">
@@ -80,6 +82,9 @@
     </#if>
     <#if pmid?has_content>
         <span class="pub-id-link">PMID:&nbsp;<a href="http://pubmed.gov/${pmid}"  title="View in PubMed" target="external">${pmid}</a></span>
+    </#if>
+    <#if pmcid?has_content>
+        <span class="pub-id-link">PMCID:&nbsp;<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/${pmcid}"  title="View in PubMed Central" target="external">${pmcid}</a></span>
     </#if>
     <#if wosId?has_content>
         <#-- Change WoS link to match customer code -->
