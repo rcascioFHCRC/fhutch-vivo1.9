@@ -54,3 +54,4 @@ def harvest_awards(sample=True):
 if __name__ == "__main__":
     logger.info("Starting harvest.")
     harvest_awards()
+    logger.info("Harvest complete.")

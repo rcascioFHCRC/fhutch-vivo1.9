@@ -64,6 +64,9 @@
             <#if statement.pmid?has_content>
                 <span class="pub-id-link">PMID:&nbsp;<a href="http://pubmed.gov/${statement.pmid}"  title="View in PubMed" target="external">${statement.pmid}</a></span>
             </#if>
+            <#if statement.pmcid?has_content>
+                <span class="pub-id-link">PMCID:&nbsp;<a href="https://www.ncbi.nlm.nih.gov/pmc/articles/${statement.pmcid}"  title="View in PubMed Central" target="external">${statement.pmcid}</a></span>
+            </#if>
             <#if statement.wosId?has_content>
                 <#-- Change WoS link to match customer code -->
                 <span class="pub-id-link">Web of Science:&nbsp;<a href="http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcApp=VIVO&SrcAuth=TRINTCEL&KeyUT=WOS:${statement.wosId}&DestLinkType=FullRecord&DestApp=WOS_CPL"  title="View in Web of Science" target="external">${statement.wosId}</a></span>

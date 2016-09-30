@@ -31,7 +31,7 @@ journals_q = """
   <and>
     <and>
      <relation minCount="1" name="PUBL_has_JOUR"/>
-     <attribute argument="19.05.2016" name="Updated on" operator="greaterequal"/>
+     <!--<attribute argument="19.05.2016" name="Updated on" operator="greaterequal"/>-->
     </and>
   </and>
   </filter>

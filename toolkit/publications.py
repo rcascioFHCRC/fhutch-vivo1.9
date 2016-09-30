@@ -82,6 +82,7 @@ def run_pub_card_harvest(to_fetch):
     harvest_queue.join()
     logger.info("Harvest complete")
 
+
 def process_pub_card(card):
     """
     Process publication card relations.
@@ -99,8 +100,14 @@ def process_pub_card(card):
     return
 
 
-
-
+def generate_local_coauthor():
+    """
+    Run SPARQL query to generate a boolean indicating that
+    the person has a local coauthor.
+    """
+    logger.info("Generating local coauthor flag.")
+    g = models.create_local_coauthor_flag()
+    backend.sync_updates("http://localhost/data/local-coauthors", g)
 
 def get_pub_cards(sample=False):
     logger.info("Getting publications cards.")
@@ -169,6 +176,7 @@ def clear_pub_cards():
     """
     Delete all the pubs-cards named graphs.
     """
+    # get pub cards
     cards = get_pub_cards()
     for card_uri, card in cards:
         g = Graph()
@@ -180,5 +188,7 @@ if __name__ == "__main__":
     pub_harvest()
     logger.info("Generating authorships")
     generate_authorships()
+    logger.info("Adding local coauthor flag.")
+    generate_local_coauthor()
     logger.info("Pub harvest complete.")
     #clear_pub_cards()

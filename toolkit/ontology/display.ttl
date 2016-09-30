@@ -222,6 +222,12 @@ fhd:url a owl:DatatypeProperty ;
         rdfs:label "url" .
 
 
+fhd:hasLocalCoauthor a owl:DatatypeProperty ;
+        rdfs:label "has local coauthor" ;
+        rdfs:range xsd:boolean .
+
+
+
 fhd:image a owl:DatatypeProperty ;
         rdfs:label "image" ;
         rdfs:range xsd:string ;

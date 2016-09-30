@@ -799,6 +799,9 @@ class Expertise(BaseModel):
         return g
 
     def get_narrower(self):
+        """
+        This seems to have been deprecated.
+        """
         g = Graph()
         for area in client.get_related_ids('Area', self.cid, 'AREA_has_child_AREA'):
             narrow = area_uri(area)
@@ -838,7 +841,7 @@ class Expertise(BaseModel):
         # Get related orgs
         g += self.has_orgs()
         # Ger narrower terms.
-        g += self.get_narrower()
+        #g += self.get_narrower()
 
         return g
 
@@ -969,7 +972,7 @@ class Award(BaseModel):
 
     def get_awarded_by(self):
         g = Graph()
-        for org in client.related_ids('Award', self.cid, 'AWRD_has_ORGA'):
+        for org in client.get_related_ids('Award', self.cid, 'AWRD_has_ORGA'):
             ouri = org_uri(org.cid)
             g.add((self.uri, FHD.awardedBy, ouri))
         return g
@@ -1036,6 +1039,34 @@ def create_authorships():
     return g
 
 
+def create_local_coauthor_flag():
+    q = """
+    select DISTINCT ?person 
+    where {
+        ?person a foaf:Person .
+        ?aship vivo:relates ?pub, ?person .
+        ?pub a <http://vivo.fredhutch.org/ontology/publications#Publication> .
+        ?aship2 vivo:relates ?pub, ?person2 .
+        ?person2 a foaf:Person .
+        FILTER (?person != ?person2)
+    }
+    """
+    #Define the VIVO store
+    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
+    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
+    vstore = SyncVStore(
+                os.environ['VIVO_EMAIL'],
+                os.environ['VIVO_PASSWORD']
+            )
+    vstore.open((query_endpoint, update_endpoint))
+
+    g = Graph()
+    query = rq_prefixes + q
+    for row in vstore.query(query):
+        g.add((row.person, FHD.hasLocalCoauthor, Literal(True)))
+    return g
+
+
 def get_pub_cards():
     q = """
     select DISTINCT ?person ?card
@@ -1083,7 +1114,7 @@ class ClinicalTrial(BaseModel):
         """
         g = Graph()
         for org in client.get_related_ids('Organisation', self.cid, 'CLIN_has_ORGA'):
-            ouri = org_uri(org.cid)
+            ouri = org_uri(org)
             g.add((self.uri, FHCT.hasSponsor, ouri))
 
         return g
@@ -1110,7 +1141,7 @@ class ClinicalTrial(BaseModel):
         return g
 
     def assign_type(self):
-        default = FHCT.Other
+        default = FHCT.Recruiting
         ttypes = {
             '5340473': FHCT.ActiveNotRecruiting,
             '5340476': FHCT.ApprovedForMarketing,
@@ -1126,8 +1157,11 @@ class ClinicalTrial(BaseModel):
             '5340506': FHCT.Withdrawn,
         }
         if hasattr(self, 'recruitmentstatus'):
-            ctype = self.recruitmentstatus['cid'].strip()
-            return ttypes.get(ctype, default)
+            try:
+                ctype = self.recruitmentstatus['cid'].strip()
+                return ttypes.get(ctype, default)
+            except:
+                logger.error("Error parsing ClinicalTrial type" + self.cid)
         return default
 
     def to_rdf(self):
