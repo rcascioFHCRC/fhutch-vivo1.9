@@ -1,6 +1,5 @@
 """
-Threaded fetch of publications going from publication card
-to pubs. E.g. /Card/1235/PUBL_has_CARD.
+Threaded fetch of publications.
 """
 import logging
 import os
@@ -178,8 +177,8 @@ def clear_pub_cards():
 
 if __name__ == "__main__":
     logger.info("Starting publications harvest.")
-    #pub_harvest()
+    pub_harvest()
     logger.info("Generating authorships")
-    #generate_authorships()
+    generate_authorships()
     logger.info("Pub harvest complete.")
-    clear_pub_cards()
+    #clear_pub_cards()
