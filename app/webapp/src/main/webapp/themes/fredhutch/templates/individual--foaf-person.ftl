@@ -139,6 +139,7 @@
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
 	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
   <#assign skipThis = propertyGroups.pullProperty(orcidProp)!>
+  <#assign skipThis = propertyGroups.pullProperty(localCoauthorProp)!>
   <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#briefDescription")!>
   <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#nickname")!>
 </#if>
