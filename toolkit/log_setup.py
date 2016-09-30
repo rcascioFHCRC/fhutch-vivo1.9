@@ -4,7 +4,7 @@ import logging.handlers
 def get_logger(client_level=logging.WARNING):
     # For console logging.
     logging.basicConfig(
-        level=logging.INFO,
+        level=logging.WARNING,
         format='[%(asctime)s] p%(process)s {%(pathname)s:%(lineno)d} %(levelname)s - %(message)s',
     )
     # File handler and formatting. 
