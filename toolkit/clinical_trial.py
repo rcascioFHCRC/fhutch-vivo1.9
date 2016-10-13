@@ -99,6 +99,6 @@ def single_thread_harvest():
 
 if __name__ == "__main__":
     logger.info("Starting Cinical Trial harvest.")
-    #single_thread_harvest()
-    threaded_harvest()
+    single_thread_harvest()
+    #threaded_harvest()
     logger.info("Clinical trial harvest finished.")

@@ -1141,7 +1141,7 @@ class ClinicalTrial(BaseModel):
         return g
 
     def assign_type(self):
-        default = FHCT.Recruiting
+        default = FHCT.ClinicalTrial
         ttypes = {
             '5340473': FHCT.ActiveNotRecruiting,
             '5340476': FHCT.ApprovedForMarketing,
@@ -1156,12 +1156,17 @@ class ClinicalTrial(BaseModel):
             '5340503': FHCT.Terminated,
             '5340506': FHCT.Withdrawn,
         }
+        # 'Completed', 'Enrolling by invitation', 'Recruiting', 'n/a', 'Active, not recruiting'
         if hasattr(self, 'recruitmentstatus'):
-            try:
-                ctype = self.recruitmentstatus['cid'].strip()
-                return ttypes.get(ctype, default)
-            except:
-                logger.error("Error parsing ClinicalTrial type" + self.cid)
+            status = self.recruitmentstatus.lower().strip()
+            if status == 'completed':
+                return FHCT.Completed
+            elif status == 'enrolling by invitation':
+                return FHCT.EnrollingByInvitation
+            elif status == 'recruiting':
+                return FHCT.Recruiting
+            elif status.find('active, not rectruiting') > 0:
+                return FHCT.ActiveNotRecruiting
         return default
 
     def to_rdf(self):
