@@ -244,9 +244,6 @@ $(document).ready(function(){
 
 <div id="body">
 	<div  class="sub_headings"><h2><a href="${egoVivoProfileURL}" title="${i18n().author_name}"><span id="ego_label"></span></a><br />${i18n().co_author_network} </h2></div>
-    <#if (numOfCoAuthorShips?? && numOfCoAuthorShips > 0) || (numOfAuthors?? && numOfAuthors > 0) > 
-        <div class = "graphml-file-link">(<a href="${egoCoAuthorshipNetworkDataFileURL}" title="GraphML ${i18n().file}">GraphML ${i18n().file}</a>)</div>
-    </#if>
 
     <div class = "toggle_visualization">
         <div id="coinvestigator_link_container" class="collaboratorship-link-container">
