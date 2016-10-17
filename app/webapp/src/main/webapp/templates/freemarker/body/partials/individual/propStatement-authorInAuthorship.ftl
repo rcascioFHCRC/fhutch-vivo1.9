@@ -71,6 +71,9 @@
                 <#-- Change WoS link to match customer code -->
                 <span class="pub-id-link">Web of Science:&nbsp;<a href="http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcApp=VIVO&SrcAuth=TRINTCEL&KeyUT=WOS:${statement.wosId}&DestLinkType=FullRecord&DestApp=WOS_CPL"  title="View in Web of Science" target="external">${statement.wosId}</a></span>
             </#if>
+            <#if statement.repoURL?has_content>
+                <span class="pub-id-link">Full Text via Intranet&nbsp;<a href="${statement.repoURL}"  title="View in Web of Science" target="external">${statement.repoURL}</a></span>
+            </#if>
         </div>
     </div>
 </#if>

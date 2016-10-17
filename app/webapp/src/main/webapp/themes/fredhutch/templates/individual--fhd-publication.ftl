@@ -6,6 +6,7 @@
 <#assign pmidp = "http://purl.org/ontology/bibo/pmid">
 <#assign pmcidp = "http://vivoweb.org/ontology/core#pmcid">
 <#assign wosp = "http://localhost/ontology/converis#wosId">
+<#assign repo = "http://vivo.fredhutch.org/ontology/display#repositoryURL">
 <#global pg=propertyGroups>
 
 <#-- helper to get data properties -->
@@ -75,6 +76,7 @@
 <#assign pmid=gdp(pmidp)!>
 <#assign pmcid=gdp(pmcidp)!>
 <#assign wosId=gdp(wosp)!>
+<#assign repoU=gdp(repo)!>
 
 <div class="pub-ids">
     <#if doi?has_content>
@@ -89,6 +91,9 @@
     <#if wosId?has_content>
         <#-- Change WoS link to match customer code -->
         <span class="pub-id-link">Web of Science:&nbsp;<a href="http://gateway.webofknowledge.com/gateway/Gateway.cgi?GWVersion=2&SrcApp=VIVO&SrcAuth=TRINTCEL&KeyUT=WOS:${wosId}&DestLinkType=FullRecord&DestApp=WOS_CPL"  title="View in Web of Science" target="external">${wosId}</a></span>
+    </#if>
+    <#if repoU?has_content>
+        <span class="pub-id-link">Full Text via Intranet:&nbsp;<a href="${repoU}"  title="Full Text via Intranet" target="external">${repoU}</a></span>
     </#if>
 </div>
 
