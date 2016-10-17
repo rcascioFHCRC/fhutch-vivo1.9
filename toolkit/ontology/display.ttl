@@ -221,6 +221,8 @@ fhd:Disciplines  a          owl:Class ;
 fhd:url a owl:DatatypeProperty ;
         rdfs:label "url" .
 
+fhd:repositoryURL a owl:DatatypeProperty ;
+        rdfs:label "repository url" .
 
 fhd:hasLocalCoauthor a owl:DatatypeProperty ;
         rdfs:label "has local coauthor" ;

@@ -705,6 +705,7 @@ class Publication(BaseModel):
             ('pubmedid', BIBO.pmid),
             ('pmcid', VIVO.pmcid),
             ('isiid', CONVERIS.wosId),
+            ('irhandle', FHD.repositoryURL),
             ('cfstartpage', BIBO.pageStart),
             ('cfendpage', BIBO.pageEnd),
             ('cfabstr', BIBO.abstract),
