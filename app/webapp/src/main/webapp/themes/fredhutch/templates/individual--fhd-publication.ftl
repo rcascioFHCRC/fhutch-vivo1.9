@@ -109,6 +109,26 @@
 
 <#include "individual-property-group-tabs.ftl">
 
+<script>
+    var imagesPath = '${urls.images}';
+        var individualUri = '${individual.uri!}';
+        var individualPhoto = '${individual.thumbNail!}';
+        var exportQrCodeUrl = '${urls.base}/qrcode?uri=${individual.uri!}';
+        var baseUrl = '${urls.base}';
+    var i18nStrings = {
+        displayLess: '${i18n().display_less}',
+        displayMoreEllipsis: '${i18n().display_more_ellipsis}',
+        showMoreContent: '${i18n().show_more_content}',
+        verboseTurnOff: '${i18n().verbose_turn_off}',
+        researchAreaTooltipOne: '${i18n().research_area_tooltip_one}',
+        researchAreaTooltipTwo: '${i18n().research_area_tooltip_two}'
+    };
+    var i18nStringsUriRdf = {
+        shareProfileUri: '${i18n().share_profile_uri}',
+        viewRDFProfile: '${i18n().view_profile_in_rdf}',
+        closeString: '${i18n().close}'
+    };
+</script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/individual/individual.css" />')}
 
