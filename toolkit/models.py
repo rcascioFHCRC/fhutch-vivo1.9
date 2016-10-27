@@ -1170,6 +1170,30 @@ class ClinicalTrial(BaseModel):
                 return FHCT.ActiveNotRecruiting
         return default
 
+
+    def data_properties(self):
+        props = [
+            ('briefsummary', VIVO.overview),
+            ('nctnumber', FHCT.nctNumber),
+            #('studyidnumbers', FHCT.studyIDNumber),
+            ('conditionother', FHCT.focusOfStudy),
+            ('recruitmentstatus', FHCT.recruitmentStatus),
+            ('healthyvolunteers', FHCT.acceptsHealthyVolunteers),
+            ('url', FHD.url)
+        ]
+        for k, pred in props:
+            if hasattr(self, k):
+                try:
+                    value = getattr(self, k).strip()
+                except AttributeError:
+                    # these are choice groups
+                    value = getattr(self, k)['value'].strip()
+                # skip blanks
+                if value == u"":
+                    continue
+                yield (pred, Literal(value))
+
+
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
@@ -1182,20 +1206,32 @@ class ClinicalTrial(BaseModel):
         r.set(FHCT.officialTitle, Literal(self.officialtitle))
         r.set(CONVERIS.converisId, Literal(self.cid))
 
-        if hasattr(self, "briefsummary"):
-            r.set(VIVO.overview, Literal(self.briefsummary))
+        # if hasattr(self, "briefsummary"):
+        #     r.set(VIVO.overview, Literal(self.briefsummary))
 
-        r.set(FHCT.nctNumber, Literal(self.nctnumber))
+        # r.set(FHCT.nctNumber, Literal(self.nctnumber))
+
+        # if hasattr(self, 'conditionother'):
+        #     r.set(FHCT.focusOfStudy, Literal(self.conditionother))
+
+        # if hasattr(self, 'recruitmentstatus'):
+        #     r.set(FHCT.recruitmentStatus, Literal(self.recruitmentstatus))
+
+        # if hasattr(self, 'url'):
+        #     r.set(FHD.url, Literal(self.url))
+
+        # data props
+        for pred, val in self.data_properties():
+            r.set(pred, val)
 
         if hasattr(self, 'studyidnumbers'):
-            r.set(FHCT.studyIDNumber, Literal(self.studyidnumbers))
-
-        r.set(FHD.url, Literal(self.url))
+            nums = "; ".join([s.strip() for s in self.studyidnumbers.split("    ")])
+            r.set(FHCT.studyIDNumber, Literal(nums))
 
         g += self.get_sponsors()
         g += self.get_pubs()
         g += self.get_investigators()
-        g += self.get_areas()
+        #g += self.get_areas()
 
         # dti
         try:

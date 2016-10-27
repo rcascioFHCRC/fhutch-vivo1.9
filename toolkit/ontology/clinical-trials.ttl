@@ -103,8 +103,6 @@ fhct:nctNumber a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
 
-studyIDNumbers
-
 fhct:studyIDNumber a owl:DatatypeProperty ;
     rdfs:label "study ID number"@en-US ;
     rdfs:range xsd:string ;
@@ -152,3 +150,25 @@ fhct:sponsorFor a owl:ObjectProperty ;
         rdfs:range fhct:ClinicalTrial ;
         owl:inverseOf fhct:hasSponsor ;
         vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
+
+
+fhct:focusOfStudy a owl:DatatypeProperty ;
+    rdfs:label "focus of study"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupresearch .
+
+fhct:recruitmentStatus a owl:DatatypeProperty ;
+    rdfs:label "recruitment status"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupoverview .
+
+
+fhct:acceptsHealthyVolunteers a owl:DatatypeProperty ;
+    rdfs:label "accepts healthy volunteers"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupoverview .
+
+fhct:acceptsHealthyVolunteers a owl:DatatypeProperty ;
+    rdfs:label "accepts healthy volunteers"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupoverview .
