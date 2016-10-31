@@ -1,12 +1,36 @@
 <#include "individual-setup.ftl">
 <#import "lib-vivo-properties.ftl" as vp>
 
+<#assign nctp = "http://vivo.fredhutch.org/ontology/clinicaltrials#nctNumber">
+<#assign furlp = "http://vivo.fredhutch.org/ontology/display#url">
+<#global pg=propertyGroups>
+
+<#-- helper to get data properties -->
+<#function gdp prop>
+    <#assign val = pg.getProperty(prop)!>
+    <#if val?has_content>
+        <#if val.statements[0]??>
+            <#return val.statements[0].value>
+        </#if>
+    </#if>
+</#function>
+
+<#assign nct=gdp(nctp)!>
+<#assign url=gdp(furlp)!>
+
 <#assign individualProductExtension>
     <ul class="individual-urls" role="list">
-        <#assign webpage = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#url")!>
-        <#if webpage?has_content>
-            <li role="list-item">For eligibility information and additional details, visit: <a href="${webpage.statements[0].value}">${webpage.statements[0].value}</a></li>
+        <li role="list-item">For eligibility information and additional details, visit 
+        <#if nct?has_content>
+            <a href="https://clinicaltrials.gov/show/${nct}">https://clinicaltrials.gov/show/${nct}</a>
         </#if>
+        <#if url?has_content>
+            <#if "https://clinicaltrials.gov/show/${nct}"!= url>
+                or
+                <a href="${url}">${url}</a>
+            </#if>
+        </#if>
+        </li>
     </ul>
     <#include "individual-overview.ftl">
     <ul class="top-offset1 individual-urls">
