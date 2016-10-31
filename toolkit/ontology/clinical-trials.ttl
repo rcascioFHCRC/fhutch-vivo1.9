@@ -187,3 +187,28 @@ fhct:acceptsHealthyVolunteers a owl:DatatypeProperty ;
     rdfs:label "accepts healthy volunteers"@en-US ;
     rdfs:range xsd:string ;
     vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupoverview .
+
+# central contact
+fhct:centralContactName a owl:DatatypeProperty ;
+    rdfs:label "central contact"@en-US ;
+    rdfs:domain fhct:ClinicalTrial ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaddress .
+
+fhct:centralContactOrganization a owl:DatatypeProperty ;
+    rdfs:label "central contact organization"@en-US ;
+    rdfs:domain fhct:ClinicalTrial ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaddress .
+
+fhct:centralContactPhone a owl:DatatypeProperty ;
+    rdfs:label "central contact phone"@en-US ;
+    rdfs:domain fhct:ClinicalTrial ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaddress .
+
+fhct:centralContactEmail a owl:DatatypeProperty ;
+    rdfs:label "central contact email"@en-US ;
+    rdfs:domain fhct:ClinicalTrial ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaddress .

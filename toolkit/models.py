@@ -1182,7 +1182,12 @@ class ClinicalTrial(BaseModel):
             ('conditionother', FHCT.focusOfStudy),
             ('recruitmentstatus', FHCT.recruitmentStatus),
             ('healthyvolunteers', FHCT.acceptsHealthyVolunteers),
-            ('url', FHD.url)
+            ('url', FHD.url),
+            #central contact
+            ('centralcontactother', FHCT.centralContactName),
+            ('centralcontactorgaother', FHCT.centralContactOrganization),
+            ('centralcontactphoneother', FHCT.centralContactPhone),
+            ('centralcontactemailother', FHCT.centralContactEmail)
         ]
         for k, pred in props:
             if hasattr(self, k):
