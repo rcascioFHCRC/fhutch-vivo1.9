@@ -1175,6 +1175,9 @@ class ClinicalTrial(BaseModel):
         props = [
             ('briefsummary', VIVO.overview),
             ('nctnumber', FHCT.nctNumber),
+            ('awardnumberother', FHCT.grantContractAwardNumber),
+            ('indidenumber', FHCT.indIdeNumber),
+            ('protocolid', FHCT.protocolId),
             #('studyidnumbers', FHCT.studyIDNumber),
             ('conditionother', FHCT.focusOfStudy),
             ('recruitmentstatus', FHCT.recruitmentStatus),
@@ -1224,9 +1227,9 @@ class ClinicalTrial(BaseModel):
         for pred, val in self.data_properties():
             r.set(pred, val)
 
-        if hasattr(self, 'studyidnumbers'):
-            nums = "; ".join([s.strip() for s in self.studyidnumbers.split("    ")])
-            r.set(FHCT.studyIDNumber, Literal(nums))
+        #if hasattr(self, 'studyidnumbers'):
+        #    nums = "; ".join([s.strip() for s in self.studyidnumbers.split("    ")])
+        #    r.set(FHCT.studyIDNumber, Literal(nums))
 
         g += self.get_sponsors()
         g += self.get_pubs()

@@ -97,7 +97,7 @@ fhct:officialTitle a owl:DatatypeProperty ;
     rdfs:range xsd:string ;
     vitro:inPropertyGroupAnnot  pgroup_instance:vitroPropertyGroupoverview .
 
-
+# identifiers
 fhct:nctNumber a owl:DatatypeProperty ;
     rdfs:label "NCT number"@en-US ;
     rdfs:range xsd:string ;
@@ -105,6 +105,21 @@ fhct:nctNumber a owl:DatatypeProperty ;
 
 fhct:studyIDNumber a owl:DatatypeProperty ;
     rdfs:label "study ID number"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
+
+fhct:grantContractAwardNumber a owl:DatatypeProperty ;
+    rdfs:label "grant/contract award number"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
+
+fhct:indIdeNumber a owl:DatatypeProperty ;
+    rdfs:label "ind ide number"@en-US ;
+    rdfs:range xsd:string ;
+    vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
+
+fhct:protocolId a owl:DatatypeProperty ;
+    rdfs:label "FHCRC unique protocol id"@en-US ;
     rdfs:range xsd:string ;
     vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupidentifiers .
 
