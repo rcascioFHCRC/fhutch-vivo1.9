@@ -73,8 +73,8 @@ class ThreadedHarvest(object):
         pages = self.get_pages()
         for st_sp in pages:
             harvest_queue.put(st_sp)
-            logger.info("Sleeping {} seconds between thread instantiation.".format(DELAY))
-            time.sleep(DELAY)
+            #logger.info("Sleeping {} seconds between thread instantiation.".format(DELAY))
+            #time.sleep(DELAY)
 
         logger.debug('Harvest initialized')
         harvest_queue.join()
