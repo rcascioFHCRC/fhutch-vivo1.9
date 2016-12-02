@@ -35,7 +35,7 @@
                 ?dateTimeInterval core:end ?dateTimeEndValue .
                 ?dateTimeEndValue core:dateTime ?dateTimeEnd .
             }
-        } ORDER BY DESC(?date)
+        } ORDER BY DESC(?dateTimeEnd)
     </query-select>
     <template>propStatement-personHasTraining.ftl</template>
 </list-view-config>
