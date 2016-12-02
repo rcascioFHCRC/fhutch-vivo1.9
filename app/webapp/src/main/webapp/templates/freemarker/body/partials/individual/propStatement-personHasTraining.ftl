@@ -2,5 +2,5 @@
 <@showStatement statement />
 
 <#macro showStatement statement>
-    ${statement.trainingName!}</a><#if statement.dateTimeStart?? & dateTimeEnd??>, ${statement.dateTimeStart} - ${statement.dateTimeEnd}<#else><#if statement.dateTimeEnd??>, ${statement.dateTimeEnd}</#if></#if>
+    ${statement.trainingName!}</a>&nbsp;<#if statement.date??><span class="listDateTime">${statement.date}</span><#elseif statement.dateTimeStart?? & statement.dateTimeEnd??><span class="listDateTime">${statement.dateTimeStart} - ${statement.dateTimeEnd}</span><#elseif statement.dateTimeEnd??><span class="listDateTime">${statement.dateTimeEnd}</span></#if>
 </#macro>

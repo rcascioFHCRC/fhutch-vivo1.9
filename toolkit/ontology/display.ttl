@@ -423,3 +423,7 @@ fhd:License  a owl:Class ;
 fhd:PostdoctoralTraining  a owl:Class ;
     rdfs:subClassOf          fhd:EducationalTraining ;
     rdfs:label "Postdoctoral Training"@en-US .
+
+fhd:Training  a owl:Class ;
+    rdfs:subClassOf          fhd:EducationalTraining ;
+    rdfs:label "Training"@en-US .

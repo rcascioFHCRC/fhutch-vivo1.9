@@ -17,6 +17,7 @@
             ?trainingName
             ?rank
             ?dateTimeStart ?dateTimeEnd
+            ?date
         WHERE
         {
             ?subject ?property ?training .
@@ -37,11 +38,14 @@
                 ?dateTimeInterval core:end ?dateTimeEndValue .
                 ?dateTimeEndValue core:dateTime ?dateTimeEnd .
             }
+            OPTIONAL {
+                ?training fhd:date ?date .
+            }
 
             <collated>
                 ?training vitro:mostSpecificType ?subclass .
             </collated>
-        } ORDER BY ?subclass DESC(?dateTimeEnd)
+        } ORDER BY ?subclass DESC(?dateTimeEnd) DESC(?date)
     </query-select>
 
     <query-construct>
@@ -64,6 +68,7 @@
             ?dateTimeStartValue core:dateTime ?dateTimeStart .
             ?dateTimeInterval core:end ?dateTimeEndValue .
             ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+            ?training fhd:date ?dateTime .
         }
         WHERE
         {
@@ -97,6 +102,13 @@
                 ?training core:dateTimeInterval ?dateTimeInterval .
                 ?dateTimeInterval core:end ?dateTimeEndValue .
                 ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+            }
+            UNION
+            {
+                ?subject ?property ?training .
+                ?training a fhd:EducationalTraining .
+                ?training core:dateTimeValue ?dateTimeValue .
+                ?dateTimeValue core:dateTime ?dateTime .
             }
         }
     </query-construct>

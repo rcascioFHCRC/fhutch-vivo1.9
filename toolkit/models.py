@@ -77,6 +77,12 @@ class BaseModel(client.BaseEntity):
     def uri(self):
         return URIRef(D + self.vid)
 
+    def _v(self, attr):
+        try:
+            return getattr(self, attr)
+        except AttributeError:
+            return
+
     def _date(self, dtype, dv):
         g = Graph()
         date_obj = client.convert_date(dv)
@@ -186,15 +192,15 @@ class Person(BaseModel):
         trainings = client.RelatedObject('Person', self.cid, 'EDUC_has_PERS')
         for train in trainings:
             duri = degree_uri(train.cid)
-            train_label = train.shortdescription.replace(self.shortdescription, "")
-            try:
-                degree, org, _ = re.search(re.compile("(.*)\s\([0-9]+\)\s(.*)\s\s(Degree|License|Certification|Postgraduate Training|)$"), train_label).groups()
-                label = degree + ", " + org
-            except AttributeError:
-                logging.warn("Failed to parse training: id {} -- {} ".format(train.cid, train.shortdescription))
-                #label = train_label
-                return g
-            g.add((duri, RDFS.label, Literal(label)))
+            # train_label = train.shortdescription.replace(self.shortdescription, "")
+            # try:
+            #     degree, org, _ = re.search(re.compile("(.*)\s\([0-9]+\)\s(.*)\s\s(Degree|License|Certification|Training|)$"), train_label).groups()
+            #     label = degree + ", " + org
+            # except AttributeError:
+            #     logging.warn("Failed to parse training: id {} -- {} ".format(train.cid, train.shortdescription))
+            #     #label = train_label
+            #     return g
+            # g.add((duri, RDFS.label, Literal(label)))
             g += client.to_graph(train, Degree)
             g.add((self.uri, VIVO.relatedBy, duri))
         return g
@@ -278,7 +284,7 @@ class Person(BaseModel):
         g += self.get_videos()
 
         # degrees/training
-        g += self.get_training()
+        #g += self.get_training()
 
         # add single letter sort key for person browse
         p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
@@ -1252,7 +1258,78 @@ class ClinicalTrial(BaseModel):
         return g
 
 
+# class Degree(BaseModel):
+
+#     def get_dti(self):
+#         try:
+#             end = self.conferredon
+#         except AttributeError:
+#             end = None
+#         try:
+#             start = self.startedon
+#         except AttributeError:
+#             start = None
+#         if (start is None) and (end is None):
+#             return
+#         return self._dti(start, end)
+
+#     def get_assigned_by(self):
+#         g = Graph()
+#         for org in client.get_related_ids('Education', self.cid, 'EDUC_has_ORGA'):
+#             ouri = org_uri(org.cid)
+#             g.add((self.uri, VIVO.assignedBy, ouri))
+#         return g
+
+#     def assign_type(self):
+#         default = FHD.EducationalTraining
+#         ettypes = {
+#             '10371': FHD.Certification,
+#             '10368': FHD.Degree,
+#             '10369': FHD.Certification,
+#             '10370': FHD.PostdoctoralTraining,
+#         }
+#         if hasattr(self, 'dynamictype'):
+#             ctype = self.dynamictype['cid'].strip()
+#             return ettypes.get(ctype, default)
+#         return default
+
+#     def to_rdf(self):
+#         g = Graph()
+#         r = Resource(g, self.uri)
+
+#         # Label set in person call.
+#         r.set(RDFS.label, Literal(self.shortdescription))
+#         dtype = self.assign_type()
+#         if dtype == FHD.Degree:
+#             # make a label
+
+#         r.set(RDF.type, dtype)
+
+#         #r.set(VIVO.majorField, Literal(self.program))
+#         #g += self.get_assigned_by()
+
+#         #if hasattr(self, "")
+
+#         # Add datetime interval
+#         try:
+#             dti_uri, dti_g = self.get_dti()
+#             g += dti_g
+#             r.set(VIVO.dateTimeInterval, dti_uri)
+#         except TypeError:
+#             pass
+
+#         return g
+
+
 class Degree(BaseModel):
+
+    def get_assigned_by(self):
+        #g = Graph()
+        for org in client.get_related_entities('Organisation', self.cid, 'EDUC_has_ORGA'):
+            #ouri = org_uri(org.cid)
+            #g.add((self.uri, VIVO.assignedBy, ouri))
+            return org.cfname
+        return
 
     def get_dti(self):
         try:
@@ -1267,49 +1344,72 @@ class Degree(BaseModel):
             return
         return self._dti(start, end)
 
-    def get_assigned_by(self):
+    def get_person(self):
         g = Graph()
-        for org in client.get_related_ids('Education', self.cid, 'EDUC_has_ORGA'):
-            ouri = org_uri(org.cid)
-            g.add((self.uri, VIVO.assignedBy, ouri))
+        for pers in client.get_related_ids('Person', self.cid, 'EDUC_has_PERS'):
+            puri = person_uri(pers)
+            g.add((self.uri, VIVO.relates, puri))
         return g
 
-    def assign_type(self):
-        default = FHD.EducationalTraining
-        ettypes = {
-            '10371': FHD.Certification,
-            '10368': FHD.Degree,
-            '10369': FHD.License,
-            '10370': FHD.PostdoctoralTraining,
-        }
-        if hasattr(self, 'dynamictype'):
-            ctype = self.dynamictype['cid'].strip()
-            return ettypes.get(ctype, default)
-        return default
+    def add_date(self):
+        g = Graph()
+        on_date = self._v('conferredon')
+        if on_date is not None:
+            date_uri, dg = self._date("degree", on_date)
+            g += dg
+            g.add((self.uri, VIVO.dateTimeValue, date_uri))
+        return g
+
+    def build_degree_label(self):
+        label = self.degreetype['value']
+        org = self.get_assigned_by()
+        if org is not None:
+            label += ", " + org
+        program = self._v("program")
+        if program is not None:
+            label += ", " + program
+        concentration = self._v("concentration")
+        if concentration is not None:
+            label += ", " + concentration
+        return Literal(label)
+
+    def build_training_label(self):
+        lb = []
+        if hasattr(self, "titleoftrainingrole"):
+            dt = self.titleoftrainingrole['value']
+            if dt != "Other":
+                lb.append(dt)
+        lb.append(self._v("degreetypeother"))
+        org = self.get_assigned_by()
+        lb.append(org)
+        lb.append(self._v("program"))
+        label = ", ".join([l for l in lb if l is not None])
+        return Literal(label)
 
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-
-        # Label set in person call.
-        #r.set(RDFS.label, Literal(self.shortdescription))
-        r.set(RDF.type, self.assign_type())
-
+        rtype = self.dynamictype['value']
+        if rtype == 'Degree':
+            r.set(RDF.type, FHD.Degree)
+            r.set(RDFS.label, self.build_degree_label())
+            g += self.add_date()
+        elif rtype == 'Training':
+            r.set(RDF.type, FHD.Training)
+            r.set(RDFS.label, self.build_training_label())
+            # Add datetime interval
+            try:
+                dti_uri, dti_g = self.get_dti()
+                g += dti_g
+                r.set(VIVO.dateTimeInterval, dti_uri)
+            except TypeError:
+                pass
+        
         #r.set(VIVO.majorField, Literal(self.program))
-        #g += self.get_assigned_by()
 
-        #if hasattr(self, "")
-
-        # Add datetime interval
-        try:
-            dti_uri, dti_g = self.get_dti()
-            g += dti_g
-            r.set(VIVO.dateTimeInterval, dti_uri)
-        except TypeError:
-            pass
+        g += self.get_person()
 
         return g
-
 
 class Service(BaseModel):
 
@@ -1537,3 +1637,5 @@ class TeachingLecture(BaseModel):
             pass
 
         return g 
+
+# Education & training
