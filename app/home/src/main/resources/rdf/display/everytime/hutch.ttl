@@ -15,7 +15,7 @@
 @prefix : <http://vitro.mannlib.cornell.edu/ns/vitro/ApplicationConfiguration#> .
 @prefix local: <http://vitro.mannlib.cornell.edu/ns/vitro/siteConfig/> .
 @prefix role:  <http://vitro.mannlib.cornell.edu/ns/vitro/role#> .
-
+@prefix d: <http://vivo.fredhutch.org/individual/> .
 
 # Additional listViewConfigs
 
@@ -171,7 +171,7 @@ local:personEducationConfig a :ObjectPropertyDisplayConfig ;
     vitro:displayRankAnnot  10 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
-    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoverview> . 
+    :propertyGroup d:vitroPropertyGroupEducationTraining . 
 
 # person to training
 
@@ -179,7 +179,7 @@ local:personTrainingContext a :ConfigContext ;
     :hasConfiguration local:personTrainingConfig ;
     :configContextFor vivo:relatedBy ;
     :qualifiedByDomain  foaf:Person ;
-    :qualifiedBy      fhd:EducationalTraining .
+    :qualifiedBy      fhd:Training .
 
 local:personTrainingConfig a :ObjectPropertyDisplayConfig ;
     :listViewConfigFile "listViewConfig-personHasTraining.xml"^^xsd:string ;
@@ -188,21 +188,21 @@ local:personTrainingConfig a :ObjectPropertyDisplayConfig ;
     vitro:displayRankAnnot  20 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
-    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoverview> .
+    :propertyGroup d:vitroPropertyGroupEducationTraining .
 
 # person to certification
 
-local:personCertificationContext a :ConfigContext ;
-    :hasConfiguration local:personCertificationConfig ;
+local:personLicenseContext a :ConfigContext ;
+    :hasConfiguration local:personLicenseConfig ;
     :configContextFor vivo:relatedBy ;
     :qualifiedByDomain  foaf:Person ;
-    :qualifiedBy      fhd:Certification .
+    :qualifiedBy      fhd:License .
 
-local:personCertificationConfig a :ObjectPropertyDisplayConfig ;
-    :listViewConfigFile "listViewConfig-personHasTraining.xml"^^xsd:string ;
+local:personLicenseConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-personHasLicense.xml"^^xsd:string ;
     rdfs:label "certification person"@en-US ;
     :displayName "licensure & certification" ;
     vitro:displayRankAnnot  30 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
-    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupoverview> .
+    :propertyGroup d:vitroPropertyGroupEducationTraining .

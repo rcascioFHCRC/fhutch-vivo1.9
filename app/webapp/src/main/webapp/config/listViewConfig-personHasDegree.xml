@@ -14,26 +14,16 @@
         SELECT DISTINCT
             ?training
             ?trainingName
-            ?dateTimeStart
-            ?dateTimeEnd
+            ?date
         WHERE
         {
             ?subject ?property ?training .
-            ?training a fhd:Training .
+            ?training a fhd:Degree .
             ?training rdfs:label ?trainingName .
             OPTIONAL
             {
-                ?subject ?property ?training .
-                ?training core:dateTimeInterval ?dateTimeInterval .
-                ?dateTimeInterval core:start ?dateTimeStartValue .
-                ?dateTimeStartValue core:dateTime ?dateTimeStart .
-            }
-            OPTIONAL
-            {
-                ?subject ?property ?training .
-                ?training core:dateTimeInterval ?dateTimeInterval .
-                ?dateTimeInterval core:end ?dateTimeEndValue .
-                ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+                ?training core:dateTimeValue ?dateTimeValue .
+                ?dateTimeValue core:dateTime ?date .
             }
         } ORDER BY DESC(?date)
     </query-select>
