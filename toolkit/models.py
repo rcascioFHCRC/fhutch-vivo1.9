@@ -1321,7 +1321,7 @@ class ClinicalTrial(BaseModel):
 #         return g
 
 
-class Degree(BaseModel):
+class EducationTraining(BaseModel):
 
     def get_assigned_by(self):
         #g = Graph()
@@ -1386,6 +1386,17 @@ class Degree(BaseModel):
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
 
+    def build_license_label(self):
+        title = None
+        if hasattr(self, "titleoflicense"):
+            title = self.titleoflicense['value']
+        lb = [title, self._v("title"), self.get_assigned_by(), self._v("degreetype")]
+        if hasattr(self, "discipline"):
+            lb.append(self.discipline["value"])
+        lb.append(self._v("degreetypeother"))
+        label = ", ".join([l for l in lb if l is not None and l !="Other"])
+        return Literal(label)
+
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
@@ -1404,6 +1415,10 @@ class Degree(BaseModel):
                 r.set(VIVO.dateTimeInterval, dti_uri)
             except TypeError:
                 pass
+        elif rtype == 'License' or rtype == 'Certification':
+            r.set(RDF.type, FHD.License)
+            r.set(RDFS.label, self.build_license_label())
+            g += self.add_date()
         
         #r.set(VIVO.majorField, Literal(self.program))
 
