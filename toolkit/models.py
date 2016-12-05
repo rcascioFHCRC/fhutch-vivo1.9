@@ -1,8 +1,10 @@
 """
 VIVO models
 """
+import base64
 import hashlib
 import logging
+import pickle
 import re
 import sys
 import os
@@ -34,8 +36,18 @@ DATA_NAMESPACE = D
 
 logger = logging.getLogger("converis_client")
 
+# Index for person uris
+with open("data/people.idx") as inf:
+    PEOPLE_IDX = pickle.load(inf)
+
+IMAGE_PATH = os.environ["IMAGE_PATH"]
+
 def person_uri(person_id):
-    return D['c' + person_id]
+    try:
+        short = PEOPLE_IDX[person_id]
+    except IndexError:
+        short = "c" + person_id
+    return D[short]
 
 def org_uri(cid):
     return D['c' + cid]
@@ -122,6 +134,10 @@ class Person(BaseModel):
     """
     A Converis person.
     """
+    @property
+    def uri(self):
+        return person_uri(self.cid)
+
     @property
     def vcard_uri(self):
         return DATA_NAMESPACE + "vci" + self.vid
@@ -228,6 +244,20 @@ class Person(BaseModel):
         else:
             return slugify(u"{} {}".format(first, last))
 
+    def picture(self):
+        g = Graph()
+        url_base = os.environ['PHOTO_BASE_URL']
+        fname = "{}.jpg".format(self.cid)
+        full_path = os.path.join(os.environ['IMAGE_PATH'], fname)
+        url = url_base + fname
+        for item in client.RelatedObject('Person', self.cid, 'PERS_has_PICT'):
+            with open(full_path, 'wb') as of:
+                dcd = base64.decodestring(item.filedata)
+                of.write(dcd)
+                g.add((self.uri, FHD.image, Literal(url)))
+                break
+        return g
+
 
     def to_rdf(self):
         g = Graph()
@@ -288,6 +318,9 @@ class Person(BaseModel):
 
         # add single letter sort key for person browse
         p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
+
+        # pictures
+        g += self.picture()
 
         return g
 
