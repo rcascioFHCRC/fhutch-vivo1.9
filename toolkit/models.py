@@ -1250,7 +1250,10 @@ class ClinicalTrial(BaseModel):
         except AttributeError:
             logger.warning("No brief title found for trial {}".format(self.cid))
             return Graph()
-        r.set(FHCT.officialTitle, Literal(self.officialtitle))
+        try:
+            r.set(FHCT.officialTitle, Literal(self.officialtitle))
+        except AttributeError:
+            pass
         r.set(CONVERIS.converisId, Literal(self.cid))
 
         # if hasattr(self, "briefsummary"):
