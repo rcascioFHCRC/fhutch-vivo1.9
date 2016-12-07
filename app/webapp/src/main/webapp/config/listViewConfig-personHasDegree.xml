@@ -15,6 +15,7 @@
             ?training
             ?trainingName
             ?date
+            (STR(YEAR(?date)) as ?year)
 
         WHERE
         {
