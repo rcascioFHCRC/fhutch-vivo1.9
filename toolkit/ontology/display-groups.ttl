@@ -13,3 +13,10 @@ d:vitroPropertyGroupEducationTraining
         vitro:displayRank       "50"^^xsd:int ;
         vitro:modTime           "2016-12-02T07:11:40"^^xsd:dateTime ;
         vitro:mostSpecificType  vitro:PropertyGroup .
+
+d:vitroPropertyGroupActivitiesAwards
+        a                       vitro:PropertyGroup ;
+        rdfs:label              "activities & awards"@en-US ;
+        vitro:displayRank       "60"^^xsd:int ;
+        vitro:modTime           "2016-12-02T07:11:40"^^xsd:dateTime ;
+        vitro:mostSpecificType  vitro:PropertyGroup .
