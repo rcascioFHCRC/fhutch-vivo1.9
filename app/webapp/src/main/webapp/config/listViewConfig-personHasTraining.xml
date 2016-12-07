@@ -37,5 +37,5 @@
             }
         } ORDER BY DESC(?dateTimeEnd)
     </query-select>
-    <template>propStatement-personHasTraining.ftl</template>
+    <template>propStatement-labelDate.ftl</template>
 </list-view-config>

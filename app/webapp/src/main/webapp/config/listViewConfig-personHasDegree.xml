@@ -15,7 +15,7 @@
             ?training
             ?trainingName
             ?date
-            (STR(YEAR(?date)) as ?year)
+
         WHERE
         {
             ?subject ?property ?training .
@@ -28,5 +28,5 @@
             }
         } ORDER BY DESC(?date)
     </query-select>
-    <template>propStatement-personHasTraining.ftl</template>
+    <template>propStatement-labelDate.ftl</template>
 </list-view-config>
