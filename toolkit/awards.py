@@ -37,6 +37,7 @@ if os.environ.get('HTTP_CACHE') == "1":
      backend='redis',
      allowable_methods=('GET', 'PUT'))
 
+THREADS = int(os.environ['THREADS'])
 NG = "http://localhost/data/awards"
 
 query = """
@@ -124,7 +125,7 @@ def single_thread_harvest_awards(sample=True):
 
 class AwardHarvest(ThreadedHarvest):
 
-    def __init__(self, q, vmodel, threads=5):
+    def __init__(self, q, vmodel, threads=THREADS):
         self.query = query
         self.graph = Graph()
         self.threads = threads

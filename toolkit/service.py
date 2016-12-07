@@ -5,6 +5,7 @@ import os
 import logging
 import logging.handlers
 
+from converis import backend
 from converis import client
 
 # local models
@@ -26,31 +27,170 @@ if os.environ.get('HTTP_CACHE') == "1":
 
 THREADS = int(os.environ['THREADS'])
 
+NG = "http://localhost/data/service"
+
+from models import (
+  BaseModel,
+  FHS,
+  CONVERIS,
+  VIVO,
+  Resource,
+  Literal,
+  RDF,
+  RDFS,
+  person_uri,
+  org_uri
+)
+
+class Service(BaseModel):
+
+    def _v(self, k):
+        value = None
+        if hasattr(self, k):
+            try:
+                value = getattr(self, k).strip()
+            except AttributeError:
+                # these are choice groups
+                value = getattr(self, k)['value'].strip()
+            # skip blanks
+            if value == u"":
+                return
+        return value
+
+    def get_type(self, default=FHS.Service):
+        """
+        10441
+        Consultant Services
+            
+        10443
+        Editorial or Review
+            
+        10447
+        Foundations and Trusts
+            
+        10445
+        Industry
+            
+        10446
+        National or International Service
+            
+        10444
+        Professional and Honors Societies
+            
+        10442
+        University or Institutional Services
+        """
+        ntypes = {
+            '10441': FHS.ConsultantServices,
+            '10443': FHS.EditorialReview,
+            '10447': FHS.FoundationsTrusts,
+            '10445': FHS.Industry,
+            '10446': FHS.NationalInternationalService,
+            '10444': FHS.ProfessionalHonorsSocieties,
+            '10442': FHS.UniversityInstitutionalServices
+        }
+        if hasattr(self, 'dynamictype'):
+            ctype = self.dynamictype['cid'].strip()
+            return ntypes.get(ctype, default)
+        return default
 
 
-def harvest_service(sample=False):
-    """
-    Fetch all news items
-    """
-    logger.info("Harvesting Service.")
-    q = """
-    <data xmlns="http://converis/ns/webservice">
-     <query>
-      <filter for="Service" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-      </filter>
-     </query>
-    </data>
-    """
-    g = Graph()
-    done = 0
-    for item in client.filter_query(q):
-        #print item.cid
-        g += client.to_graph(item, models.Service)
-        done += 1
-        if (sample is True) and (done >= 100):
-            break
-    print g.serialize(format='n3')
-    #backend.sync_updates("http://localhost/data/service", g)
+    def get_person(self):
+        g = Graph()
+        for person in client.get_related_ids('Person', self.cid, 'SERV_has_PERS'):
+            puri = person_uri(person)
+            g.add((self.uri, VIVO.relates, puri))
+        return g
+
+    def get_org(self):
+        #g = Graph()
+        for org in client.get_related_entities('Organisation', self.cid, 'SERV_has_ORGA'):
+            return org.cfname
+            #puri = org_uri(org)
+            #g.add((self.uri, VIVO.relates, puri))
+        return
+
+    def get_journal(self):
+        g = Graph()
+        name = None
+        for jrnl in client.RelatedObject('Service', self.cid, 'SERV_has_JOUR'):
+            juri = models.journal_uri(jrnl.cid)
+            g.add((self.uri, VIVO.relates, juri))
+            jm = models.Journal(**jrnl.__dict__)
+            name = jrnl.name
+            g += jm.to_rdf()
+        return name, g
+
+    def _gattrs(self, keys):
+        for key in keys:
+            if hasattr(self, key):
+                return getattr(self, key)['value']
+        return None
+
+    def label(self):
+        """
+        Look in four different fields for role description.
+        - proSocietyRole
+        - editorshipRole
+        - committeRole
+        - roleOther
+
+        """
+        #return self.shortdescription.split('(')[0].strip()
+        role = self._gattrs(["prosocietyrole", "editorshiprole", "committeerole", "roleother"]) or "Not specified"
+        modifier = None
+        if hasattr(self, "rolemodifier"):
+            modifier = self.rolemodifier["value"]
+            role = u"{} {}".format(modifier, role)
+        if hasattr(self, "committeegroup"):
+            role += u", {}".format(self.committeegroup)
+        # strip off not specified if role is not but committee or modifier exists.
+        return role
+
+    def full_label(self):
+        lb = [
+            self.label()
+        ]
+        lb.append(self.get_org())
+        jname, jgroup = self.get_journal()
+        lb.append(jname)
+        label = ", ".join([l for l in lb if l is not None])
+        return Literal(label)
+
+
+    def to_rdf(self):
+        g = Graph()
+        r = Resource(g, self.uri)
+        r.set(RDF.type, self.get_type())
+        r.set(RDFS.label, Literal(self.full_label()))
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
+        g += self.get_person()
+        #g += self.get_org()
+        jname, jg = self.get_journal()
+        g += jg
+
+        if hasattr(self, 'startedon'):
+            start = self.startedon
+        else:
+            start = None
+
+        if hasattr(self, "endedon"):
+            end = self.endedon
+        else:
+            end = None
+        # Add datetime interval
+        try:
+            dti_uri, dti_g = self._dti(start, end)
+            g += dti_g
+            r.set(VIVO.dateTimeInterval, dti_uri)
+        except TypeError:
+            pass
+
+        #g += self.add_vcard_weblink()
+
+        return g
+
 
 service_q = """
 <data xmlns="http://converis/ns/webservice">
@@ -60,6 +200,23 @@ service_q = """
  </query>
 </data>
 """
+
+
+def harvest_service(sample=False):
+    """
+    Fetch all service items
+    """
+    g = Graph()
+    done = 0
+    for item in client.filter_query(service_q):
+        #print item.cid
+        g += client.to_graph(item, Service)
+        done += 1
+        if (sample is True) and (done >= 100):
+            break
+    print g.serialize(format='n3')
+    backend.sync_updates(NG, g)
+
 
 class ServiceHarvest(ThreadedHarvest):
 
@@ -72,13 +229,13 @@ class ServiceHarvest(ThreadedHarvest):
 
 
 def harvest():
-    ng = "http://localhost/data/service"
-    jh = ServiceHarvest(service_q, models.Service)
+    jh = ServiceHarvest(service_q, Service)
     jh.run_harvest()
     logger.info("Service harvest finished. Syncing to vstore.")
-    jh.sync_updates(ng)
+    jh.sync_updates(NG)
 
 if __name__ == "__main__":
-    logger.info("Starting harvest.")
+    logger.info("Starting Service harvest.")
     harvest()
-    #harvest_service(sample=False)
+    #harvest_service(sample=True)
+    logger.info("Service harvest complete.")

@@ -225,3 +225,22 @@ local:personAwardConfig a :ObjectPropertyDisplayConfig ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
     :propertyGroup d:vitroPropertyGroupActivitiesAwards .
+
+# person to service
+
+local:personServiceContext a :ConfigContext ;
+    :hasConfiguration local:personServiceConfig ;
+    :configContextFor vivo:relatedBy ;
+    :qualifiedByDomain  foaf:Person ;
+    :qualifiedBy      fhs:Service .
+
+local:personServiceConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-personHasService.xml"^^xsd:string ;
+    rdfs:label "service person"@en-US ;
+    :displayName "service, membership & committees" ;
+    vitro:displayRankAnnot  50 ;
+    vitro:collateBySubclassAnnot
+              "true"^^xsd:boolean ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup d:vitroPropertyGroupActivitiesAwards .
