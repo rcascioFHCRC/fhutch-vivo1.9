@@ -1001,50 +1001,6 @@ class News(BaseModel):
         return g
 
 
-class Award(BaseModel):
-
-    def get_type(self, default=FHD.Award):
-        """
-        """
-        return default
-
-    def get_awardee(self):
-        g = Graph()
-        people = client.RelatedObject('Award', self.cid, 'PERS_has_AWRD')
-        for person in people:
-            puri = person_uri(person.cid)
-            g.add((self.uri, FHD.awardee, puri))
-        return g
-
-    def get_awarded_by(self):
-        g = Graph()
-        for org in client.get_related_ids('Award', self.cid, 'AWRD_has_ORGA'):
-            ouri = org_uri(org.cid)
-            g.add((self.uri, FHD.awardedBy, ouri))
-        return g
-
-    def add_date(self):
-        g = Graph()
-        if hasattr(self, 'awardedon'):
-            date_obj = client.convert_date(self.awardedon)
-            g.add((self.uri, FHD.awardedOn, Literal(date_obj, datatype=XSD.date)))
-        return g
-
-    def to_rdf(self):
-        g = Graph()
-        r = Resource(g, self.uri)
-        r.set(RDF.type, self.get_type())
-        r.set(RDFS.label, Literal(self.nameofhonor))
-        r.set(CONVERIS.converisId, Literal(self.cid))
-
-        if hasattr(self, 'url'):
-            r.set(FHD.url, Literal(self.url))
-
-        g += self.get_awardee()
-        g += self.get_awarded_by()
-        g += self.add_date()
-
-        return g
 
 
 def pub_to_card(card_id):

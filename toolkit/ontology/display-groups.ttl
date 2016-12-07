@@ -7,6 +7,10 @@
 @prefix d: <http://vivo.fredhutch.org/individual/> .
 
 
+#Class groups and property groups go in:
+# <http://vitro.mannlib.cornell.edu/default/vitro-kb-applicationMetadata>
+# A restart is required after adding.
+
 d:vitroPropertyGroupEducationTraining
         a                       vitro:PropertyGroup ;
         rdfs:label              "education & training"@en-US ;

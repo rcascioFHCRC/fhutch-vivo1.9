@@ -30,6 +30,7 @@ vitroDisplay:SearchIndex
     vitroDisplay:excludeClass fhd:EducationalTraining ;
     vitroDisplay:excludeClass fhs:Service ;
     vitroDisplay:excludeClass vivo:Position ;
+    vitroDisplay:excludeClass vivo:Award ;
     vitroDisplay:excludeClass vivo:DateTimeValue ;
     vitroDisplay:excludeClass vivo:DateTimeInterval ;
     vitroDisplay:excludeClass vivo:AcademicDegree ;
@@ -206,3 +207,21 @@ local:personLicenseConfig a :ObjectPropertyDisplayConfig ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
     :propertyGroup d:vitroPropertyGroupEducationTraining .
+
+
+# person to award
+
+local:personAwardContext a :ConfigContext ;
+    :hasConfiguration local:personAwardConfig ;
+    :configContextFor vivo:relatedBy ;
+    :qualifiedByDomain  foaf:Person ;
+    :qualifiedBy      fhd:Award .
+
+local:personAwardConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-personHasAward.xml"^^xsd:string ;
+    rdfs:label "award person"@en-US ;
+    :displayName "awards & honors" ;
+    vitro:displayRankAnnot  10 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup d:vitroPropertyGroupActivitiesAwards .
