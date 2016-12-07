@@ -47,14 +47,14 @@ IMAGE_PATH = os.environ["IMAGE_PATH"]
 def person_uri(person_id):
     try:
         short = URL_IDX[person_id]
-    except IndexError:
+    except KeyError:
         short = "c" + person_id
     return D[short]
 
 def org_uri(cid):
     try:
         short = URL_IDX[cid]
-    except IndexError:
+    except KeyError:
         short = "c" + cid
     return D[short]
 
@@ -70,7 +70,7 @@ def area_uri(cid):
 def journal_uri(cid):
     return D['c' + cid]
 
-def degree_uri(cid):
+def education_training_uri(cid):
     return D['c' + cid]
 
 def hash_uri(prefix, value):
@@ -213,7 +213,7 @@ class Person(BaseModel):
         g = Graph()
         trainings = client.RelatedObject('Person', self.cid, 'EDUC_has_PERS')
         for train in trainings:
-            duri = degree_uri(train.cid)
+            duri = education_training_uri(train.cid)
             # train_label = train.shortdescription.replace(self.shortdescription, "")
             # try:
             #     degree, org, _ = re.search(re.compile("(.*)\s\([0-9]+\)\s(.*)\s\s(Degree|License|Certification|Training|)$"), train_label).groups()
@@ -223,7 +223,7 @@ class Person(BaseModel):
             #     #label = train_label
             #     return g
             # g.add((duri, RDFS.label, Literal(label)))
-            g += client.to_graph(train, Degree)
+            g += client.to_graph(train, EducationTraining)
             g.add((self.uri, VIVO.relatedBy, duri))
         return g
 
@@ -320,7 +320,7 @@ class Person(BaseModel):
         g += self.get_videos()
 
         # degrees/training
-        #g += self.get_training()
+        g += self.get_training()
 
         # add single letter sort key for person browse
         p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
