@@ -32,17 +32,14 @@ if os.environ.get('HTTP_CACHE') == "1":
 
 query = """
 <data xmlns="http://converis/ns/webservice">
-     <query>
-      <filter for="Education" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-        <or>
-            <attribute argument="10368" name="dynamicType" operator="equals"/>
-            <attribute argument="10370" name="dynamicType" operator="equals"/>
-            <attribute argument="10369" name="dynamicType" operator="equals"/>
-            <attribute argument="10371" name="dynamicType" operator="equals"/>
-        </or>
-      </filter>
-     </query>
-    </data>
+ <query>
+  <filter for="Education" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+    <relation minCount="1" name="EDUC_has_PERS">
+      <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+    </relation>
+  </filter>
+ </query>
+</data>
 """
 
 named_graph = "http://localhost/data/degrees"

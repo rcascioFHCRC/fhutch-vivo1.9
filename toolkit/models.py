@@ -320,7 +320,7 @@ class Person(BaseModel):
         g += self.get_videos()
 
         # degrees/training
-        g += self.get_training()
+        #g += self.get_training()
 
         # add single letter sort key for person browse
         p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
