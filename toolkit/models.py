@@ -36,21 +36,27 @@ DATA_NAMESPACE = D
 
 logger = logging.getLogger("converis_client")
 
-# Index for person uris
-with open("data/people.idx") as inf:
-    PEOPLE_IDX = pickle.load(inf)
+# Index for short URIs
+SHORT_URLS = "data/uris.idx"
+with open(SHORT_URLS) as inf:
+    URL_IDX = pickle.load(inf)
 
 IMAGE_PATH = os.environ["IMAGE_PATH"]
 
+
 def person_uri(person_id):
     try:
-        short = PEOPLE_IDX[person_id]
+        short = URL_IDX[person_id]
     except IndexError:
         short = "c" + person_id
     return D[short]
 
 def org_uri(cid):
-    return D['c' + cid]
+    try:
+        short = URL_IDX[cid]
+    except IndexError:
+        short = "c" + cid
+    return D[short]
 
 def card_uri(cid):
     return D['c' + cid]
