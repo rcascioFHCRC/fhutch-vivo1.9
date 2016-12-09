@@ -13,7 +13,7 @@
 
         SELECT DISTINCT
             ?resource
-            ?resourceName
+            ?label
             ?date
             (STR(YEAR(?date)) as ?year)
 
@@ -21,7 +21,7 @@
         {
             ?subject ?property ?resource .
             ?resource a fhd:Degree .
-            ?resource rdfs:label ?resourceName .
+            ?resource rdfs:label ?label .
             OPTIONAL
             {
                 ?resource core:dateTimeValue ?dateTimeValue .
