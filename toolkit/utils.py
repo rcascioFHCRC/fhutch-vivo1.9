@@ -92,3 +92,19 @@ class ThreadedHarvest(object):
             raise Exception("No named graph provided")
         logger.info("Syncing updates with {} triples.".format(len(self.graph)))
         backend.sync_updates(named_graph, self.graph)
+
+
+def parent_org_label_id(cid):
+    for c in client.RelatedObject('Organisation', cid, 'ORGA_has_child_ORGA', direction="parent"):
+        return c.cid, c.cfname
+    return None, None
+
+def get_parent_org_label(cid):
+    out = []
+    while True:
+        cid, name = parent_org_label_id(cid)
+        if cid is None:
+            break
+        else:
+            out.append(name)
+    return ", ".join(out)

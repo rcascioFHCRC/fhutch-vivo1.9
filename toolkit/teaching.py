@@ -1,5 +1,5 @@
 """
-Service harvest process.
+Teaching harvest process.
 """
 import os
 import logging
@@ -76,5 +76,4 @@ if __name__ == "__main__":
     logger.info("Starting teaching harvest.")
     harvest()
     #single_thread_harvest()
-    #harvest_service(sample=False)
     logger.info("Teaching harvest complete.")

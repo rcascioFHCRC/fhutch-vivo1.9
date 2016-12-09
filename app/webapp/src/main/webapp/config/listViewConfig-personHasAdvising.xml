@@ -20,7 +20,7 @@
         WHERE
         {
             ?subject ?property ?resource .
-            ?resource a fht:Teaching .
+            ?resource a fht:AdvisingMentoring .
             ?resource rdfs:label ?label .
             OPTIONAL
             {

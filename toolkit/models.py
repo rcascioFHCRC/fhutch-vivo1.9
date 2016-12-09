@@ -21,6 +21,8 @@ from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
 
 from converis.backend import SyncVStore
 
+import utils
+
 # display classes
 FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
 # publications
@@ -134,6 +136,22 @@ class BaseModel(client.BaseEntity):
             g += end_g
             dti.set(VIVO.end, end_uri)
         return dti_uri, g
+
+    def related_org_label(self):
+        """
+        Create a label for an organization and its parents.
+        For of: dept x, college y, university z
+        """
+        lb = []
+        orgs = client.get_related_entities('Organisation', self.cid, 'LECT_has_ORGA')
+        for org in orgs:
+            lb.append(org.cfname)
+            parents = utils.get_parent_org_label(org.cid)
+            lb.append(parents)
+        if lb == []:
+            return None
+        else:
+            return ", ".join(lb)
 
 
 class Person(BaseModel):
@@ -1450,30 +1468,15 @@ class TeachingLecture(BaseModel):
             g.add((self.uri, VIVO.relates, org_uri(org)))
         return g
 
-    def related_org(self):
-        orgs = client.get_related_entities('Organisation', self.cid, 'LECT_has_ORGA')
-        for org in orgs:
-            return org.cfname
-        return None
-
     def related_event(self):
         events = client.get_related_entities('cfEvent', self.cid, 'LECT_has_EVEN')
         for ev in events:
             return ev.shortdescription
         return None
 
-    def get_dti(self):
-        try:
-            end = self.startedon
-        except AttributeError:
-            end = None
-        try:
-            start = self.endedon
-        except AttributeError:
-            start = None
-        if (start is None) and (end is None):
-            return None, None
-        return self._dti(start, end)
+    def get_advisee(self):
+        for adv in client.get_related_entities('Person', self.cid, 'LECT_has_stud_PERS'):
+            return adv.shortdescription
 
     def add_date(self):
         g = Graph()
@@ -1520,10 +1523,35 @@ class TeachingLecture(BaseModel):
             self._v("typeoflecture"),
             self._v("title"),
             self.related_event(),
-            self.related_org()
+            self.related_org_label()
         ]
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
+
+    def build_teaching_label(self):
+        lb = [
+            self._v("title"),
+            self._v("coursetype"),
+            self.related_event(),
+            self.related_org_label(),
+        ]
+        label = ", ".join([l for l in lb if l is not None])
+        return Literal(label.strip(','))
+
+    def build_advising_label(self):
+        return Literal(self.shortdescription)
+        lb = [
+            self._v("rolemodifier"),
+            self._v("advisingrole"),
+            self.get_advisee(),
+            self._v("adviseeOther"),
+            self._v("typeofdegree"),
+            self._v("description")
+        ]
+        label = ", ".join([l for l in lb if l is not None])
+        if label == "":
+            import ipdb; ipdb.set_trace()
+        return Literal(label.strip(','))
 
     def to_rdf(self):
         g = Graph()
@@ -1534,29 +1562,30 @@ class TeachingLecture(BaseModel):
             r.set(RDF.type, FHT.InvitedLecture)
             r.set(RDFS.label, self.build_invited_lecture_label())
             g += self.add_date()
+        # teaching
+        elif rtype_id == '10470':
+            r.set(RDF.type, FHT.Teaching)
+            r.set(RDFS.label, self.build_teaching_label())
+        # advising
+        elif rtype_id == '10468':
+            r.set(RDF.type, FHT.AdvisingMentoring)
+            r.set(RDFS.label, self.build_advising_label())
 
-        # ttype = self.assign_type()
-        # if ttype == FHT.AdvisingMentoring:
-        #     return g
-        # r.set(RDF.type, ttype)
-        # r.set(RDFS.label, Literal(self.label()))
-        # r.set(CONVERIS.converisId, Literal(self.cid))
+        # teaching and advising get a date interval
+        if rtype_id in ['10470', '10468']:
+            # Add datetime interval
+            try:
+                start = self._v("startedon") or self._v("occurredon")
+                dti_uri, dti_g = self._dti(start, self._v("endedon"))
+                g += dti_g
+                r.set(VIVO.dateTimeInterval, dti_uri)
+            except TypeError:
+                pass
 
-        # # related entities
+
+        r.set(CONVERIS.converisId, Literal(self.cid))
+
         g += self.get_person()
-        # g += self.get_orgs()
-        # g += self.get_publ()
-
-        # # some have single dates
-        # g += self.add_date()
-        # # some have intervals
-        # # Add datetime interval
-        # try:
-        #     dti_uri, dti_g = self._dti(self._v("startedon"), self._v("endedon"))
-        #     g += dti_g
-        #     r.set(VIVO.dateTimeInterval, dti_uri)
-        # except TypeError:
-        #     pass
 
         return g 
 
