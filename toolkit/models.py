@@ -1539,19 +1539,19 @@ class TeachingLecture(BaseModel):
         return Literal(label.strip(','))
 
     def build_advising_label(self):
-        return Literal(self.shortdescription)
-        lb = [
-            self._v("rolemodifier"),
-            self._v("advisingrole"),
-            self.get_advisee(),
-            self._v("adviseeOther"),
-            self._v("typeofdegree"),
-            self._v("description")
-        ]
-        label = ", ".join([l for l in lb if l is not None])
-        if label == "":
-            import ipdb; ipdb.set_trace()
-        return Literal(label.strip(','))
+        return Literal(self.shortdescription.rstrip('Advising and Mentoring'))
+        # lb = [
+        #     self._v("rolemodifier"),
+        #     self._v("advisingrole"),
+        #     self.get_advisee(),
+        #     self._v("adviseeOther"),
+        #     self._v("typeofdegree"),
+        #     self._v("description")
+        # ]
+        # label = ", ".join([l for l in lb if l is not None])
+        # if label == "":
+        #     import ipdb; ipdb.set_trace()
+        # return Literal(label.strip(','))
 
     def to_rdf(self):
         g = Graph()
