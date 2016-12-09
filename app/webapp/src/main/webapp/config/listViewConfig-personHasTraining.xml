@@ -12,26 +12,26 @@
         PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
 
         SELECT DISTINCT
-            ?training
-            ?trainingName
+            ?resource
+            ?label
             ?dateTimeStart
             ?dateTimeEnd
         WHERE
         {
-            ?subject ?property ?training .
-            ?training a fhd:Training .
-            ?training rdfs:label ?trainingName .
+            ?subject ?property ?resource .
+            ?resource a fhd:Training .
+            ?resource rdfs:label ?label .
             OPTIONAL
             {
-                ?subject ?property ?training .
-                ?training core:dateTimeInterval ?dateTimeInterval .
+                ?subject ?property ?resource .
+                ?resource core:dateTimeInterval ?dateTimeInterval .
                 ?dateTimeInterval core:start ?dateTimeStartValue .
                 ?dateTimeStartValue core:dateTime ?dateTimeStart .
             }
             OPTIONAL
             {
-                ?subject ?property ?training .
-                ?training core:dateTimeInterval ?dateTimeInterval .
+                ?subject ?property ?resource .
+                ?resource core:dateTimeInterval ?dateTimeInterval .
                 ?dateTimeInterval core:end ?dateTimeEndValue .
                 ?dateTimeEndValue core:dateTime ?dateTimeEnd .
             }

@@ -12,19 +12,19 @@
         PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
 
         SELECT DISTINCT
-            ?training
-            ?trainingName
+            ?resource
+            ?label
             ?date
             (STR(YEAR(?date)) as ?year)
 
         WHERE
         {
-            ?subject ?property ?training .
-            ?training a fhd:Award .
-            ?training rdfs:label ?trainingName .
+            ?subject ?property ?resource .
+            ?resource a fhd:Award .
+            ?resource rdfs:label ?label .
             OPTIONAL
             {
-                ?training core:dateTimeValue ?dateTimeValue .
+                ?resource core:dateTimeValue ?dateTimeValue .
                 ?dateTimeValue core:dateTime ?date .
             }
         } ORDER BY DESC(?date)
