@@ -1450,6 +1450,18 @@ class TeachingLecture(BaseModel):
             g.add((self.uri, VIVO.relates, org_uri(org)))
         return g
 
+    def related_org(self):
+        orgs = client.get_related_entities('Organisation', self.cid, 'LECT_has_ORGA')
+        for org in orgs:
+            return org.cfname
+        return None
+
+    def related_event(self):
+        events = client.get_related_entities('cfEvent', self.cid, 'LECT_has_EVEN')
+        for ev in events:
+            return ev.shortdescription
+        return None
+
     def get_dti(self):
         try:
             end = self.startedon
@@ -1488,9 +1500,13 @@ class TeachingLecture(BaseModel):
 
     def _v(self, attr):
         try:
-            return getattr(self, attr)
+            v = getattr(self, attr)
         except AttributeError:
-            return
+            return None
+        if type(v) == dict:
+            return v['value']
+        else:
+            return v
 
     def label(self):
         title = self._v("title")
@@ -1499,32 +1515,48 @@ class TeachingLecture(BaseModel):
         else:
             return title
 
+    def build_invited_lecture_label(self):
+        lb = [
+            self._v("typeoflecture"),
+            self._v("title"),
+            self.related_event(),
+            self.related_org()
+        ]
+        label = ", ".join([l for l in lb if l is not None])
+        return Literal(label)
 
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-        ttype = self.assign_type()
-        if ttype == FHT.AdvisingMentoring:
-            return g
-        r.set(RDF.type, ttype)
-        r.set(RDFS.label, Literal(self.label()))
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        rtype_id = self.dynamictype['cid']
+        # Invited lecture
+        if rtype_id == '10469':
+            r.set(RDF.type, FHT.InvitedLecture)
+            r.set(RDFS.label, self.build_invited_lecture_label())
+            g += self.add_date()
 
-        # related entities
+        # ttype = self.assign_type()
+        # if ttype == FHT.AdvisingMentoring:
+        #     return g
+        # r.set(RDF.type, ttype)
+        # r.set(RDFS.label, Literal(self.label()))
+        # r.set(CONVERIS.converisId, Literal(self.cid))
+
+        # # related entities
         g += self.get_person()
-        g += self.get_orgs()
-        g += self.get_publ()
+        # g += self.get_orgs()
+        # g += self.get_publ()
 
-        # some have single dates
-        g += self.add_date()
-        # some have intervals
-        # Add datetime interval
-        try:
-            dti_uri, dti_g = self._dti(self._v("startedon"), self._v("endedon"))
-            g += dti_g
-            r.set(VIVO.dateTimeInterval, dti_uri)
-        except TypeError:
-            pass
+        # # some have single dates
+        # g += self.add_date()
+        # # some have intervals
+        # # Add datetime interval
+        # try:
+        #     dti_uri, dti_g = self._dti(self._v("startedon"), self._v("endedon"))
+        #     g += dti_g
+        #     r.set(VIVO.dateTimeInterval, dti_uri)
+        # except TypeError:
+        #     pass
 
         return g 
 

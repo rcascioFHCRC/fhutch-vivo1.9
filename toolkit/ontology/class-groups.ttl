@@ -6,9 +6,21 @@
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
 @prefix d: <http://vivo.fredhutch.org/individual/> .
 
+#Class groups and property groups go in:
+# <http://vitro.mannlib.cornell.edu/default/vitro-kb-applicationMetadata>
+# A restart is required after adding.
 
-d:vitroClassGrouppublications
-    vitro:displayRank "2"^^xsd:int ;
-    a vitro:ClassGroup, owl:Thing ;
-    rdfs:label "publications"@en-us .
+d:vitroPropertyGroupEducationTraining
+        a                       vitro:PropertyGroup ;
+        rdfs:label              "education & training"@en-US ;
+        vitro:displayRank       "50"^^xsd:int ;
+        vitro:modTime           "2016-12-02T07:11:40"^^xsd:dateTime ;
+        vitro:mostSpecificType  vitro:PropertyGroup .
 
+
+d:vitroPropertyGroupActivitiesAwards
+        a                       vitro:PropertyGroup ;
+        rdfs:label              "activities & awards"@en-US ;
+        vitro:displayRank       "60"^^xsd:int ;
+        vitro:modTime           "2016-12-02T07:11:40"^^xsd:dateTime ;
+        vitro:mostSpecificType  vitro:PropertyGroup .
