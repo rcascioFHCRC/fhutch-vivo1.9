@@ -1,4 +1,5 @@
 """
+
 Harvest orgs that are related to other entities we are tracking. 
 
 This doesn't include cards/positions, which are handled by organizations.py. 
@@ -33,11 +34,12 @@ internal = """
  <query>
   <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
    <or>
+    <!--
     <relation minCount="1" name="LECT_has_ORGA"/>
     <relation minCount="1" name="AWRD_has_ORGA"/>
-    <relation minCount="1" name="CLIN_has_ORGA"/>
     <relation minCount="1" name="EDUC_has_ORGA"/>
-    <relation minCount="1" name="SERV_has_ORGA"/>
+    <relation minCount="1" name="SERV_has_ORGA"/> -->
+    <relation minCount="1" name="CLIN_has_ORGA"/>
    </or>
   </filter>
  </query>
@@ -58,7 +60,7 @@ def harvest():
     ng = "http://localhost/data/related-orgs"
     jh = OrgaHarvest(internal, models.RelatedOrganization)
     jh.run_harvest()
-    logger.info("Org harvest finished. Syncing to vstore.")
+    logger.info("Related org harvest finished. Syncing to vstore.")
     jh.sync_updates(ng)
 
 
