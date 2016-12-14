@@ -700,8 +700,12 @@ class Organization(BaseModel):
 
     def get_links(self):
         """Hyperlinks"""
+        seen = []
         g = Graph()
         for link in client.get_related_entities('Hyperlink', self.cid, 'ORGA_has_Link'):
+            # duplicate urls exist 
+            if link.href in seen:
+                continue
             # Create vcard indiviudal
             vci_uri = D['vcard-individual-org-' + self.cid]
             g.add((vci_uri, RDF.type, VCARD.Individual))
@@ -724,6 +728,8 @@ class Organization(BaseModel):
 
                 # Relate vcard individual to url
                 g.add((vci_uri, VCARD.hasURL, vcu_uri))
+                g.add((self.uri, OBO['ARG_2000028'], vci_uri))
+                seen.append(link.href)
 
         return g
 
@@ -767,7 +773,8 @@ class RelatedOrganization(Organization):
         o.set(CONVERIS.converisId, Literal(self.cid))
         if hasattr(self, 'description'):
             o.set(VIVO.overview, Literal(self.description))
-        g += self.add_vcard_weblink()
+        #g += self.add_vcard_weblink()
+        g += self.get_links()
 
         # determine if this is an internal or external org
         if hasattr(self, 'intorext'):
