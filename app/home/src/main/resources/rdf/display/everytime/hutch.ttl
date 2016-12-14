@@ -221,3 +221,23 @@ local:personAdvisingConfig a :ObjectPropertyDisplayConfig ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
     :propertyGroup d:vitroPropertyGroupTeachingLectures .
+
+
+# person to past position
+
+local:personPastPositionContext a :ConfigContext ;
+    :hasConfiguration local:personPastPositionConfig ;
+    :configContextFor vivo:relatedBy ;
+    :qualifiedByDomain  foaf:Person ;
+    :qualifiedBy      fhd:FormerPosition .
+
+local:personPastPositionConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-personInFormerPosition.xml"^^xsd:string ;
+    rdfs:label "past position person"@en-US ;
+    :displayName "past position" ;
+    vitro:displayRankAnnot  80 ;
+    #vitro:collateBySubclassAnnot
+    #          "true"^^xsd:boolean ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup d:vitroPropertyGroupPastPositions .
