@@ -245,6 +245,31 @@ class Person(BaseModel):
             g.add((self.uri, VIVO.relatedBy, duri))
         return g
 
+    def get_links(self):
+        """Hyperlinks"""
+        g = Graph()
+        for link in client.get_related_entities('Hyperlink', self.cid, 'PERS_has_Link'):
+            link_type = link.typeoflink['value']
+
+            if link_type == "Embedded Video":
+                g.add((self.uri, FHD.video, Literal(link.href)))
+                continue
+            else:
+                link_label = None
+                if hasattr(link, "name"):
+                    link_label == link.name
+                label = link_label or link_type
+                # vcard URL
+                vcu_uri = D['vcard-url' + link.cid]
+                g.add((vcu_uri, RDF.type, VCARD.URL))
+                g.add((vcu_uri, RDFS.label, Literal(label)))
+                g.add((vcu_uri, VCARD.url, Literal(link.href)))
+
+                # Relate vcard individual to url
+                g.add((URIRef(self.vcard_uri), VCARD.hasURL, vcu_uri))
+
+        return g
+
     def _label(self):
         """
         Use nickname for first name if it's present per AMC.
@@ -335,7 +360,9 @@ class Person(BaseModel):
         g += self.get_positions()
 
         # videos
-        g += self.get_videos()
+        #g += self.get_videos()
+        # all links
+        g += self.get_links()
 
         # degrees/training
         #g += self.get_training()
@@ -344,7 +371,7 @@ class Person(BaseModel):
         p.set(FHD.sortLetter, Literal(self._label()[0].lower()))
 
         # pictures
-        g += self.picture()
+        #g += self.picture()
 
         return g
 
@@ -571,6 +598,9 @@ class Organization(BaseModel):
     def related_uri(self, c_id):
         return D['c' + c_id]
 
+    def vcard_uri(self):
+        return D['vcard-individual-org-' + self.cid]
+
     def get_children(self):
         """
         Get sub-organizations.
@@ -671,6 +701,30 @@ class Organization(BaseModel):
 
         return g
 
+    def get_links(self):
+        """Hyperlinks"""
+        g = Graph()
+        for link in client.get_related_entities('Hyperlink', self.cid, 'ORGA_has_Link'):
+            link_type = link.typeoflink['value']
+
+            if link_type == "Embedded Video":
+                g.add((self.uri, FHD.video, Literal(link.href)))
+                continue
+            else:
+                link_label = None
+                if hasattr(link, "name"):
+                    link_label == link.name
+                label = link_label or link_type
+                # vcard URL
+                vcu_uri = D['vcard-url' + link.cid]
+                g.add((vcu_uri, RDF.type, VCARD.URL))
+                g.add((vcu_uri, RDFS.label, Literal(label)))
+                g.add((vcu_uri, VCARD.url, Literal(link.href)))
+
+                # Relate vcard individual to url
+                g.add((self.vcard_uri(), VCARD.hasURL, vcu_uri))
+
+        return g
 
     def to_rdf(self, get_all=True):
         g = Graph()
@@ -688,7 +742,8 @@ class Organization(BaseModel):
             # Get positions for this org.
             g += self.get_positions()
 
-        g += self.add_vcard_weblink()
+        #g += self.add_vcard_weblink()
+        g += self.get_links()
 
         # determine if this is an internal or external org
         if hasattr(self, 'intorext'):
@@ -1589,4 +1644,66 @@ class TeachingLecture(BaseModel):
 
         return g 
 
-# Education & training
+# Links
+
+
+class Hyperlink(BaseModel):
+
+    def _v(self, attr):
+        try:
+            v = getattr(self, attr)
+        except AttributeError:
+            return None
+        if type(v) == dict:
+            return v['value']
+        else:
+            return v
+
+    def get_related_entities(self):
+        uris = []
+        for person in client.get_related_ids('Person', self.cid, 'PERS_has_Link'):
+            puri = person_uri(person)
+            uris.append(puri)
+
+        for org in client.get_related_ids('Organisation', self.cid, 'ORGA_has_Link'):
+            ouri = org_uri(org)
+            uris.append(ouri)
+
+        return uris
+
+    def make_label(self):
+        return self._v("name") or self._v("typeoflink")
+
+
+    def to_rdf(self):
+        g = Graph()
+
+        related_entities = self.get_related_entities()
+        link_type = self._v("typeoflink")
+
+        if link_type == "Embedded Video":
+            for person_uri in related_entities:
+                g.add((person_uri, FHD.video, Literal(self.href)))
+            return g
+
+
+        label = self.make_label()
+
+        # vcard individual for org
+        vci_uri = D['vcard-individual-link-' + self.cid]
+        g.add((vci_uri, RDF.type, VCARD.Individual))
+
+        # vcard URL
+        vcu_uri = D['vcard-url' + self.cid]
+        g.add((vcu_uri, RDF.type, VCARD.URL))
+        g.add((vcu_uri, RDFS.label, Literal(label)))
+        g.add((vcu_uri, VCARD.url, Literal(self.href)))
+
+        # Relate vcard individual to url
+        g.add((vci_uri, VCARD.hasURL, vcu_uri))
+        # Relate web link and entity
+        for ruri in related_entities:
+            g.add((ruri, OBO['ARG_2000028'], vci_uri))
+
+        return g
+
