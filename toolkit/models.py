@@ -598,9 +598,6 @@ class Organization(BaseModel):
     def related_uri(self, c_id):
         return D['c' + c_id]
 
-    def vcard_uri(self):
-        return D['vcard-individual-org-' + self.cid]
-
     def get_children(self):
         """
         Get sub-organizations.
@@ -705,8 +702,10 @@ class Organization(BaseModel):
         """Hyperlinks"""
         g = Graph()
         for link in client.get_related_entities('Hyperlink', self.cid, 'ORGA_has_Link'):
+            # Create vcard indiviudal
+            vci_uri = D['vcard-individual-org-' + self.cid]
+            g.add((vci_uri, RDF.type, VCARD.Individual))
             link_type = link.typeoflink['value']
-
             if link_type == "Embedded Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
@@ -715,6 +714,8 @@ class Organization(BaseModel):
                 if hasattr(link, "name"):
                     link_label == link.name
                 label = link_label or link_type
+                if label == "Organization Site":
+                    label = "organization's website"
                 # vcard URL
                 vcu_uri = D['vcard-url' + link.cid]
                 g.add((vcu_uri, RDF.type, VCARD.URL))
@@ -722,7 +723,7 @@ class Organization(BaseModel):
                 g.add((vcu_uri, VCARD.url, Literal(link.href)))
 
                 # Relate vcard individual to url
-                g.add((self.vcard_uri(), VCARD.hasURL, vcu_uri))
+                g.add((vci_uri, VCARD.hasURL, vcu_uri))
 
         return g
 
