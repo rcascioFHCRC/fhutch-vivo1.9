@@ -1,72 +1,119 @@
 """
-This is placeholder script just to get images working from Converis to VIVO.
-We will need something different.
+Harvest pictures.
+
+By default, this will harvest pictures updated since yesterday.
+
+To harvest all pictures, run as:
+$ python pictures all
 """
 
+import base64
 import csv
 import os
 import sys
 
-# Chemistry CMS client 
-# https://github.com/apache/chemistry-cmislib
-from cmislib import CmisClient
-
 from rdflib import Graph, Literal
 
-from converis import backend
+from converis import client, backend
+import log_setup
 
 from models import FHD
-from models import person_uri
+from models import person_uri, BaseModel
 
-class ConverisDocs(object):
-    def __init__(self, image_path):
-        client = CmisClient(
-            os.environ['CONVERIS_CHEMISTRY'],
-            os.environ['CONVERIS_USER'],
-            os.environ['CONVERIS_PASS']
-        )
-        self.repo = client.defaultRepository
-        self.path = image_path
+from utils import days_ago
 
-    def save_pic(self, person_id, pic_id):
-        doc = self.repo.getObject(pic_id)
-        stream = doc.getContentStream()
-        fname = "{}.jpg".format(person_id)
-        full_path = os.path.join(self.path, fname)
-        with open(full_path, 'wb') as of:
-            of.write(stream.read())
-        return fname
+logger = log_setup.get_logger()
 
-def pic_statements(pics_added):
+NG = "http://localhost/data/photos"
+
+QUERY = """
+<data xmlns="http://converis/ns/webservice">
+  <query>
+    <filter for="Picture" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+    <or>
+        <relation minCount="1" name="PERS_has_PICT">
+          <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+        </relation>
+    </or>
+    <and>
+        <attribute argument="2000-01-01" name="Updated on" operator="greaterequal"/>
+    </and>
+    </filter>
+  </query>
+</data>
+"""
+
+class Picture(BaseModel):
+
+    def get_related_entities(self):
+        uris = []
+        for person in client.get_related_ids('Person', self.cid, 'PERS_has_PICT'):
+            puri = person_uri(person)
+            uris.append(puri)
+
+        for org in client.get_related_ids('Organisation', self.cid, 'ORGA_has_PICT'):
+            ouri = org_uri(org)
+            uris.append(ouri)
+
+        return uris
+
+    def to_rdf(self):
+        g = Graph()
+        related_entities = self.get_related_entities()
+        for uri in self.get_related_entities():
+            url_base = os.environ['PHOTO_BASE_URL']
+            fname = "{}.jpg".format(self.cid)
+            full_path = os.path.join(os.environ['IMAGE_PATH'], fname)
+            url = url_base + fname
+            with open(full_path, 'wb') as of:
+                dcd = base64.decodestring(self.filedata)
+                of.write(dcd)
+                g.add((uri, FHD.image, Literal(url)))
+                break
+        return g
+
+
+def harvest():
+    """
+    Fetch all pics and write to file
+    """
+    logger.info("Harvesting all pictures.")
     g = Graph()
-    for person_id, url in pics_added:
-        puri = person_uri(person_id)
-        g.add((puri, FHD.image, Literal(url)))
-    return g
+    for pict in client.filter_query(QUERY):
+        g += client.to_graph(pict, Picture)
+    logger.info("Picture harvest complete")
+    backend.sync_updates(NG, g)
 
 
-def harvest_people(sample=False):
-    p = get_people(sample=sample)
-    #print p.serialize(format='n3')
-    
+def harvest_updates(days=2, test=False):
+    """
+    Fetch updated pics and write to file.
+    Default to days as 2 so that we get yesterday's date.
+    """
+    updated_date = days_ago(days)
+    logger.info("Harvesting updated pictures since {}.".format(updated_date))
+    query = QUERY.replace("2000-01-01", updated_date)
+    g = Graph()
+    done = 0
+    for pict in client.filter_query(query):
+        g += client.to_graph(pict, Picture)
+        done += 1
+        if test is True:
+            if done > 10:
+                break
+    if len(g) > 0:
+        backend.post_updates(NG, g)
+        logger.info("Updated picture harvest complete.")
+    else:
+        logger.info("No updated pictures found.")
 
 
 if __name__ == "__main__":
-    infile = sys.argv[1]
-    img_dir = sys.argv[2]
-    url_base = os.environ['PHOTO_BASE_URL']
-    pics_added = []
-    with open(infile) as inf:
-        for row in csv.DictReader(inf):
-            pid = row['person']
-            cid = row['pic_id']
-            print>>sys.stderr, "Fetching photo", pid
-            cd = ConverisDocs(img_dir)
-            fname = cd.save_pic(pid, cid)
-            url = url_base + fname
-            pics_added.append((pid, url))
-    
-    g = pic_statements(pics_added)
-    
-    #print g.serialize(format="turtle")
-    backend.sync_updates("http://localhost/data/photos", g)
+    try:
+        update = sys.argv[1]
+    except IndexError:
+        update = False
+    if update == "all":
+        harvest()
+    else:
+        harvest_updates()

@@ -5,6 +5,8 @@ from Queue import Queue
 from threading import Thread
 import time
 
+from datetime import datetime, timedelta
+
 from converis import client
 from converis import backend
 
@@ -108,3 +110,12 @@ def get_parent_org_label(cid):
         else:
             out.append(name)
     return ", ".join(out)
+
+
+def days_ago(num):
+    """
+    Return date in year-month-day format for X 
+    number of days ago.
+    """
+    dt = datetime.today() - timedelta(days=num)
+    return "{}-{}-{}".format(dt.year, dt.month, dt.day)
