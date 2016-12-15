@@ -30,12 +30,10 @@ QUERY = """
 <data xmlns="http://converis/ns/webservice">
   <query>
     <filter for="Picture" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-    <or>
+    <and>
         <relation minCount="1" name="PERS_has_PICT">
           <attribute argument="6019159" name="fhPersonType" operator="equals"/>
         </relation>
-    </or>
-    <and>
         <attribute argument="2000-01-01" name="Updated on" operator="greaterequal"/>
     </and>
     </filter>
