@@ -124,7 +124,11 @@ class Service(BaseModel):
     def _gattrs(self, keys):
         for key in keys:
             if hasattr(self, key):
-                return getattr(self, key)['value']
+                val = getattr(self, key)
+                if type(val) == dict:
+                    return getattr(self, key)['value']
+                else:
+                    return val
         return None
 
     def label(self):
