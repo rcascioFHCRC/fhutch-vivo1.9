@@ -80,7 +80,10 @@ def harvest():
     for pict in client.filter_query(QUERY):
         g += client.to_graph(pict, Picture)
     logger.info("Picture harvest complete")
-    backend.sync_updates(NG, g)
+    if len(g) < 200:
+        logger.error("Picture data incomplete. Not updating")
+    else:
+        backend.sync_updates(NG, g)
 
 
 def harvest_updates(days=2, test=False):
