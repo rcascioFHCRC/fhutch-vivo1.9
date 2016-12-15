@@ -77,7 +77,7 @@ def harvest():
     """
     logger.info("Harvesting all pictures.")
     g = Graph()
-    for pict in client.filter_query(QUERY):
+    for pict in client.filter_query(QUERY, page_size=25):
         g += client.to_graph(pict, Picture)
     logger.info("Picture harvest complete")
     if len(g) < 200:
