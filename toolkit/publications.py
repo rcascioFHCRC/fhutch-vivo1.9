@@ -211,8 +211,8 @@ def clear_pub_cards():
     
 
 if __name__ == "__main__":
-    #threaded_pub_harvest()
     logger.info("Starting publications harvest.")
+    threaded_pub_harvest()
     # pub_harvest()
     logger.info("Generating authorships")
     generate_authorships()
