@@ -31,6 +31,26 @@ if os.environ.get('HTTP_CACHE') == "1":
 
 THREADS = int(os.environ.get('THREADS', 5))
 
+NG = "http://localhost/data/publications"
+
+QUERY = """
+<data xmlns="http://converis/ns/webservice">
+    <query>
+        <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
+        <and>
+            <and>
+                <relation direction="lefttoright" name="PUBL_has_CARD">
+                    <relation direction="righttoleft"  name="PERS_has_CARD">
+                        <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+                    </relation>
+                </relation>
+            </and>
+        </and>
+        </filter>
+    </query>
+</data>
+"""
+
 def harvest_sets():
     pq = """
     <data xmlns="http://converis/ns/webservice">
@@ -140,7 +160,7 @@ def pub_harvest():
         <and>
             <relation direction="lefttoright" name="PUBL_has_CARD">
                 <relation direction="righttoleft"  name="PERS_has_CARD">
-                <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+                    <attribute argument="6019159" name="fhPersonType" operator="equals"/>
                 </relation>
             </relation>
         </and>
@@ -154,6 +174,13 @@ def pub_harvest():
         g += client.to_graph(item, models.Publication)
     ng = "http://localhost/data/publications"
     backend.sync_updates(ng, g)
+
+
+def threaded_pub_harvest():
+    ph = PubHarvest(QUERY, models.Publication)
+    ph.run_harvest()
+    logger.info("Publications harvest finished. Syncing to vstore")
+    ph.sync_updates(NG)
 
 
 def generate_authorships():
@@ -184,11 +211,12 @@ def clear_pub_cards():
     
 
 if __name__ == "__main__":
+    #threaded_pub_harvest()
     logger.info("Starting publications harvest.")
-    pub_harvest()
+    # pub_harvest()
     logger.info("Generating authorships")
     generate_authorships()
     logger.info("Adding local coauthor flag.")
     generate_local_coauthor()
-    logger.info("Pub harvest complete.")
+    logger.info("Pub harvest and authorship generation complete.")
     #clear_pub_cards()
