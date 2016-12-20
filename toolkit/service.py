@@ -156,8 +156,6 @@ class Service(BaseModel):
             self.label()
         ]
         lb.append(self.related_org_label("SERV_has_ORGA"))
-        jname, jgroup = self.get_journal()
-        lb.append(jname)
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
 
