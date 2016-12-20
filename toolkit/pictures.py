@@ -81,11 +81,12 @@ class PersonPicture(BaseModel):
         fname = "{}.jpg".format(self.cid)
         full_path = os.path.join(os.environ['IMAGE_PATH'], fname)
         url = url_base + fname
+        puri = person_uri(self.cid)
         for item in client.RelatedObject('Person', self.cid, 'PERS_has_PICT'):
             with open(full_path, 'wb') as of:
                 dcd = base64.decodestring(item.filedata)
                 of.write(dcd)
-                g.add((self.uri, FHD.image, Literal(url)))
+                g.add((puri, FHD.image, Literal(url)))
                 break
         return g
 
