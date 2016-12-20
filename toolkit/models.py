@@ -1583,7 +1583,7 @@ class TeachingLecture(BaseModel):
 
     def build_invited_lecture_label(self):
         lb = [
-            self._v("typeoflecture"),
+            #self._v("typeoflecture"),
             self._v("title"),
             self.related_event(),
             self.related_org_label('LECT_has_ORGA')
@@ -1602,19 +1602,18 @@ class TeachingLecture(BaseModel):
         return Literal(label.rstrip(','))
 
     def build_advising_label(self):
-        return Literal(self.shortdescription.rstrip('Advising and Mentoring'))
-        # lb = [
-        #     self._v("rolemodifier"),
-        #     self._v("advisingrole"),
-        #     self.get_advisee(),
-        #     self._v("adviseeOther"),
-        #     self._v("typeofdegree"),
-        #     self._v("description")
-        # ]
-        # label = ", ".join([l for l in lb if l is not None])
-        # if label == "":
-        #     import ipdb; ipdb.set_trace()
-        # return Literal(label.strip(','))
+        lb = [
+            self.get_advisee(),
+            self._v("adviseeother"),
+            self._v("typeofdegree"),
+            self._v("rolemodifier"),
+            self._v("advisingrole"),
+            #self._v("description")
+        ]
+        label = ", ".join([l for l in lb if l is not None])
+        if label == "":
+            return Literal(self.shortdescription)
+        return Literal(label.strip(','))
 
     def to_rdf(self):
         g = Graph()
