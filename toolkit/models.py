@@ -151,7 +151,7 @@ class BaseModel(client.BaseEntity):
         if lb == []:
             return None
         else:
-            return ", ".join(lb)
+            return ", ".join(lb).rstrip(", ")
 
 
 class Person(BaseModel):
