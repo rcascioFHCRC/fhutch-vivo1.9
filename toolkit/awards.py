@@ -83,8 +83,8 @@ class Award(BaseModel):
         return g
 
     def build_label(self):
-        lb = [self.nameofhonor]
-        lb.append(self.get_awarded_by())
+        lb = [self.nameofhonor, self._v("description")]
+        lb.append(self.related_org_label("AWRD_has_ORGA"))
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
 
@@ -119,7 +119,7 @@ def single_thread_harvest_awards(sample=True):
         done += 1
         #if (sample is True) and (done >= 20):
         #    break
-    print g.serialize(format='n3')
+    #print g.serialize(format='n3')
     backend.sync_updates(NG, g)
 
 
