@@ -137,13 +137,13 @@ class BaseModel(client.BaseEntity):
             dti.set(VIVO.end, end_uri)
         return dti_uri, g
 
-    def related_org_label(self):
+    def related_org_label(self, relationship):
         """
         Create a label for an organization and its parents.
         For of: dept x, college y, university z
         """
         lb = []
-        orgs = client.get_related_entities('Organisation', self.cid, 'LECT_has_ORGA')
+        orgs = client.get_related_entities('Organisation', self.cid, relationship)
         for org in orgs:
             lb.append(org.cfname)
             parents = utils.get_parent_org_label(org.cid)
@@ -1586,7 +1586,7 @@ class TeachingLecture(BaseModel):
             self._v("typeoflecture"),
             self._v("title"),
             self.related_event(),
-            self.related_org_label()
+            self.related_org_label('LECT_has_ORGA')
         ]
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
@@ -1596,10 +1596,10 @@ class TeachingLecture(BaseModel):
             self._v("title"),
             self._v("coursetype"),
             self.related_event(),
-            self.related_org_label(),
+            self.related_org_label('LECT_has_ORGA'),
         ]
-        label = ", ".join([l for l in lb if l is not None])
-        return Literal(label.strip(','))
+        label = ", ".join([l for l in lb if l is not None and l != ""])
+        return Literal(label.rstrip(','))
 
     def build_advising_label(self):
         return Literal(self.shortdescription.rstrip('Advising and Mentoring'))
