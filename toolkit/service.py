@@ -141,7 +141,16 @@ class Service(BaseModel):
 
         """
         #return self.shortdescription.split('(')[0].strip()
-        role = self._gattrs(["prosocietyrole", "editorshiprole", "committeerole", "roleother"]) or "Not specified"
+        role = self._gattrs([
+            "prosocietyrole",
+            "editorshiprole",
+            "committeerole",
+            "description"
+            "roleother",
+            "consultantactivity",
+            "consultantactivityother"
+        ]
+        ) or ""
         modifier = None
         if hasattr(self, "rolemodifier"):
             modifier = self.rolemodifier["value"]
@@ -156,15 +165,19 @@ class Service(BaseModel):
             self.label()
         ]
         lb.append(self.related_org_label("SERV_has_ORGA"))
-        label = ", ".join([l for l in lb if l is not None])
+        label = ", ".join([l for l in lb if l is not None and l != ""])
         return Literal(label)
 
 
     def to_rdf(self):
         g = Graph()
         r = Resource(g, self.uri)
-        r.set(RDF.type, self.get_type())
-        r.set(RDFS.label, Literal(self.full_label()))
+        vtype = self.get_type()
+        label = self.full_label()
+        if vtype == FHS.ConsultantServices:
+            label = label.replace("Member, ", "")
+        r.set(RDF.type, vtype)
+        r.set(RDFS.label, Literal(label))
         r.set(CONVERIS.converisId, Literal(self.cid))
 
         g += self.get_person()
