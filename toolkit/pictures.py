@@ -29,19 +29,24 @@ NG = "http://localhost/data/photos"
 QUERY = """
 <data xmlns="http://converis/ns/webservice">
   <query>
-    <filter for="Picture" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+    <filter for="Person" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
     <and>
         <relation minCount="1" name="PERS_has_PICT">
-          <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+            <attribute argument="2000-01-01" name="Updated on" operator="greaterequal"/>
         </relation>
-        <attribute argument="2000-01-01" name="Updated on" operator="greaterequal"/>
+        <attribute argument="6019159" name="fhPersonType" operator="equals"/>
     </and>
     </filter>
   </query>
 </data>
 """
 
-class Picture(BaseModel):
+class PersonPicture(BaseModel):
+    """
+    For pictures, we will go from the person to the picture.
+    This avoids data issues that we were seeing when attempting
+    to harvest the picture entity directly.
+    """
 
     def get_related_entities(self):
         uris = []
@@ -56,17 +61,31 @@ class Picture(BaseModel):
         return uris
 
     def to_rdf(self):
+        # g = Graph()
+        # related_entities = self.get_related_entities()
+        # for uri in self.get_related_entities():
+        #     url_base = os.environ['PHOTO_BASE_URL']
+        #     fname = "{}.jpg".format(self.cid)
+        #     full_path = os.path.join(os.environ['IMAGE_PATH'], fname)
+        #     url = url_base + fname
+        #     with open(full_path, 'wb') as of:
+        #         dcd = base64.decodestring(self.filedata)
+        #         of.write(dcd)
+        #         g.add((uri, FHD.image, Literal(url)))
+        #         break
+        return self.picture()
+
+    def picture(self):
         g = Graph()
-        related_entities = self.get_related_entities()
-        for uri in self.get_related_entities():
-            url_base = os.environ['PHOTO_BASE_URL']
-            fname = "{}.jpg".format(self.cid)
-            full_path = os.path.join(os.environ['IMAGE_PATH'], fname)
-            url = url_base + fname
+        url_base = os.environ['PHOTO_BASE_URL']
+        fname = "{}.jpg".format(self.cid)
+        full_path = os.path.join(os.environ['IMAGE_PATH'], fname)
+        url = url_base + fname
+        for item in client.RelatedObject('Person', self.cid, 'PERS_has_PICT'):
             with open(full_path, 'wb') as of:
-                dcd = base64.decodestring(self.filedata)
+                dcd = base64.decodestring(item.filedata)
                 of.write(dcd)
-                g.add((uri, FHD.image, Literal(url)))
+                g.add((self.uri, FHD.image, Literal(url)))
                 break
         return g
 
@@ -77,8 +96,8 @@ def harvest():
     """
     logger.info("Harvesting all pictures.")
     g = Graph()
-    for pict in client.filter_query(QUERY, page_size=25):
-        g += client.to_graph(pict, Picture)
+    for per_pict in client.filter_query(QUERY):
+        g += client.to_graph(per_pict, PersonPicture)
     logger.info("Picture harvest complete")
     if len(g) < 200:
         logger.error("Picture data incomplete. Not updating")
@@ -97,14 +116,14 @@ def harvest_updates(days=2, test=False):
     g = Graph()
     done = 0
     for pict in client.filter_query(query):
-        g += client.to_graph(pict, Picture)
+        g += client.to_graph(pict, PersonPicture)
         done += 1
         if test is True:
             if done > 10:
                 break
     if len(g) > 0:
         backend.post_updates(NG, g)
-        logger.info("Updated picture harvest complete.")
+        logger.info("Updated picture harvest complete. Updated: {}".format(done))
     else:
         logger.info("No updated pictures found.")
 
