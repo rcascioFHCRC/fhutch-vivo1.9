@@ -35,6 +35,7 @@ internal = """
        <relation minCount="1" name="CARD_has_ORGA"/>
      </relation>
      <relation minCount="1" name="EVEN_has_ORGA"/>
+     <relation minCount="1" name="EVEN_has_host_ORGA"/>
    </or>
   </filter>
  </query>
