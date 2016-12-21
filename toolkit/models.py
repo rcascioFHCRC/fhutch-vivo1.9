@@ -887,6 +887,9 @@ class Publication(BaseModel):
         g = Graph()
         for card in client.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
             g.add((self.uri, CONVERIS.pubCardId, Literal(card)))
+        # editor cards too
+        for card in client.get_related_entities('Card', self.cid, 'PUBL_has_editor_CARD'):
+            g.add((self.uri, CONVERIS.pubCardId, Literal(card)))
         return g
 
 
@@ -1087,6 +1090,10 @@ class News(BaseModel):
 def pub_to_card(card_id):
     g = Graph()
     for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
+        #ashipuri = D['aship-{}-{}'.format(pub, self.cid)]
+        puri = pub_uri(pub)
+        g.add((puri, CONVERIS.pubCardId, Literal(card_id)))
+    for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_editor_CARD'):
         #ashipuri = D['aship-{}-{}'.format(pub, self.cid)]
         puri = pub_uri(pub)
         g.add((puri, CONVERIS.pubCardId, Literal(card_id)))

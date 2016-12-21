@@ -38,13 +38,18 @@ QUERY = """
     <query>
         <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
         <and>
-            <and>
+            <or>
                 <relation direction="lefttoright" name="PUBL_has_CARD">
                     <relation direction="righttoleft"  name="PERS_has_CARD">
                         <attribute argument="6019159" name="fhPersonType" operator="equals"/>
                     </relation>
                 </relation>
-            </and>
+                <relation direction="lefttoright" name="PUBL_has_editor_CARD">
+                    <relation direction="righttoleft"  name="PERS_has_CARD">
+                        <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+                    </relation>
+                </relation>
+            </or>
         </and>
         </filter>
     </query>
