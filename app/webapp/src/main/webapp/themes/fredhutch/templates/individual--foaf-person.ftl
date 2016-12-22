@@ -154,6 +154,18 @@
      <#include "individual-property-group-menus.ftl">
 -->
 
+<#-- Based of Weill Cornell VIVO publication sorting.
+http://vivo.med.cornell.edu/display/cwid-ljaronne -->
+<div id="pub-sorter">
+  <span>Sort by</span>
+  <select id="dropdown_options" class="button" title="Sort by">
+      <option value="newest" selected>Newest</option>
+      <option value="oldest">Oldest</option>
+      <option value="pubname">Title</option>
+  </select>
+</div>
+
+
 <#include "individual-property-group-tabs.ftl">
 
 <#assign rdfUrl = individual.rdfUrl>
@@ -163,6 +175,7 @@
         var individualRdfUrl = '${rdfUrl}';
     </script>
 </#if>
+
 <script>
     var imagesPath = '${urls.images}';
 	var individualUri = '${individual.uri!}';
@@ -188,6 +201,26 @@
       var link = $(item).text().trim();
       $(item).html("<li class=\"embed-video\"><iframe width=\"560px\" height=\"315\" src=\"" + link + "\"/></li>");
     });
+
+    //pub sorting
+    var sorter = $('#pub-sorter')[0];
+    $('h3#relatedBy-Authorship').append(sorter);
+    $(sorter).show();
+
+    $('#dropdown_options').change(function (e) {
+          var optionSelected = $("option:selected", this);
+          var valueSelected = this.value;
+          console.debug(valueSelected);
+          if (valueSelected == 'oldest') {
+            tinysort('div.pub-container', {attr:'datetime'})
+
+          } else if (valueSelected == 'newest') {
+            tinysort('div.pub-container', {attr:'datetime', order:'desc'})
+          } else if (valueSelected == 'pubname') {
+            tinysort('div.pub-container', {attr:'pubname'})
+            }
+    });
+     
 </script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/individual/individual.css" />',
@@ -204,3 +237,7 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/individual/in
 			  '<script type="text/javascript" src="${urls.base}/js/individual/moreLessController.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/imageUpload/imageUploadUtils.js"></script>')}
+
+${scripts.add('<script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js"></script>')}
+
+

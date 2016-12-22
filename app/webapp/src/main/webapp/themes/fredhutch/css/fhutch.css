@@ -2065,3 +2065,24 @@ section#recent {
 #home-pubs {
     float: right;
 }
+
+/*pub sorter */
+#pub-sorter {
+    float:right;
+    display: none;
+    width: 10em;
+    margin: 0;
+    margin-right: 2em;
+}
+
+#pub-sorter span {
+    font-weight: bold;
+}
+
+#pub-sorter select {
+    margin-left: .25em;
+}
+
+#pub-sorter .button {
+    background: #123054;
+}
