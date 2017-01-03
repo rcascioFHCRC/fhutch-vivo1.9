@@ -1557,7 +1557,7 @@ class TeachingLecture(BaseModel):
             if link.href in seen:
                 continue
             # Create vcard indiviudal
-            vci_uri = D['vcard-individual-org-' + self.cid]
+            vci_uri = D['vcard-individual-' + self.cid]
             g.add((vci_uri, RDF.type, VCARD.Individual))
             link_type = link.typeoflink['value']
             if link_type == "Embedded Video":
