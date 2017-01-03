@@ -162,6 +162,7 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
       <option value="newest" selected>Newest</option>
       <option value="oldest">Oldest</option>
       <option value="pubname">Title</option>
+      <option value="venue">Journal</option>
   </select>
 </div>
 
@@ -213,13 +214,15 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
             var valueSelected = this.value;
             //console.debug(valueSelected);
             if (valueSelected == 'oldest') {
-              tinysort('div.pub-container', {attr:'datetime'})
+              tinysort('div.pub-container', {attr:'datetime'},{attr:'pubname'})
 
             } else if (valueSelected == 'newest') {
-              tinysort('div.pub-container', {attr:'datetime', order:'desc'})
+              tinysort('div.pub-container', {attr:'datetime', order:'desc'},{attr:'pubname'})
             } else if (valueSelected == 'pubname') {
-              tinysort('div.pub-container', {attr:'pubname'})
-              }
+              tinysort('div.pub-container', {attr:'pubname'}, {attr:'datetime', order:'desc'})
+            } else if (valueSelected == 'venue') {
+              tinysort('div.pub-container', {attr:'venue'},{attr:'pubname'})
+            }
       });
     };
      

@@ -44,7 +44,7 @@
         </#if>
     </#local>
 
-    <div class="pub-container" pubname="${statement.infoResourceName}" datetime="${statement.dateTime!}">
+    <div class="pub-container" pubname="${statement.infoResourceName}" datetime="${statement.dateTime!}" venue="${statement.journal!"z"}">
         <div class="title">${resourceTitle} <span class="pub-date"><@dt.yearSpan "${statement.dateTime!}" /></span></div>
         <#if statement.authorList?has_content>
             <div class="author-list">
