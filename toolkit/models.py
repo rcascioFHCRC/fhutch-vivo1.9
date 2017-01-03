@@ -1550,10 +1550,16 @@ class TeachingLecture(BaseModel):
 
     def get_links(self):
         """Hyperlinks"""
+        seen = []
         g = Graph()
         for link in client.get_related_entities('Hyperlink', self.cid, 'LECT_has_Link'):
+            # duplicate urls exist 
+            if link.href in seen:
+                continue
+            # Create vcard indiviudal
+            vci_uri = D['vcard-individual-org-' + self.cid]
+            g.add((vci_uri, RDF.type, VCARD.Individual))
             link_type = link.typeoflink['value']
-
             if link_type == "Embedded Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
@@ -1562,6 +1568,8 @@ class TeachingLecture(BaseModel):
                 if hasattr(link, "name"):
                     link_label == link.name
                 label = link_label or link_type
+                if label == "Organization Site":
+                    label = "organization's website"
                 # vcard URL
                 vcu_uri = D['vcard-url' + link.cid]
                 g.add((vcu_uri, RDF.type, VCARD.URL))
@@ -1569,7 +1577,10 @@ class TeachingLecture(BaseModel):
                 g.add((vcu_uri, VCARD.url, Literal(link.href)))
 
                 # Relate vcard individual to url
-                g.add((URIRef(self.vcard_uri), VCARD.hasURL, vcu_uri))
+                g.add((vci_uri, VCARD.hasURL, vcu_uri))
+                g.add((self.uri, OBO['ARG_2000028'], vci_uri))
+                seen.append(link.href)
+
         return g
 
     def add_date(self):
