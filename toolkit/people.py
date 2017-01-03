@@ -48,15 +48,15 @@ def add_since(time_stamp):
     return ET.tostring(df)
 
 query = """
-    <data xmlns="http://converis/ns/webservice">
-     <return>
-      <attributes/>
-     </return>
-     <query>
-      <filter for="Person" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-      </filter>
-     </query>
-    </data>
+<data xmlns="http://converis/ns/webservice">
+ <return>
+ </return>
+ <query>
+  <filter for="Person" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+    <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+  </filter>
+ </query>
+</data>
 """
 
 class PersonHarvest(ThreadedHarvest):
