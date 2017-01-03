@@ -214,14 +214,13 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
             var valueSelected = this.value;
             //console.debug(valueSelected);
             if (valueSelected == 'oldest') {
-              tinysort('div.pub-container', {attr:'datetime'},{attr:'pubname'})
-
+              tinysort('div.pub-container', {attr:'datetime'})
             } else if (valueSelected == 'newest') {
-              tinysort('div.pub-container', {attr:'datetime', order:'desc'},{attr:'pubname'})
+              tinysort('div.pub-container', {attr:'datetime', order:'desc'})
             } else if (valueSelected == 'pubname') {
-              tinysort('div.pub-container', {attr:'pubname'}, {attr:'datetime', order:'desc'})
+              tinysort('div.pub-container', {attr:'pubname'})
             } else if (valueSelected == 'venue') {
-              tinysort('div.pub-container', {attr:'venue'},{attr:'pubname'})
+              tinysort('div.pub-container', {attr:'venue'})
             }
       });
     };
