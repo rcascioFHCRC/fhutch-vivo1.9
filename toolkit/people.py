@@ -60,6 +60,9 @@ query = """
 """
 
 class PersonHarvest(ThreadedHarvest):
+    """
+    Harvest FredHutch people.
+    """
 
     def __init__(self, q, vmodel, threads=5):
         self.query = q
@@ -69,16 +72,10 @@ class PersonHarvest(ThreadedHarvest):
 
     def process(self, pair):
         start, stop = pair
-        #_p("Processing {} {}".format(start, stop))
-        #self.total += 1
         rsp = client.EntityFilter(self.query, start=start, stop=stop)
         for ety in rsp:
             item = client.Entity('Person', ety.cid)
-            # FH people only
-            if hasattr(item, 'fhpersontype'):
-                if item.fhpersontype['cid'] == '6019159':
-                    g = client.to_graph(item, models.Person)
-                    self.graph += g
+            self.graph += client.to_graph(item, models.Person)
 
 
 def harvest():
