@@ -1548,6 +1548,30 @@ class TeachingLecture(BaseModel):
         for adv in client.get_related_entities('Person', self.cid, 'LECT_has_stud_PERS'):
             return adv.shortdescription
 
+    def get_links(self):
+        """Hyperlinks"""
+        g = Graph()
+        for link in client.get_related_entities('Hyperlink', self.cid, 'LECT_has_Link'):
+            link_type = link.typeoflink['value']
+
+            if link_type == "Embedded Video":
+                g.add((self.uri, FHD.video, Literal(link.href)))
+                continue
+            else:
+                link_label = None
+                if hasattr(link, "name"):
+                    link_label == link.name
+                label = link_label or link_type
+                # vcard URL
+                vcu_uri = D['vcard-url' + link.cid]
+                g.add((vcu_uri, RDF.type, VCARD.URL))
+                g.add((vcu_uri, RDFS.label, Literal(label)))
+                g.add((vcu_uri, VCARD.url, Literal(link.href)))
+
+                # Relate vcard individual to url
+                g.add((URIRef(self.vcard_uri), VCARD.hasURL, vcu_uri))
+        return g
+
     def add_date(self):
         g = Graph()
         on_date = self._v('occurredon')
@@ -1655,6 +1679,8 @@ class TeachingLecture(BaseModel):
         r.set(CONVERIS.converisId, Literal(self.cid))
 
         g += self.get_person()
+
+        g += self.get_links()
 
         return g 
 
