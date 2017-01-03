@@ -202,24 +202,26 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
       $(item).html("<li class=\"embed-video\"><iframe width=\"560px\" height=\"315\" src=\"" + link + "\"/></li>");
     });
 
-    //pub sorting
-    var sorter = $('#pub-sorter')[0];
-    $('h3#relatedBy-Authorship').append(sorter);
-    $(sorter).show();
+    //pub sorting - only show if there are pubs on the page
+    if ($('#relatedBy-Authorship-List li').length > 0) {
+      var sorter = $('#pub-sorter')[0];
+      $('h3#relatedBy-Authorship').append(sorter);
+      $(sorter).show();
 
-    $('#dropdown_options').change(function (e) {
-          var optionSelected = $("option:selected", this);
-          var valueSelected = this.value;
-          console.debug(valueSelected);
-          if (valueSelected == 'oldest') {
-            tinysort('div.pub-container', {attr:'datetime'})
+      $('#dropdown_options').change(function (e) {
+            var optionSelected = $("option:selected", this);
+            var valueSelected = this.value;
+            //console.debug(valueSelected);
+            if (valueSelected == 'oldest') {
+              tinysort('div.pub-container', {attr:'datetime'})
 
-          } else if (valueSelected == 'newest') {
-            tinysort('div.pub-container', {attr:'datetime', order:'desc'})
-          } else if (valueSelected == 'pubname') {
-            tinysort('div.pub-container', {attr:'pubname'})
-            }
-    });
+            } else if (valueSelected == 'newest') {
+              tinysort('div.pub-container', {attr:'datetime', order:'desc'})
+            } else if (valueSelected == 'pubname') {
+              tinysort('div.pub-container', {attr:'pubname'})
+              }
+      });
+    };
      
 </script>
 

@@ -2070,13 +2070,13 @@ section#recent {
 #pub-sorter {
     float:right;
     display: none;
-    width: 10em;
+    min-width: 8em;
     margin: 0;
     margin-right: 2em;
 }
 
 #pub-sorter span {
-    font-weight: bold;
+    /*font-weight: bold;*/
 }
 
 #pub-sorter select {
