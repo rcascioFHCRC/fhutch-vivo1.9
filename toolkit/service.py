@@ -133,14 +133,8 @@ class Service(BaseModel):
 
     def label(self):
         """
-        Look in four different fields for role description.
-        - proSocietyRole
-        - editorshipRole
-        - committeRole
-        - roleOther
-
+        Look in various fields for role description.
         """
-        #return self.shortdescription.split('(')[0].strip()
         role = self._gattrs([
             "prosocietyrole",
             "editorshiprole",
@@ -157,8 +151,8 @@ class Service(BaseModel):
             role = u"{} {}".format(modifier, role)
         if hasattr(self, "committeegroup"):
             role += u", {}".format(self.committeegroup)
-        # strip off not specified if role is not but committee or modifier exists.
         return role
+
 
     def full_label(self):
         lb = [
