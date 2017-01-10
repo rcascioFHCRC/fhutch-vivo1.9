@@ -32,7 +32,7 @@ NG = "http://localhost/data/service"
 from models import (
   BaseModel,
   FHS,
-  CONVERIS,
+  FHD,
   VIVO,
   Resource,
   Literal,
@@ -172,7 +172,7 @@ class Service(BaseModel):
             label = label.replace("Member, ", "")
         r.set(RDF.type, vtype)
         r.set(RDFS.label, Literal(label))
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        r.set(FHD.converisId, Literal(self.cid))
 
         g += self.get_person()
         #g += self.get_org()
