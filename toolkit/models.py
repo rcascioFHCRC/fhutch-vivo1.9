@@ -1162,7 +1162,7 @@ def get_pub_cards():
     select DISTINCT ?person ?card
     where {
         ?person a foaf:Person ;
-            converis:pubCardId ?card .
+            fhd:pubCardId ?card .
     }
     """
     #Define the VIVO store
