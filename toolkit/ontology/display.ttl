@@ -234,7 +234,7 @@ fhd:image a owl:DatatypeProperty ;
         rdfs:label "image" ;
         rdfs:range xsd:string ;
         vitro:hiddenFromDisplayBelowRoleLevelAnnot
-                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
         vitro:hiddenFromPublishBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
