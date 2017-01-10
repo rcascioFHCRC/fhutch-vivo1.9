@@ -241,6 +241,69 @@ fhd:image a owl:DatatypeProperty ;
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
 
 
+fhd:cardId  a                  owl:DatatypeProperty ;
+        rdfs:label                  "Card identifier"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupidentifiers> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
+
+fhd:authorList  a              owl:DatatypeProperty ;
+        rdfs:label                  "cited authors"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:displayRankAnnot      "3"^^xsd:int ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
+
+fhd:pubCardId  a               owl:DatatypeProperty ;
+        rdfs:label                  "publication card identifier"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupidentifiers> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
+
+fhd:wosId  a                   owl:DatatypeProperty ;
+        rdfs:label                  "Web of Science ID"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupidentifiers> .
+
+fhd:citationText
+        a                           owl:DatatypeProperty ;
+        rdfs:domain                 bibo:Document ;
+        rdfs:label                  "citation"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
+
+fhd:converisId  a              owl:DatatypeProperty ;
+        rdfs:label                  "Converis ID"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#nobody> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupidentifiers> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#nobody> .
+
 # News
 
 d:vitroClassGroupNews

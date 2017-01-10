@@ -17,7 +17,7 @@ import bleach
 
 from converis import client
 from converis.namespaces import rq_prefixes
-from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, CONVERIS, SKOS
+from converis.namespaces import D, BIBO, VIVO, OBO, VCARD, SKOS
 
 from converis.backend import SyncVStore
 
@@ -210,7 +210,7 @@ class Person(BaseModel):
             # Check for pub tracking cards.
             if (hasattr(card, 'positiontype') is True) and\
                  (card.positiontype.get('cid') == '12166'):
-                g.add((self.uri, CONVERIS.pubCardId, Literal(card.cid)))
+                g.add((self.uri, FHD.pubCardId, Literal(card.cid)))
                 continue
             # Former positions
             if (hasattr(card, 'currentposition') is True) and (card.currentposition.get('cid') == '11289'):
@@ -313,7 +313,7 @@ class Person(BaseModel):
         p = Resource(g, self.uri)
         p.add(RDF.type, FOAF.Person)
         p.set(RDFS.label, Literal(self._label()))
-        p.set(CONVERIS.converisId, Literal(self.cid))
+        p.set(FHD.converisId, Literal(self.cid))
         if self._nickname is not None:
             p.set(FHD.nickname, Literal(self._nickname))
         if hasattr(self, 'cfresint'):
@@ -540,7 +540,7 @@ class Position(BaseModel):
         g = Graph()
         g += self.add_type_rank()
         e = Resource(g, self.uri)
-        e.set(CONVERIS.converisId, Literal(self.cid))
+        e.set(FHD.converisId, Literal(self.cid))
         # Check jobtitle and function for position name.
         if hasattr(self, 'jobtitle'):
             title = self.jobtitle
@@ -738,7 +738,7 @@ class Organization(BaseModel):
         o = Resource(g, self.uri)
         o.set(RDF.type, self.get_type())
         o.set(RDFS.label, Literal(self.cfname))
-        o.set(CONVERIS.converisId, Literal(self.cid))
+        o.set(FHD.converisId, Literal(self.cid))
         if hasattr(self, 'description'):
             o.set(VIVO.overview, Literal(self.description))
 
@@ -770,7 +770,7 @@ class RelatedOrganization(Organization):
         o = Resource(g, self.uri)
         o.set(RDF.type, self.get_type())
         o.set(RDFS.label, Literal(self.cfname))
-        o.set(CONVERIS.converisId, Literal(self.cid))
+        o.set(FHD.converisId, Literal(self.cid))
         if hasattr(self, 'description'):
             o.set(VIVO.overview, Literal(self.description))
         #g += self.add_vcard_weblink()
@@ -826,11 +826,11 @@ class Publication(BaseModel):
 
     def data_properties(self):
         props = [
-            ('srcauthors', CONVERIS.authorList),
+            ('srcauthors', FHD.authorList),
             ('doi', BIBO.doi),
             ('pubmedid', BIBO.pmid),
             ('pmcid', VIVO.pmcid),
-            ('isiid', CONVERIS.wosId),
+            ('isiid', FHD.wosId),
             ('irhandle', FHD.repositoryURL),
             ('cfstartpage', BIBO.pageStart),
             ('cfendpage', BIBO.pageEnd),
@@ -838,7 +838,7 @@ class Publication(BaseModel):
             ('cfvol', BIBO.volume),
             ('cfissue', BIBO.issue),
             ('cftotalpages', BIBO.numPages),
-            ('shortdescription', CONVERIS.citationText)
+            ('shortdescription', FHD.citationText)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -886,10 +886,10 @@ class Publication(BaseModel):
     def pub_cards(self):
         g = Graph()
         for card in client.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
-            g.add((self.uri, CONVERIS.pubCardId, Literal(card)))
+            g.add((self.uri, FHD.pubCardId, Literal(card)))
         # editor cards too
         for card in client.get_related_entities('Card', self.cid, 'PUBL_has_editor_CARD'):
-            g.add((self.uri, CONVERIS.pubCardId, Literal(card)))
+            g.add((self.uri, FHD.pubCardId, Literal(card)))
         return g
 
 
@@ -897,7 +897,7 @@ class Publication(BaseModel):
         g = Graph()
         o = Resource(g, self.uri)
         o.set(RDF.type, self.get_type())
-        o.set(CONVERIS.converisId, Literal(self.cid))
+        o.set(FHD.converisId, Literal(self.cid))
         try:
             o.set(RDFS.label, Literal(self.cftitle))
         except AttributeError:
@@ -962,7 +962,7 @@ class Expertise(BaseModel):
         g = Graph()
         r = Resource(g, self.uri)
         r.set(RDFS.label, Literal(self.name))
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        r.set(FHD.converisId, Literal(self.cid))
 
         # Set local class
         g += self.add_primary_type()
@@ -991,7 +991,7 @@ class Journal(BaseModel):
         r = Resource(g, self.uri)
         r.set(RDF.type, BIBO.Journal)
         r.set(RDFS.label, Literal(self.name))
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        r.set(FHD.converisId, Literal(self.cid))
 
         if hasattr(self, 'issn'):
             r.set(BIBO.issn, Literal(self.issn))
@@ -1071,7 +1071,7 @@ class News(BaseModel):
         r = Resource(g, self.uri)
         r.set(RDF.type, self.get_type())
         r.set(RDFS.label, Literal(self.title))
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        r.set(FHD.converisId, Literal(self.cid))
 
         if hasattr(self, 'url'):
             r.set(FHD.url, Literal(self.url))
@@ -1092,11 +1092,11 @@ def pub_to_card(card_id):
     for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
         #ashipuri = D['aship-{}-{}'.format(pub, self.cid)]
         puri = pub_uri(pub)
-        g.add((puri, CONVERIS.pubCardId, Literal(card_id)))
+        g.add((puri, FHD.pubCardId, Literal(card_id)))
     for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_editor_CARD'):
         #ashipuri = D['aship-{}-{}'.format(pub, self.cid)]
         puri = pub_uri(pub)
-        g.add((puri, CONVERIS.pubCardId, Literal(card_id)))
+        g.add((puri, FHD.pubCardId, Literal(card_id)))
     return g
 
 
@@ -1304,7 +1304,7 @@ class ClinicalTrial(BaseModel):
             r.set(FHCT.officialTitle, Literal(self.officialtitle))
         except AttributeError:
             pass
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        r.set(FHD.converisId, Literal(self.cid))
 
         # if hasattr(self, "briefsummary"):
         #     r.set(VIVO.overview, Literal(self.briefsummary))
@@ -1687,7 +1687,7 @@ class TeachingLecture(BaseModel):
                 pass
 
 
-        r.set(CONVERIS.converisId, Literal(self.cid))
+        r.set(FHD.converisId, Literal(self.cid))
 
         g += self.get_person()
 

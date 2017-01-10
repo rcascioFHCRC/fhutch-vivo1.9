@@ -10,7 +10,6 @@
         PREFIX bibo: &lt;http://purl.org/ontology/bibo/&gt;
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
         PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
-        PREFIX converis: &lt;http://localhost/ontology/converis#&gt;
         PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
         SELECT DISTINCT ?subclass
             ?authorship
@@ -46,9 +45,9 @@
             OPTIONAL { ?infoResource bibo:doi ?doi }
             OPTIONAL { ?infoResource bibo:pmid ?pmid }
             OPTIONAL { ?infoResource core:pmcid ?pmcid }
-            OPTIONAL { ?infoResource converis:wosId ?wosId }
+            OPTIONAL { ?infoResource fhd:wosId ?wosId }
             OPTIONAL { ?infoResource fhd:repositoryURL ?repoURL }
-            OPTIONAL { ?infoResource converis:authorList ?authorList }
+            OPTIONAL { ?infoResource fhd:authorList ?authorList }
             OPTIONAL { ?infoResource bibo:pageStart ?startPage }
             OPTIONAL { ?infoResource bibo:pageEnd ?endPage }
             OPTIONAL { ?infoResource core:placeOfPublication ?locale }
@@ -94,7 +93,6 @@
         PREFIX bibo: &lt;http://purl.org/ontology/bibo/&gt;
         PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
-        PREFIX converis: &lt;http://localhost/ontology/converis#&gt;
         PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
         CONSTRUCT
         {
@@ -112,9 +110,9 @@
             ?infoResource bibo:doi ?doi .
             ?infoResource bibo:pmid ?pmid .
             ?infoResource core:pmcid ?pmcid .
-            ?infoResource converis:wosId ?wosId .
+            ?infoResource fhd:wosId ?wosId .
             ?infoResource fhd:repositoryURL ?repoURL .
-            ?infoResource converis:authorList ?authorList .
+            ?infoResource fhd:authorList ?authorList .
             ?infoResource core:placeOfPublication ?locale .
             ?infoResource bibo:reproducedIn ?appearsInObj .
             ?appearsInObj rdfs:label ?appearsIn .
@@ -234,7 +232,7 @@
                 ?authorship a core:Authorship .
                 ?authorship core:relates ?infoResource .
                 ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
-                ?infoResource converis:wosId ?wosId .
+                ?infoResource fhd:wosId ?wosId .
             }
             UNION
             {
@@ -250,7 +248,7 @@
                 ?authorship a core:Authorship .
                 ?authorship core:relates ?infoResource .
                 ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
-                ?infoResource converis:authorList ?authorList .
+                ?infoResource fhd:authorList ?authorList .
             }
             UNION
             {
@@ -258,7 +256,7 @@
                 ?authorship a core:Authorship .
                 ?authorship core:relates ?infoResource .
                 ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
-                ?infoResource converis:authorList ?authorList .
+                ?infoResource fhd:authorList ?authorList .
             }
             UNION
             {
