@@ -1105,9 +1105,9 @@ def create_authorships():
     select DISTINCT ?person ?publication
     where {
         ?person a foaf:Person ;
-                converis:pubCardId ?card .
+                fhd:pubCardId ?card .
         ?publication a <http://vivo.fredhutch.org/ontology/publications#Publication> ;
-            converis:pubCardId ?card .
+            fhd:pubCardId ?card .
     }
     """
     #Define the VIVO store
