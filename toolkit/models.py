@@ -1102,6 +1102,7 @@ def pub_to_card(card_id):
 
 def create_authorships():
     q = """
+    PREFIX fhd: <http://vivo.fredhutch.org/ontology/display#>
     select DISTINCT ?person ?publication
     where {
         ?person a foaf:Person ;
@@ -1159,6 +1160,7 @@ def create_local_coauthor_flag():
 
 def get_pub_cards():
     q = """
+    PREFIX fhd: <http://vivo.fredhutch.org/ontology/display#>
     select DISTINCT ?person ?card
     where {
         ?person a foaf:Person ;
