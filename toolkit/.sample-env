@@ -1,0 +1,18 @@
+
+# VIVO connection details
+export DATA_NAMESPACE='http://vivo.fredhutch.org/individual/'
+export VIVO_EMAIL='vivo_root@school.edu'
+export VIVO_PASSWORD=''
+export VIVO_URL='http://localhost:8080/vivo'
+
+export CONVERIS_URL='https://xxx.converis.thomsonreuters.com/converis'
+
+# Where to store photos on disk
+export IMAGE_PATH='/tmp/hutch_pics/'
+# URL where photos will be served
+export PHOTO_BASE_URL='http://xx.xxx.xx/cimages/'
+
+# For ingest - cache? 
+export HTTP_CACHE=1
+# How many threads to use for ingest. 
+export THREADS=2
