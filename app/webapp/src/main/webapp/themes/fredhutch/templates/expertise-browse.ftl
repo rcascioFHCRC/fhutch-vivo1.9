@@ -5,11 +5,9 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
-<!-- load D3js -->
-<script src="http://www.d3plus.org/js/d3.js"></script>
-
+<script type="text/javascript" src="${urls.base}/js/d3.js"></script>
 <!-- load D3plus after D3js -->
-<script src="http://www.d3plus.org/js/d3plus.js"></script>
+<script type="text/javascript" src="${urls.base}/js/d3plus.js"></script>
 
 
 <style>
