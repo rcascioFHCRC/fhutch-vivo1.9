@@ -5,7 +5,7 @@
 <#assign doip = "http://purl.org/ontology/bibo/doi">
 <#assign pmidp = "http://purl.org/ontology/bibo/pmid">
 <#assign pmcidp = "http://vivoweb.org/ontology/core#pmcid">
-<#assign wosp = "http://vivo.fredhutch.org/ontology/display##wosId">
+<#assign wosp = "http://vivo.fredhutch.org/ontology/display#wosId">
 <#assign repo = "http://vivo.fredhutch.org/ontology/display#repositoryURL">
 <#global pg=propertyGroups>
 
