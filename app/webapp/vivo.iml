@@ -19,8 +19,8 @@
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpcore-nio:4.3.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpmime:4.3.6" level="project" />
     <orderEntry type="library" name="Maven: org.json:json:20140107" level="project" />
-    <orderEntry type="library" name="Maven: org.vivoweb:vivo-api:1.9.0-SNAPSHOT" level="project" />
-    <orderEntry type="library" name="Maven: org.vivoweb:vitro-api:1.9.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.vivoweb:vivo-api:1.9.1" level="project" />
+    <orderEntry type="library" name="Maven: org.vivoweb:vitro-api:1.9.1" level="project" />
     <orderEntry type="library" name="Maven: asm:asm:3.1" level="project" />
     <orderEntry type="library" name="Maven: com.github.ansell.aterms:aterm-java:1.8.2" level="project" />
     <orderEntry type="library" name="Maven: com.github.ansell.jjtraveler:jjtraveler:0.6" level="project" />
@@ -125,7 +125,7 @@
     <orderEntry type="library" name="Maven: org.vivoweb.dependencies:agrovocws:3.0" level="project" />
     <orderEntry type="library" name="Maven: org.vivoweb.dependencies:oim.vivo.scimapcore:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.vivoweb.dependencies:orcid-api-client:0.2" level="project" />
-    <orderEntry type="library" name="Maven: org.vivoweb:vivo-webapp:war:1.9.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: org.vivoweb:vivo-webapp:war:1.9.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: javax.servlet:jsp-api:2.0" level="project" />
   </component>
