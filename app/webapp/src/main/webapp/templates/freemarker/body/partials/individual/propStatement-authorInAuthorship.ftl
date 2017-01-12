@@ -74,6 +74,9 @@
             <#if statement.repoURL?has_content>
                 <span class="pub-id-link">Full Text via Intranet&nbsp;<a href="${statement.repoURL}"  title="View in Web of Science" target="external">${statement.repoURL}</a></span>
             </#if>
+            <#if statement.oclcNum?has_content>
+                <span class="pub-id-link">OCLC:&nbsp;<a href="http://www.worldcat.org/oclc/${statement.oclcNum}"  title="View in OCLC" target="external">${statement.oclcNum}</a></span>
+            </#if>
         </div>
     </div>
 </#if>

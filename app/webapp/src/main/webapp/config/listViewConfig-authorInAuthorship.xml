@@ -23,6 +23,7 @@
             ?pmcid
             ?wosId
             ?repoURL
+            ?oclcNum
             ?authorList
             ?startPage
             ?endPage
@@ -47,6 +48,7 @@
             OPTIONAL { ?infoResource core:pmcid ?pmcid }
             OPTIONAL { ?infoResource fhd:wosId ?wosId }
             OPTIONAL { ?infoResource fhd:repositoryURL ?repoURL }
+            OPTIONAL { ?infoResource bibo:oclcnum ?oclcNum }
             OPTIONAL { ?infoResource fhd:authorList ?authorList }
             OPTIONAL { ?infoResource bibo:pageStart ?startPage }
             OPTIONAL { ?infoResource bibo:pageEnd ?endPage }
@@ -112,6 +114,7 @@
             ?infoResource core:pmcid ?pmcid .
             ?infoResource fhd:wosId ?wosId .
             ?infoResource fhd:repositoryURL ?repoURL .
+            ?infoResource bibo:oclcnum ?oclcNum .
             ?infoResource fhd:authorList ?authorList .
             ?infoResource core:placeOfPublication ?locale .
             ?infoResource bibo:reproducedIn ?appearsInObj .
@@ -241,6 +244,14 @@
                 ?authorship core:relates ?infoResource .
                 ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
                 ?infoResource fhd:repositoryURL ?repoURL .
+            }
+            UNION
+            {
+                ?subject ?property ?authorship .
+                ?authorship a core:Authorship .
+                ?authorship core:relates ?infoResource .
+                ?infoResource a &lt;http://purl.obolibrary.org/obo/IAO_0000030&gt; .
+                ?infoResource bibo:oclcnum ?oclcNum .
             }
             UNION
             {
