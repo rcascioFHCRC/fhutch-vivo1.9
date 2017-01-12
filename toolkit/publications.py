@@ -213,15 +213,40 @@ def clear_pub_cards():
     for card_uri, card in cards:
         g = Graph()
         backend.sync_updates("http://localhost/data/pubs-card-{}".format(card), g)
-    
 
-if __name__ == "__main__":
+
+def sample_harvest():
+    q = """
+    <data xmlns="http://converis/ns/webservice">
+     <query>
+      <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+        <attribute operator="equals" argument="10347" name="Publication type"/>
+      </filter>
+     </query>
+    </data>
+    """
+    logger.info("Starting sample publications harvest.")
+    g = Graph()
+    for item in client.filter_query(q):
+        g += client.to_graph(item, models.Publication)
+    # print g.serialize(format="turtle")
+    # backend.sync_updates replaces the named graph with the incoming data - meaning any
+    # data in the system that's not in the incoming data will be deleted
+    # backend.post_updates will only update the entities that are in the incoming data - anything
+    # else is left as it is. 
+    backend.sync_updates("http://localhost/data/sample-books", g)
+
+
+def full_publication_harvest():
     logger.info("Starting publications harvest.")
     threaded_pub_harvest()
-    # pub_harvest()
     logger.info("Generating authorships")
     generate_authorships()
     logger.info("Adding local coauthor flag.")
     generate_local_coauthor()
     logger.info("Pub harvest and authorship generation complete.")
-    #clear_pub_cards()
+
+
+if __name__ == "__main__":
+    #sample_harvest()
+    full_publication_harvest()

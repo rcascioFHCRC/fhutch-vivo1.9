@@ -838,7 +838,8 @@ class Publication(BaseModel):
             ('cfvol', BIBO.volume),
             ('cfissue', BIBO.issue),
             ('cftotalpages', BIBO.numPages),
-            ('shortdescription', FHD.citationText)
+            ('shortdescription', FHD.citationText),
+            ('oclcnumber', BIBO.oclcnum)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -846,6 +847,8 @@ class Publication(BaseModel):
                 # skip blanks
                 if value == u"":
                     continue
+                if pred == BIBO.oclcnum:
+                    value = value.replace(",", "")
                 yield (pred, Literal(value))
 
     def add_date(self):
