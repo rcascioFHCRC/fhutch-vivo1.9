@@ -1,13 +1,17 @@
 
 ##Fred Hutch VIVO
 
-Built with VIVO 1.9.1
-
 The project is broken up into two main components:
 
- * `app` - VIVO related changes - theme, template changes, added controllers, etc. 
+ * `app` - the VIVO web application. VIVO related changes - theme, template changes, added controllers, etc. 
  * `toolkit` - the Converis to VIVO data syncing code
 
+### Application overview
+
+Built with VIVO 1.9.1
+
+* The project uses the [custom installer](https://wiki.duraspace.org/display/VIVODOC19x/Installing+VIVO) pattern documented by the VIVO project. 
+* The `webapp/src/main/webapp/themes` directory contains the CSS and template changes for this project. 
 
 ### Toolkit overview
 
