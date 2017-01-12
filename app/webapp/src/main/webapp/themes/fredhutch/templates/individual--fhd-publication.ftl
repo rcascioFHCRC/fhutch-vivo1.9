@@ -5,6 +5,7 @@
 <#assign doip = "http://purl.org/ontology/bibo/doi">
 <#assign pmidp = "http://purl.org/ontology/bibo/pmid">
 <#assign pmcidp = "http://vivoweb.org/ontology/core#pmcid">
+<#assign oclcdp = "http://purl.org/ontology/bibo/oclcnum">
 <#assign wosp = "http://vivo.fredhutch.org/ontology/display#wosId">
 <#assign repo = "http://vivo.fredhutch.org/ontology/display#repositoryURL">
 <#global pg=propertyGroups>
@@ -75,6 +76,7 @@
 <#assign doi=gdp(doip)!>
 <#assign pmid=gdp(pmidp)!>
 <#assign pmcid=gdp(pmcidp)!>
+<#assign oclc=gdp(oclcdp)!>
 <#assign wosId=gdp(wosp)!>
 <#assign repoU=gdp(repo)!>
 
@@ -94,6 +96,9 @@
     </#if>
     <#if repoU?has_content>
         <span class="pub-id-link">Full Text via Intranet:&nbsp;<a href="${repoU}"  title="Full Text via Intranet" target="external">${repoU}</a></span>
+    </#if>
+    <#if oclc?has_content>
+        <span class="pub-id-link">OCLC:&nbsp;<a href="http://www.worldcat.org/oclc/${oclc}"  title="View in OCLC" target="external">${oclc}</a></span>
     </#if>
 </div>
 
