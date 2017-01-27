@@ -1,7 +1,12 @@
-git+https://github.com/lawlesst/c2vivo.git
+requests
+vivo-rdflib-sparqlstore
+# short urls - used ?
+slugify
 # for cleaning markup
 bleach
 
+
+# optional if using caching
 # for caching
-requests_cache
+#requests_cache
 #redis
