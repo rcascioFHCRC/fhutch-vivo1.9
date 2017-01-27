@@ -25,8 +25,9 @@ from rdflib import Graph, Literal
 
 from utils import ThreadedHarvest
 
-
 logger = log_setup.get_logger()
+
+NUM_THREADS = int(os.environ.get('THREADS', '2'))
 
 if os.environ.get('HTTP_CACHE') == "1":
   import requests_cache
@@ -61,7 +62,7 @@ query = """
 
 class PersonHarvest(ThreadedHarvest):
 
-    def __init__(self, q, vmodel, threads=5):
+    def __init__(self, q, vmodel, threads=NUM_THREADS):
         self.query = q
         self.graph = Graph()
         self.threads = threads
