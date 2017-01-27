@@ -703,7 +703,7 @@ class Organization(BaseModel):
         seen = []
         g = Graph()
         for link in client.get_related_entities('Hyperlink', self.cid, 'ORGA_has_Link'):
-            # duplicate urls exist 
+            # duplicate urls exist
             if link.href in seen:
                 continue
             # Create vcard indiviudal
@@ -1135,7 +1135,7 @@ def create_authorships():
 
 def create_local_coauthor_flag():
     q = """
-    select DISTINCT ?person 
+    select DISTINCT ?person
     where {
         ?person a foaf:Person .
         ?aship vivo:relates ?pub, ?person .
@@ -1223,8 +1223,8 @@ class ClinicalTrial(BaseModel):
 
     def get_investigators(self):
         g = Graph()
-        for pub in client.get_related_ids('Person', self.cid, 'CLIN_has_invs_PERS'):
-            uri = pub_uri(pub)
+        for invest in client.get_related_ids('Person', self.cid, 'CLIN_has_invs_PERS'):
+            uri = person_uri(invest)
             g.add((self.uri, FHCT.hasInvestigator, uri))
         return g
 
@@ -1510,7 +1510,7 @@ class EducationTraining(BaseModel):
             r.set(RDF.type, FHD.License)
             r.set(RDFS.label, self.build_license_label())
             g += self.add_date()
-        
+
         #r.set(VIVO.majorField, Literal(self.program))
 
         g += self.get_person()
@@ -1558,7 +1558,7 @@ class TeachingLecture(BaseModel):
         seen = []
         g = Graph()
         for link in client.get_related_entities('Hyperlink', self.cid, 'LECT_has_Link'):
-            # duplicate urls exist 
+            # duplicate urls exist
             if link.href in seen:
                 continue
             # Create vcard indiviudal
@@ -1698,6 +1698,6 @@ class TeachingLecture(BaseModel):
 
         g += self.get_links()
 
-        return g 
+        return g
 
 
