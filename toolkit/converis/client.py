@@ -17,9 +17,6 @@ from requests.exceptions import ChunkedEncodingError
 
 logger = logging.getLogger("converis_client")
 
-# disable SSL warnings
-requests.packages.urllib3.disable_warnings()
-
 # Set Converis URL globally from environment variable
 CONVERIS_URL = os.environ['CONVERIS_URL'].rstrip('/') + '/'
 
