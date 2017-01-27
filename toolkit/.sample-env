@@ -12,7 +12,11 @@ export IMAGE_PATH='/tmp/hutch_pics/'
 # URL where photos will be served
 export PHOTO_BASE_URL='http://xx.xxx.xx/cimages/'
 
-# For ingest - cache? 
-export HTTP_CACHE=1
-# How many threads to use for ingest. 
+# How many threads to use for ingest processes.
 export THREADS=2
+
+# For ingest - cache?
+# Off by defualt. Requires configuring redis as well. 
+# Helpful for development so that realtime queries don't
+# have to be made to converis.
+export HTTP_CACHE=0
