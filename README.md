@@ -13,13 +13,13 @@ Built with VIVO 1.9.1
 * The project uses the [custom installer](https://wiki.duraspace.org/display/VIVODOC19x/Installing+VIVO) pattern documented by the VIVO project. 
 * The `webapp/src/main/webapp/themes` directory contains the CSS and template changes for this project. 
 
-Installing FredHutch VIVO
+#### Installing FredHutch VIVO
 * Clone the FredHutch VIVO
  * `git clone https://github.com/blevinefhcrc/fhutch-vivo.git`
 * Change to the app directory
  * `cd app`
-* Copy `example-settings.xml` to `settings.xml` and adjust the settings to match your database, tomcat directory, VIVO home directory.
- * `cp example-settings.xml settings.xml`
+* Copy `sample-installer.xml` to `settings.xml` and adjust the settings to match your database, tomcat directory, VIVO home directory.
+ * `cp sample-insstaller.xml settings.xml`
 * Install the customized VIVO installation
  * `mvn install -s settings.xml`
 
