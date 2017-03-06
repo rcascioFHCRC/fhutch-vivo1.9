@@ -34,6 +34,13 @@ def get_trials(trials):
     <data xmlns="http://converis/ns/webservice">
      <query>
       <filter for="ClincialTrial" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+        <and>
+            <and>
+                <relation direction="lefttoright" name="CLIN_has_invs_PERS">
+                    <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+                </relation>
+            </and>
+        </and>       
       </filter>
      </query>
     </data>
@@ -65,7 +72,13 @@ query = """
   </return>
   <query>
     <filter for="ClinicalTrial" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-     
+        <and>
+            <and>
+                <relation direction="lefttoright" name="CLIN_has_invs_PERS">
+                    <attribute argument="6019159" name="fhPersonType" operator="equals"/>
+                </relation>
+            </and>
+        </and>     
     </filter>
   </query>
 </data>
