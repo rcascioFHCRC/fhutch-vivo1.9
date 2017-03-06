@@ -1260,7 +1260,7 @@ class ClinicalTrial(BaseModel):
                 return FHCT.EnrollingByInvitation
             elif status == 'recruiting':
                 return FHCT.Recruiting
-            elif status.find('active, not recruiting') == 0:
+            elif status == 'active, not recruiting':
                 return FHCT.ActiveNotRecruiting
         return default
 
