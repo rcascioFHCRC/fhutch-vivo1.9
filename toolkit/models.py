@@ -1251,18 +1251,36 @@ class ClinicalTrial(BaseModel):
             '5340503': FHCT.Terminated,
             '5340506': FHCT.Withdrawn,
         }
-        # 'Completed', 'Enrolling by invitation', 'Recruiting', 'n/a', 'Active, not recruiting'
         if hasattr(self, 'recruitmentstatus'):
             status = self.recruitmentstatus.lower().strip()
             if status == 'completed':
                 return FHCT.Completed
-            elif status == 'enrolling by invitation':
-                return FHCT.EnrollingByInvitation
-            elif status == 'recruiting':
-                return FHCT.Recruiting
             elif status == 'active, not recruiting':
                 return FHCT.ActiveNotRecruiting
+            elif status == 'approved for marketing':
+                return FHCT.ApprovedForMarketing
+            elif status == 'available for expanded access':
+                return FHCT.AvailableForExpandedAccess
+            elif status == 'enrolling by invitation':
+                return FHCT.EnrollingByInvitation
+            elif status == 'no longer available for expanded access':
+                return FHCT.NoLongerAvailableForExpandedAccess                                        
+            elif status == 'not yet recruiting':
+                return FHCT.NotYetRecruiting                                                           
+            elif status == 'recruiting':
+                return FHCT.Recruiting
+            elif status == 'suspended':
+                return FHCT.Suspended
+            elif status == 'temporarily not available for expanded access':
+                return FHCT.TemporarilyNotAvailableForExpandedAccess                                            
+            elif status == 'terminated':
+                return FHCT.Terminated                                                       
+            elif status == 'withdrawn':
+                return FHCT.Withdrawn                                            
         return default
+
+
+        
 
 
     def data_properties(self):
