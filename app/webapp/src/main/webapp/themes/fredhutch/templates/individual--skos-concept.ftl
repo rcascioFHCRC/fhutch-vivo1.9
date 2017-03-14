@@ -4,9 +4,9 @@
 
 <#-- Do not show the link for temporal visualization unless it's enabled -->
 
-<#assign affiliatedResearchAreas>
-    <#include "individual-affiliated-departments.ftl">
-</#assign>
+<#-- <#assign affiliatedResearchAreas> -->
+<#--    <#include "individual-affiliated-departments.ftl"> -->
+<#-- </#assign> -->
 
 <#include "individual.ftl">
 
