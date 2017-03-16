@@ -860,6 +860,8 @@ class Publication(BaseModel):
             date_value = self.cfrespubldate
         if hasattr(self, 'publyear'):
             year_value = self.publyear
+        if hasattr(self, 'publishedon'):
+            date_value = self.publishedon
 
         if (date_value is None) and (year_value is None):
             return g
