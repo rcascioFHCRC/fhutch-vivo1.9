@@ -918,7 +918,7 @@ class Publication(BaseModel):
         for pred, obj in self.data_properties():
             o.set(pred, obj)
         # editors
-        g += get_editors()
+        g += self.get_editors()
 
         # add date
         g += self.add_date()
