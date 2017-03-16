@@ -890,11 +890,20 @@ class Publication(BaseModel):
         g = Graph()
         for card in client.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
             g.add((self.uri, FHD.pubCardId, Literal(card)))
-        # editor cards too
-        for card in client.get_related_entities('Card', self.cid, 'PUBL_has_editor_CARD'):
-            g.add((self.uri, FHD.pubCardId, Literal(card)))
         return g
-
+	
+	def get_editors(self):
+		g = Graph()
+        # editor cards
+        for card in client.get_related_entities('Card', self.cid, 'PUBL_has_editor_CARD'):
+			# get the person related to editor card
+			for pers in client.get_related_entities('Person', card.cid, 'PERS_has_CARD'):
+				# create editorship
+				eship_uri = D['editorship' + self.cid + card.cid]
+				g.add((eship_uri, RDF.type, VIVO.Editorship))
+				g.add((eship_uri, VIVO.relates, self.uri))
+				g.add((eship_uri, VIVO.relates, person_uri(pers.cid))
+ 		return g
 
     def to_rdf(self):
         g = Graph()
@@ -908,6 +917,9 @@ class Publication(BaseModel):
             return g
         for pred, obj in self.data_properties():
             o.set(pred, obj)
+
+		# editors
+		g += get_editors()
 
         # add date
         g += self.add_date()
