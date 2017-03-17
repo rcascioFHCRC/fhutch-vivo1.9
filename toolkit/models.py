@@ -839,7 +839,8 @@ class Publication(BaseModel):
             ('cfissue', BIBO.issue),
             ('cftotalpages', BIBO.numPages),
             ('shortdescription', FHD.citationText),
-            ('oclcnumber', BIBO.oclcnum)
+            ('oclcnumber', BIBO.oclcnum),
+            ('srceditors', FHD.editorList)
         ]
         for k, pred in props:
             if hasattr(self, k):
