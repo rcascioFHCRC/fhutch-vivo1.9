@@ -228,7 +228,7 @@ fhd:hasLocalCoauthor a owl:DatatypeProperty ;
         rdfs:label "has local coauthor" ;
         rdfs:range xsd:boolean .
 
-
+# Publications
 
 fhd:image a owl:DatatypeProperty ;
         rdfs:label "image" ;
@@ -275,7 +275,18 @@ fhd:editorList  a              owl:DatatypeProperty ;
         vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
-     
+
+fhd:publisher  a              owl:DatatypeProperty ;
+        rdfs:label                  "published by"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:displayRankAnnot      "20"^^xsd:int ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
 
 fhd:pubCardId  a               owl:DatatypeProperty ;
         rdfs:label                  "publication card identifier"@en-US ;
