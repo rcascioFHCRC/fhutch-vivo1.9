@@ -240,7 +240,6 @@ fhd:image a owl:DatatypeProperty ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#curator> .
 
-
 fhd:cardId  a                  owl:DatatypeProperty ;
         rdfs:label                  "Card identifier"@en-US ;
         rdfs:range                  xsd:string ;
@@ -280,6 +279,23 @@ fhd:publisher  a              owl:DatatypeProperty ;
         rdfs:label                  "published by"@en-US ;
         rdfs:range                  xsd:string ;
         vitro:displayRankAnnot      "20"^^xsd:int ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
+
+fhd:freeisbn  a                   owl:DatatypeProperty ;
+        rdfs:label                  "International Standard Book Number (ISBN)"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupidentifiers> .
+
+fhd:seriesTitle  a              owl:DatatypeProperty ;
+        rdfs:label                  "series title"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:displayRankAnnot      "30"^^xsd:int ;
         vitro:hiddenFromDisplayBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
         vitro:hiddenFromPublishBelowRoleLevelAnnot
