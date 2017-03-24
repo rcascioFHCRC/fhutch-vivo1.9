@@ -789,6 +789,14 @@ class RelatedOrganization(Organization):
 
 class Publication(BaseModel):
 
+    def get_title(self):
+        if hasattr(self, 'cftitle'):
+            return self.cftitle
+        elif hasattr(self, 'srctitle'):
+            return self.srctitle
+        else:
+            return None
+
     def get_type(self, default=FHP.OtherPublication):
         """
         Assign a publication type.
@@ -922,19 +930,17 @@ class Publication(BaseModel):
         o = Resource(g, self.uri)
         o.set(RDF.type, self.get_type())
         o.set(FHD.converisId, Literal(self.cid))
-        try:
-            o.set(RDFS.label, Literal(self.cftitle))
-        except AttributeError:
+        title = self.get_title()
+        if title is None:
             logger.error("Can't find title for {}".format(self.cid))
-            return g
+            return Graph()
+        o.set(RDFS.label, Literal(title))
         for pred, obj in self.data_properties():
             o.set(pred, obj)
         # editors
         g += self.get_editors()
-
         # add date
         g += self.add_date()
-
         return g
 
 

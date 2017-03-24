@@ -11,6 +11,9 @@ from namespaces import rq_prefixes, VIVO
 import logging
 logger = logging.getLogger("converis_client")
 
+# library's default is 8000
+BATCH_SIZE = 4000
+
 class SyncVStore(VIVOUpdateStore):
     """
     Extending VIVOUpdateStore with utilities
@@ -53,9 +56,9 @@ class SyncVStore(VIVOUpdateStore):
         existing = self.get_existing(name)
         both, adds, deletes = graph_diff(incoming, existing)
         del both
-        added = self.bulk_add(name, adds)
+        added = self.bulk_add(name, adds, size=BATCH_SIZE)
         logger.info("Adding {} triples.".format(added))
-        removed = self.bulk_remove(name, deletes)
+        removed = self.bulk_remove(name, deletes, size=BATCH_SIZE)
         logger.info("Removed {} triples.".format(removed))
         return (added, removed)
 
