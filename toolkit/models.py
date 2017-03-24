@@ -249,7 +249,11 @@ class Person(BaseModel):
         """Hyperlinks"""
         g = Graph()
         for link in client.get_related_entities('Hyperlink', self.cid, 'PERS_has_Link'):
-            link_type = link.typeoflink['value']
+            try:
+                link_type = link.typeoflink['value']
+            except AttributeError:
+                logger.error("No type of link for {}".format(self.cid))
+                continue
 
             if link_type == "Embedded Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
@@ -899,7 +903,7 @@ class Publication(BaseModel):
         for card in client.get_related_ids('Card', self.cid, 'PUBL_has_CARD'):
             g.add((self.uri, FHD.pubCardId, Literal(card)))
         return g
-    
+
     def get_editors(self):
         g = Graph()
         # editor cards
@@ -1283,23 +1287,23 @@ class ClinicalTrial(BaseModel):
             elif status == 'enrolling by invitation':
                 return FHCT.EnrollingByInvitation
             elif status == 'no longer available for expanded access':
-                return FHCT.NoLongerAvailableForExpandedAccess                                        
+                return FHCT.NoLongerAvailableForExpandedAccess
             elif status == 'not yet recruiting':
-                return FHCT.NotYetRecruiting                                                           
+                return FHCT.NotYetRecruiting
             elif status == 'recruiting':
                 return FHCT.Recruiting
             elif status == 'suspended':
                 return FHCT.Suspended
             elif status == 'temporarily not available for expanded access':
-                return FHCT.TemporarilyNotAvailableForExpandedAccess                                            
+                return FHCT.TemporarilyNotAvailableForExpandedAccess
             elif status == 'terminated':
-                return FHCT.Terminated                                                       
+                return FHCT.Terminated
             elif status == 'withdrawn':
-                return FHCT.Withdrawn                                            
+                return FHCT.Withdrawn
         return default
 
 
-        
+
 
 
     def data_properties(self):
