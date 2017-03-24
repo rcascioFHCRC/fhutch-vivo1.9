@@ -15,6 +15,9 @@ from xml.etree.ElementTree import ParseError
 import requests
 from requests.exceptions import ChunkedEncodingError
 
+from requests.packages import urllib3
+urllib3.disable_warnings()
+
 logger = logging.getLogger("converis_client")
 
 # Set Converis URL globally from environment variable
@@ -214,7 +217,7 @@ class RelatedObject(BaseEntity):
                 yield BaseEntity(root=grp, cid=grp.attrib['id'])
         except AttributeError:
             logger.error("Unable to parse related object: {}".format(self.url))
-            
+
 
 
 def filter_query(query, page_size=100):
