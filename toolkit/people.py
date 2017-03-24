@@ -89,7 +89,20 @@ def harvest():
     logger.info("Harvest finished. Syncing to vstore.")
     ph.sync_updates(ng)
 
+
+def single_thread_harvest():
+  ng = "http://localhost/data/people"
+  g = Graph()
+  for ety in client.filter_query(query):
+      item = client.Entity('Person', ety.cid)
+      # FH people only
+      if hasattr(item, 'fhpersontype'):
+        if item.fhpersontype['cid'] == '6019159':
+          g += client.to_graph(item, models.Person)
+  backend.sync_updates(ng, g)
+
 if __name__ == "__main__":
     logger.info("Starting people harvest.")
     harvest()
+    #single_thread_harvest()
 
