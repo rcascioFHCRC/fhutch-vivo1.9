@@ -253,7 +253,7 @@ class Person(BaseModel):
                 link_type = link.typeoflink['value']
             except AttributeError:
                 logger.error("No type of link for {}".format(self.cid))
-                continue
+                link_type = "link"
 
             if link_type == "Embedded Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
@@ -713,7 +713,11 @@ class Organization(BaseModel):
             # Create vcard indiviudal
             vci_uri = D['vcard-individual-org-' + self.cid]
             g.add((vci_uri, RDF.type, VCARD.Individual))
-            link_type = link.typeoflink['value']
+            try:
+                link_type = link.typeoflink['value']
+            except AttributeError:
+                logger.error("No type of link for {}".format(self.cid))
+                link_type = "link"
             if link_type == "Embedded Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
@@ -1611,7 +1615,11 @@ class TeachingLecture(BaseModel):
             # Create vcard indiviudal
             vci_uri = D['vcard-individual-' + self.cid]
             g.add((vci_uri, RDF.type, VCARD.Individual))
-            link_type = link.typeoflink['value']
+            try:
+                link_type = link.typeoflink['value']
+            except AttributeError:
+                logger.error("No type of link for {}".format(self.cid))
+                link_type = "link"
             if link_type == "Embedded Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue

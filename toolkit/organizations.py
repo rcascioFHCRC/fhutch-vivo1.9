@@ -5,6 +5,8 @@ import os
 import logging
 import logging.handlers
 
+from converis import client, backend
+
 # local models
 import models
 import log_setup
@@ -24,8 +26,10 @@ if os.environ.get('HTTP_CACHE') == "1":
 
 THREADS = int(os.environ['THREADS'])
 
+NG = "http://localhost/data/orgs"
+
 # get orgs with cards or parent orgs that have child orgs with cards.
-internal = """
+internal_orgs_query = """
 <data xmlns="http://converis/ns/webservice">
  <query>
   <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
@@ -45,7 +49,7 @@ internal = """
 class OrgaHarvest(ThreadedHarvest):
 
     def __init__(self, q, vmodel, threads=THREADS):
-        self.query = q
+        self.query = internal_orgs_query
         self.graph = Graph()
         self.threads = threads
         self.vmodel = vmodel
@@ -53,13 +57,20 @@ class OrgaHarvest(ThreadedHarvest):
 
 
 def harvest():
-    ng = "http://localhost/data/orgs"
-    jh = OrgaHarvest(internal, models.Organization)
+    jh = OrgaHarvest(internal_orgs_query, models.Organization)
     jh.run_harvest()
     logger.info("Org harvest finished. Syncing to vstore.")
-    jh.sync_updates(ng)
+    jh.sync_updates(NG)
+
+
+def single_thread_harvest():
+    g = Graph()
+    for item in client.filter_query(internal_orgs_query):
+        g += client.to_graph(item, models.Organization)
+    backend.sync_updates(NG, g)
 
 
 if __name__ == "__main__":
     logger.info("Starting harvest.")
     harvest()
+    #single_thread_harvest()
