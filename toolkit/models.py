@@ -942,7 +942,7 @@ class Publication(BaseModel):
             o.set(pred, obj)
         # series title vs website title
         if hasattr(self, 'cfseries'):
-            if self.publicationtype == "Internet Communication":
+            if self.publicationtype['value'] == "Internet Communication":
                 o.set(FHD.websiteTitle, Literal(self.cfseries))          
             else:
                 o.set(FHD.seriesTitle, Literal(self.cfseries))
