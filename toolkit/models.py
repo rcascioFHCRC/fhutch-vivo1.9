@@ -810,7 +810,7 @@ class Publication(BaseModel):
             "Journal article": BIBO.AcademicArticle,
             "Article or Abstract": BIBO.AcademicArticle,
             "Book": BIBO.Book,
-            "Book Chapter or Entry": BIBO.BookChatper,
+            "Book Chapter or Entry": BIBO.BookChapter,
             "Dataset": VIVO.Dataset,
             "Dissertation or Thesis": BIBO.Thesis,
             "Internet Communication": BIBO.Webpage,
@@ -860,7 +860,9 @@ class Publication(BaseModel):
             ('publisher', FHD.publisher),
             ('cfedition', BIBO.edition),
             ('cfissn', BIBO.issn),
-            ('cfisbn', FHD.freeisbn)
+            ('cfisbn', FHD.freeisbn),
+            ('year_origin', FHD.yearOrigin),
+            ('year_update', FHD.yearUpdate)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -870,6 +872,10 @@ class Publication(BaseModel):
                     continue
                 if pred == BIBO.oclcnum:
                     value = value.replace(",", "")
+                if pred == FHD.yearOrigin:
+                    value = value.replace(",", "")
+                if pred == FHD.yearUpdate:
+                    value = value.replace(",", "")                    
                 yield (pred, Literal(value))
 
     def add_date(self):
