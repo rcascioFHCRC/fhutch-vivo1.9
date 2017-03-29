@@ -292,6 +292,18 @@ fhd:freeisbn  a                   owl:DatatypeProperty ;
         rdfs:range                  xsd:string ;
         vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupidentifiers> .
 
+fhd:websiteTitle  a              owl:DatatypeProperty ;
+        rdfs:label                  "website title"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:displayRankAnnot      "28"^^xsd:int ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
+
 fhd:seriesTitle  a              owl:DatatypeProperty ;
         rdfs:label                  "series title"@en-US ;
         rdfs:range                  xsd:string ;
@@ -431,7 +443,7 @@ fhd:nickname a owl:DatatypeProperty ;
 fhp:Publication vitro:customDisplayViewAnnot
           "individual--fhd-publication.ftl"^^xsd:string .
 
-
+# Awards
 
 fhd:Award  a owl:Class ;
     rdfs:label "Award"@en-US ;
