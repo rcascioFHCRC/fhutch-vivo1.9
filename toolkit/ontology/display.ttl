@@ -266,7 +266,7 @@ fhd:authorList  a              owl:DatatypeProperty ;
 fhd:editorList  a              owl:DatatypeProperty ;
         rdfs:label                  "cited editors"@en-US ;
         rdfs:range                  xsd:string ;
-        vitro:displayRankAnnot      "8"^^xsd:int ;
+        vitro:displayRankAnnot      "10"^^xsd:int ;
         vitro:hiddenFromDisplayBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
         vitro:hiddenFromPublishBelowRoleLevelAnnot
