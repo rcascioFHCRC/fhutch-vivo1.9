@@ -860,8 +860,7 @@ class Publication(BaseModel):
             ('publisher', FHD.publisher),
             ('cfedition', BIBO.edition),
             ('cfissn', BIBO.issn),
-            ('cfisbn', FHD.freeisbn),
-            ('cfseries', FHD.seriesTitle)
+            ('cfisbn', FHD.freeisbn)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -941,6 +940,12 @@ class Publication(BaseModel):
         o.set(RDFS.label, Literal(title))
         for pred, obj in self.data_properties():
             o.set(pred, obj)
+        # series title vs website title
+        if hasattr(self, 'cfseries'):
+            if self.publicationtype['value'] == "Internet Communication":
+                o.set(FHD.websiteTitle, Literal(self.cfseries))          
+            else:
+                o.set(FHD.seriesTitle, Literal(self.cfseries))
         # editors
         g += self.get_editors()
         # add date
@@ -1754,5 +1759,3 @@ class TeachingLecture(BaseModel):
         g += self.get_links()
 
         return g
-
-
