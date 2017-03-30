@@ -102,3 +102,15 @@ fhp:OtherPublication a owl:Class ;
         rdfs:label "Other Publication" ;
         vitro:inClassGroup      d:vitroClassGrouppublications ;
         rdfs:subClassOf fhp:Publication .
+
+fhp:inBook a owl:ObjectProperty ;
+        rdfs:label "published in"@en-US ;
+        rdfs:domain fhp:Publication ;
+        rdfs:range fhp:Publication ;
+        owl:inverseOf fhp:hasChapter .
+
+fhp:hasChapter a owl:ObjectProperty ;
+        rdfs:label "contains"@en-US ;
+        rdfs:domain fhp:Publication ;
+        rdfs:range fhp:Publication ;
+        owl:inverseOf fhp:inBook .
