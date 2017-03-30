@@ -934,6 +934,13 @@ class Publication(BaseModel):
                 g.add((eship_uri, VIVO.relates, person_uri(pers.cid)))
         return g
 
+    def get_my_book(self):
+        g = Graph()
+        for pub in client.get_related_ids('Publication', self.cid, 'PUBL_has_PUBL'):
+            puri = pub_uri(pub)
+            g.add((self.uri, FHP.inBook, puri))
+        return g
+
     def to_rdf(self):
         g = Graph()
         o = Resource(g, self.uri)
@@ -952,6 +959,8 @@ class Publication(BaseModel):
                 o.set(FHD.websiteTitle, Literal(self.cfseries))          
             else:
                 o.set(FHD.seriesTitle, Literal(self.cfseries))
+        # books and chapters
+        g += self.get_my_book()
         # editors
         g += self.get_editors()
         # add date
