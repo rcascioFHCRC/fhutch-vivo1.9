@@ -862,7 +862,8 @@ class Publication(BaseModel):
             ('cfissn', BIBO.issn),
             ('cfisbn', FHD.freeisbn),
             ('year_origin', FHD.yearOrigin),
-            ('year_update', FHD.yearUpdate)
+            ('year_update', FHD.yearUpdate),
+            ('cfdept', FHD.department)
         ]
         for k, pred in props:
             if hasattr(self, k):
