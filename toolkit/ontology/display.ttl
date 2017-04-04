@@ -299,6 +299,18 @@ fhd:editorList  a              owl:DatatypeProperty ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
 
+fhd:department  a              owl:DatatypeProperty ;
+        rdfs:label                  "department"@en-US ;
+        rdfs:range                  xsd:string ;
+        vitro:displayRankAnnot      "15"^^xsd:int ;
+        vitro:hiddenFromDisplayBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:hiddenFromPublishBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
+        vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
+        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
+                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
+
 fhd:publisher  a              owl:DatatypeProperty ;
         rdfs:label                  "published by"@en-US ;
         rdfs:range                  xsd:string ;
