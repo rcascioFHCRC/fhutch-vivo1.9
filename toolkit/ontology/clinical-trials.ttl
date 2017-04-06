@@ -27,7 +27,7 @@ fhct:ClinicalTrial a owl:Class ;
         vitro:inClassGroup       d:vitroClassGroupclinicaltrials .
 
 fhct:ActiveNotRecruiting a owl:Class ;
-        rdfs:label "Active not recruiting" ;
+        rdfs:label "Active, not recruiting" ;
         vitro:inClassGroup       d:vitroClassGroupclinicaltrials ;
         rdfs:subClassOf fhct:ClinicalTrial .
 
@@ -57,7 +57,7 @@ fhct:NoLongerAvailableForExpandedAccess a owl:Class ;
         rdfs:subClassOf fhct:ClinicalTrial .
 
 fhct:NotYetRecruiting a owl:Class ;
-        rdfs:label "Not yet recuriting" ;
+        rdfs:label "Not yet recruiting" ;
         vitro:inClassGroup       d:vitroClassGroupclinicaltrials ;
         rdfs:subClassOf fhct:ClinicalTrial .
 
