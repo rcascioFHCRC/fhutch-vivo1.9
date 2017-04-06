@@ -17,6 +17,8 @@
             ?rank
             ?person
             ?personName
+            ?dateTimeStart
+            ?dateTimeEnd
         WHERE
         {
             ?subject ?property ?position
@@ -68,6 +70,11 @@
             ?position vitro:mostSpecificType ?subclass .
             ?subclass rdfs:subClassOf core:Position .
             ?position rdfs:label ?positionTitle .
+            ?position core:dateTimeInterval ?dateTimeInterval .
+            ?dateTimeInterval core:start ?dateTimeStartValue .
+            ?dateTimeStartValue core:dateTime ?dateTimeStart .
+            ?dateTimeInterval core:end ?dateTimeEndValue .
+            ?dateTimeEndValue core:dateTime ?dateTimeEnd .
             ?position core:relates ?person .
             ?person a foaf:Person .
             ?person rdfs:label ?personName .
@@ -85,6 +92,16 @@
                 ?person a foaf:Person .
                 ?person rdfs:label ?personName .
                 OPTIONAL { ?position core:rank ?rank }
+                OPTIONAL {
+                    ?position core:dateTimeInterval ?dateTimeInterval .
+                    ?dateTimeInterval core:start ?dateTimeStartValue .
+                    ?dateTimeStartValue core:dateTime ?dateTimeStart .
+                }
+                OPTIONAL {
+                    ?position core:dateTimeInterval ?dateTimeInterval .
+                    ?dateTimeInterval core:end ?dateTimeEndValue .
+                    ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+                }
             }
             <!-- child orgs -->
             UNION {
@@ -97,6 +114,16 @@
                 ?person a foaf:Person .
                 ?person rdfs:label ?personName .
                 OPTIONAL { ?position core:rank ?rank }
+                OPTIONAL {
+                    ?position core:dateTimeInterval ?dateTimeInterval .
+                    ?dateTimeInterval core:start ?dateTimeStartValue .
+                    ?dateTimeStartValue core:dateTime ?dateTimeStart .
+                }
+                OPTIONAL {
+                    ?position core:dateTimeInterval ?dateTimeInterval .
+                    ?dateTimeInterval core:end ?dateTimeEndValue .
+                    ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+                }
             }
             <!-- grand child orgs -->
             UNION {
@@ -110,6 +137,16 @@
                 ?person a foaf:Person .
                 ?person rdfs:label ?personName .
                 OPTIONAL { ?position core:rank ?rank }
+                OPTIONAL {
+                    ?position core:dateTimeInterval ?dateTimeInterval .
+                    ?dateTimeInterval core:start ?dateTimeStartValue .
+                    ?dateTimeStartValue core:dateTime ?dateTimeStart .
+                }
+                OPTIONAL {
+                    ?position core:dateTimeInterval ?dateTimeInterval .
+                    ?dateTimeInterval core:end ?dateTimeEndValue .
+                    ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+                }
             }
             FILTER NOT EXISTS { ?position a fhd:FormerPosition }
         }
