@@ -83,7 +83,7 @@
 
      <div id="copyright" class="copyright">
       Fred Hutchinson Cancer Research Center | 1100 Fairview Ave. N., Seattle, WA 98109<br/>
-      &copy; 2016 Fred Hutchinson Cancer Research Center, <span class="nobreak">a 501(c)(3) nonprofit organization.</span>
+      &copy; 2017 Fred Hutchinson Cancer Research Center, <span class="nobreak">a 501(c)(3) nonprofit organization.</span>
 
       <div class="terms_privacy"><a href="http://www.fredhutch.org/en/util/terms-privacy.html">Terms of use &amp; privacy policy</a>&nbsp;|&nbsp;<a href="http://www.fredhutch.org/en/util/conflict-of-interest.html">Conflict of interest</a></div>
      </div>
