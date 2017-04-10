@@ -942,6 +942,30 @@ class Publication(BaseModel):
             g.add((self.uri, FHP.inBook, puri))
         return g
 
+    def build_dissertation_label(self):
+        lb = [
+            self.related_org_label('PUBL_has_ORGA'),
+        ]
+        label = ", ".join([l for l in lb if l is not None and l != ""])
+        return Literal(label.rstrip(','))
+
+
+    def related_org_label(self, relationship):
+        """
+        Create a label for an organization and its parents.
+        For of: dept x, college y, university z
+        """
+        lb = []
+        orgs = client.get_related_entities('Organisation', self.cid, relationship)
+        for org in orgs:
+            lb.append(org.cfname)
+            parents = utils.get_parent_org_label(org.cid)
+            lb.append(parents)
+        if lb == []:
+            return None
+        else:
+            return ", ".join(lb).rstrip(", ")
+
     def to_rdf(self):
         g = Graph()
         o = Resource(g, self.uri)
@@ -954,6 +978,9 @@ class Publication(BaseModel):
         o.set(RDFS.label, Literal(title))
         for pred, obj in self.data_properties():
             o.set(pred, obj)
+        # orga for dissertation and thesis            
+        if self.publicationtype['value'] == "Dissertation or Thesis":
+            o.set(FHD.relatedUni, self.build_dissertation_label())            
         # series title vs website title
         if hasattr(self, 'cfseries'):
             if self.publicationtype['value'] == "Internet Communication":
