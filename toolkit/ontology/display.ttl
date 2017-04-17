@@ -564,6 +564,25 @@ fhd:PostDoctoral  a owl:Class ;
     vitro:displayRankAnnot       60 ;
     rdfs:label "Post Doctoral"@en-US .
 
+fhd:ProgramLeadership  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       9 ;
+    rdfs:label "Program Leadership"@en-US .
+
+fhd:Affiliate  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       15 ;
+    rdfs:label "Affiliate"@en-US .
+
+fhd:ResearchAssociate  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       55 ;
+    rdfs:label "Research Associate"@en-US .
+
+fhd:Industry  a owl:Class ;
+    rdfs:subClassOf          vivo:Position ;
+    vitro:displayRankAnnot       60 ;
+    rdfs:label "Industry"@en-US .
 
 # degrees / training
 
