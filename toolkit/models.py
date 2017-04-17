@@ -510,7 +510,7 @@ class Position(BaseModel):
         """
         pos_ranks = {
             '12169': (VIVO.FacultyAdministrativePosition, 10),
-            '10933252': (VIVO.ProgramLeadership, 20),
+            '10933252': (FHD.ProgramLeadership, 10),
             '12167':  (VIVO.FacultyPosition, 20),
             '12173': (FHD.Clinician, 40),
             '6259451': (FHD.Emeritus, 40),
