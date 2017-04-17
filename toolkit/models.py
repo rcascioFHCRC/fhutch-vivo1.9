@@ -510,6 +510,7 @@ class Position(BaseModel):
         """
         pos_ranks = {
             '12169': (VIVO.FacultyAdministrativePosition, 10),
+            '10933252': (VIVO.ProgramLeadership, 10),
             '12167':  (VIVO.FacultyPosition, 20),
             '12173': (FHD.Clinician, 40),
             '6259451': (FHD.Emeritus, 40),
@@ -517,6 +518,9 @@ class Position(BaseModel):
             '12172': (FHD.Membership, 40),
             '12170': (FHD.StaffScientist, 40),
             '12171': (FHD.Postdoctoral, 40),
+            '10933347': (FHD.Industry, 40),
+            '11035904': (FHD.ResearchAssociate, 40),            
+            '6616737': (FHD.Affiliate, 40),
         }
 
         g = Graph()
