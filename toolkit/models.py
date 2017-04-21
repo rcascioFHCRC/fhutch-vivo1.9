@@ -332,6 +332,12 @@ class Person(BaseModel):
         # brief description
         if hasattr(self, 'briefdescription'):
             p.set(FHD.briefDescription, Literal(self.briefdescription))
+        # profile under construction?
+        construction = "Yes"
+        if hasattr(self, 'underconstruction'):
+            if self.underconstruction['cid'] == '11289':
+                construction = "No"
+        p.set(FHD.underConstruction, Literal(construction))
 
         # Vcard individual
         vci_uri = URIRef(self.vcard_uri)
