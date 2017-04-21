@@ -24,6 +24,7 @@
 <#assign imageProp = "http://vivo.fredhutch.org/ontology/display#image">
 <#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
 <#assign localCoauthorProp = "http://vivo.fredhutch.org/ontology/display#hasLocalCoauthor">
+<#assign consctructionProp = "http://vivo.fredhutch.org/ontology/display#underConstruction">
 
 <#assign vcardName = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Name")!>
 <#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Telephone")!>
@@ -45,6 +46,18 @@
         </#if>
         <!-- Contact Info -->
         <ul id="contacts">
+            <!-- profile under construction? -->
+            <#assign cp = propertyGroups.getProperty(consctructionProp)!>
+            <#if cp?has_content>
+              <#if cp.statements[0]??>
+                  <#if (cp.statements[0].value) != "false">
+                    <li class="under-construction">
+                      <span>Profile Under Construction</span>
+                    </li>
+                  </#if>
+                  
+                </#if>
+            </#if>        
             <#if vcardName?has_content>
               <li class="person-contact"><@vc.showFullName vcardName.statements[0] />
               </li>
@@ -82,7 +95,6 @@
                     
                   </#if>
               </#if>
-
         </ul>
         <!-- Websites -->
         <#include "individual-webpage.ftl">
