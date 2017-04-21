@@ -1953,6 +1953,11 @@ span.tree-toggler {
     margin-top: .5em;
 }
 
+li.under-construction > span {
+    color: #89c348;
+    text-decoration: none;   
+}
+
 .sidebar {
     float: right;
     width: 30%;
