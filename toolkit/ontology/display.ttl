@@ -230,8 +230,8 @@ fhd:hasLocalCoauthor a owl:DatatypeProperty ;
 
 # Person Profile Under Construction?
 
-fhd:underConstruction  a              owl:DatatypeProperty ;
-        rdfs:label                  "profile under construction"@en-US ;
+fhd:underConstruction a owl:DatatypeProperty ;
+        rdfs:label "profile under construction" .
 
 # Publications
 
