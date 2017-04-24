@@ -24,7 +24,7 @@
 <#assign imageProp = "http://vivo.fredhutch.org/ontology/display#image">
 <#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
 <#assign localCoauthorProp = "http://vivo.fredhutch.org/ontology/display#hasLocalCoauthor">
-<#assign consctructionProp = "http://vivo.fredhutch.org/ontology/display#underConstruction">
+<#assign constructionProp = "http://vivo.fredhutch.org/ontology/display#underConstruction">
 
 <#assign vcardName = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Name")!>
 <#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Telephone")!>
@@ -47,7 +47,7 @@
         <!-- Contact Info -->
         <ul id="contacts">
             <!-- profile under construction? -->
-            <#assign cp = propertyGroups.getProperty(consctructionProp)!>
+            <#assign cp = propertyGroups.getProperty(constructionProp)!>
             <#if cp?has_content>
               <#if cp.statements[0]??>
                   <#if (cp.statements[0].value) != "false">
@@ -150,6 +150,7 @@
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/firstName")!>
 	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
 	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
+  <#assign skipThis = propertyGroups.pullProperty (constructionProp)!>
   <#assign skipThis = propertyGroups.pullProperty(orcidProp)!>
   <#assign skipThis = propertyGroups.pullProperty(localCoauthorProp)!>
   <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#briefDescription")!>
