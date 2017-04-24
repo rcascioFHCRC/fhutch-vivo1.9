@@ -52,7 +52,7 @@
               <#if cp.statements[0]??>
                   <#if (cp.statements[0].value) != "false">
                     <li class="under-construction">
-                      <span>Profile Under Construction</span>
+                      <span style="color: #89c348;">Profile Under Construction</span>
                     </li>
                   </#if>
                   

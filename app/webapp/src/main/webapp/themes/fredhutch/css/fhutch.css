@@ -1953,7 +1953,7 @@ span.tree-toggler {
     margin-top: .5em;
 }
 
-li.under-construction > span {
+li.under-construction {
     color: #89c348;
     text-decoration: none;   
 }
