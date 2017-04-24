@@ -232,12 +232,6 @@ fhd:hasLocalCoauthor a owl:DatatypeProperty ;
 
 fhd:underConstruction  a              owl:DatatypeProperty ;
         rdfs:label                  "profile under construction"@en-US ;
-        vitro:hiddenFromDisplayBelowRoleLevelAnnot
-                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
-        vitro:hiddenFromPublishBelowRoleLevelAnnot
-                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> ;
-        vitro:prohibitedFromUpdateBelowRoleLevelAnnot
-                <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
 
 # Publications
 
