@@ -138,19 +138,23 @@ class Service(BaseModel):
         role = self._gattrs([
             "prosocietyrole",
             "editorshiprole",
-            "committeerole",
             "description"
-            "roleother",
-            "consultantactivity",
-            "consultantactivityother"
         ]
         ) or ""
         modifier = None
         if hasattr(self, "rolemodifier"):
             modifier = self.rolemodifier["value"]
             role = u"{} {}".format(modifier, role)
+        if hasattr(self, "committeerole"):
+            role += u"{}".format(self.committeerole["value"])
+            if role == 'Other' and hasattr(self, "roleother"):
+                role += u"{}".format(self.roleother)
+        elif hasattr(self, "roleother"):
+            role += u"{}".format(self.roleother)
         if hasattr(self, "committeegroup"):
             role += u", {}".format(self.committeegroup)
+        if hasattr(self, "consultantactivity"):
+            role += u", {}".format(self.consultantactivity["value"])            
         return role
 
 
@@ -169,7 +173,9 @@ class Service(BaseModel):
         vtype = self.get_type()
         label = self.full_label()
         if vtype == FHS.ConsultantServices:
-            label = label.replace("Member, ", "")
+            # label = label.replace("Member, ", "")
+            # debugging consultant activity
+            logger.info('Label: %s.' % (label))
         r.set(RDF.type, vtype)
         r.set(RDFS.label, Literal(label))
         r.set(FHD.converisId, Literal(self.cid))
@@ -219,6 +225,7 @@ def harvest_service(sample=False):
     done = 0
     for item in client.filter_query(service_q):
         #print item.cid
+        logger.error(item.cid)
         g += client.to_graph(item, Service)
         done += 1
         if (sample is True) and (done >= 100):
