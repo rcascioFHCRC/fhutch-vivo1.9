@@ -1763,12 +1763,17 @@ class TeachingLecture(BaseModel):
         return Literal(label.rstrip(','))
 
     def build_advising_label(self):
+        modifier = self._v('rolemodifier')
+        label = self._v("advisingrole")
+        if modifier is not None:
+            label = u"{} {}".format(modifier, label)
         lb = [
+            #self._v("rolemodifier"),
+            #self._v("advisingrole"),
+            label,
             self.get_advisee(),
-            self._v("adviseeother"),
-            self._v("typeofdegree"),
-            self._v("rolemodifier"),
-            self._v("advisingrole"),
+            self._v("adviseeother")
+            #self._v("typeofdegree"),
             #self._v("description")
         ]
         label = ", ".join([l for l in lb if l is not None])
