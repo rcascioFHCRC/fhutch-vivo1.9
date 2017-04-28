@@ -253,7 +253,7 @@ class Person(BaseModel):
                 link_type = link.typeoflink['value']
             except AttributeError:
                 logger.error("No type of link for {}".format(self.cid))
-                link_type = "link"
+                link_type = "Link"
 
             if link_type == "Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
@@ -702,7 +702,7 @@ class Organization(BaseModel):
         # vcard URL
         vcu_uri = D['vcard-url-org-' + self.cid]
         g.add((vcu_uri, RDF.type, VCARD.URL))
-        g.add((vcu_uri, RDFS.label, Literal(u"organization's website")))
+        g.add((vcu_uri, RDFS.label, Literal(u"Organization's Website")))
         g.add((vcu_uri, VCARD.url, Literal(url)))
 
         # Relate vcard individual to url
@@ -727,8 +727,8 @@ class Organization(BaseModel):
                 link_type = link.typeoflink['value']
             except AttributeError:
                 logger.error("No type of link for {}".format(self.cid))
-                link_type = "link"
-            if link_type == "Embedded Video":
+                link_type = "Link"
+            if link_type == "Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
             else:
@@ -737,7 +737,7 @@ class Organization(BaseModel):
                     link_label == link.name
                 label = link_label or link_type
                 if label == "Organization Site":
-                    label = "organization's website"
+                    label = "Organization's Website"
                 # vcard URL
                 vcu_uri = D['vcard-url' + link.cid]
                 g.add((vcu_uri, RDF.type, VCARD.URL))
@@ -1678,8 +1678,8 @@ class TeachingLecture(BaseModel):
                 link_type = link.typeoflink['value']
             except AttributeError:
                 logger.error("No type of link for {}".format(self.cid))
-                link_type = "link"
-            if link_type == "Embedded Video":
+                link_type = "Link"
+            if link_type == "Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
             else:
@@ -1688,7 +1688,7 @@ class TeachingLecture(BaseModel):
                     link_label == link.name
                 label = link_label or link_type
                 if label == "Organization Site":
-                    label = "organization's website"
+                    label = "Organization's Website"
                 # vcard URL
                 vcu_uri = D['vcard-url' + link.cid]
                 g.add((vcu_uri, RDF.type, VCARD.URL))
