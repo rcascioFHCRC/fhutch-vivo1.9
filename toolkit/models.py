@@ -254,15 +254,16 @@ class Person(BaseModel):
             except AttributeError:
                 logger.error("No type of link for {}".format(self.cid))
                 link_type = "Link"
-
             if link_type == "Video":
                 g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
             else:
                 link_label = None
                 if hasattr(link, "name"):
-                    link_label == link.name
+                    link_label = link.name
+                    logger.warning('link.name: %s.' % (link.name))
                 label = link_label or link_type
+                #logger.warning('Label: %s.' % (label))
                 # vcard URL
                 vcu_uri = D['vcard-url' + link.cid]
                 g.add((vcu_uri, RDF.type, VCARD.URL))
@@ -734,7 +735,8 @@ class Organization(BaseModel):
             else:
                 link_label = None
                 if hasattr(link, "name"):
-                    link_label == link.name
+                    link_label = link.name
+                    logger.warning('link.name: %s.' % (link.name))
                 label = link_label or link_type
                 if label == "Organization Site":
                     label = "Organization's Website"
@@ -1685,7 +1687,8 @@ class TeachingLecture(BaseModel):
             else:
                 link_label = None
                 if hasattr(link, "name"):
-                    link_label == link.name
+                    link_label = link.name
+                    logger.warning('link.name: %s.' % (link.name))
                 label = link_label or link_type
                 if label == "Organization Site":
                     label = "Organization's Website"
