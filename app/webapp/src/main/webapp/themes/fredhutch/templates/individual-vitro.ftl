@@ -14,6 +14,9 @@
     <#assign languageCount = 1>
 </#if>
 
+<#--Center Leadership-->
+<#assign GillilandProfile = "${urls.base}/display/gary-gilliland">
+
 <#-- Default individual profile page template -->
 <#--@dumpAll /-->
 <section id="individual-intro" class="vcard" role="region" <@mf.sectionSchema individual/>>
@@ -33,7 +36,7 @@
         <div id="photo-wrapper">${individualImage}</div>
     </section>
     <!-- start section individual-info -->
-    <section id="individual-info" ${infoClass!} role="region">
+    <section id="individual-info" ${infoClass!} role="region">      
         <#include "individual-adminPanel.ftl">
 
         <#if individualProductExtensionPreHeader??>
@@ -53,12 +56,17 @@
                     <@p.mostSpecificTypes individual />
                 </h1>
             </#if>
+            <!-- Center Leadership -->
+            <#if individual.uri?ends_with("c638881")>
+                <h4 id="center-leadership">President and Director <a href="${GillilandProfile}" target="_blank">Gary Gilliland, MD, PhD</a></h4>
+            </#if>
+            <!-- End Center Leadership -->            
         </header>
 
     <#if individualProductExtension??>
         ${individualProductExtension}
     <#else>
-            </section> <!-- individual-info -->
+            </section> <!-- individual-info -->      
         </section> <!-- individual-intro -->
     </#if>
 
