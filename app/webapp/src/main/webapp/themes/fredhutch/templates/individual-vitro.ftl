@@ -36,7 +36,7 @@
         <div id="photo-wrapper">${individualImage}</div>
     </section>
     <!-- start section individual-info -->
-    <section id="individual-info" ${infoClass!} role="region">      
+    <section id="individual-info" ${infoClass!} role="region">
         <#include "individual-adminPanel.ftl">
 
         <#if individualProductExtensionPreHeader??>
@@ -66,7 +66,7 @@
     <#if individualProductExtension??>
         ${individualProductExtension}
     <#else>
-            </section> <!-- individual-info -->      
+            </section> <!-- individual-info -->
         </section> <!-- individual-intro -->
     </#if>
 
