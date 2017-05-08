@@ -375,6 +375,9 @@ class Person(BaseModel):
         # all links
         g += self.get_links()
 
+        # relate PIs and their Labs
+        g += self.is_labPI()
+
         # degrees/training
         #g += self.get_training()
 
@@ -452,6 +455,13 @@ class Person(BaseModel):
                 g.add((self.uri, FHD.video, Literal(cl)))
             return g
         return g
+
+    def is_labPI(self):
+        g = Graph()
+        for org in client.get_related_ids('Organisation', self.cid, 'LAB_has_PI'):
+            uri = org_uri(org)
+            g.add((self.uri, FHD.PIof, uri))
+        return g        
 
 
 class Position(BaseModel):
