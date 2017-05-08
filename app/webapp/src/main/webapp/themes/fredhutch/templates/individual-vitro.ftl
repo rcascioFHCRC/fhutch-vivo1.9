@@ -17,8 +17,25 @@
 <#--Center Leadership-->
 <#assign GillilandProfile = "${urls.base}/display/gary-gilliland">
 
+<#--Lab PIs-->
+<#assign piProp = "http://vivo.fredhutch.org/ontology/display#hasPI">
+<#global pg=propertyGroups>
+
+<#-- helper to get data properties -->
+<#function gdp prop>
+    <#assign val = pg.getProperty(prop)!>
+    <#if val?has_content>
+        <#if val.statements[0]??>
+            <#return val.statements[0].localName>
+        </#if>
+    </#if>
+</#function>
+
+<#assign pi=gdp(piProp)!>
+
 <#-- Default individual profile page template -->
 <#--@dumpAll /-->
+<@dumpAll />
 <section id="individual-intro" class="vcard" role="region" <@mf.sectionSchema individual/>>
     <section id="share-contact" role="region">
         <#-- Image -->
@@ -56,11 +73,18 @@
                     <@p.mostSpecificTypes individual />
                 </h1>
             </#if>
+            <!-- Begin Lab PIs and Center Leadership -->
             <!-- Center Leadership -->
             <#if individual.uri?ends_with("c638881")>
                 <h4 id="center-leadership">President and Director <a href="${GillilandProfile}" target="_blank">Gary Gilliland, MD, PhD</a></h4>
             </#if>
-            <!-- End Center Leadership -->            
+            <!-- Lab PIs -->
+            <#if pi?has_content>
+                <h4>Principal Investigator <a href="${urls.base}/display/${pi}" target="_blank">${pi?replace('-', ' ')?capitalize}</a>
+                
+                </h4>
+            </#if>          
+            <!-- End Lab PIs and Center Leadership -->            
         </header>
 
     <#if individualProductExtension??>
