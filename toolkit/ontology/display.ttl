@@ -228,6 +228,20 @@ fhd:hasLocalCoauthor a owl:DatatypeProperty ;
         rdfs:label "has local coauthor" ;
         rdfs:range xsd:boolean .
 
+fhd:hasPI a owl:ObjectProperty ;
+        rdfs:label "principal investigator"@en-US ;
+        rdfs:domain foaf:Organization ;
+        rdfs:range foaf:Person ;
+        owl:inverseOf fhd:PIof ;
+        vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
+
+fhd:PIof a owl:ObjectProperty ;
+        rdfs:label "principal investigator of"@en-US ;
+        rdfs:domain foaf:Person ;
+        rdfs:range foaf:Organization ;
+        owl:inverseOf fhd:hasPI ;
+        vitro:inPropertyGroupAnnot pgroup_instance:vitroPropertyGroupaffiliation .
+
 # Person Profile Under Construction?
 
 fhd:underConstruction a owl:DatatypeProperty ;
