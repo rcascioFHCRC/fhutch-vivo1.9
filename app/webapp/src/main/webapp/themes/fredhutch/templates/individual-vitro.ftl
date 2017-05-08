@@ -35,7 +35,6 @@
 
 <#-- Default individual profile page template -->
 <#--@dumpAll /-->
-<@dumpAll />
 <section id="individual-intro" class="vcard" role="region" <@mf.sectionSchema individual/>>
     <section id="share-contact" role="region">
         <#-- Image -->
