@@ -510,6 +510,9 @@ fhd:nickname a owl:DatatypeProperty ;
 fhp:Publication vitro:customDisplayViewAnnot
           "individual--fhd-publication.ftl"^^xsd:string .
 
+bibo:Journal vitro:customDisplayViewAnnot
+          "individual--bibo-journal.ftl"^^xsd:string .
+
 # Awards
 
 fhd:Award  a owl:Class ;
