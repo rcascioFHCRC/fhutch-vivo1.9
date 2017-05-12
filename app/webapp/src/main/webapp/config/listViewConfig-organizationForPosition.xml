@@ -148,7 +148,7 @@
                     ?dateTimeEndValue core:dateTime ?dateTimeEnd .
                 }
             }
-            FILTER NOT EXISTS { ?position a fhd:FormerPosition }
+            FILTER (?subclass NOT IN (fhd:ProgramLeadership, fhd:Membership, fhd:Clinician, fhd:FormerPosition))
         }
     </query-construct>
 
