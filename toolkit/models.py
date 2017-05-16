@@ -866,7 +866,6 @@ class Publication(BaseModel):
         props = [
             ('srcauthors', FHD.authorList),
             ('doi', BIBO.doi),
-            ('pubmedid', BIBO.pmid),
             ('pmcid', VIVO.pmcid),
             ('isiid', FHD.wosId),
             ('irhandle', FHD.repositoryURL),
@@ -1010,6 +1009,11 @@ class Publication(BaseModel):
                 o.set(FHD.websiteTitle, Literal(self.cfseries))          
             else:
                 o.set(FHD.seriesTitle, Literal(self.cfseries))
+        # pubmedID
+        if hasattr(self, 'pubmedid'):
+            o.set(BIBO.pmid, Literal(self.pubmedid))          
+        elif hasattr(self, 'srcpubmedid'):
+            o.set(BIBO.pmid, Literal(self.srcpubmedid))
         # books and chapters
         g += self.get_my_book()
         # editors
