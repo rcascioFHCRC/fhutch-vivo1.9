@@ -877,7 +877,6 @@ class Publication(BaseModel):
             ('cftotalpages', BIBO.numPages),
             ('shortdescription', FHD.citationText),
             ('oclcnumber', BIBO.oclcnum),
-            ('srceditors', FHD.editorList),
             ('publisher', FHD.publisher),
             ('cfedition', BIBO.edition),
             ('cfissn', BIBO.issn),
