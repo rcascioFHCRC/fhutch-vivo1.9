@@ -960,7 +960,7 @@ class Publication(BaseModel):
         g = Graph()
         for pub in client.get_related_ids('Publication', self.cid, 'PUBL_has_PUBL'):
             puri = pub_uri(pub)
-            g.add((self.uri, FHP.inBook, puri))
+            g.add((self.uri, FHP.inBook, puri))            
         return g
 
     def build_dissertation_label(self):
@@ -1015,6 +1015,10 @@ class Publication(BaseModel):
             o.set(BIBO.pmid, Literal(self.srcpubmedid))
         # books and chapters
         g += self.get_my_book()
+        if hasattr(self, 'srcbooktitle'):
+            o.set(FHP.srcBook, Literal(self.srcbooktitle))
+        elif hasattr(self, 'srcjourname'):
+            o.set(FHP.srcBook, Literal(self.srcjourname))
         # editors
         g += self.get_editors()
         # add date
