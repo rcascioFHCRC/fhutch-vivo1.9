@@ -114,3 +114,7 @@ fhp:hasChapter a owl:ObjectProperty ;
         rdfs:domain fhp:Publication ;
         rdfs:range fhp:Publication ;
         owl:inverseOf fhp:inBook .
+
+fhp:srcBook a owl:DatatypeProperty ;
+    rdfs:label "published in"@en-US ;    
+    rdfs:range xsd:string .        
