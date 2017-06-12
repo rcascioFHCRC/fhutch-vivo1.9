@@ -30,7 +30,7 @@
         <section id="intro" role="region">
             <h2>Welcome to Fred Hutch Researcher Profiles</h2>
 
-            <p class="under-construction" style="font-weight: bold; font-size: .97em;">Site Under Construction</p>
+            <p class="under-construction" style="font-weight: bold; font-size: .97em; font-style: italic;">Site Under Construction</p>
 
             <p>VIVO is a research-focused discovery tool that provides detailed information about our scientists and physicians.  Learn more about our efforts to generate new scientific discoveries and translate them into effective medical practices, therapies and public health approaches.</p>
 
