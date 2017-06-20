@@ -1021,6 +1021,9 @@ class Publication(BaseModel):
             o.set(FHP.srcBook, Literal(self.srcjourname))
         # editors
         g += self.get_editors()
+        if hasattr(self, 'srceditors'):
+            if self.publicationtype['value'] == "Book":
+                o.set(FHP.srcEditors, Literal(self.srceditors))
         # add date
         g += self.add_date()
         return g
