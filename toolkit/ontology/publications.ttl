@@ -117,4 +117,8 @@ fhp:hasChapter a owl:ObjectProperty ;
 
 fhp:srcBook a owl:DatatypeProperty ;
     rdfs:label "published in"@en-US ;    
-    rdfs:range xsd:string .        
+    rdfs:range xsd:string .
+
+fhp:srcEditors a owl:DatatypeProperty ;
+    rdfs:label "cited editors"@en-US ;    
+    rdfs:range xsd:string .
