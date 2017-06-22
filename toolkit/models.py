@@ -1016,9 +1016,8 @@ class Publication(BaseModel):
         # books and chapters
         g += self.get_my_book()
         if hasattr(self, 'srcbooktitle'):
-            o.set(FHP.srcBook, Literal(self.srcbooktitle))
-        elif hasattr(self, 'srcjourname'):
-            o.set(FHP.srcBook, Literal(self.srcjourname))
+            if self.publicationtype['value'] == "Book Chapter or Entry":
+                o.set(FHP.srcBook, Literal(self.srcbooktitle))
         # editors
         g += self.get_editors()
         if hasattr(self, 'srceditors'):
