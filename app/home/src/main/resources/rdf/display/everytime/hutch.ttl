@@ -262,4 +262,5 @@ local:orgPublicationConfig a :ObjectPropertyDisplayConfig ;
     vitro:collateBySubclassAnnot
         "true"^^xsd:boolean;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
-    :propertyGroup vivo:vitroPropertyGroupresearch .
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupresearch> .
+
