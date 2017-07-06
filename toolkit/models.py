@@ -1310,7 +1310,7 @@ def relate_pubs_to_orgs():
     vstore = get_store()
     try:
         g = vstore.query(q)
-        logger.info("Found {} ".len(g))
+        logger.info("Found {} ".format(len(g)))
     except ResultException:
         g = Graph()
     return g

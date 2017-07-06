@@ -239,7 +239,7 @@ def sample_harvest():
 
 def generate_orgs_to_pubs():
     g = models.relate_pubs_to_orgs()
-    backend.sync_updates("http://localhost/data/org-authorships", g)
+    backend.sync_updates("http://localhost/data/org-pubs", g)
 
 
 def full_publication_harvest():
