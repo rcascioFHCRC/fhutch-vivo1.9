@@ -55,9 +55,9 @@
                       <span style="font-weight: bold; font-size: .97em; font-style: italic;">Profile Under Construction</span>
                     </li>
                   </#if>
-                  
+
                 </#if>
-            </#if>        
+            </#if>
             <#if vcardName?has_content>
               <li class="person-contact"><@vc.showFullName vcardName.statements[0] />
               </li>
@@ -92,7 +92,7 @@
                         <#include "utils/coauthor-viz.ftl">
                       </li>
                     </#if>
-                    
+
                   </#if>
               </#if>
         </ul>
@@ -238,7 +238,7 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
             }
       });
     };
-     
+
 </script>
 
 ${stylesheets.add('<link rel="stylesheet" href="${urls.base}/css/individual/individual.css" />',
@@ -256,6 +256,6 @@ ${scripts.add('<script type="text/javascript" src="${urls.base}/js/individual/in
               '<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/imageUpload/imageUploadUtils.js"></script>')}
 
-${scripts.add('<script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js"></script>')}
+${scripts.add('<script src="${urls.base}/js/tinysort.min.js"></script>')}
 
 

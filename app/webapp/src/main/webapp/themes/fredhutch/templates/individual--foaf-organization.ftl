@@ -26,9 +26,9 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
 <script>
 
 //pub sorting - only show if there are pubs on the page
-if ($('#relatedBy-Authorship-List li').length > 0) {
+if ($('#relates-Publication-List li').length > 0) {
   var sorter = $('#pub-sorter')[0];
-  $('h3#relatedBy-Authorship').append(sorter);
+  $('h3#relates').append(sorter);
   $(sorter).show();
 
   $('#dropdown_options').change(function (e) {
@@ -51,4 +51,4 @@ if ($('#relatedBy-Authorship-List li').length > 0) {
 </script>
 
 
-${scripts.add('<script src="https://cdnjs.cloudflare.com/ajax/libs/tinysort/2.3.6/tinysort.min.js"></script>')}
+${scripts.add('<script src="${urls.base}/js/tinysort.min.js"></script>')}

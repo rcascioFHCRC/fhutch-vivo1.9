@@ -259,5 +259,7 @@ local:orgPublicationConfig a :ObjectPropertyDisplayConfig ;
     :displayName "publications" ;
     vitro:displayRankAnnot  10 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:collateBySubclassAnnot
+        "true"^^xsd:boolean;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
     :propertyGroup vivo:vitroPropertyGroupresearch .

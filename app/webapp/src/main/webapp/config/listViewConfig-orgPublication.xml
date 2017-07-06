@@ -144,7 +144,6 @@
             UNION
             {
                 ?subject ?property ?infoResource .
-                ?infoResource a fhp:Publication .
                 ?infoResource vitro:mostSpecificType ?subclass .
             }
             UNION
