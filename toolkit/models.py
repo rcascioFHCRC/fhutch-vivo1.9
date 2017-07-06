@@ -12,6 +12,7 @@ import os
 from rdflib import Graph, Namespace, Literal, URIRef
 from rdflib.resource import Resource
 from rdflib.namespace import RDF, RDFS, XSD, FOAF, OWL
+from rdflib.query import ResultException
 
 import bleach
 
@@ -44,6 +45,18 @@ with open(SHORT_URLS) as inf:
     URL_IDX = pickle.load(inf)
 
 IMAGE_PATH = os.environ["IMAGE_PATH"]
+
+
+def get_store():
+    #Define the VIVO store
+    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
+    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
+    vstore = SyncVStore(
+                os.environ['VIVO_EMAIL'],
+                os.environ['VIVO_PASSWORD']
+            )
+    vstore.open((query_endpoint, update_endpoint))
+    return vstore
 
 
 def person_uri(person_id):
@@ -461,7 +474,7 @@ class Person(BaseModel):
         for org in client.get_related_ids('Organisation', self.cid, 'LAB_has_PI'):
             uri = org_uri(org)
             g.add((self.uri, FHD.PIof, uri))
-        return g        
+        return g
 
 
 class Position(BaseModel):
@@ -536,7 +549,7 @@ class Position(BaseModel):
             '12170': (FHD.StaffScientist, 40),
             '12171': (FHD.Postdoctoral, 40),
             '10933347': (FHD.Industry, 40),
-            '11035904': (FHD.ResearchAssociate, 40),            
+            '11035904': (FHD.ResearchAssociate, 40),
             '6616737': (FHD.Affiliate, 40),
         }
 
@@ -884,7 +897,7 @@ class Publication(BaseModel):
             ('year_origin', FHD.yearOrigin),
             ('year_update', FHD.yearUpdate),
             ('cfdept', FHD.department),
-            ('cfuri', FHD.url)            
+            ('cfuri', FHD.url)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -897,7 +910,7 @@ class Publication(BaseModel):
                 if pred == FHD.yearOrigin:
                     value = value.replace(",", "")
                 if pred == FHD.yearUpdate:
-                    value = value.replace(",", "")                    
+                    value = value.replace(",", "")
                 yield (pred, Literal(value))
 
     def add_date(self):
@@ -960,7 +973,7 @@ class Publication(BaseModel):
         g = Graph()
         for pub in client.get_related_ids('Publication', self.cid, 'PUBL_has_PUBL'):
             puri = pub_uri(pub)
-            g.add((self.uri, FHP.inBook, puri))            
+            g.add((self.uri, FHP.inBook, puri))
         return g
 
     def build_dissertation_label(self):
@@ -999,18 +1012,18 @@ class Publication(BaseModel):
         o.set(RDFS.label, Literal(title))
         for pred, obj in self.data_properties():
             o.set(pred, obj)
-        # orga for dissertation and thesis            
+        # orga for dissertation and thesis
         if self.publicationtype['value'] == "Dissertation or Thesis":
-            o.set(FHD.relatedUni, self.build_dissertation_label())            
+            o.set(FHD.relatedUni, self.build_dissertation_label())
         # series title vs website title
         if hasattr(self, 'cfseries'):
             if self.publicationtype['value'] == "Internet Communication":
-                o.set(FHD.websiteTitle, Literal(self.cfseries))          
+                o.set(FHD.websiteTitle, Literal(self.cfseries))
             else:
                 o.set(FHD.seriesTitle, Literal(self.cfseries))
         # pubmedID
         if hasattr(self, 'pubmedid'):
-            o.set(BIBO.pmid, Literal(self.pubmedid))          
+            o.set(BIBO.pmid, Literal(self.pubmedid))
         elif hasattr(self, 'srcpubmedid'):
             o.set(BIBO.pmid, Literal(self.srcpubmedid))
         # books and chapters
@@ -1227,14 +1240,7 @@ def create_authorships():
             fhd:pubCardId ?card .
     }
     """
-    #Define the VIVO store
-    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
-    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
-    vstore = SyncVStore(
-                os.environ['VIVO_EMAIL'],
-                os.environ['VIVO_PASSWORD']
-            )
-    vstore.open((query_endpoint, update_endpoint))
+    vstore = get_store()
 
     g = Graph()
     query = rq_prefixes + q
@@ -1258,14 +1264,7 @@ def create_local_coauthor_flag():
         FILTER (?person != ?person2)
     }
     """
-    #Define the VIVO store
-    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
-    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
-    vstore = SyncVStore(
-                os.environ['VIVO_EMAIL'],
-                os.environ['VIVO_PASSWORD']
-            )
-    vstore.open((query_endpoint, update_endpoint))
+    vstore = get_store()
 
     g = Graph()
     query = rq_prefixes + q
@@ -1283,20 +1282,38 @@ def get_pub_cards():
             fhd:pubCardId ?card .
     }
     """
-    #Define the VIVO store
-    query_endpoint = os.environ['VIVO_URL'] + '/api/sparqlQuery'
-    update_endpoint = os.environ['VIVO_URL'] + '/api/sparqlUpdate'
-    vstore = SyncVStore(
-                os.environ['VIVO_EMAIL'],
-                os.environ['VIVO_PASSWORD']
-            )
-    vstore.open((query_endpoint, update_endpoint))
+    vstore = get_store()
 
     query = rq_prefixes + q
     out = []
     for row in vstore.query(query):
         out.append((row.person, row.card.toPython()))
     return set(out)
+
+
+def relate_pubs_to_orgs():
+    q = rq_prefixes + """
+    CONSTRUCT { ?org vivo:relates ?pub }
+    WHERE {
+        ?org a fhd:Organization ;
+            vivo:relatedBy ?position .
+        ?position a vivo:Position ;
+                  vivo:relates ?person .
+        ?person a foaf:Person ;
+                vivo:relatedBy ?authorship .
+        ?authorship a vivo:Authorship ;
+                    vivo:relates ?pub .
+        ?pub a fhp:Publication .
+        FILTER (?org != d:c638881)
+    }
+    """
+    vstore = get_store()
+    try:
+        g = vstore.query(q)
+        logger.info("Found {} ".len(g))
+    except ResultException:
+        g = Graph()
+    return g
 
 
 class ClinicalTrial(BaseModel):

@@ -22,6 +22,9 @@ OBO = Namespace('http://purl.obolibrary.org/obo/')
 
 CONVERIS = Namespace('http://localhost/ontology/converis#')
 
+FHP = Namespace('http://vivo.fredhutch.org/ontology/publications#')
+FHD = Namespace('http://vivo.fredhutch.org/ontology/display#')
+
 #tmp graph for in memory graphs
 TMP = Namespace('http://localhost/tmp#')
 
