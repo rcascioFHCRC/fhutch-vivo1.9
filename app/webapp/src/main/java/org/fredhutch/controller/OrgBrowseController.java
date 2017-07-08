@@ -13,6 +13,7 @@ import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
 import com.hp.hpl.jena.query.*;
 import com.hp.hpl.jena.rdf.model.*;
+import edu.cornell.mannlib.vitro.webapp.config.ConfigurationProperties;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.FreemarkerHttpServlet;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.UrlBuilder;
 import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFServiceException;
@@ -23,13 +24,15 @@ import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.ResponseValues;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.TemplateResponseValues;
 
+import org.fredhutch.utils.Config;
+
 public class OrgBrowseController extends FreemarkerHttpServlet {
 
     private static final Log log = LogFactory.getLog(OrgBrowseController.class);
     private static final String TEMPLATE = "org-browse.ftl";
+    private static String namespace;
     public static final String SUB_ORG_PROPERTY = "http://purl.obolibrary.org/obo/BFO_0000050";
     public static final String FHD_PREFIX = "http://vivo.fredhutch.org/ontology/display#";
-    public static final String TOP_ORG = "http://vivo.fredhutch.org/individual/c638881";
     public static final String TMP_NAMESPACE = "http://localhost/tmp#";
     public static final String CHILD_QUERY = "orgBrowse/getChildren.rq";
     public static final String CHILD_QUERY_BY_TYPE = "orgBrowse/getChildrenByType.rq";
@@ -40,13 +43,16 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
 
     @Override
     protected ResponseValues processRequest(VitroRequest vreq) {
+        ConfigurationProperties props = ConfigurationProperties.getBean(vreq);
+        namespace = props.getProperty("Vitro.defaultNamespace");
+        String topOrg = namespace + Config.topOrgLocalName;
         log.debug("Generating org browse model");
         //Get the tmp model for org structure
         String rq = readQuery(ORG_MODEL_QUERY);
         Model orgModel = runConstruct(rq, vreq);
 
         //Starting with top level org uri, get orgs with
-        Resource topUri = ResourceFactory.createResource(TOP_ORG);
+        Resource topUri = ResourceFactory.createResource(topOrg);
         //Get child orgs
 //        ArrayList<HashMap> orgTree = getChildren(orgModel, topUri, vreq);
         //Divisions and children
@@ -62,7 +68,7 @@ public class OrgBrowseController extends FreemarkerHttpServlet {
         body.put("divisions", divisionTree);
         body.put("sciInit", sciITree);
         body.put("irc", ircTree);
-        body.put("topUrl", getURL(TOP_ORG, vreq));
+        body.put("topUrl", getURL(topOrg, vreq));
         return new TemplateResponseValues(TEMPLATE, body);
     }
 
