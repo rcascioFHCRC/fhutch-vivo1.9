@@ -65,7 +65,6 @@ h2 a:visited {
 h3 {
     padding: 10px 0 12px 0;
     margin: 0;
-    font-size: 1.125em;
     color: #064d68;
 }
 h4 {
@@ -1453,8 +1452,8 @@ h3.internal-auth {
     font-weight: bold;
 }
 #individual-info h3 {
-    font-size: 1.125em;
     line-height: 1.2em;
+    font-weight: bold;
 }
 ul#individual-personInPosition {
     font-size: 1em;
@@ -1533,6 +1532,7 @@ article.property h3 {
 article.property ul.property-list li.subclass h3 {
     font-size: 1.063em;
     color: #123054;
+    font-weight: bold;
 }
 article.property .data-property-statement {
     background: #fff;
@@ -1562,6 +1562,9 @@ input[type="submit"] {
 }
 p.address-line {
     margin-bottom: 0.3em;
+}
+.listDateTime {
+    font-weight: bold;
 }
 /* EDITING DISPLAY------>  */
 .edit-individual {
