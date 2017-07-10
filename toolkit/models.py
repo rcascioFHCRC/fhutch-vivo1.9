@@ -1767,6 +1767,7 @@ class TeachingLecture(BaseModel):
     def build_invited_lecture_label(self):
         lb = [
             #self._v("typeoflecture"),
+            self._v("nameofseries"),
             self._v("title"),
             self.related_event(),
             self.related_org_label('LECT_has_ORGA')
