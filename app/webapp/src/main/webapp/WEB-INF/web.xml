@@ -1521,6 +1521,33 @@
     <url-pattern>/org/*</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>OrgCollabController</servlet-name>
+    <servlet-class>org.fredhutch.controller.OrgCollabVizController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrgCollabController</servlet-name>
+    <url-pattern>/org-collab/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>ResearcherService</servlet-name>
+    <servlet-class>org.fredhutch.dataservice.Researcher</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ResearcherService</servlet-name>
+    <url-pattern>/vds/researcher/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>CollaborationsService</servlet-name>
+    <servlet-class>org.fredhutch.dataservice.Collaborations</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CollaborationsService</servlet-name>
+    <url-pattern>/vds/collaborations/*</url-pattern>
+  </servlet-mapping>
+
   <!-- ==================== mime types ============================== -->
 
   <mime-mapping>
