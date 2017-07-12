@@ -168,7 +168,13 @@ This network shows collaborations among members of this organization only.
     });
   }
 
+
+
+
   function make_viz(data) {
+    var maxTotal = _.max(data.nodes, function(object){return object.total}).total
+    var getColor = d3.scale.linear().domain([0,maxTotal])
+      .range(['#ffffe0', '#8b0000']);
     var visualization = d3plus.viz()
       .container("#viz")
       .type("network")
@@ -177,9 +183,9 @@ This network shows collaborations among members of this organization only.
       .edges({
         "value": data.edges,
       })
-      // .color(function(d){
-      //   return d.total == 3 ? "#064d68" : "#39b6b9";
-      // })
+      .color(function(d){
+        return getColor(d.total);
+      })
       .tooltip(tipParams)
       .text("name")
       .draw()

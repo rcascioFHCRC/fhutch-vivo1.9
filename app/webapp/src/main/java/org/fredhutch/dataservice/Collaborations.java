@@ -15,6 +15,7 @@ import edu.cornell.mannlib.vitro.webapp.visualization.collaborationutils.CoAutho
 import edu.cornell.mannlib.vitro.webapp.visualization.valueobjects.Collaborator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.fredhutch.utils.StoreUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -31,6 +32,7 @@ public class Collaborations extends VitroHttpServlet {
 
     private static final Log log = LogFactory.getLog(Collaborations.class.getName());
     private String namespace;
+    private StoreUtils storeUtils;
 
 
 
@@ -40,6 +42,10 @@ public class Collaborations extends VitroHttpServlet {
 
         VitroRequest vreq = new VitroRequest(request);
         String path = vreq.getPathInfo();
+
+        //setup storeUtils
+        this.storeUtils = new StoreUtils();
+        this.storeUtils.setRdfService(namespace, vreq.getRDFService());
 
         String[] pathParts = path.split("/");
         String ln = pathParts[1];
@@ -188,39 +194,46 @@ public class Collaborations extends VitroHttpServlet {
     }
 
     @SuppressWarnings("unchecked")
-    private static ArrayList getOrgMembers(String orgUri, VitroRequest vreq) {
+    private ArrayList getOrgMembers(String orgUri, VitroRequest vreq) {
         log.debug("Running org query");
         final ArrayList members = new ArrayList<String>();
         String rq = "" +
                 "SELECT DISTINCT ?person \n" +
                 "WHERE { \n" +
+                "{" +
                 "?org a foaf:Organization ; \n" +
                 "       vivo:relatedBy ?pos . \n" +
                 "?pos a vivo:Position ; \n" +
                 "       vivo:relates ?org, ?person .\n" +
                 "?person a foaf:Person ." +
+                "}" +
+                "UNION {" +
+                "?org a foaf:Organization ; \n" +
+                "      obo:BFO_0000051 ?childOrg .\n" +
+                "?childOrg a foaf:Organization ; \n"+
+                "   vivo:relatedBy ?pos . \n" +
+                "?pos a vivo:Position ; \n" +
+                "       vivo:relates ?childOrg, ?person .\n" +
+                "?person a foaf:Person .\n" +
+                "}\n" +
+                "UNION {" +
+                "?org a foaf:Organization ; \n" +
+                "      obo:BFO_0000051 ?childOrg ;\n" +
+                "      obo:BFO_0000051 ?grandChildOrg .\n" +
+                "?grandChildOrg a foaf:Organization ; \n"+
+                "   vivo:relatedBy ?pos . \n" +
+                "?pos a vivo:Position ; \n" +
+                "       vivo:relates ?grandChildOrg, ?person .\n" +
+                "?person a foaf:Person .\n" +
+                "}\n" +
                 "}";
-        ParameterizedSparqlString q2 = new ParameterizedSparqlString();
-        q2.setCommandText(rq);
+        ParameterizedSparqlString q2 = this.storeUtils.getQuery(rq);
         q2.setIri("org", orgUri);
-        q2.setNsPrefix("foaf", "http://xmlns.com/foaf/0.1/");
-        q2.setNsPrefix("vivo", "http://vivoweb.org/ontology/core#");
-        q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
-        q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
         String query = q2.toString();
-        log.debug("Recent query:\n" + query);
-        try {
-            vreq.getRDFService().sparqlSelectQuery(query, new ResultSetConsumer() {
-                @Override
-                protected void processQuerySolution(QuerySolution qs) {
-
-                    Resource person = qs.getResource("person");
-                    members.add(person.toString());
-
-                }
-            });
-        } catch (RDFServiceException e) {
-            e.printStackTrace();
+        log.debug("Collab query:\n" + query);
+        ArrayList<HashMap> results = this.storeUtils.getFromStore(query);
+        for (HashMap row : results) {
+            members.add(row.get("person"));
         }
         return members;
     }
