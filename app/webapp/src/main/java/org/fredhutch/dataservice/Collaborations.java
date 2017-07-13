@@ -199,7 +199,7 @@ public class Collaborations extends VitroHttpServlet {
         final ArrayList members = new ArrayList<String>();
         String rq = "" +
                 "SELECT DISTINCT ?person \n" +
-                "WHERE { \n" +
+                "WHERE { \n" +  
                 "{" +
                 "?org a foaf:Organization ; \n" +
                 "       vivo:relatedBy ?pos . \n" +

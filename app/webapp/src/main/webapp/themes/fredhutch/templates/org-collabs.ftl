@@ -1,78 +1,24 @@
 
-<h2 class="browse-header">${name}</h2>
 
-<script type="text/javascript" src="${urls.base}/js/underscore-min.js"></script>
-<script type="text/javascript" src="${urls.base}/js/handlebars.min.js"></script>
-<script type="text/javascript" src="${urls.base}/js/d3.js"></script>
-<!-- load D3plus after D3js -->
-<script type="text/javascript" src="${urls.base}/js/d3plus.js"></script>
+${stylesheets.add('<link rel="stylesheet" href="${urls.base}/themes/fredhutch/css/org-collab.css" />')}
+${headScripts.add('<script type="text/javascript" src="${urls.base}/js/underscore-min.js"></script>')}
+${headScripts.add('<script type="text/javascript" src="${urls.base}/js/handlebars.min.js"></script>')}
+${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3.js"></script>')}
+${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js"></script>')}
 
+<h2 class="browse-header">${name} Collaboration Network</h2>
+<div class="back-link"><a href="${urls.base}/display/${localName}">View organization page</a></div>
 
-<style>
-
-#viz {
-  width: 90%;
-  margin-left:auto;
-  margin-right:auto;
-  height: 800px;
-  margin-bottom: 4em;
-}
-
-a#view {
-    background-color: #123054;
-    color: white;
-    display: block;
-    font-size: 1.25em;
-    margin: 2em;
-    padding: .5em;
-    text-align: center;
-    text-decoration: none;
-  }
-
-.tiny-image {
-  border-radius: 50%;
-  max-width: 75px;
-}
-
-h6.profile-card {
-  line-height: 1em;
-}
-
-table {
-  width: 80%;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
-
-th {
-background: #F3F3F3; /* Light grey background */
-font-weight: left; /* Make sure they're bold */
-padding-left: 1em;
-}
-
-td {
-background: #FAFAFA; /* Lighter grey background */
-text-align: left; /* Center our text */
-padding-left: 1em;
-}
-
-.message {
-  font-variant: small-caps;
-  font-size: small;
-}
-
-</style>
 
 
 <#-- <p>${overview}</p> -->
-
-<h5><a href="./${localName}" title="Click to reset visualization">Collaboration network</a></h5>
-<p>
-This network shows collaborations among members of this organization only.
-<br/><a class="message" href="./${localName}" title="Click to reset visualization">click to reset visualization</a>
-</p>
+<#-- <h5><a href="./${localName}" title="Click to reset visualization">Collaboration network</a></h5> -->
+<div class="viz-intro">
+  <p>
+  This network shows collaborations among members of this organization only.
+  <br/><a class="message" href="./${localName}" title="Click to reset visualization">click to reset visualization</a>
+  </p>
+</div>
 <!-- create container element for visualization -->
 <div id="viz">
 </div>
@@ -169,12 +115,18 @@ This network shows collaborations among members of this organization only.
   }
 
 
+function getColor(total) {
+  var colors = ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"]
+  return colors[Math.floor(Math.random() * colors.length)];
+}
 
 
   function make_viz(data) {
     var maxTotal = _.max(data.nodes, function(object){return object.total}).total
-    var getColor = d3.scale.linear().domain([0,maxTotal])
-      .range(['#ffffe0', '#8b0000']);
+    var third = Math.ceil(maxTotal / 3 )
+    var getColor = d3.scale.linear()
+      .domain([1, third, third+third, maxTotal])
+      .range(['#ffffcc','#a1dab4','#41b6c4','#225ea8']);
     var visualization = d3plus.viz()
       .container("#viz")
       .type("network")
@@ -186,6 +138,9 @@ This network shows collaborations among members of this organization only.
       .color(function(d){
         return getColor(d.total);
       })
+      .font({ "family": "Geogrotesque-Regular"})
+      .legend(false)
+      //.color({"range": ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"], "value": "total"})
       .tooltip(tipParams)
       .text("name")
       .draw()
@@ -212,6 +167,7 @@ This network shows collaborations among members of this organization only.
         .focus(localName)
         .tooltip(tipParams)
         .text("name")
+        .font({ "family": "Geogrotesque-Regular"})
         .draw()
   };
 

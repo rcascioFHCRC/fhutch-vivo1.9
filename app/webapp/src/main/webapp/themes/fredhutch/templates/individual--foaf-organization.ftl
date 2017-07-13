@@ -4,11 +4,20 @@
 
 <#-- Do not show the link for temporal visualization unless it's enabled -->
 
-<#assign affiliatedResearchAreas>
-    <#include "individual-affiliated-research-areas.ftl">
+<#include "individual-setup.ftl">
+<#import "lib-vivo-properties.ftl" as vp>
+
+<#assign individualProductExtension>
+    <ul class="individual-urls" role="list">
+        <li role="list-item">
+          <a href="${urls.base}/org-collab/${individual.localName}">View organizational collaborations</a>
+        </li>
+    </ul>
+        </section> <!-- #individual-info -->
+    </section> <!-- #individual-intro -->
 </#assign>
 
-<#include "individual.ftl">
+<#include "individual-vitro.ftl">
 
 
 <#-- Based of Weill Cornell VIVO publication sorting.
@@ -52,3 +61,4 @@ if ($('#relates-Publication-List li').length > 0) {
 
 
 ${scripts.add('<script src="${urls.base}/js/tinysort.min.js"></script>')}
+

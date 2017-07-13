@@ -1,0 +1,72 @@
+/* org collabs */
+
+#viz {
+  width: 90%;
+  margin-left:auto;
+  margin-right:auto;
+  height: 800px;
+  margin-bottom: 4em;
+}
+
+h2.browse-header {
+  color: #595B5B;
+}
+
+a#view {
+    background-color: #123054;
+    color: white;
+    display: block;
+    font-size: 1.25em;
+    margin: 2em;
+    padding: .5em;
+    text-align: center;
+    text-decoration: none;
+  }
+
+.tiny-image {
+  border-radius: 50%;
+  max-width: 125px;
+}
+
+.entry {
+  padding-left: 1em;
+}
+
+h6.profile-card {
+  padding-top: .1em;
+  line-height: 1.25em;
+  font-size: 1.25em;
+}
+
+table {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+td, th { border: 1px solid #CCC; height: 30px; } /* Make cells a bit taller */
+
+th {
+  background: #F3F3F3; /* Light grey background */
+  font-weight: left; /* Make sure they're bold */
+  padding-left: 1em;
+}
+
+td {
+  background: #FAFAFA; /* Lighter grey background */
+  text-align: left; /* Center our text */
+}
+
+.message {
+  font-variant: small-caps;
+  font-size: small;
+}
+
+.viz-intro {
+  margin-top: 1em;
+}
+
+.back-link a {
+  color: #123054;
+  font-size: smaller;
+}
