@@ -32,6 +32,6 @@
         </#if>
     </#local>
 
-    <@s.join [ linkedIndividual, statement.positionTitle! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
 </#if>
 </#macro>

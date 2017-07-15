@@ -2,6 +2,9 @@
 VIVO models
 """
 import base64
+# thereadsafe
+import _strptime
+from datetime import datetime
 import hashlib
 import logging
 import pickle
@@ -461,14 +464,14 @@ class Person(BaseModel):
         for org in client.get_related_ids('Organisation', self.cid, 'LAB_has_PI'):
             uri = org_uri(org)
             g.add((self.uri, FHD.PIof, uri))
-        return g        
+        return g
 
 
 class Position(BaseModel):
 
     def _date(self, dtype, dv):
         g = Graph()
-        date_obj = client.convert_date(dv)
+        date_obj = datetime.strptime(dv, '%Y-%m-%d').year
         date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
         de = Resource(g, date_uri)
         de.set(RDF.type, VIVO.DateTimeValue)
@@ -478,7 +481,7 @@ class Position(BaseModel):
                 VIVO.dateTime,
                 Literal(date_obj, datatype=XSD.date)
             )
-            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+            de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
         return date_uri, g
 
     def get_dti(self, start, end):
@@ -536,7 +539,7 @@ class Position(BaseModel):
             '12170': (FHD.StaffScientist, 40),
             '12171': (FHD.Postdoctoral, 40),
             '10933347': (FHD.Industry, 40),
-            '11035904': (FHD.ResearchAssociate, 40),            
+            '11035904': (FHD.ResearchAssociate, 40),
             '6616737': (FHD.Affiliate, 40),
         }
 
@@ -884,7 +887,7 @@ class Publication(BaseModel):
             ('year_origin', FHD.yearOrigin),
             ('year_update', FHD.yearUpdate),
             ('cfdept', FHD.department),
-            ('cfuri', FHD.url)            
+            ('cfuri', FHD.url)
         ]
         for k, pred in props:
             if hasattr(self, k):
@@ -897,7 +900,7 @@ class Publication(BaseModel):
                 if pred == FHD.yearOrigin:
                     value = value.replace(",", "")
                 if pred == FHD.yearUpdate:
-                    value = value.replace(",", "")                    
+                    value = value.replace(",", "")
                 yield (pred, Literal(value))
 
     def add_date(self):
@@ -960,7 +963,7 @@ class Publication(BaseModel):
         g = Graph()
         for pub in client.get_related_ids('Publication', self.cid, 'PUBL_has_PUBL'):
             puri = pub_uri(pub)
-            g.add((self.uri, FHP.inBook, puri))            
+            g.add((self.uri, FHP.inBook, puri))
         return g
 
     def build_dissertation_label(self):
@@ -999,18 +1002,18 @@ class Publication(BaseModel):
         o.set(RDFS.label, Literal(title))
         for pred, obj in self.data_properties():
             o.set(pred, obj)
-        # orga for dissertation and thesis            
+        # orga for dissertation and thesis
         if self.publicationtype['value'] == "Dissertation or Thesis":
-            o.set(FHD.relatedUni, self.build_dissertation_label())            
+            o.set(FHD.relatedUni, self.build_dissertation_label())
         # series title vs website title
         if hasattr(self, 'cfseries'):
             if self.publicationtype['value'] == "Internet Communication":
-                o.set(FHD.websiteTitle, Literal(self.cfseries))          
+                o.set(FHD.websiteTitle, Literal(self.cfseries))
             else:
                 o.set(FHD.seriesTitle, Literal(self.cfseries))
         # pubmedID
         if hasattr(self, 'pubmedid'):
-            o.set(BIBO.pmid, Literal(self.pubmedid))          
+            o.set(BIBO.pmid, Literal(self.pubmedid))
         elif hasattr(self, 'srcpubmedid'):
             o.set(BIBO.pmid, Literal(self.srcpubmedid))
         # books and chapters
