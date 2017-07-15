@@ -17,11 +17,13 @@
             ?rank
             ?person
             ?personName
+            ?orgName
             ?dateTimeStart
             ?dateTimeEnd
         WHERE
         {
-            ?subject ?property ?position
+            ?subject ?property ?position ;
+                     rdfs:label ?orgName .
             OPTIONAL
             {
                 ?position core:relates ?person .
@@ -66,6 +68,7 @@
         CONSTRUCT
         {
             ?subject ?property ?position .
+            ?subject rdfs:label ?orgName .
             ?position a core:Position .
             ?position vitro:mostSpecificType ?subclass .
             ?subclass rdfs:subClassOf core:Position .
@@ -85,6 +88,7 @@
             <!-- this org -->
             {
                 ?subject ?property ?position .
+                ?subject rdfs:label ?orgName .
                 ?position a core:Position .
                 ?position vitro:mostSpecificType ?subclass .
                 ?position rdfs:label ?positionTitle .
@@ -106,6 +110,7 @@
             <!-- child orgs -->
             UNION {
                 ?subject obo:BFO_0000051 ?childOrg .
+                ?childOrg rdfs:label ?orgName .
                 ?childOrg ?property ?position .
                 ?position a core:Position .
                 ?position vitro:mostSpecificType ?subclass .
@@ -129,6 +134,7 @@
             UNION {
                 ?subject obo:BFO_0000051 ?childOrg .
                 ?childOrg obo:BFO_0000051 ?grandChildOrg .
+                ?grandChildOrg rdfs:label ?orgName .
                 ?grandChildOrg ?property ?position .
                 ?position a core:Position .
                 ?position vitro:mostSpecificType ?subclass .
@@ -148,7 +154,7 @@
                     ?dateTimeEndValue core:dateTime ?dateTimeEnd .
                 }
             }
-            FILTER (?subclass NOT IN (fhd:ProgramLeadership, fhd:Membership, fhd:Clinician, fhd:FormerPosition))
+            FILTER (?subclass NOT IN (fhd:Membership, fhd:Clinician, fhd:FormerPosition))
         }
     </query-construct>
 
