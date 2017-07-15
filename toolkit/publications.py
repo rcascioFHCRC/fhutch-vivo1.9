@@ -233,8 +233,13 @@ def sample_harvest():
     # backend.sync_updates replaces the named graph with the incoming data - meaning any
     # data in the system that's not in the incoming data will be deleted
     # backend.post_updates will only update the entities that are in the incoming data - anything
-    # else is left as it is. 
+    # else is left as it is.
     backend.sync_updates("http://localhost/data/sample-books", g)
+
+
+def generate_orgs_to_pubs():
+    g = models.relate_pubs_to_orgs()
+    backend.sync_updates("http://localhost/data/org-pubs", g)
 
 
 def full_publication_harvest():
@@ -245,6 +250,8 @@ def full_publication_harvest():
     logger.info("Adding local coauthor flag.")
     generate_local_coauthor()
     logger.info("Pub harvest and authorship generation complete.")
+    logger.info("Relating orgs to publications.")
+    generate_orgs_to_pubs()
 
 
 if __name__ == "__main__":

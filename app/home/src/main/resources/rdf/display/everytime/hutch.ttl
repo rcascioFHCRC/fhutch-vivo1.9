@@ -9,6 +9,7 @@
 @prefix fhd: <http://vivo.fredhutch.org/ontology/display#> .
 @prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
 @prefix fht: <http://vivo.fredhutch.org/ontology/teaching#> .
+@prefix fhp: <http://vivo.fredhutch.org/ontology/publications#> .
 @prefix foaf:  <http://xmlns.com/foaf/0.1/> .
 @prefix bibo: <http://purl.org/ontology/bibo/> .
 
@@ -16,6 +17,7 @@
 @prefix local: <http://vitro.mannlib.cornell.edu/ns/vitro/siteConfig/> .
 @prefix role:  <http://vitro.mannlib.cornell.edu/ns/vitro/role#> .
 @prefix d: <http://vivo.fredhutch.org/individual/> .
+@prefix vdisplay: <http://vivoweb.org/ontology/> .
 
 # Additional listViewConfigs
 
@@ -89,7 +91,7 @@ local:personEducationConfig a :ObjectPropertyDisplayConfig ;
     vitro:displayRankAnnot  10 ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
-    :propertyGroup d:vitroPropertyGroupEducationTraining . 
+    :propertyGroup d:vitroPropertyGroupEducationTraining .
 
 # person to training
 
@@ -241,3 +243,24 @@ local:personPastPositionConfig a :ObjectPropertyDisplayConfig ;
     vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
     vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
     :propertyGroup d:vitroPropertyGroupPastPositions .
+
+
+# org to publication
+
+local:orgPublicationContext a :ConfigContext ;
+    :hasConfiguration local:orgPublicationConfig ;
+    :configContextFor vivo:relates ;
+    :qualifiedByDomain  foaf:Organization ;
+    :qualifiedBy      fhp:Publication .
+
+local:orgPublicationConfig a :ObjectPropertyDisplayConfig ;
+    :listViewConfigFile "listViewConfig-orgPublication.xml"^^xsd:string ;
+    rdfs:label "org to publication"@en-US ;
+    :displayName "publications" ;
+    vitro:displayRankAnnot  10 ;
+    vitro:hiddenFromDisplayBelowRoleLevelAnnot role:public ;
+    vitro:collateBySubclassAnnot
+        "true"^^xsd:boolean;
+    vitro:prohibitedFromUpdateBelowRoleLevelAnnot role:curator ;
+    :propertyGroup <http://vivoweb.org/ontology#vitroPropertyGroupresearch> .
+
