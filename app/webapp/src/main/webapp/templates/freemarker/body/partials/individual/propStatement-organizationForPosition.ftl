@@ -32,6 +32,13 @@
         </#if>
     </#local>
 
-    <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    <#-- For these subclasses, don't show org. -->
+    <#assign sc = ['http://vivoweb.org/ontology/core#FacultyPosition', 'http://vivoweb.org/ontology/core#FacultyAdministrativePosition', 'http://vivo.fredhutch.org/ontology/display#Emeritus']>
+
+    <#if sc?seq_contains("${statement.subclass!}")>
+         <@s.join [ linkedIndividual, statement.positionTitle! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    <#else>
+        <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    </#if>
 </#if>
 </#macro>
