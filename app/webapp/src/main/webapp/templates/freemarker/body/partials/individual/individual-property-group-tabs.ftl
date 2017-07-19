@@ -19,13 +19,14 @@
             <#assign groupName = "${i18n().properties_capitalized}">
     	    <#assign groupNameHtmlId = "${i18n().properties}" >
         </#if>
-        <#if tabCount = 1 >
+        <#if tabCount = 1 && ( propertyGroups.all?size = 1 )>
             <li class="selectedGroupTab clickable" groupName="${groupNameHtmlId?replace("/","-")}">${groupName?capitalize}</li>
             <li class="groupTabSpacer">&nbsp;</li>
             <#assign tabCount = 2>
         <#else>
             <li class="nonSelectedGroupTab clickable" groupName="${groupNameHtmlId?replace("/","-")}">${groupName?capitalize}</li>
             <li class="groupTabSpacer">&nbsp;</li>
+            <#assign tabCount = 2>
         </#if>
     </#if>
 </#list>
