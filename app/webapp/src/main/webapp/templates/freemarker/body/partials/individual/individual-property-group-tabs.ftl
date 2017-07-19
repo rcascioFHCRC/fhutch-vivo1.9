@@ -30,7 +30,7 @@
     </#if>
 </#list>
 <#if (propertyGroups.all?size > 1) >
-    <li  class="nonSelectedGroupTab clickable" groupName="viewAll">${i18n().view_all_capitalized}</li>
+    <li  class="selectedGroupTab clickable" groupName="viewAll">${i18n().view_all_capitalized}</li>
     <li  class="groupTabSpacer">&nbsp;</li>
 </#if>
 </ul>
