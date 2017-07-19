@@ -28,7 +28,7 @@ def convert_date(raw):
     """
     Converis string date to Python date conversion.
     """
-    return datetime.strptime(raw, '%Y-%m-%d').year
+    return datetime.strptime(raw, '%Y-%m-%d')
 
 
 def get_response(url):
