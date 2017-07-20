@@ -114,7 +114,7 @@ def get_parent_org_label(cid):
 
 def days_ago(num):
     """
-    Return date in year-month-day format for X 
+    Return date in year-month-day format for X
     number of days ago.
     """
     dt = datetime.today() - timedelta(days=num)

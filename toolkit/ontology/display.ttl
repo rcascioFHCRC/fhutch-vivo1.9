@@ -293,7 +293,7 @@ fhd:yearOrigin  a              owl:DatatypeProperty ;
         vitro:inPropertyGroupAnnot  <http://vivoweb.org/ontology#vitroPropertyGroupoverview> ;
         vitro:prohibitedFromUpdateBelowRoleLevelAnnot
                 <http://vitro.mannlib.cornell.edu/ns/vitro/role#public> .
-                                
+
 fhd:yearUpdate  a              owl:DatatypeProperty ;
         rdfs:label                  "year most recently updated"@en-US ;
         rdfs:range                  xsd:string ;
@@ -576,7 +576,7 @@ fhd:PostDoctoral  a owl:Class ;
 
 fhd:ProgramLeadership  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       9 ;
+    vitro:displayRankAnnot       3 ;
     rdfs:label "Program Leadership"@en-US .
 
 fhd:Affiliate  a owl:Class ;

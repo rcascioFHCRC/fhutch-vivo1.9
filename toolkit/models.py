@@ -2,6 +2,9 @@
 VIVO models
 """
 import base64
+# thereadsafe
+import _strptime
+from datetime import datetime
 import hashlib
 import logging
 import pickle
@@ -128,7 +131,7 @@ class BaseModel(client.BaseEntity):
                 VIVO.dateTime,
                 Literal(date_obj, datatype=XSD.date)
             )
-            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+            de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
         return date_uri, g
 
 
@@ -481,7 +484,7 @@ class Position(BaseModel):
 
     def _date(self, dtype, dv):
         g = Graph()
-        date_obj = client.convert_date(dv)
+        date_obj = datetime.strptime(dv, '%Y-%m-%d').year
         date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
         de = Resource(g, date_uri)
         de.set(RDF.type, VIVO.DateTimeValue)
@@ -491,7 +494,7 @@ class Position(BaseModel):
                 VIVO.dateTime,
                 Literal(date_obj, datatype=XSD.date)
             )
-            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+            de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
         return date_uri, g
 
     def get_dti(self, start, end):
@@ -932,18 +935,19 @@ class Publication(BaseModel):
         de = Resource(g, date_uri)
         de.set(RDF.type, VIVO.DateTimeValue)
         if date_value is not None:
+            date_obj = client.convert_date(date_value)
             de.set(RDFS.label, Literal(date_value))
             de.set(
                 VIVO.dateTime,
-                Literal("{}T00:00:00".format(date_value), datatype=XSD.dateTime)
+                Literal(date_obj, datatype=XSD.date)
             )
-            de.set(VIVO.dateTimePrecision, VIVO.yearMonthDayPrecision)
+            de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
         else:
             clean = year_value.strip().replace(',', '')
             de.set(RDFS.label, Literal(clean))
             de.set(
                 VIVO.dateTime,
-                Literal("{}-01-01T00:00:00".format(clean), datatype=XSD.dateTime)
+                Literal("{}-01-01".format(clean), datatype=XSD.date)
             )
             de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
 

@@ -10,6 +10,7 @@
         PREFIX vitro: &lt;http://vitro.mannlib.cornell.edu/ns/vitro/0.7#&gt;
         PREFIX foaf: &lt;http://xmlns.com/foaf/0.1/&gt;
         PREFIX fn:   &lt;http://www.w3.org/2005/xpath-functions#&gt;
+        PREFIX fhd: &lt;http://vivo.fredhutch.org/ontology/display#&gt;
 
         SELECT DISTINCT <collated>?subclass</collated>
             ?position
@@ -17,11 +18,12 @@
             ?rank
             ?person
             ?personName
+            ?orgName
             ?dateTimeStart
             ?dateTimeEnd
         WHERE
         {
-            ?subject ?property ?position
+            ?subject ?property ?position .
             OPTIONAL
             {
                 ?position core:relates ?person .
@@ -29,6 +31,7 @@
                 ?person rdfs:label ?personName .
             }
             OPTIONAL { ?position rdfs:label ?positionTitle }
+            OPTIONAL { ?position fhd:org ?orgName }
             OPTIONAL
             {
                 ?position core:rank ?rank .
@@ -68,6 +71,7 @@
             ?subject ?property ?position .
             ?position a core:Position .
             ?position vitro:mostSpecificType ?subclass .
+            ?position fhd:org ?orgName .
             ?subclass rdfs:subClassOf core:Position .
             ?position rdfs:label ?positionTitle .
             ?position core:dateTimeInterval ?dateTimeInterval .
@@ -85,6 +89,7 @@
             <!-- this org -->
             {
                 ?subject ?property ?position .
+                ?subject rdfs:label ?orgName .
                 ?position a core:Position .
                 ?position vitro:mostSpecificType ?subclass .
                 ?position rdfs:label ?positionTitle .
@@ -106,6 +111,7 @@
             <!-- child orgs -->
             UNION {
                 ?subject obo:BFO_0000051 ?childOrg .
+                ?childOrg rdfs:label ?orgName .
                 ?childOrg ?property ?position .
                 ?position a core:Position .
                 ?position vitro:mostSpecificType ?subclass .
@@ -129,6 +135,7 @@
             UNION {
                 ?subject obo:BFO_0000051 ?childOrg .
                 ?childOrg obo:BFO_0000051 ?grandChildOrg .
+                ?grandChildOrg rdfs:label ?orgName .
                 ?grandChildOrg ?property ?position .
                 ?position a core:Position .
                 ?position vitro:mostSpecificType ?subclass .
@@ -148,7 +155,7 @@
                     ?dateTimeEndValue core:dateTime ?dateTimeEnd .
                 }
             }
-            FILTER (?subclass NOT IN (fhd:ProgramLeadership, fhd:Membership, fhd:Clinician, fhd:FormerPosition))
+            FILTER (?subclass NOT IN (fhd:Membership, fhd:Clinician, fhd:FormerPosition))
         }
     </query-construct>
 
