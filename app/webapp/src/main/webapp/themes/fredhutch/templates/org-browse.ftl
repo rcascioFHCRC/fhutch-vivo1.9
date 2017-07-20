@@ -44,7 +44,7 @@
 
 <div id="org-tree">
     <h3>Browse by organization structure</h3>
-    <h4><a class="top-org" href="${topUrl}">Fred Hutchinson Cancer Research Center Leadership</a></h4>
+    <h4><a class="top-org" href="${topUrl}">Fred Hutchinson Cancer Research Center</a></h4>
 
     <h4>Divisions</h4>
     <ul>

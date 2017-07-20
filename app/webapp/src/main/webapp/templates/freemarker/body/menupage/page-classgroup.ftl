@@ -16,7 +16,8 @@
             <div class="aside">Visit <a href="./people-browse">people profiles</a> to see trials and studies associated with specific researchers. To search for studies and trials by keyword or topic use the search function and select the Clinical Trials filter in the drop-down list.</div>
         </#if>
         <#if classGroup?contains("InternalOrgs")>
-            <div class="aside"><a href="./org-browse">Browse by organization structure</a></div>
+            <div class="aside"><a href="${urls.base}/org/c638881">View Fred Hutchinson Organization Page</a></div>
+            <div class="aside"><a href="${urls.base}/org-browse">View internal organizational structure</a></div>
         </#if>
     </section>
 

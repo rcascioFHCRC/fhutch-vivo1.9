@@ -3,8 +3,8 @@
 <section id="individual-intro" class="vcard" role="region" itemscope="" itemtype="http://schema.org/Organization">
     <section id="individual-info" role="region">
         <header>
-            <h1 class="fn">${title} Leadership</h1>
-            <h4><a class="website" href="http://www.fredhutch.org" title="website">Fred Hutch Website</a></h4>
+            <h1 class="fn">${title}</h1>
+            <h4>Leadership</h4>
         </header>
     </section>
 </section>
@@ -32,8 +32,15 @@
 </div>
 
 <hr/>
+
+<p>More information about our <a href="http://www.fredhutch.org/en/about/leadership.html">Leadership and Board</a>
+</p>
+<p>
+<a href="${urls.base}/org-browse">Browse Oganizational Structure</a>
+</p>
+
 <div class="alpha-browse">
-    <p>Browse all researchers by last name.</p>
+    <p>Browse all researchers by last name:</p>
     <ul>
         <#list alphabet as alpha>
             <li>
@@ -42,6 +49,5 @@
         </#list>
     </ul>
 </div>
-
 
 </div>
