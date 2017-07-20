@@ -939,7 +939,7 @@ class Publication(BaseModel):
             de.set(RDFS.label, Literal(date_value))
             de.set(
                 VIVO.dateTime,
-                Literal(date_obj, datatype=XSD.dateTime)
+                Literal(date_obj, datatype=XSD.date)
             )
             de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
         else:
@@ -947,7 +947,7 @@ class Publication(BaseModel):
             de.set(RDFS.label, Literal(clean))
             de.set(
                 VIVO.dateTime,
-                Literal("{}-01-01T00:00:00".format(clean), datatype=XSD.dateTime)
+                Literal("{}-01-01".format(clean), datatype=XSD.date)
             )
             de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
 
