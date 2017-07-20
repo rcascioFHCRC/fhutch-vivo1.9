@@ -58,10 +58,10 @@
 
                 </#if>
             </#if>
-            <#if vcardName?has_content>
-              <li class="person-contact"><@vc.showFullName vcardName.statements[0] />
-              </li>
-            </#if>
+            <!-- <#if vcardName?has_content> -->
+              <!-- <li class="person-contact"><@vc.showFullName vcardName.statements[0] /> -->
+              <!-- </li> -->
+            <!-- </#if> -->
             <#if vcardPhone?has_content>
                 <#if vcardPhone.statements?has_content>
                   <#list vcardPhone.statements as statement>

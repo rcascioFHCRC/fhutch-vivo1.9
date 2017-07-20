@@ -19,6 +19,8 @@
             ?middleOrg ?middleOrgName
             ?outerOrg ?outerOrgName
             ?dateTimeStart ?dateTimeEnd
+            (STR(YEAR(?dateTimeStart)) as ?startyear)
+            (STR(YEAR(?dateTimeEnd)) as ?endyear)            
         WHERE
         {
             ?subject ?property ?position .
