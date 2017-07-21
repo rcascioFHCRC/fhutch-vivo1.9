@@ -1519,7 +1519,7 @@ section.property-group h2,
 #menupage-content h4 {
     font-size: 1.25em;
     color: #123054;
-    font-weight: normal;
+    font-weight: bold!important;
 }
 article.property {
     width: 852px;
@@ -1528,6 +1528,7 @@ article.property h3 {
     background: #fafaf9;
     font-size: 1.063em;
     color: #123054;
+    font-weight: bold;
 }
 article.property ul.property-list li.subclass h3 {
     font-size: 1.063em;
