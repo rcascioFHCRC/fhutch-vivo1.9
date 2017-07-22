@@ -69,6 +69,7 @@ public class RecentItems extends HttpServlet {
                 "       rdfs:label ?title ; \n" +
                 "       fhd:url ?url ; \n" +
                 "       fhd:publishedOn ?date . \n" +
+                "   FILTER (?date > ?cutOff^^xsd:dateTime) \n" +
                 "} \n" +
                 "ORDER BY DESC(?date) \n" +
                 "LIMIT 10\n";
@@ -77,6 +78,7 @@ public class RecentItems extends HttpServlet {
         q2.setNsPrefix("fhd", "http://vivo.fredhutch.org/ontology/display#");
         q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
         q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        q2.setLiteral("cutOff", cutOffDate());
         String query = q2.toString();
         log.debug("Recent query:\n" + query);
         try {
