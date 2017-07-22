@@ -92,7 +92,7 @@
     <div class="arnold">
         <div>Powered by the <a href="http://sharedresources.fredhutch.org/core-facilities/library">Arnold Library</a>, Converis, and <a href="http://vivoweb.org">VIVO</a>.</div>
 
-        <div><a href="https://fhcrc.converis.thomsonreuters.com/converis/secure/login">Edit your profile</a>&nbsp;&nbsp;Get <a href="#">help with your profile</a>.</div>
+        <div><a href="mailto:library@fredhutch.org">Get help with your profile</a>.</div>
     </div>
 
 </footer>
