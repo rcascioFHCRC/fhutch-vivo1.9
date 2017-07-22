@@ -121,7 +121,7 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js
   function make_network(org) {
     d3.json(baseURL + "/vds/collaborations/" + org, function(error, data) {
       if (error) return console.error(error);
-      makeNetworkViz(sortedData);
+      makeNetworkViz(data);
       addTable(data);
     });
   }
