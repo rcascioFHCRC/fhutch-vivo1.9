@@ -21,9 +21,8 @@
             ?parentOrg ?parentOrgName
             ?grandParentOrg ?grandParentOrgName
             ?journal ?journalName
-            ?dateTimeStart ?dateTimeEnd
-            (STR(YEAR(?dateTimeStart)) as ?startyear)
-            (STR(YEAR(?dateTimeEnd)) as ?endyear)            
+            ?dateTimeStart
+            ?dateTimeEnd
         WHERE
         {
             ?subject ?property ?service .
@@ -109,7 +108,7 @@
                 ?service a fhs:Service .
                 ?service vitro:mostSpecificType ?subclass .
             }
-            # org 
+            # org
             UNION {
                 ?subject ?property ?service .
                 ?service a fhs:Service .
@@ -117,7 +116,7 @@
                 ?org a foaf:Organization ;
                     rdfs:label ?orgName .
             }
-            # parent org 
+            # parent org
             UNION {
                 ?subject ?property ?service .
                 ?service a fhs:Service .
@@ -126,7 +125,7 @@
                 ?org obo:BFO_0000050 ?parentOrg .
                 ?parentOrg rdfs:label ?parentOrgName .
             }
-            # grand-parent org 
+            # grand-parent org
             UNION {
                 ?subject ?property ?service .
                 ?service a fhs:Service .
@@ -136,7 +135,7 @@
                 ?parentOrg obo:BFO_0000050 ?grandParentOrg .
                 ?grandParentOrg rdfs:label ?grandParentOrgName .
             }
-            # journal 
+            # journal
             UNION {
                 ?subject ?property ?service .
                 ?service a fhs:Service .
