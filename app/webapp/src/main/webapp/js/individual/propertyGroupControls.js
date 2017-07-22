@@ -227,7 +227,7 @@ $(document).ready(function(){
                 }
             }
         }
-        else {
+        else if ( $('article.property').length > 1 ){
           swapTabs('viewAll', currentTab)
         }
         // If you wish to default to the "all" tab for small profiles, uncomment the following lines
