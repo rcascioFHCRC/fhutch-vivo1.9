@@ -284,7 +284,7 @@ $(document).ready(function(){
     <#if (numOfAuthors?? && numOfAuthors > 0) >
 
         <#-- Sparkline -->
-        <div id="sparkline-container-full">
+<#--         <div id="sparkline-container-full">
 
             <#assign displayTable = false />
 
@@ -293,11 +293,11 @@ $(document).ready(function(){
 
             <#assign sparklineVO = uniqueCoauthorsSparklineVO />
             <div id="coauthor-count-sparkline-include"><#include "coAuthorshipSparklineContent.ftl"></div>
-        </div>
+        </div> -->
 
         <div class="vis_stats_full">
 
-        <div class="sub_headings" id="table_heading"><h3>${i18n().tables_capitalized}</h3></div>
+        <div class="sub_headings" id="table_heading"></div>
 
             <div class="vis-tables">
 
