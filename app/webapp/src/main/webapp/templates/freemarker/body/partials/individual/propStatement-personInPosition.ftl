@@ -8,6 +8,7 @@
 
 <#import "lib-sequence.ftl" as s>
 <#import "lib-datetime.ftl" as dt>
+<#import "hutch-dates.ftl" as hd>
 
 <@showPosition statement />
 
@@ -37,7 +38,6 @@
             </span>
         </#if>
     </#local>
-
-    <@s.join [ posTitle, linkedIndividual, middleOrganization! ]/>  <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
-
+    <@s.join [ posTitle, linkedIndividual, middleOrganization! ]/>
+    <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
 </#macro>
