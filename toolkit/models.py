@@ -482,39 +482,9 @@ class Person(BaseModel):
 
 class Position(BaseModel):
 
-    def _date(self, dtype, dv):
-        g = Graph()
-        date_obj = datetime.strptime(dv, '%Y-%m-%d').year
-        date_uri = URIRef(DATA_NAMESPACE + 'date' + dtype + self.vid)
-        de = Resource(g, date_uri)
-        de.set(RDF.type, VIVO.DateTimeValue)
-        if date_obj is not None:
-            de.set(RDFS.label, Literal(dv))
-            de.set(
-                VIVO.dateTime,
-                Literal(date_obj, datatype=XSD.date)
-            )
-            de.set(VIVO.dateTimePrecision, VIVO.yearPrecision)
-        return date_uri, g
-
     def get_dti(self, start, end):
-        if (start is None) and (end is None):
-            return
-        # Date/Time Interval
-        g = Graph()
-        dti_uri = D['dti'] + self.vid
-        dti = Resource(g, dti_uri)
-        dti.set(RDF.type, VIVO.DateTimeInterval)
-        if start is not None:
-            start_uri, start_g = self._date("start", start)
-            dti.set(VIVO.start, start_uri)
-            g += start_g
-        if end is not None:
-            end_uri, end_g = self._date("end", end)
-            g += end_g
-            dti.set(VIVO.end, end_uri)
+        dti_uri, g = self._dti(start, end)
         return dti_uri, g
-
 
     def get_people(self):
         """
