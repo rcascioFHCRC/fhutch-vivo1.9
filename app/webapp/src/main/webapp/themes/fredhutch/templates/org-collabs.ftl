@@ -27,6 +27,9 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js
 </div>
 
 <script id="header-template" type="text/x-handlebars-template">
+  <div class="dialog">
+    <a onclick="closeTip()" class="close-thik"></a>
+  </div>
   <div class="entry">
     {{# if picture }}
       <img src="{{picture}}" class="tiny-image"/>
@@ -37,17 +40,21 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js
 </script>
 
 <script id="table-template" type="text/x-handlebars-template">
-  <table>
-    <tr>
-      <th>Name</th>
-      <th>Organizational Collaborators</th>
-    </tr>
+  <table id="collab-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Total Number of Organizational Collaborators</th>
+      </tr>
+    </thead>
+    <tbody>
     {{#each objects}}
     <tr>
       <td><a href="../display/{{id}}">{{name}}</a></td>
-      <td>{{#if total }}<a href="#" onclick="loadTarget(this)" data-id="{{id}}">{{total}}{{else}}0{{/if}}</td>
+      <td>{{#if total }}<a href="#" onclick="loadTarget(this)" data-id="{{id}}">{{total}}{{else}}-{{/if}}</td>
     </tr>
     {{/each}}
+    </tbody>
   </table>
 </script>
 
@@ -55,7 +62,6 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js
 <script>
 
   var baseURL="${baseURL}";
-  console.debug(baseURL);
 
   function applyTemplate(item) {
             var source   = document.getElementById("header-template").innerHTML;
@@ -95,7 +101,13 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js
       getCard(point)
 
   }
-  var tipParams = {"html": tip, "size": true, "fullscreen": false, "large": 300, "stacked": true};
+  var tipParams = {
+    "html": tip,
+    "size": true,
+    "fullscreen": false,
+    "large": 300,
+    "stacked": true
+  };
 
   var incomingResearcher = getURLParameter("profile");
   var incomingOrg = document.location.pathname.replace(baseURL, "").split("/")[2];
@@ -109,7 +121,7 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/d3plus.js
   function make_network(org) {
     d3.json(baseURL + "/vds/collaborations/" + org, function(error, data) {
       if (error) return console.error(error);
-      make_viz(data);
+      makeNetworkViz(sortedData);
       addTable(data);
     });
   }
@@ -121,7 +133,7 @@ function getColor(total) {
 }
 
 
-  function make_viz(data) {
+  function makeNetworkViz(data) {
     var maxTotal = _.max(data.nodes, function(object){return object.total}).total
     var third = Math.ceil(maxTotal / 3 )
     var getColor = d3.scale.linear()
@@ -179,5 +191,9 @@ function getColor(total) {
 
     function getURLParameter(name) {
       return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(location.search) || [null, ''])[1].replace(/\+/g, '%20')) || null;
+    }
+
+    function closeTip() {
+      d3plus.tooltip.remove();
     }
 </script>

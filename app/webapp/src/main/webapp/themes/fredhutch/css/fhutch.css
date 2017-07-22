@@ -2098,3 +2098,42 @@ section#recent {
 
 a.website { color: #123054 }
 
+
+table#collab-table tr td, table#collab-table tr th {
+    padding-top: .25em;
+    padding-bottom: .25em;
+}
+
+table#collab-table th {
+    text-align: left;
+    padding-left: 1em;
+    font-weight: 500;
+}
+
+table#collab-table tbody tr td {
+    margin-left: 1em;
+}
+
+table#collab-table td a {
+    margin-left: 1em;
+}
+
+
+/* https://codepen.io/starikovs/pen/Hilyt
+ Close Button */
+
+[class*='close-'] {
+  color: #777;
+  font: 14px/100% arial, sans-serif;
+  position: absolute;
+  right: 5px;
+  text-decoration: none;
+  text-shadow: 0 1px 0 #fff;
+  top: 5px;
+}
+
+.close-thik:after {
+  content: '✖'; /* UTF-8 symbol */
+}
+
+
