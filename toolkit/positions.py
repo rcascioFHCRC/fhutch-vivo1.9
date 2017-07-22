@@ -20,6 +20,8 @@ from rdflib import Graph, Literal
 
 logger = log_setup.get_logger(client_level=logging.DEBUG)
 
+NG = "http://localhost/data/positions"
+
 
 if os.environ.get('HTTP_CACHE') == "1":
     import requests_cache
@@ -46,7 +48,7 @@ class PositionsHarvest(object):
         self.query = q
         self.graph = Graph()
         self.threads = threads
-        self.named_graph = "http://localhost/data/positions"
+        self.named_graph = NG
 
     def get_total(self):
         rsp = client.EntityFilter(self.query, start=0, stop=1)
