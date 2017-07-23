@@ -108,6 +108,17 @@
   </filter-mapping>
 
   <filter>
+    <description>Cache person browse.</description>
+    <filter-name>Browse filter</filter-name>
+    <filter-class>org.fredhutch.filters.BrowseCacheFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>Browse filter</filter-name>
+    <url-pattern>/people-browse/*</url-pattern>
+    <url-pattern>/org-browse</url-pattern>
+  </filter-mapping>
+
+  <filter>
     <filter-name>JSession Strip Filter</filter-name>
     <filter-class>edu.cornell.mannlib.vitro.webapp.filters.JSessionStripFilter</filter-class>
   </filter>

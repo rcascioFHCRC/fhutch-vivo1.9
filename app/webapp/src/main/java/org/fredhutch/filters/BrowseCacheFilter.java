@@ -16,6 +16,7 @@ import java.util.Calendar;
 public class BrowseCacheFilter implements Filter {
     private static final Log log = LogFactory.getLog(BrowseCacheFilter.class);
     private static final String PROPERTY_ENABLE_CACHING = "http.createCacheHeaders";
+    private static final String PROPERTY_ENABLE_BROWSE_CACHING = "http.cacheBrowse";
 
     private ServletContext ctx;
     private boolean enabled;
@@ -23,7 +24,8 @@ public class BrowseCacheFilter implements Filter {
     public void init(FilterConfig fc) throws ServletException {
         ctx = fc.getServletContext();
         ConfigurationProperties props = ConfigurationProperties.getBean(ctx);
-        enabled = Boolean.valueOf(props.getProperty(PROPERTY_ENABLE_CACHING));
+        enabled = Boolean.valueOf(props.getProperty(PROPERTY_ENABLE_CACHING))
+            & Boolean.valueOf(props.getProperty(PROPERTY_ENABLE_BROWSE_CACHING));
     }
 
     public void destroy() {
@@ -44,7 +46,7 @@ public class BrowseCacheFilter implements Filter {
             resp.sendError(HttpServletResponse.SC_NOT_MODIFIED, "Not Modified");
         } else {
             //Should we send cache headers?
-            if (shouldCache(req, thisEtag)) {
+            if (enabled == true) {
                 resp.addHeader("ETag", thisEtag);
             }
         }
