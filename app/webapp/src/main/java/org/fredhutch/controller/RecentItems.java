@@ -122,7 +122,7 @@ public class RecentItems extends HttpServlet {
                 "       rdfs:label ?title ; \n" +
                 "       vivo:dateTimeValue ?dt .\n" +
                 "   ?dt vivo:dateTime ?date . \n" +
-                "   FILTER (?date > ?cutOff^^xsd:dateTime) \n" +
+                "   FILTER (?date > ?cutOff^^xsd:date) \n" +
                 "} \n" +
                 "ORDER BY DESC(?date) \n" +
                 "LIMIT 10\n";
@@ -172,7 +172,7 @@ public class RecentItems extends HttpServlet {
         cal.add(Calendar.DAY_OF_MONTH, -120);
         Date today90 = cal.getTime();
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        return df.format(today90) + "T00:00:00Z";
+        return df.format(today90);
     }
 }
 

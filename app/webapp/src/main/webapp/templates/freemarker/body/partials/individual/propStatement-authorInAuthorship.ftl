@@ -8,6 +8,7 @@
 
 <#import "lib-sequence.ftl" as s>
 <#import "lib-datetime.ftl" as dt>
+<#import "hutch-dates.ftl" as hd>
 
 <@showAuthorship statement />
 
@@ -45,7 +46,7 @@
     </#local>
 
     <div class="pub-container" pubname="${statement.infoResourceName}" datetime="${statement.dateTime!}" venue="${statement.journal!"z"}">
-        <div class="title">${resourceTitle} <span class="pub-date"><@dt.yearSpan "${statement.dateTime!}" /></span></div>
+        <div class="title">${resourceTitle} <span class="pub-date"><@hd.year "${statement.dateTime!}" /></span></div>
         <#if statement.authorList?has_content>
             <div class="author-list">
             <#assign shortauthors=(statement.authorList)>
