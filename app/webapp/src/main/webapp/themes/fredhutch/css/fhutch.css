@@ -1566,6 +1566,9 @@ p.address-line {
 }
 .listDateTime {
     font-weight: bold;
+    padding: 0 0.4em;
+    font-size: 0.8em;
+    background: #f4f4f4;    
 }
 /* EDITING DISPLAY------>  */
 .edit-individual {
