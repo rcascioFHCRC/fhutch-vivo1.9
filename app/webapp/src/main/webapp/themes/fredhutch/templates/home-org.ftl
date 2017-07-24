@@ -36,7 +36,7 @@
 <p>More information about our <a href="http://www.fredhutch.org/en/about/leadership.html">Leadership and Board</a>
 </p>
 <p>
-<a href="${urls.base}/org-browse">Browse Oganizational Structure</a>
+<a href="${urls.base}/org-browse">Browse Organizational Structure</a>
 </p>
 
 <div class="alpha-browse">
