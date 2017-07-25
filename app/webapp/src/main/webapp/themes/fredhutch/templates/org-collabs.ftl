@@ -133,30 +133,42 @@ function getColor(total) {
 }
 
 
-  function makeNetworkViz(data) {
-    var maxTotal = _.max(data.nodes, function(object){return object.total}).total
-    var third = Math.ceil(maxTotal / 3 )
-    var getColor = d3.scale.linear()
-      .domain([1, third, third+third, maxTotal])
-      .range(['#ffffcc','#a1dab4','#41b6c4','#225ea8']);
-    var visualization = d3plus.viz()
-      .container("#viz")
-      .type("network")
-      .data({"value": data.nodes})
-      .size("total")
-      .edges({
-        "value": data.edges,
-      })
-      .color(function(d){
-        return getColor(d.total);
-      })
-      .font({ "family": "Geogrotesque-Regular"})
-      .legend(false)
-      //.color({"range": ["#9b59b6", "#3498db", "#95a5a6", "#e74c3c", "#34495e", "#2ecc71"], "value": "total"})
-      .tooltip(tipParams)
-      .text("name")
-      .draw()
-    };
+function makeNetworkViz(data) {
+  var maxTotal = _.max(data.nodes, function(object){return object.total}).total
+  var third = Math.ceil(maxTotal / 3 )
+  var getColor = d3.scale.linear()
+    .domain([1, third, third+third, maxTotal])
+    .range(['#ffffcc','#a1dab4','#41b6c4','#225ea8']);
+  var visualization = d3plus.viz()
+    .container("#viz")
+    .type("network")
+    .data({"value": data.nodes})
+    .size("total")
+    .edges({
+      "value": data.edges,
+    })
+    .color(function(d){
+      return getColor(d.total);
+    })
+    .font({ "family": "Geogrotesque-Regular"})
+    .legend(false)
+    .format({ "text" : function( text , key ) {
+        if (text === "primary connections") {
+          return "Local Co-Authors";
+        } else if ( text == "total" ) {
+          return "Collaborations"
+        }
+        else {
+          return text.toLocaleString();
+        }
+
+      }
+    })
+    //.order("total")
+    .tooltip(tipParams)
+    .text("name")
+    .draw()
+  };
 
     function makeRings(org, localName) {
       d3.json(baseURL + "/vds/collaborations/" + org, function(error, data) {
@@ -179,6 +191,20 @@ function getColor(total) {
         .focus(localName)
         .tooltip(tipParams)
         .text("name")
+        .format({ "text" : function( text , key ) {
+          console.log(key);
+          console.log(text);
+          if (text === "primary connections") {
+            return "Local Co-Authors";
+          } else if ( text == "total" ) {
+            return "Collaborations"
+          }
+          else {
+            return text.toLocaleString();
+          }
+
+        }
+        })
         .font({ "family": "Geogrotesque-Regular"})
         .draw()
   };
