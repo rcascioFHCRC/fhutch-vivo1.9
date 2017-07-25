@@ -98,7 +98,7 @@
                     } else {
                         url = val.url;
                     }
-                    items.push( "<li><a href=\"" + url + "\">" + val.name + "</a>&nbsp;<span class=\"date\">" + val.date + "</span></li>" );
+                    items.push( "<li><a href=\"" + url + "\">" + val.name + "</a>&nbsp;<span class=\"date\">" + val.date.substring(0,7) + "</span></li>" );
                 });
                 $( "<ul/>", {
                     html: items.join( "" )
