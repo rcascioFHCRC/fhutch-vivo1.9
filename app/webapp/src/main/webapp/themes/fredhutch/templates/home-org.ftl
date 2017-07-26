@@ -4,7 +4,7 @@
     <section id="individual-info" role="region">
         <header>
             <h1 class="fn">${title}</h1>
-            <h4>Leadership</h4>
+            <h2>Leadership</h2>
         </header>
     </section>
 </section>
