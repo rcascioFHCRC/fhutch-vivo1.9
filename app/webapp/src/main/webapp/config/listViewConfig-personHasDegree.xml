@@ -15,8 +15,6 @@
             ?resource
             ?label
             ?date
-            (STR(YEAR(?date)) as ?year)
-
         WHERE
         {
             ?subject ?property ?resource .

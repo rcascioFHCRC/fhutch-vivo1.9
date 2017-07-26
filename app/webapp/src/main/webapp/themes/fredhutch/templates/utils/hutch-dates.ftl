@@ -7,5 +7,5 @@ Requires start to be populated.-->
 
 
 <#macro year date="">
-<#if date?has_content><span class="listDateTime">${date?string[0..3]}</#if>
+<#if date?has_content><span class="listDateTime">${date?string[0..3]}</span></#if>
 </#macro>
