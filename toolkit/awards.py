@@ -66,28 +66,15 @@ class Award(BaseModel):
         return g
 
     def get_awarded_by(self):
-        #g = Graph()
         for org in client.get_related_entities('Organisation', self.cid, 'AWRD_has_ORGA'):
-            #ouri = org_uri(org.cid)
             return org.cfname
-            #g.add((self.uri, FHD.awardedBy, ouri))
         return None
-
-    def add_date(self):
-        g = Graph()
-        on_date = self._v('awardedon')
-        if on_date is not None:
-            date_uri, dg = self._date("degree", on_date)
-            g += dg
-            g.add((self.uri, VIVO.dateTimeValue, date_uri))
-        return g
 
     def build_label(self):
         lb = [self.nameofhonor, self._v("description")]
         lb.append(self.related_org_label("AWRD_has_ORGA"))
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
-
 
     def to_rdf(self):
         g = Graph()
@@ -102,7 +89,7 @@ class Award(BaseModel):
 
         g += self.get_awardee()
         #g += self.get_awarded_by()
-        g += self.add_date()
+        g += self.get_date_statements("award", self._v("awardedon"))
 
         return g
 
@@ -117,9 +104,6 @@ def single_thread_harvest_awards(sample=True):
     for award in client.filter_query(query):
         g += client.to_graph(award, Award)
         done += 1
-        #if (sample is True) and (done >= 20):
-        #    break
-    #print g.serialize(format='n3')
     backend.sync_updates(NG, g)
 
 

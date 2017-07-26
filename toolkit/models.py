@@ -119,6 +119,16 @@ class BaseModel(client.BaseEntity):
         except AttributeError:
             return
 
+    def get_date_statements(self, dtype, dv):
+        g = Graph()
+        if dv is None:
+            return g
+        date_uri, dg = self._date(dtype, dv)
+        g += dg
+        g.add((self.uri, VIVO.dateTimeValue, date_uri))
+        return g
+
+
     def _date(self, dtype, dv):
         g = Graph()
         date_obj = client.convert_date(dv)
@@ -1565,13 +1575,7 @@ class EducationTraining(BaseModel):
         return g
 
     def add_date(self):
-        g = Graph()
-        on_date = self._v('conferredon')
-        if on_date is not None:
-            date_uri, dg = self._date("degree", on_date)
-            g += dg
-            g.add((self.uri, VIVO.dateTimeValue, date_uri))
-        return g
+        return self.get_date_statements("award", self._v("conferredon"))
 
     def build_degree_label(self):
         label = self.degreetype['value']
@@ -1628,6 +1632,7 @@ class EducationTraining(BaseModel):
                 r.set(VIVO.dateTimeInterval, dti_uri)
             except TypeError:
                 pass
+            #import ipdb; ipdb.set_trace()
         elif rtype == 'License' or rtype == 'Certification':
             r.set(RDF.type, FHD.License)
             r.set(RDFS.label, self.build_license_label())
