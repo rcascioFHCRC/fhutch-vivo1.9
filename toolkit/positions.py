@@ -149,6 +149,21 @@ def harvest(query, sync=False):
         ph.post_updates()
 
 
+def single_thread_harvest():
+    """
+    Fetch all positions
+    """
+    logger.info("Harvesting Positions.")
+    g = Graph()
+    done = 0
+    for pos in client.filter_query(query):
+        g += client.to_graph(pos, models.Position)
+        done += 1
+        if done > 100:
+            import ipdb; ipdb.set_trace()
+    backend.sync_updates(NG, g)
+
 if __name__ == "__main__":
     logger.info("Starting positions harvest.")
     harvest(query, sync=True)
+    #single_thread_harvest()
