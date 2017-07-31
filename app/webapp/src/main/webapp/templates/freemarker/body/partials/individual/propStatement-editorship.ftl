@@ -8,6 +8,7 @@
  
 <#import "lib-sequence.ftl" as s>
 <#import "lib-datetime.ftl" as dt>
+<#import "hutch-dates.ftl" as hd>
 
 <@showEditorship statement />
 
@@ -92,5 +93,5 @@
         </#if>
     </#local>
 
-    ${resourceTitle} ${citationDetails} <@dt.yearSpan "${statement.dateTime!}" /> 
+    ${resourceTitle} ${citationDetails} <@hd.year "${statement.dateTime!}" /> 
 </#macro>
