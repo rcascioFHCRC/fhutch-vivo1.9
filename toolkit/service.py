@@ -152,7 +152,7 @@ class Service(BaseModel):
             #if self.committeerole["value"] == "Other":
             role += u"{}".format(self.committeerole["value"])
             if role == 'Other' and hasattr(self, "roleother"):
-                role += u"{}".format(self.roleother)
+                role = u"{}".format(self.roleother)
         elif hasattr(self, "roleother"):
             role += u"{}".format(self.roleother)
         if hasattr(self, "committeegroup"):
