@@ -156,7 +156,10 @@ class Service(BaseModel):
         elif hasattr(self, "roleother"):
             role += u"{}".format(self.roleother)
         if hasattr(self, "committeegroup"):
-            role += u", {}".format(self.committeegroup)
+			if not role:
+				role = u"{}".format(self.committeegroup)
+			else:
+				role += u", {}".format(self.committeegroup)
         if hasattr(self, "consultantactivity"):
             role += u", {}".format(self.consultantactivity["value"])           
         return role
