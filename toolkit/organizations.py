@@ -5,6 +5,8 @@ import os
 import logging
 import logging.handlers
 
+from rdflib.query import ResultException
+
 from converis import client, backend
 
 # local models
@@ -27,6 +29,7 @@ if os.environ.get('HTTP_CACHE') == "1":
 THREADS = int(os.environ['THREADS'])
 
 NG = "http://localhost/data/orgs"
+VNG = "http://localhost/data/orgs-videos"
 
 # get orgs with cards or parent orgs that have child orgs with cards.
 internal_orgs_query = """
@@ -56,6 +59,31 @@ class OrgaHarvest(ThreadedHarvest):
         #self.page_size = 30
 
 
+def related_videos():
+    """
+    Get videos related to people with positions in this org.
+    """
+    q = models.rq_prefixes + """
+    CONSTRUCT {
+        ?org fhd:video ?video .
+    }
+    WHERE {
+      ?p a foaf:Person ;
+         fhd:video ?video .
+       ?p vivo:relatedBy ?position .
+      ?position a vivo:Position ;
+                vivo:relates ?p, ?org .
+      ?org a fhd:Organization .
+    }
+    """
+    vstore = models.get_store()
+    try:
+        g = vstore.query(q)
+        logger.info("Found {} org videos".format(len(g)))
+    except ResultException:
+        g = Graph()
+    backend.sync_updates(VNG, g)
+
 def harvest():
     jh = OrgaHarvest(internal_orgs_query, models.Organization)
     jh.run_harvest()
@@ -74,3 +102,4 @@ if __name__ == "__main__":
     logger.info("Starting harvest.")
     harvest()
     #single_thread_harvest()
+    related_videos()

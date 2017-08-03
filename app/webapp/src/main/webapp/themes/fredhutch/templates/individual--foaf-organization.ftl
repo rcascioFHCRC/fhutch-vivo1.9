@@ -34,6 +34,13 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
 
 <script>
 
+//replace video links with
+var videos = $('h3#video').siblings('ul').children();
+$.each(videos, function(idx, item){
+  var link = $(item).text().trim();
+  $(item).html("<li class=\"embed-video\"><iframe width=\"560px\" height=\"315\" src=\"" + link + "\"/></li>");
+});
+
 //pub sorting - only show if there are pubs on the page
 if ($('#relates-Publication-List li').length > 0) {
   var sorter = $('#pub-sorter')[0];
