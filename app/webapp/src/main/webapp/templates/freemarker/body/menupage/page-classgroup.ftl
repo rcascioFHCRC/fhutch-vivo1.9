@@ -17,7 +17,7 @@
         </#if>
         <#if classGroup?contains("org")>
             <div class="aside"><a href="${urls.base}/org/c638881">View Fred Hutchinson Organization Page</a></div>
-            <div class="aside"><a href="${urls.base}/org-browse">View internal organizational structure</a></div>
+            <div class="aside"><a href="${urls.base}/org-browse">Browse Organizational Structure</a></div>
         </#if>
     </section>
 
