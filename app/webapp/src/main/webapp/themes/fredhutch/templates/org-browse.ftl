@@ -70,6 +70,6 @@
 </div>
 
 <hr style="margin-top: 32px;"/>
-<p><a href="/organizations">Browse by Organizational Type</a></p>
+<p><a href="/organizations">Browse by Organization Type</a></p>
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/fhBrowse.js"></script>')}
