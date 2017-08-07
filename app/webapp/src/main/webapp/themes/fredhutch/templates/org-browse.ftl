@@ -37,13 +37,7 @@
     </#if>
 </#macro>
 
-<div class="org-browse-header">
-    <h2>${title}</h2>
-    <div><a href="./organizations">Browse by organization type</a></div>
-</div>
-
 <div id="org-tree">
-    <h3>Browse by organization structure</h3>
     <h4><a class="top-org" href="${topUrl}">Fred Hutchinson Cancer Research Center</a></h4>
 
     <h4>Divisions</h4>
@@ -53,6 +47,15 @@
     </#list>
     </ul>
 
+    <#if irc?hasContent>
+        <h4>Integrated Research Centers</h4>
+        <ul>
+        <#list irc as rc>
+            <@branch org=rc kids=rc.children!/>
+        </#list>
+        </ul>
+    </#if>
+	
     <h4>Scientific Initiatives</h4>
     <ul>
     <#list sciInit as sciI>
@@ -60,16 +63,6 @@
     </#list>
     </ul>
 
-    <#if irc?hasContent>
-        <h4>Interdisciplinary Research Centers</h4>
-        <ul>
-        <#list irc as rc>
-            <@branch org=rc kids=rc.children!/>
-        </#list>
-        </ul>
-    </#if>
-
 </div>
 
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/fhBrowse.js"></script>')}
-
