@@ -37,6 +37,10 @@
     </#if>
 </#macro>
 
+<div class="org-browse-header">
+    <h2>${title}</h2>
+</div>
+
 <div id="org-tree">
     <h4><a class="top-org" href="${topUrl}">Fred Hutchinson Cancer Research Center</a></h4>
 
