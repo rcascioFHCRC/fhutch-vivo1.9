@@ -17,6 +17,6 @@
 <#assign webpage = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#url")!>
 <#if webpage?has_content>
 <ul class="individual-urls" role="list">
-    <li role="list-item"><a href="${webpage.statements[0].value}">${webpage.statements[0].value}</a></li>
+    <li role="list-item"><a href="${webpage.statements[0].value}" target="_blank">${webpage.statements[0].value}</a></li>
 </ul>
 </#if>
