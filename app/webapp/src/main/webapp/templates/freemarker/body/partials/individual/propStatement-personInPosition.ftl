@@ -28,12 +28,17 @@
         </#if>
     </#local>
     <#-- The sparql query returns both the org's parent (middleOrg) and grandparent (outerOrg).
-         For now, we are only displaying the parent in the list view. -->
+         We are currently displaying the parent and grandparent in the list view. -->
     <#local middleOrganization>
         <#if statement.middleOrg??>
             <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><a href="${profileUrl(statement.uri("middleOrg"))}" title="${i18n().middle_organization}"><span itemprop="name">${statement.middleOrgName!}</span></a></span>
         </#if>
     </#local>
-    <@s.join [ posTitle, linkedIndividual, middleOrganization! ]/><span class="space"> </span>
+    <#local outerOrganization>
+        <#if statement.outerOrg??>
+            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><a href="${profileUrl(statement.uri("outerOrg"))}" title="${i18n().outer_organization}"><span itemprop="name">${statement.outerOrgName!}</span></a></span>
+        </#if>
+    </#local>    
+    <@s.join [ posTitle, linkedIndividual, middleOrganization, outerOrganization! ]/><span class="space"> </span>
     <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
 </#macro>
