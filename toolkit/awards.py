@@ -89,8 +89,25 @@ class Award(BaseModel):
 
         g += self.get_awardee()
         #g += self.get_awarded_by()
-        g += self.get_date_statements("award", self._v("awardedon"))
+        #g += self.get_date_statements("award", self._v("awardedon"))
 
+        if hasattr(self, 'awardedon'):
+            start = self.awardedon
+        else:
+            start = None
+
+        if hasattr(self, "endedon"):
+            end = self.endedon
+        else:
+            end = None
+        # Add datetime interval
+        try:
+            dti_uri, dti_g = self._dti(start, end)
+            g += dti_g
+            r.set(VIVO.dateTimeInterval, dti_uri)
+        except TypeError:
+            pass        
+        
         return g
 
 
