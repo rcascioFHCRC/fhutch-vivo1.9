@@ -14,7 +14,8 @@
         SELECT DISTINCT
             ?resource
             ?label
-            ?date
+            ?dateTimeStart
+            ?dateTimeEnd
 
         WHERE
         {
@@ -23,10 +24,17 @@
             ?resource rdfs:label ?label .
             OPTIONAL
             {
-                ?resource core:dateTimeValue ?dateTimeValue .
-                ?dateTimeValue core:dateTime ?date .
+                ?resource core:dateTimeInterval ?dateTimeInterval .
+                ?dateTimeInterval core:start ?dateTimeStartValue .
+                ?dateTimeStartValue core:dateTime ?dateTimeStart .
             }
-        } ORDER BY DESC(?date)
+            OPTIONAL
+            {
+                ?resource core:dateTimeInterval ?dateTimeInterval .
+                ?dateTimeInterval core:end ?dateTimeEndValue .
+                ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+            }
+        } ORDER BY DESC(?dateTimeStart)
     </query-select>
     <template>propStatement-labelDate.ftl</template>
 </list-view-config>
