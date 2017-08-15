@@ -57,9 +57,9 @@
 
     <div class="column accred">
             <h3></h3>
-            <p><a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo_2016.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a></p>
-            <p><a href="http://www.nccn.org/" target="_blank"><img id="nci_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_nci_logo.png" alt="National Comprehensive Cancer Network"></a></p>
-            <p><a href="http://www.aahrpp.org/" target="_blank"><img id="aahrpp_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/aahrpp_logo_footer.png" alt="AAHRPP logo"></a></p>
+            <p><a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="https://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo_2016.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a></p>
+            <p><a href="http://www.nccn.org/" target="_blank"><img id="nci_logo_footer" src="https://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_nci_logo.png" alt="National Comprehensive Cancer Network"></a></p>
+            <p><a href="http://www.aahrpp.org/" target="_blank"><img id="aahrpp_logo_footer" src="https://www.fredhutch.org/etc/designs/public/img/logos/aahrpp_logo_footer.png" alt="AAHRPP logo"></a></p>
             <p id="aahrpp_accreditation">Accredited by the Association for the Accreditation of Human Research Protection Programs</p>
     </div>
 
