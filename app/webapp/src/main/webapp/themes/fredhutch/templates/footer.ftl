@@ -57,15 +57,15 @@
 
     <div class="column accred">
             <h3></h3>
-            <p><a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo_2016.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a></p>
-            <p><a href="http://www.nccn.org/" target="_blank"><img id="nci_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_nci_logo.png" alt="National Comprehensive Cancer Network"></a></p>
-            <p><a href="http://www.aahrpp.org/" target="_blank"><img id="aahrpp_logo_footer" src="http://www.fredhutch.org/etc/designs/public/img/logos/aahrpp_logo_footer.png" alt="AAHRPP logo"></a></p>
+            <p><a href="http://www.cancer.gov/" target="_blank"><img id="ccc_logo_footer" src="https://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_ccc_logo_2016.png" alt="A Comprehensive Cancer Center Designated by the National Cancer Institute"></a></p>
+            <p><a href="http://www.nccn.org/" target="_blank"><img id="nci_logo_footer" src="https://www.fredhutch.org/etc/designs/public/img/logos/fred_hutch_nci_logo.png" alt="National Comprehensive Cancer Network"></a></p>
+            <p><a href="http://www.aahrpp.org/" target="_blank"><img id="aahrpp_logo_footer" src="https://www.fredhutch.org/etc/designs/public/img/logos/aahrpp_logo_footer.png" alt="AAHRPP logo"></a></p>
             <p id="aahrpp_accreditation">Accredited by the Association for the Accreditation of Human Research Protection Programs</p>
     </div>
 
     <div class="column social">
             <h3>Follow Us</h3>
-            <img id="social_media_icons_footer" src="http://www.fredhutch.org/etc/designs/public/img/icons/socialmedia_footer.png" alt="Social media icons" usemap="#socialmap">
+            <img id="social_media_icons_footer" src="https://www.fredhutch.org/etc/designs/public/img/icons/socialmedia_footer.png" alt="Social media icons" usemap="#socialmap">
             <map name="socialmap">
                 <area shape="rect" coords="0,0,28,28" href="http://www.facebook.com/HutchinsonCenter" target="_blank" alt="Like Fred Hutch on Facebook"></area>
                 <area shape="rect" coords="28,0,56,28" href="http://twitter.com/fredhutch" target="_blank" alt="Follow Fred Hutch on Twitter"></area>
