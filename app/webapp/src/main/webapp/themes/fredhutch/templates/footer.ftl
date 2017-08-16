@@ -65,7 +65,7 @@
 
     <div class="column social">
             <h3>Follow Us</h3>
-            <img id="social_media_icons_footer" src="http://www.fredhutch.org/etc/designs/public/img/icons/socialmedia_footer.png" alt="Social media icons" usemap="#socialmap">
+            <img id="social_media_icons_footer" src="https://www.fredhutch.org/etc/designs/public/img/icons/socialmedia_footer.png" alt="Social media icons" usemap="#socialmap">
             <map name="socialmap">
                 <area shape="rect" coords="0,0,28,28" href="http://www.facebook.com/HutchinsonCenter" target="_blank" alt="Like Fred Hutch on Facebook"></area>
                 <area shape="rect" coords="28,0,56,28" href="http://twitter.com/fredhutch" target="_blank" alt="Follow Fred Hutch on Twitter"></area>
