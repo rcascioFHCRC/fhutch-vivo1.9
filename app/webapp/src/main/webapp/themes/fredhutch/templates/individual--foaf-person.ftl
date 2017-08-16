@@ -25,6 +25,7 @@
 <#assign orcidProp = "http://vivo.fredhutch.org/ontology/display#orcid">
 <#assign localCoauthorProp = "http://vivo.fredhutch.org/ontology/display#hasLocalCoauthor">
 <#assign constructionProp = "http://vivo.fredhutch.org/ontology/display#underConstruction">
+<#assign piProp = "http://vivo.fredhutch.org/ontology/display#PIof">
 
 <#assign vcardName = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Name")!>
 <#assign vcardPhone = propertyGroups.pullProperty("http://purl.obolibrary.org/obo/ARG_2000028","http://www.w3.org/2006/vcard/ns#Telephone")!>
@@ -146,15 +147,16 @@
 
 <#-- Ontology properties -->
 <#if !editable>
-	<#-- We don't want to see the first name and last name unless we might edit them. -->
-	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/firstName")!>
-	<#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
-	<#assign skipThis = propertyGroups.pullProperty(imageProp)!>
+<#-- We don't want to see the first name and last name unless we might edit them. -->
+  <#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/firstName")!>
+  <#assign skipThis = propertyGroups.pullProperty("http://xmlns.com/foaf/0.1/lastName")!>
+  <#assign skipThis = propertyGroups.pullProperty(imageProp)!>
   <#assign skipThis = propertyGroups.pullProperty (constructionProp)!>
   <#assign skipThis = propertyGroups.pullProperty(orcidProp)!>
   <#assign skipThis = propertyGroups.pullProperty(localCoauthorProp)!>
   <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#briefDescription")!>
   <#assign skipThis = propertyGroups.pullProperty("http://vivo.fredhutch.org/ontology/display#nickname")!>
+  <#assign skipThis = propertyGroups.pullProperty(piProp)!>
 </#if>
 
 <!-- Property group menu or tabs -->
