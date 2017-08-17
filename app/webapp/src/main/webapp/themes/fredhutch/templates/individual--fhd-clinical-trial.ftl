@@ -18,6 +18,7 @@
 <#assign nct=gdp(nctp)!>
 <#assign url=gdp(furlp)!>
 
+
 <#assign individualProductExtension>
     <ul class="individual-urls" role="list">
         <li role="list-item">For eligibility information and additional details, visit 
@@ -41,12 +42,20 @@
     <!--postindividual overiew ftl-->
 </#assign>
 
+
+<#-- Ontology properties -->
+<#if !editable>
+<#-- We don't want to see the first name and last name unless we might edit them. -->
+  <#assign skipThis = propertyGroups.pullProperty(furlp)!>
+</#if>
+
 <#include "individual-vitro.ftl">
 
 <p class="disclaimer">
 Disclaimer: We update this information regularly. However, what you read today may not be completely up to date.
 Please remember: Talk to your health care providers first before making decisions about your health care. Whether you are eligible for a research study depends on many things. There are specific requirements to be in research studies. These requirements are different for each study.
 </p>
+
 
 <script>
 var i18nStrings = {
