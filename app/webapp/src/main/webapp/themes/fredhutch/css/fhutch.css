@@ -1424,12 +1424,12 @@ ul#individual-tools {
 ul.individual-urls {
     list-style: url(../../../images/individual/arrow-green.gif);
 }
-ul.individual-urls li {
-    font-size: .875em;
-    line-height: 1.6em;
-}
 ul.individual-urls-people {
     list-style: url(../../../images/individual/arrow-grey.gif);
+}
+#individual-intro ul.individual-urls li {
+    font-size: 1em;
+    padding-bottom: 0;
 }
 /* INDIVIDUAL RIGHT CONTENT ------>  */
 #individual-info,
@@ -1820,7 +1820,13 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
 
 
 .ca-network {
-    margin-top: 1em;
+    margin: 0 0 0 15px;
+    list-style: url(../../../images/individual/arrow-green.gif);
+    line-height: 1.5em;
+}
+
+.ca-network a {
+    color: #123054;
 }
 
 .pub-id-link {
