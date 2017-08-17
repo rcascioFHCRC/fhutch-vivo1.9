@@ -6,8 +6,10 @@
      is also used to generate the property statement during a deletion.
  -->
 
+<#import "hutch-dates.ftl" as hd>
 <#import "lib-sequence.ftl" as s>
 <#import "lib-datetime.ftl" as dt>
+
 <@showPosition statement />
 
 <#-- Use a macro to keep variable assignments local; otherwise the values carry over to the
@@ -36,9 +38,9 @@
     <#assign sc = ['http://vivoweb.org/ontology/core#FacultyPosition', 'http://vivoweb.org/ontology/core#FacultyAdministrativePosition', 'http://vivo.fredhutch.org/ontology/display#Emeritus']>
 
     <#if sc?seq_contains("${statement.subclass!}")>
-         <@s.join [ linkedIndividual, statement.positionTitle! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+         <@s.join [ linkedIndividual, statement.positionTitle! ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
     <#else>
-        <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@dt.yearIntervalSpan "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+        <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
     </#if>
 </#if>
 </#macro>
