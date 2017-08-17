@@ -84,21 +84,23 @@
                   <li class="person-contact"><img src="../images/orcid.png"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
                 </#if>
               </#if>
-              <!-- localCa -->
-              <#assign lca = propertyGroups.getProperty(localCoauthorProp)!>
-              <#if lca?has_content>
-                <#if lca.statements[0]??>
-                    <#if (lca.statements[0].value) != "false">
-                      <li class="ca-network">
-                        <#include "utils/coauthor-viz.ftl">
-                      </li>
-                    </#if>
 
-                  </#if>
-              </#if>
-        </ul>
-        <!-- Websites -->
-        <#include "individual-webpage.ftl">
+      <!-- Websites -->
+      <#include "individual-webpage.ftl">
+    
+      <!-- localCa -->
+      <#assign lca = propertyGroups.getProperty(localCoauthorProp)!>
+      <#if lca?has_content>
+      <#if lca.statements[0]??>
+        <#if (lca.statements[0].value) != "false">
+          <li class="ca-network">
+          <#include "utils/coauthor-viz.ftl">
+          </li>
+        </#if>
+
+        </#if>
+      </#if>
+        </ul>     
     </section>
 
     <section id="individual-info" ${infoClass!} role="region">
@@ -194,10 +196,10 @@ http://vivo.med.cornell.edu/display/cwid-ljaronne -->
 
 <script>
     var imagesPath = '${urls.images}';
-	var individualUri = '${individual.uri!}';
-	var individualPhoto = '${individual.thumbNail!}';
-	var exportQrCodeUrl = '${urls.base}/qrcode?uri=${individual.uri!}';
-	var baseUrl = '${urls.base}';
+  var individualUri = '${individual.uri!}';
+  var individualPhoto = '${individual.thumbNail!}';
+  var exportQrCodeUrl = '${urls.base}/qrcode?uri=${individual.uri!}';
+  var baseUrl = '${urls.base}';
     var i18nStrings = {
         displayLess: '${i18n().display_less}',
         displayMoreEllipsis: '${i18n().display_more_ellipsis}',
@@ -254,10 +256,8 @@ ${headScripts.add('<script type="text/javascript" src="${urls.base}/js/tiny_mce/
 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/individual/individualUtils.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/individual/individualQtipBubble.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/individual/individualUriRdf.js"></script>',
-			  '<script type="text/javascript" src="${urls.base}/js/individual/moreLessController.js"></script>',
+        '<script type="text/javascript" src="${urls.base}/js/individual/moreLessController.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/jquery-ui/js/jquery-ui-1.8.9.custom.min.js"></script>',
               '<script type="text/javascript" src="${urls.base}/js/imageUpload/imageUploadUtils.js"></script>')}
 
 ${scripts.add('<script src="${urls.base}/js/tinysort.min.js"></script>')}
-
-
