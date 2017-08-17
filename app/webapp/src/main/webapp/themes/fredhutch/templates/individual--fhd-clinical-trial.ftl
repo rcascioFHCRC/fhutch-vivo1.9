@@ -22,19 +22,19 @@
     <ul class="individual-urls" role="list">
         <li role="list-item">For eligibility information and additional details, visit 
         <#if nct?has_content>
-            <a href="https://clinicaltrials.gov/show/${nct}">https://clinicaltrials.gov/show/${nct}</a>
+            <a href="https://clinicaltrials.gov/show/${nct}" target="_blank">https://clinicaltrials.gov/show/${nct}</a>
         </#if>
         <#if url?has_content>
             <#if "https://clinicaltrials.gov/show/${nct}"!= url>
                 or
-                <a href="${url}">${url}</a>
+                <a href="${url}" target="_blank">${url}</a>
             </#if>
         </#if>
         </li>
     </ul>
     <#include "individual-overview.ftl">
     <ul class="top-offset1 individual-urls">
-        <li><a href="http://www.fredhutch.org/en/treatment/clinical-trials/patient-protection.html">Patient Protection Information</a></li>
+        <li><a href="http://www.fredhutch.org/en/treatment/clinical-trials/patient-protection.html" target="_blank">Patient Protection Information</a></li>
     </ul>
         </section> <!-- #individual-info -->
     </section> <!-- #individual-intro -->
