@@ -842,7 +842,7 @@ class Publication(BaseModel):
             '10357': FHP.ArticleAbstract,
             '10347': FHP.Book,
             '10346': FHP.BookChapterEntry,
-            '10242': FHP.Dataset,
+            '10342': FHP.Dataset,
             '10341': FHP.DissertationThesis,
             '10336': FHP.InternetCommunication,
             '10348': FHP.Multimedia,
