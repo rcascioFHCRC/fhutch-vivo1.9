@@ -37,10 +37,15 @@
     <#-- For these subclasses, don't show org. -->
     <#assign sc = ['http://vivoweb.org/ontology/core#FacultyPosition', 'http://vivoweb.org/ontology/core#FacultyAdministrativePosition', 'http://vivo.fredhutch.org/ontology/display#Emeritus']>
 
-    <#if sc?seq_contains("${statement.subclass!}")>
-         <@s.join [ linkedIndividual, statement.positionTitle! ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+    <#if individual.mostSpecificTypes?seq_contains("Lab")>
+        <@s.join [ linkedIndividual ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
     <#else>
-        <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+        <#if sc?seq_contains("${statement.subclass!}")>
+             <@s.join [ linkedIndividual, statement.positionTitle! ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+        <#else>
+            <@s.join [ linkedIndividual, statement.positionTitle!, statement.orgName! ] /> <@hd.yearInterval "${statement.dateTimeStart!}" "${statement.dateTimeEnd!}" />
+        </#if>
     </#if>
+
 </#if>
 </#macro>
