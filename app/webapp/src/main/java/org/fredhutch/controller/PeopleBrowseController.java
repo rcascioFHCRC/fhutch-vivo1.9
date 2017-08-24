@@ -29,6 +29,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
     private static final String PEOPLE_MODEL_QUERY = "peopleBrowse/getModel.rq";
     private static final String ORDERED_PEOPLE_QUERY = "peopleBrowse/orderedPeople.rq";
     private static final String PERSON_POSITIONS_QUERY = "peopleBrowse/personPositions.rq";
+    private static final String PERSON_LINKS_QUERY = "peopleBrowse/links.rq";
     public static final String TMP_NAMESPACE = "http://localhost/tmp#";
 
     @Override
@@ -61,7 +62,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
         return new TemplateResponseValues(TEMPLATE, body);
     }
 
-    public static ArrayList<HashMap> getPeople(Model positionsModel, VitroRequest vreq) {
+    public static ArrayList<HashMap> getPeople(Model peopleModel, VitroRequest vreq) {
         ArrayList<HashMap> people = new ArrayList<HashMap>();
         String rq = readQuery(ORDERED_PEOPLE_QUERY);
         ParameterizedSparqlString q2 = new ParameterizedSparqlString();
@@ -71,7 +72,7 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
         q2.setNsPrefix("tmp", "http://localhost/tmp#");
         String query = q2.toString();
         log.debug("Ordered people query:\n" + query);
-        QueryExecution qexec = QueryExecutionFactory.create(query, positionsModel);
+        QueryExecution qexec = QueryExecutionFactory.create(query, peopleModel);
         try {
             ResultSet results = qexec.execSelect();
             while ( results.hasNext() ) {
@@ -87,7 +88,8 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
                 thisPerson.put("description", soln.getLiteral("description"));
                 thisPerson.put("email", soln.getLiteral("email"));
                 thisPerson.put("phone", soln.getLiteral("phone"));
-                thisPerson.put("positions", getPositions(positionsModel, person, vreq));
+                thisPerson.put("positions", getPositions(peopleModel, person, vreq));
+                thisPerson.put("links", getLinks(peopleModel, person, vreq));
                 people.add(thisPerson);
 
             }
@@ -126,6 +128,33 @@ public class PeopleBrowseController extends FreemarkerHttpServlet {
             qexec.close();
         }
         return positions;
+    }
+
+    public static ArrayList<HashMap> getLinks(Model model, Resource person, VitroRequest vreq) {
+        ArrayList<HashMap> links = new ArrayList<HashMap>();
+        String rawQuery = readQuery(PERSON_LINKS_QUERY );
+        ParameterizedSparqlString q2 = new ParameterizedSparqlString();
+        q2.setCommandText(rawQuery);
+        q2.setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#");
+        q2.setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+        q2.setNsPrefix("tmp", TMP_NAMESPACE);
+        q2.setIri("person", person.toString());
+        String query = q2.toString();
+        log.debug("Links query:\n" + query);
+        QueryExecution qexec = QueryExecutionFactory.create(query, model);
+        try {
+            ResultSet results = qexec.execSelect();
+            while ( results.hasNext() ) {
+                HashMap thisLink = new HashMap();
+                QuerySolution soln = results.nextSolution();
+                thisLink.put("label", soln.getLiteral("label").toString());
+                thisLink.put("url", soln.getLiteral("url").toString());
+                links.add(thisLink);
+            }
+        } finally {
+            qexec.close();
+        }
+        return links;
     }
 
     public static String prepModelQuery(String letter) {

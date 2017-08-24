@@ -6,13 +6,16 @@ construct {
         tmp:description ?desc ;
         tmp:email ?email ;
         tmp:phone ?phone ;
-        tmp:position ?position .
+        tmp:position ?position ;
+        tmp:link ?link .
     ?position rdfs:label ?title ;
 	tmp:rank ?rank ;
         tmp:org ?org.
     ?org rdfs:label ?orgName .
     ?org tmp:parent ?parentOrg .
     ?parentOrg rdfs:label ?parentOrgName .
+    ?link rdfs:label ?linkLabel ;
+          tmp:url ?linkUrl .
 }
 where {
     {
@@ -56,5 +59,14 @@ where {
         ?vci vcard:hasTitle ?ti .
         ?ti vcard:title ?pTitle .
     }
+    # websites
+     UNION {
+        ?p a foaf:Person ;
+            fhd:sortLetter ?startswith .
+        ?p obo:ARG_2000028 ?vci .
+        ?vci vcard:hasURL ?link .
+        ?link rdfs:label ?linkLabel .
+        ?link vcard:url ?linkUrl .
+     }
 
 }

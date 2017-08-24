@@ -57,13 +57,21 @@
                 <#if (person.description)?hasContent>
                     <p class="description">${person.description}</p>
                 </#if>
-                <#if (person.email)?hasContent || (person.phone)?hasContent>
+                <#if (person.email)?hasContent || (person.phone)?hasContent || (person.links!)>
                     <ul class="contact">
                         <#if (person.phone)?hasContent>
                             <li class="phone">Phone: ${person.phone}</li>
                         </#if>
                         <#if (person.email)?hasContent>
                             <li>Email: <a href="mailto:${person.email}">${person.email}</a></li>
+                        </#if>
+                        <#assign links = person.links!>
+                        <#if links?hasContent>
+                            <#list links as link>
+                            <li>
+                                <a href="${link.url}">${link.label}</a>
+                            </li>
+                            </#list>
                         </#if>
                     </ul>
                 </#if>
