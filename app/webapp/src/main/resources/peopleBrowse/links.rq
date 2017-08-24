@@ -1,0 +1,7 @@
+select distinct ?link ?label ?url
+where {
+    ?person tmp:link ?link .
+    ?link rdfs:label ?label ;
+          tmp:url ?url .
+    FILTER  ( ?label != "Organization Site" )
+}
