@@ -57,7 +57,7 @@
                 <#if (person.description)?hasContent>
                     <p class="description">${person.description}</p>
                 </#if>
-                <#if (person.email)?hasContent || (person.phone)?hasContent || (person.links!)>
+                <#if (person.email)?hasContent || (person.phone)?hasContent || (person.links!?size > 0)>
                     <ul class="contact">
                         <#if (person.phone)?hasContent>
                             <li class="phone">Phone: ${person.phone}</li>
