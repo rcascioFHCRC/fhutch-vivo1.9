@@ -102,4 +102,4 @@ if __name__ == "__main__":
     logger.info("Starting harvest.")
     harvest()
     #single_thread_harvest()
-    related_videos()
+    #related_videos()
