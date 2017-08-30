@@ -238,7 +238,18 @@ def sample_harvest():
 
 
 def generate_orgs_to_pubs():
-    g = models.relate_pubs_to_orgs()
+    """
+    Relate pubs to orgs through publication cards.
+    """
+    g = Graph()
+    for person_uri, card_id in models.get_pub_cards():
+        for org in client.get_related_entities('Organisation', card_id, 'CARD_has_ORGA'):
+            if org.intorext['value'] == 'internal':
+                ouri = models.org_uri(org.cid)
+                for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
+                    pub_uri = models.pub_uri(pub)
+                    print "card", card_id, "org", org.cid, "pub", pub
+                    g.add((ouri, VIVO.relates, pub_uri))
     backend.sync_updates("http://localhost/data/org-pubs", g)
 
 
@@ -257,3 +268,4 @@ def full_publication_harvest():
 if __name__ == "__main__":
     #sample_harvest()
     full_publication_harvest()
+    #generate_orgs_to_pubs()
