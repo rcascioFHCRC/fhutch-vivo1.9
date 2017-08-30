@@ -2,7 +2,8 @@
 
 </div> <!-- #wrapper-content -->
 
-<footer>
+<!-- Suppress Fred Hutch branded header and footer as per AMC, pending 09/06/17 meeting with Celeste/Susan -->
+<!-- <footer>
     <div class="column">
         <h3>Quick Links<a href="/en/about.html"></a></h3>
 
@@ -95,6 +96,6 @@
         <div><a href="mailto:library@fredhutch.org">Get help with your profile</a>.</div>
     </div>
 
-</footer>
+</footer>-->
 
 <#include "scripts.ftl">
