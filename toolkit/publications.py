@@ -248,7 +248,7 @@ def generate_orgs_to_pubs():
                 ouri = models.org_uri(org.cid)
                 for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
                     pub_uri = models.pub_uri(pub)
-                    print "card", card_id, "org", org.cid, "pub", pub
+                    logger.info("Orgs to pubs. Processing card {}".format(card))
                     g.add((ouri, VIVO.relates, pub_uri))
     backend.sync_updates("http://localhost/data/org-pubs", g)
 
