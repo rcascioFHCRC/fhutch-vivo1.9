@@ -243,13 +243,12 @@ def generate_orgs_to_pubs():
     """
     g = Graph()
     for person_uri, card_id in models.get_pub_cards():
-        for org in client.get_related_entities('Organisation', card_id, 'CARD_has_ORGA'):
-            if org.intorext['value'] == 'internal':
-                ouri = models.org_uri(org.cid)
-                for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
-                    pub_uri = models.pub_uri(pub)
-                    logger.info("Orgs to pubs. Processing card {}".format(card))
-                    g.add((ouri, VIVO.relates, pub_uri))
+        for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
+            pub_uri = models.pub_uri(pub)
+            for org in client.get_related_ids('Organisation', card_id, 'CARD_has_ORGA'):
+                ouri = models.org_uri(org)
+                logger.info("Orgs to pubs. Processing card {}, org {}, pub {}.".format(card_id, org, pub))
+                g.add((ouri, VIVO.relates, pub_uri))
     backend.sync_updates("http://localhost/data/org-pubs", g)
 
 
