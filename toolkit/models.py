@@ -305,10 +305,12 @@ class Person(BaseModel):
         """
         Use nickname for first name if it's present per AMC.
         """
-        first = self._nickname or self._first
-        l = u"{}, {}".format(self.cffamilynames, first)
-        if hasattr(self, 'middlename'):
-            l += u" " + self.middlename
+        if self._nickname is not None:                           
+            l = u"{}, {}".format(self.cffamilynames, self._nickname)
+        else:
+            l = u"{}, {}".format(self.cffamilynames, self._first)                             
+            if hasattr(self, 'middlename'):
+                l += u" " + self.middlename
         return l
 
     def slug(self):
