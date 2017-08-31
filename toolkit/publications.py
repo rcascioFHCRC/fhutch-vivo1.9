@@ -242,6 +242,7 @@ def generate_orgs_to_pubs():
     """
     Relate pubs to orgs through publication cards.
     """
+    top_org = "638881"
 
     internal_orgs_query = """
     <data xmlns="http://converis/ns/webservice">
@@ -265,8 +266,8 @@ def generate_orgs_to_pubs():
                 </attributes>
             </return>
             <and>
-            <relation direction="righttoleft" name="PUBL_has_CARD">
-                <relation direction="righttoleft" relatedto="{}" name="CARD_has_ORGA">
+            <relation name="PUBL_has_CARD">
+                <relation relatedto="{}" name="CARD_has_ORGA">
                 </relation>
             </relation>
             </and>
@@ -283,6 +284,8 @@ def generate_orgs_to_pubs():
     logger.info("Relating {} orgs to pubs.".format(len(org_set)))
     g = Graph()
     for oid in org_set:
+        if oid == top_org:
+            continue
         logger.info("Processing orgs to pubs for org {}.".format(oid))
         q = pubs_for_org_query.format(oid)
         for pub in client.filter_query(q):
