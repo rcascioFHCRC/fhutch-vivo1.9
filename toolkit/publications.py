@@ -260,14 +260,16 @@ def generate_orgs_to_pubs():
     <data xmlns="http://converis/ns/webservice">
     <query>
         <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
-        <and>
-            <or>
-                <relation direction="righttoleft" name="PUBL_has_CARD">
-                    <relation direction="righttoleft" relatedto="{}" name="CARD_has_ORGA">
-                    </relation>
+            <return>
+                <attributes>
+                </attributes>
+            </return>
+            <and>
+            <relation direction="righttoleft" name="PUBL_has_CARD">
+                <relation direction="righttoleft" relatedto="{}" name="CARD_has_ORGA">
                 </relation>
-            </or>
-        </and>
+            </relation>
+            </and>
         </filter>
     </query>
     </data>
@@ -281,6 +283,7 @@ def generate_orgs_to_pubs():
     logger.info("Relating {} orgs to pubs.".format(len(org_set)))
     g = Graph()
     for oid in org_set:
+        logger.info("Processing orgs to pubs for org {}.".format(oid))
         q = pubs_for_org_query.format(oid)
         for pub in client.filter_query(q):
             ouri = models.org_uri(oid)
