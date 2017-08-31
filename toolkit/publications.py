@@ -4,6 +4,7 @@ Threaded fetch of publications.
 import logging
 import os
 import sys
+from collections import defaultdict
 from Queue import Queue
 from threading import Thread
 
@@ -241,14 +242,52 @@ def generate_orgs_to_pubs():
     """
     Relate pubs to orgs through publication cards.
     """
+
+    internal_orgs_query = """
+    <data xmlns="http://converis/ns/webservice">
+     <query>
+      <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+       <or>
+        <relation minCount="1" name="CARD_has_ORGA">
+             <attribute operator="equals" argument="12006" name="typeOfCard"/>
+         </relation>
+       </or>
+      </filter>
+     </query>
+    </data>
+    """
+
+    pubs_for_org_query = """
+    <data xmlns="http://converis/ns/webservice">
+    <query>
+        <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
+        <and>
+            <or>
+                <relation direction="righttoleft" name="PUBL_has_CARD">
+                    <relation direction="righttoleft" relatedto="{}" name="CARD_has_ORGA">
+                    </relation>
+                </relation>
+            </or>
+        </and>
+        </filter>
+    </query>
+    </data>
+    """
+    logger.info("Fetching orgs with pub cards:\n" + internal_orgs_query)
+    orgs = []
+    for org in client.filter_query(internal_orgs_query):
+        orgs.append(org.cid)
+    org_set = set(orgs)
+
+    logger.info("Relating {} orgs to pubs.".format(len(org_set)))
     g = Graph()
-    for person_uri, card_id in models.get_pub_cards():
-        for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
-            pub_uri = models.pub_uri(pub)
-            for org in client.get_related_ids('Organisation', card_id, 'CARD_has_ORGA'):
-                ouri = models.org_uri(org)
-                logger.info("Orgs to pubs. Processing card {}, org {}, pub {}.".format(card_id, org, pub))
-                g.add((ouri, VIVO.relates, pub_uri))
+    for oid in org_set:
+        q = pubs_for_org_query.format(oid)
+        for pub in client.filter_query(q):
+            ouri = models.org_uri(oid)
+            pub_uri = models.pub_uri(pub.cid)
+            logger.debug("Orgs to pubs. Processing org {} pub {}.".format(oid, pub.cid))
+            g.add((ouri, VIVO.relates, pub_uri))
     backend.sync_updates("http://localhost/data/org-pubs", g)
 
 
