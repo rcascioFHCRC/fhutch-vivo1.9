@@ -247,11 +247,10 @@ def generate_orgs_to_pubs():
     <data xmlns="http://converis/ns/webservice">
      <query>
       <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-       <or>
+        <attribute operator="equals" argument="12000" name="intorext"/>
         <relation minCount="1" name="CARD_has_ORGA">
              <attribute operator="equals" argument="12006" name="typeOfCard"/>
          </relation>
-       </or>
       </filter>
      </query>
     </data>
