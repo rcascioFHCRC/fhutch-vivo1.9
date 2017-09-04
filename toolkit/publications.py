@@ -4,6 +4,7 @@ Threaded fetch of publications.
 import logging
 import os
 import sys
+from collections import defaultdict
 from Queue import Queue
 from threading import Thread
 
@@ -238,7 +239,60 @@ def sample_harvest():
 
 
 def generate_orgs_to_pubs():
-    g = models.relate_pubs_to_orgs()
+    """
+    Relate pubs to orgs through publication cards.
+    """
+    top_org = "638881"
+
+    internal_orgs_query = """
+    <data xmlns="http://converis/ns/webservice">
+     <query>
+      <filter for="Organisation" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
+        <attribute operator="equals" argument="12000" name="intorext"/>
+        <relation minCount="1" name="CARD_has_ORGA">
+             <attribute operator="equals" argument="12006" name="typeOfCard"/>
+         </relation>
+      </filter>
+     </query>
+    </data>
+    """
+
+    pubs_for_org_query = """
+    <data xmlns="http://converis/ns/webservice">
+    <query>
+        <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
+            <return>
+                <attributes>
+                </attributes>
+            </return>
+            <and>
+            <relation name="PUBL_has_CARD">
+                <relation relatedto="{}" name="CARD_has_ORGA">
+                </relation>
+            </relation>
+            </and>
+        </filter>
+    </query>
+    </data>
+    """
+    logger.info("Fetching orgs with pub cards:\n" + internal_orgs_query)
+    orgs = []
+    for org in client.filter_query(internal_orgs_query):
+        orgs.append(org.cid)
+    org_set = set(orgs)
+
+    logger.info("Relating {} orgs to pubs.".format(len(org_set)))
+    g = Graph()
+    for oid in org_set:
+        if oid == top_org:
+            continue
+        logger.info("Processing orgs to pubs for org {}.".format(oid))
+        q = pubs_for_org_query.format(oid)
+        for pub in client.filter_query(q):
+            ouri = models.org_uri(oid)
+            pub_uri = models.pub_uri(pub.cid)
+            logger.debug("Orgs to pubs. Processing org {} pub {}.".format(oid, pub.cid))
+            g.add((ouri, VIVO.relates, pub_uri))
     backend.sync_updates("http://localhost/data/org-pubs", g)
 
 
@@ -257,3 +311,4 @@ def full_publication_harvest():
 if __name__ == "__main__":
     #sample_harvest()
     full_publication_harvest()
+    #generate_orgs_to_pubs()
