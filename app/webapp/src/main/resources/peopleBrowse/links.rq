@@ -3,7 +3,7 @@ where {
     ?person tmp:link ?link .
     ?link rdfs:label ?label ;
           tmp:url ?url .
-    FILTER  (regex(?label, "lab", "i") || regex(?label, "group", "i") || 
-    regex(?label, "program", "i") || regex(?label, "institute", "i") || 
-    regex(?label, "initiative", "i"))
+    FILTER  (regex(?label, "group", "i") || regex(?label, "initiative", "i") || 
+    regex(?label, "institute", "i") || regex(?label, "lab", "i") || 
+    regex(?label, "program", "i")) || regex(?label, "studies", "i")
 }
