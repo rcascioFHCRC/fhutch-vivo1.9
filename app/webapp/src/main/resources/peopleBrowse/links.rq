@@ -5,5 +5,5 @@ where {
           tmp:url ?url .
     FILTER  (regex(?label, "group", "i") || regex(?label, "initiative", "i") || 
     regex(?label, "institute", "i") || regex(?label, "lab", "i") || 
-    regex(?label, "program", "i")) || regex(?label, "studies", "i")
+    regex(?label, "program", "i") || regex(?label, "studies", "i"))
 }
