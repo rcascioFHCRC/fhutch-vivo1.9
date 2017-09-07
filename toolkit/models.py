@@ -1581,15 +1581,15 @@ class EducationTraining(BaseModel):
 
     def build_degree_label(self):
         label = self.degreetype['value']
-        org = self.get_assigned_by()
-        if org is not None:
-            label += ", " + org
         program = self._v("program")
         if program is not None:
             label += ", " + program
         concentration = self._v("concentration")
         if concentration is not None:
             label += ", " + concentration
+        org = self.get_assigned_by()
+        if org is not None:
+            label += ", " + org
         return Literal(label)
 
     def build_training_label(self):
@@ -1599,9 +1599,9 @@ class EducationTraining(BaseModel):
             if dt != "Other":
                 lb.append(dt)
         lb.append(self._v("degreetypeother"))
+        lb.append(self._v("program"))
         org = self.get_assigned_by()
         lb.append(org)
-        lb.append(self._v("program"))
         label = ", ".join([l for l in lb if l is not None])
         return Literal(label)
 
@@ -1609,10 +1609,13 @@ class EducationTraining(BaseModel):
         title = None
         if hasattr(self, "titleoflicense"):
             title = self.titleoflicense['value']
-        lb = [title, self._v("title"), self.get_assigned_by(), self._v("degreetype")]
+        lb = [title, self._v("title"), self._v("degreetype")]
+        if hasattr(self, "stateprovince"):
+            lb.append(self.stateprovince["value"])
         if hasattr(self, "discipline"):
             lb.append(self.discipline["value"])
         lb.append(self._v("degreetypeother"))
+	lb.append(self.get_assigned_by())
         label = ", ".join([l for l in lb if l is not None and l !="Other"])
         return Literal(label)
 
