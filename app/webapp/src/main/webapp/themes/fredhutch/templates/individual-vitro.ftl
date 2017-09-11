@@ -95,6 +95,10 @@
 
 <#assign nameForOtherGroup = "${i18n().other}">
 
+<#if !editable>
+  <#assign skipThis = propertyGroups.pullProperty(piProp)!>
+</#if>
+
 <!-- Property group menu or tabs -->
 <#--
     With release 1.6 there are now two types of property group displays: the original property group
