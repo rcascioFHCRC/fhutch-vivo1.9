@@ -99,10 +99,10 @@ def single_thread_harvest():
       if hasattr(item, 'fhpersontype'):
         if item.fhpersontype['cid'] == '6019159':
           g += client.to_graph(item, models.Person)
-  backend.sync_updates(ng, g)
+  backend.post_updates(ng, g)
 
 if __name__ == "__main__":
     logger.info("Starting people harvest.")
-    harvest()
-    #single_thread_harvest()
+    #harvest()
+    single_thread_harvest()
 

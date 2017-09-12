@@ -59,6 +59,8 @@ class SyncVStore(VIVOUpdateStore):
         added = self.bulk_add(name, adds, size=BATCH_SIZE)
         logger.info("Adding {} triples.".format(added))
         removed = self.bulk_remove(name, deletes, size=BATCH_SIZE)
+	for sub in deletes.subjects():
+	    logger.info("Removed {} from {}.".format(sub, name))
         logger.info("Removed {} triples.".format(removed))
         return (added, removed)
 
