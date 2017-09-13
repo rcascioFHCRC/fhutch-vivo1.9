@@ -1556,6 +1556,11 @@ class EducationTraining(BaseModel):
             return org.cfname
         return
 
+    def get_specialty(self):
+        for term in client.get_related_entities('Area', self.cid, 'EDUC_has_sub_AREA'):
+            return term.name
+        return
+
     def get_dti(self):
         try:
             end = self.conferredon
@@ -1610,6 +1615,7 @@ class EducationTraining(BaseModel):
         if hasattr(self, "titleoflicense"):
             title = self.titleoflicense['value']
         lb = [title, self._v("title"), self._v("degreetype")]
+	lb.append(self.get_specialty())
         if hasattr(self, "stateprovince"):
             lb.append(self.stateprovince["value"])
         if hasattr(self, "discipline"):
