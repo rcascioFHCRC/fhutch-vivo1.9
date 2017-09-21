@@ -63,7 +63,7 @@ fhs:ProfessionalHonorsSocieties  a owl:Class ;
     rdfs:subClassOf          fhs:Service ;
     vitro:displayRankAnnot       10 ;
     vitro:inClassGroup d:vitroClassGroupservice ;
-    rdfs:label "Professional and Honors Societies"@en-US .
+    rdfs:label "Professional and Honors Society Membership or Service"@en-US .
 
 
 fhs:UniversityInstitutionalServices  a owl:Class ;
