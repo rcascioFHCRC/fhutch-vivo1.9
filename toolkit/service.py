@@ -72,13 +72,16 @@ class Service(BaseModel):
         Industry
             
         10446
-        National or International Service
+        Government Entity or NGO Service
             
         10444
         Professional and Honors Societies
             
         10442
         University or Institutional Services
+	
+		15983752
+		Meeting Attendance or Presentation
         """
         ntypes = {
             '10441': FHS.ConsultantServices,
@@ -87,7 +90,8 @@ class Service(BaseModel):
             '10445': FHS.Industry,
             '10446': FHS.NationalInternationalService,
             '10444': FHS.ProfessionalHonorsSocieties,
-            '10442': FHS.UniversityInstitutionalServices
+            '10442': FHS.UniversityInstitutionalServices,
+			'15983752': FHS.MeetingAttendancePresentation
         }
         if hasattr(self, 'dynamictype'):
             ctype = self.dynamictype['cid'].strip()
@@ -138,6 +142,7 @@ class Service(BaseModel):
         role = self._gattrs([
             "prosocietyrole",
             "editorshiprole",
+			"meetingrole",
             #"committeerole",
             "description"
             #"roleother",
