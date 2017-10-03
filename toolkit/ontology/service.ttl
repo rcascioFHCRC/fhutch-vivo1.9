@@ -1,6 +1,5 @@
 @prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
 @prefix fhp: <http://vivo.fredhutch.org/ontology/publications#> .
-@prefix fhs: <http://vivo.fredhutch.org/ontology/service#> .
 @prefix vitro: <http://vitro.mannlib.cornell.edu/ns/vitro/0.7#> .
 @prefix rdf:   <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix owl:   <http://www.w3.org/2002/07/owl#> .
@@ -56,8 +55,7 @@ fhs:NationalInternationalService  a owl:Class ;
     rdfs:subClassOf          fhs:Service ;
     vitro:displayRankAnnot       10 ;
     vitro:inClassGroup d:vitroClassGroupservice ;
-    rdfs:label "National or International Service"@en-US .
-
+    rdfs:label "Government Entity or NGO Service"@en-US .
 
 fhs:ProfessionalHonorsSocieties  a owl:Class ;
     rdfs:subClassOf          fhs:Service ;
@@ -65,10 +63,15 @@ fhs:ProfessionalHonorsSocieties  a owl:Class ;
     vitro:inClassGroup d:vitroClassGroupservice ;
     rdfs:label "Professional and Honors Society Membership or Service"@en-US .
 
-
 fhs:UniversityInstitutionalServices  a owl:Class ;
     rdfs:subClassOf          fhs:Service ;
     vitro:displayRankAnnot       10 ;
     vitro:inClassGroup d:vitroClassGroupservice ;
     rdfs:label "University or Institutional Services"@en-US .
+	
+fhs:MeetingAttendancePresentation  a owl:Class ;
+    rdfs:subClassOf          fhs:Service ;
+    vitro:displayRankAnnot       10 ;
+    vitro:inClassGroup d:vitroClassGroupservice ;
+    rdfs:label "Meeting Attendance or Presentation"@en-US .	
 
