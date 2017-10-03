@@ -80,8 +80,8 @@ class Service(BaseModel):
         10442
         University or Institutional Services
 	
-		15983752
-		Meeting Attendance or Presentation
+        15983752
+        Meeting Attendance or Presentation
         """
         ntypes = {
             '10441': FHS.ConsultantServices,
@@ -91,7 +91,7 @@ class Service(BaseModel):
             '10446': FHS.NationalInternationalService,
             '10444': FHS.ProfessionalHonorsSocieties,
             '10442': FHS.UniversityInstitutionalServices,
-			'15983752': FHS.MeetingAttendancePresentation
+            '15983752': FHS.MeetingAttendancePresentation
         }
         if hasattr(self, 'dynamictype'):
             ctype = self.dynamictype['cid'].strip()
