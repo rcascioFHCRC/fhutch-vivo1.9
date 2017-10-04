@@ -125,6 +125,12 @@ class Service(BaseModel):
             g += jm.to_rdf()
         return name, g
 
+    def related_event(self):
+        events = client.get_related_entities('cfEvent', self.cid, 'SERV_has_EVEN')
+	for ev in events:
+	    return ev.shortdescription
+	return None
+
     def _gattrs(self, keys):
         for key in keys:
             if hasattr(self, key):
@@ -142,7 +148,7 @@ class Service(BaseModel):
         role = self._gattrs([
             "prosocietyrole",
             "editorshiprole",
-			"meetingrole",
+	    "meetingrole",
             #"committeerole",
             "description"
             #"roleother",
@@ -160,6 +166,8 @@ class Service(BaseModel):
                 role = u"{}".format(self.roleother)
         elif hasattr(self, "roleother"):
             role += u"{}".format(self.roleother)
+	if hasattr(self, "title"):
+            role += u"{}".format(self.title)
         if hasattr(self, "committeegroup"):
 			if not role:
 				role = u"{}".format(self.committeegroup)
@@ -172,7 +180,8 @@ class Service(BaseModel):
 
     def full_label(self):
         lb = [
-            self.label()
+            self.label(),
+	    self.related_event()
         ]
         lb.append(self.related_org_label("SERV_has_ORGA"))
         label = ", ".join([l for l in lb if l is not None and l != ""])
@@ -184,7 +193,7 @@ class Service(BaseModel):
         r = Resource(g, self.uri)
         vtype = self.get_type()
         label = self.full_label()
-        if vtype == FHS.ConsultantServices:
+        if vtype == FHS.MeetingAttendancePresentation:
             # label = label.replace("Member, ", "")
             # debugging consultant activity
             logger.info('Label: %s.' % (label))
