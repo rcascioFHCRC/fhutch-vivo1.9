@@ -1618,6 +1618,8 @@ class EducationTraining(BaseModel):
 	lb.append(self.get_specialty())
         if hasattr(self, "stateprovince"):
             lb.append(self.stateprovince["value"])
+		else:
+			lb.append(self._v("licensingbodyother"))
         if hasattr(self, "discipline"):
             lb.append(self.discipline["value"])
         lb.append(self._v("degreetypeother"))
