@@ -174,7 +174,9 @@ class Service(BaseModel):
 			else:
 				role += u", {}".format(self.committeegroup)
         if hasattr(self, "consultantactivity"):
-            role += u", {}".format(self.consultantactivity["value"])           
+            role += u", {}".format(self.consultantactivity["value"])
+	if hasattr(self, "journalOther"):
+            role += u"{}".format(self.journalOther)
         return role
 
 
