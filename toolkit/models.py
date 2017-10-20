@@ -531,7 +531,7 @@ class Position(BaseModel):
             '12173': (FHD.Clinician, 30),
             '12172': (FHD.Membership, 30),
             '6616737': (FHD.Affiliate, 30),
-            '12703383': (FHD.Teaching, 40)
+            '12703383': (FHD.Teaching, 40),
             '6259451': (FHD.Emeritus, 40),		
             '10933347': (FHD.Industry, 40),	
             '11035904': (FHD.ResearchAssociate, 40),
