@@ -536,57 +536,47 @@ fhd:awarded a owl:ObjectProperty ;
 
 fhd:FormerPosition  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       70 ;
     rdfs:label "former position"@en-US .
 
 fhd:Clinician  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       10 ;
     rdfs:label "Clinician"@en-US .
 
 fhd:Emeritus  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       20 ;
     rdfs:label "Emeritus"@en-US .
 
 fhd:EndowedChair  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot      30 ;
     rdfs:label "Endowed Chair"@en-US .
 
 fhd:Membership  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       40 ;
     rdfs:label "Membership"@en-US .
 
 fhd:StaffScientist  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       50 ;
     rdfs:label "Staff Scientist"@en-US .
 
-fhd:PostDoctoral  a owl:Class ;
+fhd:Teaching  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       60 ;
-    rdfs:label "Post Doctoral"@en-US .
+    vitro:displayRankAnnot       8 ;
+    rdfs:label "Teaching"@en-US .
 
 fhd:ProgramLeadership  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       3 ;
     rdfs:label "Program Leadership"@en-US .
 
 fhd:Affiliate  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       15 ;
     rdfs:label "Affiliate"@en-US .
 
 fhd:ResearchAssociate  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       55 ;
     rdfs:label "Research Associate"@en-US .
 
 fhd:Industry  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    vitro:displayRankAnnot       60 ;
     rdfs:label "Industry"@en-US .
 
 # degrees / training
