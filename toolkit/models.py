@@ -1789,6 +1789,7 @@ class TeachingLecture(BaseModel):
 
     def build_teaching_label(self):
         lb = [
+            self._v("courseno"),
             self._v("title"),
             self._v("coursetype"),
             self.related_event(),
