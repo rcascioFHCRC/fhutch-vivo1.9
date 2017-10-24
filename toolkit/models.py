@@ -1586,9 +1586,10 @@ class EducationTraining(BaseModel):
 
     def build_degree_label(self):
         label = self.degreetype['value']
-        honor = self.honorific['value']
-        if honor is not None:
-            label += " (" + honor + ")"
+        if hasattr(self, "honorific"):	
+            honor = self.honorific['value']
+            if honor is not None:
+                label += " (" + honor + ")"
         program = self._v("program")
         if program is not None:
             label += ", " + program
