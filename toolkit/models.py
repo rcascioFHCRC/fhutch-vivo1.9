@@ -1778,7 +1778,7 @@ class TeachingLecture(BaseModel):
 
     def build_invited_lecture_label(self):
         lb = [
-            #self._v("typeoflecture"),
+            self._v("typeoflecture"),
             self._v("nameofseries"),
             self._v("title"),
             self.related_event(),
