@@ -167,7 +167,7 @@ class Service(BaseModel):
         elif hasattr(self, "roleother"):
             role += u"{}".format(self.roleother)
 	if hasattr(self, "title"):
-            role += u"{}".format(self.title)
+            role += u", {}".format(self.title)
         if hasattr(self, "committeegroup"):
 			if not role:
 				role = u"{}".format(self.committeegroup)
