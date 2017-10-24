@@ -168,13 +168,16 @@ class Service(BaseModel):
                 role = u"{}".format(self.roleother)
         elif hasattr(self, "roleother"):
             role += u"{}".format(self.roleother)
-	if hasattr(self, "title"):
-            role += u"{}".format(self.title)
+	if hasattr(self, "title"): 
+            if not role:
+                role += u"{}".format(self.title)
+            else:
+                role += u", {}".format(self.title)
         if hasattr(self, "committeegroup"):
-			if not role:
-				role = u"{}".format(self.committeegroup)
-			else:
-				role += u", {}".format(self.committeegroup)
+            if not role:
+                role = u"{}".format(self.committeegroup)
+            else:
+                role += u", {}".format(self.committeegroup)
         if hasattr(self, "consultantactivity"):
             role += u", {}".format(self.consultantactivity["value"])
 	if hasattr(self, "journalother"):
