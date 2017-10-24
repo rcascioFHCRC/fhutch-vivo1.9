@@ -148,9 +148,9 @@ class Service(BaseModel):
         role = self._gattrs([
             "prosocietyrole",
             "editorshiprole",
-	    "meetingrole",
+	    #"meetingrole",
             #"committeerole",
-            "description"
+            "description",
             #"roleother",
             "consultantactivityother"
         ]
@@ -159,6 +159,8 @@ class Service(BaseModel):
         if hasattr(self, "rolemodifier"):
             modifier = self.rolemodifier["value"]
             role = u"{} {}".format(modifier, role)
+        if hasattr(self, "meetingrole"):
+            role += u"{}".format(self.meetingrole["value"])
         if hasattr(self, "committeerole"): #and hasattr(self, "roleother")
             #if self.committeerole["value"] == "Other":
             role += u"{}".format(self.committeerole["value"])
@@ -167,7 +169,7 @@ class Service(BaseModel):
         elif hasattr(self, "roleother"):
             role += u"{}".format(self.roleother)
 	if hasattr(self, "title"):
-            role += u", {}".format(self.title)
+            role += u"{}".format(self.title)
         if hasattr(self, "committeegroup"):
 			if not role:
 				role = u"{}".format(self.committeegroup)
