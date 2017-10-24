@@ -1808,7 +1808,9 @@ class TeachingLecture(BaseModel):
             #self._v("advisingrole"),
             label,
             self.get_advisee(),
-            self._v("adviseeother")
+            self._v("adviseeother"),
+            self._v("departmentother"),
+            self.related_org_label('LECT_has_ORGA'),		
             #self._v("typeofdegree"),
             #self._v("description")
         ]
