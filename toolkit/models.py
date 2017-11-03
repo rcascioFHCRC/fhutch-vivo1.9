@@ -1783,6 +1783,7 @@ class TeachingLecture(BaseModel):
             self._v("nameofseries"),
             self._v("title"),
             self.related_event(),
+            self._v("departmentother"),		
             self.related_org_label('LECT_has_ORGA')
         ]
         label = ", ".join([l for l in lb if l is not None])
