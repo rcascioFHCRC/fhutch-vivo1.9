@@ -66,7 +66,7 @@ class Person(BaseModel):
     def orcid_uri(self):
         if self.orcid:
             try:
-                return URIRef('http://orcid.org/' + self.orcid)
+                return URIRef('https://orcid.org/' + self.orcid)
             except AttributeError:
                 return
 
