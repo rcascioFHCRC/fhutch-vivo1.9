@@ -81,7 +81,7 @@
               <#assign orcid = propertyGroups.getProperty(orcidProp)!>
               <#if orcid?has_content>
                 <#if orcid.statements[0]??>
-                  <li class="person-contact"><img src="../images/orcid.png"><a href="http://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
+                  <li class="person-contact"><img src="../images/orcid.png"><a href="https://orcid.org/${orcid.statements[0].value}" target="_blank">${orcid.statements[0].value}</a></li>
                 </#if>
               </#if>
 
