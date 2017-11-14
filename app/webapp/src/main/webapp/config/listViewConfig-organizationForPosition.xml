@@ -155,7 +155,7 @@
                     ?dateTimeEndValue core:dateTime ?dateTimeEnd .
                 }
             }
-            FILTER (?subclass NOT IN (fhd:Membership, fhd:Clinician, fhd:FormerPosition))
+            FILTER (?subclass NOT IN (fhd:Clinician, fhd:FormerPosition))
         }
     </query-construct>
 
