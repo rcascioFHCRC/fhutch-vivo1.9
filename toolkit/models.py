@@ -1396,9 +1396,6 @@ class ClinicalTrial(BaseModel):
         return default
 
 
-
-
-
     def data_properties(self):
         props = [
             ('briefsummary', VIVO.overview),
@@ -1574,6 +1571,19 @@ class EducationTraining(BaseModel):
             return
         return self._dti(start, end)
 
+    def get_license_dti(self):
+        try:
+            end = self.endedon
+        except AttributeError:
+            end = None
+        try:
+            start = self.conferredon
+        except AttributeError:
+            start = None
+        if (start is None) and (end is None):
+            return
+        return self._dti(start, end)
+
     def get_person(self):
         g = Graph()
         for pers in client.get_related_ids('Person', self.cid, 'EDUC_has_PERS'):
@@ -1596,6 +1606,9 @@ class EducationTraining(BaseModel):
         concentration = self._v("concentration")
         if concentration is not None:
             label += ", " + concentration
+        thesis = self._v("thesis")
+        if thesis is not None:
+            label += ", " + thesis	
         org = self.get_assigned_by()
         if org is not None:
             label += ", " + org
@@ -1653,7 +1666,13 @@ class EducationTraining(BaseModel):
         elif rtype == 'License' or rtype == 'Certification':
             r.set(RDF.type, FHD.License)
             r.set(RDFS.label, self.build_license_label())
-            g += self.add_date()
+            # Add datetime interval
+            try:
+                dti_uri, dti_g = self.get_license_dti()
+                g += dti_g
+                r.set(VIVO.dateTimeInterval, dti_uri)
+            except TypeError:
+                pass
 
         #r.set(VIVO.majorField, Literal(self.program))
 
