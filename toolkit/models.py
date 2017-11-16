@@ -1573,7 +1573,7 @@ class EducationTraining(BaseModel):
 
     def get_license_dti(self):
         try:
-            end = self.endedon
+            end = self.dateended
         except AttributeError:
             end = None
         try:
