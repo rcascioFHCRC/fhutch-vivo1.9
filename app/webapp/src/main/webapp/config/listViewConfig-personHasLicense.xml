@@ -19,7 +19,7 @@
         WHERE
         {
             ?subject ?property ?resource .
-            ?resource a fhd:Training .
+            ?resource a fhd:License .
             ?resource rdfs:label ?label .
             OPTIONAL
             {
