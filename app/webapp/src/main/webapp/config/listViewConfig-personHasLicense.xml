@@ -14,19 +14,28 @@
         SELECT DISTINCT
             ?resource
             ?label
-            ?date
-            (STR(YEAR(?date)) as ?year)
+            ?dateTimeStart
+            ?dateTimeEnd
         WHERE
         {
             ?subject ?property ?resource .
-            ?resource a fhd:License .
+            ?resource a fhd:Training .
             ?resource rdfs:label ?label .
             OPTIONAL
             {
-                ?resource core:dateTimeValue ?dateTimeValue .
-                ?dateTimeValue core:dateTime ?date .
+                ?subject ?property ?resource .
+                ?resource core:dateTimeInterval ?dateTimeInterval .
+                ?dateTimeInterval core:start ?dateTimeStartValue .
+                ?dateTimeStartValue core:dateTime ?dateTimeStart .
             }
-        } ORDER BY DESC(?date)
+            OPTIONAL
+            {
+                ?subject ?property ?resource .
+                ?resource core:dateTimeInterval ?dateTimeInterval .
+                ?dateTimeInterval core:end ?dateTimeEndValue .
+                ?dateTimeEndValue core:dateTime ?dateTimeEnd .
+            }
+        } ORDER BY DESC(?dateTimeEnd)
     </query-select>
     <template>propStatement-labelDate.ftl</template>
 </list-view-config>
