@@ -1614,7 +1614,7 @@ class EducationTraining(BaseModel):
             label += ", " + org
         advisor = self._v("advisor")
         if advisor is not None:
-            label += ". Advisor:" + advisor
+            label += " Advisor: " + advisor
         return Literal(label)
 
     def build_training_label(self):
@@ -1630,7 +1630,7 @@ class EducationTraining(BaseModel):
         label = ", ".join([l for l in lb if l is not None])
         advisor = self._v("advisor")
         if advisor is not None:
-            label += ". Advisor:" + advisor
+            label += " Advisor: " + advisor
         return Literal(label)
 
     def build_license_label(self):
