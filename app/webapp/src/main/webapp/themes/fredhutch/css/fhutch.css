@@ -1740,6 +1740,9 @@ span.subclassExpandMinus {
     background: url(../images/green_minus_sign.gif) left center no-repeat;
     cursor:default;
 }
+li.subclass h3 {
+    text-transform:capitalize;
+}
 /* ------------------------------------------------->  */
 /* PAGE MANAGEMENT  -------------------------------->  */
 /* ------------------------------------------------->  */
