@@ -1637,7 +1637,10 @@ class EducationTraining(BaseModel):
         title = None
         if hasattr(self, "titleoflicense"):
             title = self.titleoflicense['value']
-        lb = [title, self._v("title"), self._v("degreetype"), self._v("number")]
+        number = self._v("number")
+        if number is not None:
+            title += " (" + number + ")"
+        lb = [title, self._v("title"), self._v("degreetype")]
 	lb.append(self.get_specialty())
         if hasattr(self, "stateprovince"):
             lb.append(self.stateprovince["value"])
