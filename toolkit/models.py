@@ -1635,12 +1635,11 @@ class EducationTraining(BaseModel):
 
     def build_license_label(self):
         title = None
-        lnum = None
         if hasattr(self, "titleoflicense"):
             title = self.titleoflicense['value']
-        if hasattr(self, "number"):
-            lnum = self.number['value']
-            title += " (" + lnum + ")"
+        number = self._v("number")
+        if number is not None:
+            title += " (" + number + ")"      
         lb = [title, self._v("title"), self._v("degreetype")]
 	lb.append(self.get_specialty())
         if hasattr(self, "stateprovince"):
