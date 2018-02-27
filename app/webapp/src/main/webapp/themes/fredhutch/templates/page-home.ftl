@@ -60,18 +60,14 @@
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a>
                             </li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</a></li>
-                            <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>
-                            <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupclinicaltrials">Clinical trials</a></li>
-                            <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupNews">News</a></li>
+                            <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>                            
                         </ul>
                     </form>
                 </fieldset>
             </section> <!-- #search-home -->
 
             <section id="recent">
-            <div class="home-box" id="home-news">
-                <h1>Recent news</h1>
-            </div>
+
             <div class="home-box" id="home-pubs">
                 <h1>Recent publications</h1>
             </div>
