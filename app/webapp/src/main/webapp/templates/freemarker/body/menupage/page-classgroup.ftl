@@ -13,7 +13,7 @@
             <div class="aside"><a href="./expertise-browse">Explore a treemap graphic of expertise terms</a></div>
         </#if>
         <#if classGroup?contains("clinical")>
-            <div class="aside">Visit <a href="./people-browse">people profiles</a> to see trials and studies associated with specific researchers. To search for studies and trials by keyword or topic use the search function and select the Clinical Trials filter in the drop-down list.</div>
+            <div class="aside">Visit <a href="./people-browse">people profiles</a> to see trials and studies associated with specific researchers.</div>
         </#if>
         <#if classGroup?contains("org")>
             <div class="aside"><a href="${urls.base}/org/c638881">View Fred Hutchinson Organization Page</a></div>
