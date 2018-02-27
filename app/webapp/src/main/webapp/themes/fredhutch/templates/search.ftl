@@ -15,9 +15,6 @@
                   <option value="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</option>
                   <option value="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</option>
                   <option value="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</option>
-                  <option value="http://vivo.fredhutch.org/individual/vitroClassGroupclinicaltrials">Clinical trials</option>
-                  <option value="http://vivo.fredhutch.org/individual/vitroClassGroupNews">News
-                  </option>
                 </select>
                 <input type="submit" value="${i18n().search_button}" class="search">
             </div>
