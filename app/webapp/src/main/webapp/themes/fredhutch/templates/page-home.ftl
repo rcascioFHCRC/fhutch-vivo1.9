@@ -34,7 +34,7 @@
 
             <p>VIVO is a research-focused discovery tool that provides detailed information about our scientists and physicians.  Learn more about our efforts to generate new scientific discoveries and translate them into effective medical practices, therapies and public health approaches.</p>
 
-            <p>Browse or search information on people, departments, expertise, clinical trials, grants, and publications.</p>
+            <p>Browse or search information on people, organizations, publications and expertise.</p>
 
         </section>
 
@@ -57,8 +57,7 @@
                         <ul id="filter-search-nav">
                             <li><a class="active" href="">${i18n().all_capitalized}</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouppeople">People</a></li>
-                            <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a>
-                            </li>
+                            <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>                            
                         </ul>
