@@ -81,7 +81,6 @@
              $('input.search-homepage').attr("value","${i18n().limit_search} \u2192");
         }
 
-        addRecent("news");
         addRecent("pubs");
 
         function addRecent(name) {
