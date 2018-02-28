@@ -551,6 +551,21 @@ input.search-vivo {
     border-radius: 5px;
 }
 
+.searchTOC {
+    margin-right: 0px;
+    width: 225px;
+}
+
+.searchTOC ul {
+    width: 100%;
+}
+
+.searchTOC ul li {
+    width: 100%;
+    margin-left: 0px;
+    padding-left: 20px;
+}
+
 /* MAIN NAVIGATION------>  */
 ul#main-nav {
     display: block;
