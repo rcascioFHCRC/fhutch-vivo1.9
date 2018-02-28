@@ -561,6 +561,7 @@ input.search-vivo {
 }
 
 .searchTOC ul li {
+    width: 205px;
     margin-left: 0px;
     padding-left: 20px;
 }
