@@ -78,5 +78,5 @@
         }
     </query-construct>
 
-    <template>propStatement-default.ftl</template>
+    <template>propStatement-fauxSubOrganization.ftl</template>
 </list-view-config>
