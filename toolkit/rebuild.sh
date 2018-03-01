@@ -25,13 +25,8 @@ python publications.py
 python areas.py
 # journals
 python journals.py
-# news
-python news.py
 # awards
 python awards.py
-# trials
-python clinical_trial.py
-#data/clinicaltrials.csv
 # educ 
 python education_training.py
 # teaching and lecture
@@ -40,3 +35,9 @@ python teaching.py
 python pictures.py
 #service
 python service.py
+
+# news
+#python news.py
+# trials
+#python clinical_trial.py
+#data/clinicaltrials.csv
