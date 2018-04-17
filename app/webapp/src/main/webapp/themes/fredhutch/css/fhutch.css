@@ -468,12 +468,13 @@ h1.vivo-logo a {
     height: 59px;
 }  */
 body.home {
-	background-image: url("http://gdurl.com/l7G1");
+	background-image: url("http://gdurl.com/WMXK");
 	background-repeat: no-repeat;
 }
 div.sci-pro {
 	background-image: url("http://gdurl.com/PrCe");
-	background-repeat: no-repeat;    
+	background-repeat: no-repeat;
+	margin-top: 50px;
 }
 div.sci-pro a {
     display: block;
