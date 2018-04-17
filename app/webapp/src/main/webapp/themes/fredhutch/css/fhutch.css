@@ -883,7 +883,20 @@ ul#header-nav a {
         border-bottom: 1px dotted #4f5656;
         color: #89c348;
 }
-
+/* COMMUNICATIONS-BRANDING ------>  */
+#universal-links-container {
+    background-color: #f8f8f8;
+    width: 100%;
+    min-width: 1364px;
+}
+#universal-links {
+    padding-top: 13px;
+    padding-bottom: 13px;
+    margin-left: 32px;
+}
+.link-label {
+    margin-right: 42px;
+}
 /* BROWSE ------>  */
 ul#browse-classgroups a {
     padding-top: 3px;
