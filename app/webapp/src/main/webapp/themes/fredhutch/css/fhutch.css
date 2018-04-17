@@ -608,11 +608,8 @@ ul#main-nav {
 /* WRAPPER CONTENT------>  */
 #wrapper-content {
     clear: both;
-    width: 930px;
     margin: 0 auto;
-    background: #fff;
     min-height: 710px;
-    padding: 20px;
 }
 /* INTRO-BLURB ------>  */
 #intro {
@@ -2075,6 +2072,7 @@ ul#individual-personInPosition h3 {
 
 section#recent {
     margin-top: 2em;
+    background-color: #ffffff;	
 }
 
 .home-box {
