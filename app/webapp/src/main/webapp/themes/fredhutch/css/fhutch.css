@@ -51,12 +51,8 @@ em {
 h2 {
     padding: 10px 0 12px 0;
     margin: 0;
-    font-size: 1.375em;
-    color: #064d68;
+    font-size: 2rem;
     line-height: 1.5em;
-}
-h2 a {
-    color: #123054;
 }
 h2 a:link,
 h2 a:visited {
@@ -622,7 +618,6 @@ ul#main-nav {
 #intro {
     margin-left: auto;
     margin-right: auto;
-    width: 75%;
 }
 body.loggedIn #intro {
     width: 98%;
@@ -630,7 +625,8 @@ body.loggedIn #intro {
 #intro h2 {
     padding: 35px 0 12px 24px;
     border-bottom: none;
-    color: #123054;
+    color: #f8f8f8;
+    text-align:center;
 }
 #intro p {
     font-size: 16px;
