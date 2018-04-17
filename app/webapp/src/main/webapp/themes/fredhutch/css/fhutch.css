@@ -449,12 +449,12 @@ hr.formDivider {
 /* HEADER ------>  */
 #branding {
     position: relative;
-    width: 990px;
-    height: 150px;
+    width: 100%;
     margin: 0 auto;
+    padding-left:32px;
 }
 /* BRANDING ------>  */
-h1.vivo-logo {
+/* h1.vivo-logo {
     position: absolute;
     width: 600px;
     height: 120px;
@@ -466,7 +466,20 @@ h1.vivo-logo a {
     display: block;
     width: 386px;
     height: 59px;
+}  */
+body.home {
+	background-image: url("http://gdurl.com/l7G1");
+	background-repeat: no-repeat;
 }
+div.sci-pro {
+	background-image: url("http://gdurl.com/PrCe");
+	background-repeat: no-repeat;    
+}
+div.sci-pro a {
+    display: block;
+    width: 561px;
+    height: 59px;
+} 
 /* HEADER NAV------>  */
 ul#header-nav {
     float: right;
