@@ -449,7 +449,7 @@ hr.formDivider {
 /* HEADER ------>  */
 #branding {
     position: relative;
-    width: 100%;
+    float: left;
     margin: 0 auto;
     padding-left:32px;
 }
@@ -583,10 +583,6 @@ input.search-vivo {
 /* MAIN NAVIGATION------>  */
 ul#main-nav {
     display: block;
-    width: 968px;
-    height: 46px;
-    border: 1px solid #dce4e3;
-    background-color: #f7f9f9;
     margin: 0 auto;
     list-style: none;
     font-size: 1em;
