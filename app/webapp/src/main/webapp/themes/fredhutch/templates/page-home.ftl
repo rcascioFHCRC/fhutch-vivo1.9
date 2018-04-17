@@ -27,17 +27,6 @@
 
         <#include "menu.ftl">
 
-        <section id="intro" role="region">
-            <h2>Welcome to Fred Hutch Researcher Profiles</h2>
-
-            <p class="under-construction" style="font-weight: bold; font-size: .97em; font-style: italic;">Site Under Construction</p>
-
-            <p>VIVO is a research-focused discovery tool that provides detailed information about our scientists and physicians.  Learn more about our efforts to generate new scientific discoveries and translate them into effective medical practices, therapies and public health approaches.</p>
-
-            <p>Browse or search information on people, organizations, publications and expertise.</p>
-
-        </section>
-
         <section id="search-home" role="region">
                 <h3><span class="search-filter-selected">filteredSearch</span></h3>
 
@@ -64,6 +53,11 @@
                     </form>
                 </fieldset>
             </section> <!-- #search-home -->
+
+
+        <section id="intro" role="region">
+            <h2>Welcome to <strong>Fred Hutch Scientific Profiles</strong> website,<br /> a portal that enables collaboration among researchers.</h2>
+        </section>
 
             <section id="recent">
 
