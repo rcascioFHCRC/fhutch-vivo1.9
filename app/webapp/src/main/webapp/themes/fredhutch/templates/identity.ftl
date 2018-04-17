@@ -1,10 +1,12 @@
 <#-- $This file is distributed under the terms of the license in /doc/license.txt$ -->
 
-<div id="universal-links">
-	<span class="link-label" id="first"><a href="http://www.fredhutch.org/en.html" target="_blank">fredhutch.org</a></span>
-	<span class="link-label"><a href="http://www.fredhutch.org/en/diseases.html " target="_blank">Research</a></span>
-	<span class="link-label"><a href="http://www.fredhutch.org/en/about.html" target="_blank">About Us</a></span>
-	<span class="link-label"><a href="http://www.fredhutch.org/en/ways-to-give.html" target="_blank">Ways to Give</a></span>
+<div id="universal-links-container">
+    <div id="universal-links">
+        <span class="link-label" id="first"><a href="http://www.fredhutch.org/en.html" target="_blank">fredhutch.org</a></span>
+        <span class="link-label"><a href="http://www.fredhutch.org/en/diseases.html " target="_blank">Research</a></span>
+        <span class="link-label"><a href="http://www.fredhutch.org/en/about.html" target="_blank">About Us</a></span>
+        <span class="link-label"><a href="http://www.fredhutch.org/en/ways-to-give.html" target="_blank">Ways to Give</a></span>
+    </div>
 </div>
 
 <header id="branding" role="banner">
