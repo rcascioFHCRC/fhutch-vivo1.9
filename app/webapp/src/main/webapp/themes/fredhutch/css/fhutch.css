@@ -590,27 +590,25 @@ ul#main-nav {
     margin: 0 auto;
     list-style: none;
     font-size: 1em;
-    color: #706a66;
 }
 #main-nav li {
     float: left;
     line-height: 46px;
-    background: url(../images/separator-main-nav.jpg) right -2px no-repeat;
+    margin-top: 50px;
+    /*background: url(../images/separator-main-nav.jpg) right -2px no-repeat;*/
 }
 #main-nav li a {
     padding-left: 16px;
     padding-right: 16px;
     display: block;
-    color: #706a66;
+    color: #f8f8f8;
     text-decoration: none;
 }
 #main-nav li a:hover {
-    color: #002b44;
+    text-decoration: underline;
 }
 #main-nav li a.selected {
-    color: #002b44;
-    background: url(../images/selected-main-nav.jpg) left -1px no-repeat;
-    margin-left: 18px;
+    text-decoration: underline;
 }
 /* WRAPPER CONTENT------>  */
 #wrapper-content {
