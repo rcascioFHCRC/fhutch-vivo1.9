@@ -10,7 +10,8 @@
 </div>
 
 <header id="branding" role="banner">
-
+    <div class="sci-pro"><a title="${i18n().identity_title}" href="${urls.home}"><span class="displace">${siteName}</span></a></div>
+    
     <!--<h1 class="vivo-logo"><a title="${i18n().identity_title}" href="${urls.home}"><span class="displace">${siteName}</span></a></h1>-->
     <#-- Since we are using a graphic text for the tagline, we won't render ${siteTagline}
     <#if siteTagline?has_content>
