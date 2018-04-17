@@ -34,7 +34,7 @@ a {
 }
 
 a:hover {
-    color:#89c348;text-decoration:underline
+    color:#22888A;text-decoration:underline
 }
 
 h2 a:hover,
@@ -467,6 +467,9 @@ h1.vivo-logo a {
     width: 386px;
     height: 59px;
 }  */
+body {
+	background-color: #123054;
+}
 body.home {
 	background-image: url("http://gdurl.com/WMXK");
 	background-repeat: no-repeat;
