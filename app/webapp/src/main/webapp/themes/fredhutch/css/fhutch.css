@@ -481,7 +481,17 @@ div.sci-pro a {
     display: block;
     width: 561px;
     height: 59px;
-} 
+}
+div.fh-logo {
+    background-image: url("http://gdurl.com/OZ5x");
+    background-repeat: no-repeat;
+    margin-top: 50px;    
+}
+div.fh-logo a {
+    display: block;
+    width: 239px;
+    height: 57px;
+}
 /* HEADER NAV------>  */
 ul#header-nav {
     float: right;
@@ -621,7 +631,7 @@ ul#main-nav {
 body.loggedIn #intro {
     width: 98%;
 }
-#intro h2 {
+#intro h1 {
     padding: 35px 0 12px 24px;
     border-bottom: none;
     color: #f8f8f8;
@@ -644,6 +654,20 @@ ul#individual-personInPosition li a,
 ul.individual-urls li a,
 ul.individual-urls-people li a {
     color: #123054
+}
+/* HOME TEXT ------>  */
+#fhsp-desc {
+    background-color: #f8f8f8;
+    width: 100%;
+    min-width: 1364px;
+}
+#fhcp-is h1 {
+    text-align:center;
+    color:#207c7e;
+}
+.fhcp-is-block {
+    width:33%;
+    float:left;
 }
 /* LOG IN------>  */
 #login {
@@ -2174,5 +2198,3 @@ table#collab-table td a {
 .close-thik:after {
   content: '✖'; /* UTF-8 symbol */
 }
-
-
