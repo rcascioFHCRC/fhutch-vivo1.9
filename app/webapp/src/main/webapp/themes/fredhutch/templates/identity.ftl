@@ -10,8 +10,8 @@
 </div>
 
 <header id="branding" role="banner">
+    <div class="fh-logo"><a title="Fred Hutchinson Cancer Research Center" target="_blank" href="http://www.fredhutch.org/en.html"><span class="displace">${siteName}</span></a></div>
     <div class="sci-pro"><a title="${i18n().identity_title}" href="${urls.home}"><span class="displace">${siteName}</span></a></div>
-    <div class="fh-logo"><a title="Fred Hutchinson Cancer Research Center Home" target="_blank" href="http://www.fredhutch.org/en.html"><span class="displace">${siteName}</span></a></div>
     
     <!--<h1 class="vivo-logo"><a title="${i18n().identity_title}" href="${urls.home}"><span class="displace">${siteName}</span></a></h1>-->
     <#-- Since we are using a graphic text for the tagline, we won't render ${siteTagline}
