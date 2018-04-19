@@ -26,15 +26,17 @@ body {
     height: 100%; /* IE6: treaded as min-height*/;
     min-height: 100%; /* real browsers */
     margin: 0 auto;
+    min-width: 1364px;
 }
 body {
 }
 a {
-    color: #39b6b9;
+    color: #207c7e;
 }
 
 a:hover {
-    color:#22888A;text-decoration:underline
+    color:#22888A;
+    text-decoration:underline;
 }
 
 h2 a:hover,
