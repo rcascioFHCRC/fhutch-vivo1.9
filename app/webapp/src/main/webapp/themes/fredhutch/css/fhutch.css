@@ -466,16 +466,16 @@ h1.vivo-logo a {
     height: 59px;
 }  */
 body {
-	background-color: #123054;
+    background-color: #123054;
 }
 body.home {
-	background-image: url("http://gdurl.com/WMXK");
-	background-repeat: no-repeat;
+    background-image: url("http://gdurl.com/WMXK");
+    background-repeat: no-repeat;
 }
 div.sci-pro {
-	background-image: url("http://gdurl.com/PrCe");
-	background-repeat: no-repeat;
-	margin-top: 50px;
+    background-image: url("http://gdurl.com/PrCe");
+    background-repeat: no-repeat;
+    margin-top: 50px;
 }
 div.sci-pro a {
     display: block;
@@ -485,7 +485,10 @@ div.sci-pro a {
 div.fh-logo {
     background-image: url("http://gdurl.com/OZ5x");
     background-repeat: no-repeat;
-    margin-top: 50px;    
+    position: absolute;
+    top: 40px;
+    left: 1110px;
+    width: 239px;
 }
 div.fh-logo a {
     display: block;
@@ -2098,7 +2101,7 @@ ul#individual-personInPosition h3 {
 
 section#recent {
     margin-top: 2em;
-    background-color: #ffffff;	
+    background-color: #ffffff;  
 }
 
 .home-box {
