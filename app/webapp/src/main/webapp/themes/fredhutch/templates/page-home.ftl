@@ -56,15 +56,30 @@
 
 
         <section id="intro" role="region">
-            <h2>Welcome to <strong>Fred Hutch Scientific Profiles</strong> website,<br /> a portal that enables collaboration among researchers.</h2>
+            <h1>Welcome to <strong>Fred Hutch Scientific Profiles</strong> website,<br /> a portal that enables collaboration among researchers.</h2>
         </section>
 
-            <section id="recent">
+        <section id="fhsp-desc">
+            <div id="scroll-ahead"><span>Scroll Ahead</span></div>
+            <div id="fhcp-is">
+                <h1>Fred Hutch Scientific Profiles is:</h1>
+                <div class="fhcp-is-block"><h2>For Faculty</h2>
+                    <p>Need to update your faculty profile?<br/><a href="mailto:library@fredhutch.org">Click here</a> to find out how.</p>
+                </div>
+                <div class="fhcp-is-block"><h2>For Industry Collaboration</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur elit.<br/><a href="#" target="_blank">Proin vulputate</a> sagittis metus.</p>
+                </div>
+                <div class="fhcp-is-block"><h2>For Journalists</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur elit.<br/>Proin <a href="#" target="_blank">vulputate sagittis metus</a>.</p>
+                </div>
+            </div>
+        </section>        
 
+        <section id="recent">
             <div class="home-box" id="home-pubs">
                 <h1>Recent publications</h1>
             </div>
-            </section>
+        </section>
 
         <#include "footer.ftl">
 
