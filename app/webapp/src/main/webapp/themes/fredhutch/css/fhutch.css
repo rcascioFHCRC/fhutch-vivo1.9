@@ -603,7 +603,7 @@ ul#main-nav {
     display: block;
     margin: 0 auto;
     list-style: none;
-    font-size: 1em;
+    font-size: 1.1rem;
 }
 #main-nav li {
     float: left;
@@ -663,13 +663,15 @@ ul.individual-urls-people li a {
     color: #123054
 }
 /* HOME TEXT ------>  */
-#fhsp-desc {
+#fhsp-desc > * {
     background-color: #f8f8f8;
+}
+#fhsp-desc {
     width: 100%;
     min-width: 1364px;
+    text-align:center;
 }
 #fhcp-is h1 {
-    text-align:center;
     color:#207c7e;
 }
 .fhcp-is-block {
