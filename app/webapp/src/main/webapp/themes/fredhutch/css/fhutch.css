@@ -663,13 +663,12 @@ ul.individual-urls-people li a {
     color: #123054
 }
 /* HOME TEXT ------>  */
-#fhsp-desc > * {
-    background-color: #f8f8f8;
-}
 #fhsp-desc {
     width: 100%;
     min-width: 1364px;
     text-align:center;
+    padding: 13px 0;
+    background-color: #f8f8f8;
 }
 #fhcp-is h1 {
     color:#207c7e;
@@ -677,6 +676,7 @@ ul.individual-urls-people li a {
 .fhcp-is-block {
     width:33%;
     float:left;
+    background-color: #f8f8f8;    
 }
 /* LOG IN------>  */
 #login {
