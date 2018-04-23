@@ -854,9 +854,8 @@ p.external-auth a.blue:hover {
     padding-left: 24px;
 }
 #search-home-field {
-    width: 483px;
+    width: 100%;
     height: 44px;
-    background: url(../images/search-field-and-button.gif) 0 0 no-repeat;
     display: inline-block;    
 }
 #search-home-field input.search {
@@ -879,18 +878,6 @@ input.search-home-vivo {
     color: #123054;
     margin-left: 4px;
     margin-top: 2px;
-}
-
-/* SEARCH HOME------>  */
-
-#search-home-field {
-        background: url(../images/search-field-and-button.gif) 0 0 no-repeat;
-        width: 520px;
-}
-#search-home-field input.search {
-        background-color: transparent;
-        color: #fff;
-        border: none;
 }
 a.filter-search {
     right: auto;
