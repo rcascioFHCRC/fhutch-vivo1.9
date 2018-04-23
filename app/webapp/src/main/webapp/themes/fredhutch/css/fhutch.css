@@ -670,6 +670,13 @@ ul.individual-urls-people li a {
     padding: 13px 0;
     background-color: #f8f8f8;
 }
+#scroll-ahead {
+    background-image: url("http://gdurl.com/TL0p");
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    padding: 10px 0 25px 0px;
+    margin-bottom: 25px;    
+}
 #fhcp-is h1 {
     color:#207c7e;
 }
