@@ -896,11 +896,12 @@ a.filter-search {
     right: auto;
 }
 input.search-homepage {
-        border: 0;
-        background-color: #f9fafa;
-        background-position: right;
-        opacity: .5;
-        text-align:right;
+    border: 0;
+    background-color: #f9fafa;
+    background-position: right;
+    opacity: .5;
+    text-align:right;
+    margin-left:40px;
 }
 
 .filter-default {
