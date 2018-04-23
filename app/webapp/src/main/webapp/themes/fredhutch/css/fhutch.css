@@ -890,8 +890,10 @@ input.search-homepage {
     background-position: right;
     opacity: .5;
     text-align:right;
-    margin-left:40px;
-    height:40px
+    height:40px;
+    margin-left:40px;    
+    margin-right: 0;
+    float: none;    
 }
 
 .filter-default {
