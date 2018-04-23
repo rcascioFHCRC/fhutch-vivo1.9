@@ -634,6 +634,7 @@ ul#main-nav {
 #intro {
     margin-left: auto;
     margin-right: auto;
+    margin-bottom: 50px;    
 }
 body.loggedIn #intro {
     width: 98%;
@@ -679,6 +680,7 @@ ul.individual-urls-people li a {
 }
 #fhcp-is h1 {
     color:#207c7e;
+    margin-bottom:25px;
 }
 .fhcp-is-block {
     width:33%;
@@ -840,7 +842,6 @@ p.external-auth a.blue:hover {
 }
 /* HOME SEARCH ------>  */
 #search-home {
-    width: 60%;
     margin-left: auto;
     margin-right: auto;
     padding: 2em;
@@ -850,12 +851,13 @@ p.external-auth a.blue:hover {
     font-size: 22px;
     margin-bottom: 15px;
     color: #123054;
-        padding-left: 24px;
+    padding-left: 24px;
 }
 #search-home-field {
     width: 483px;
     height: 44px;
     background: url(../images/search-field-and-button.gif) 0 0 no-repeat;
+    display: inline-block;    
 }
 #search-home-field input.search {
     text-decoration: none;
@@ -890,9 +892,9 @@ input.search-home-vivo {
         color: #fff;
         border: none;
 }
-a.filter-search {
+/*a.filter-search {
     right: 109px;
-}
+}*/
 input.search-homepage {
         border: 0;
         background-color: #f9fafa;
