@@ -892,9 +892,9 @@ input.search-home-vivo {
         color: #fff;
         border: none;
 }
-/*a.filter-search {
-    right: 109px;
-}*/
+a.filter-search {
+    right: auto;
+}
 input.search-homepage {
         border: 0;
         background-color: #f9fafa;
