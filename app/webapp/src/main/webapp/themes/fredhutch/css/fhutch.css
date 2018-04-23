@@ -84,7 +84,7 @@ h5 {
 /* ------------------------------------------------->  */
 /* EDITING STYLES ---------------------------------->  */
 /* ------------------------------------------------->  */
-input[type="text"],
+/*input[type="text"],
 select,
 input[type="password"] {
     border: 0;
@@ -96,7 +96,7 @@ input[type="password"] {
     -moz-border-radius: 5px;
     -webkit-border-radius: 5px;
     margin-bottom: .8em;
-}
+}*/
 input.block {
     margin-bottom: 20px;
 }
