@@ -36,19 +36,19 @@
                         <a class="filter-search filter-default" href="#" title="${i18n().intro_filtersearch}">
                             <span class="displace">${i18n().intro_filtersearch}</span>
                         </a>
-                        <div id="search-home-field">
-                            <input type="text" name="querytext" class="search-homepage" value="" autocapitalize="off" />
-                            <input type="submit" value="${i18n().search_button}" class="search" />
-                            <input type="hidden" name="classgroup"  value="" autocapitalize="off" />
-                        </div>
-
                         <ul id="filter-search-nav">
                             <li><a class="active" href="">${i18n().all_capitalized}</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouppeople">People</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>                            
-                        </ul>
+                        </ul>                        
+                        <div id="search-home-field">
+                            <input type="text" name="querytext" class="search-homepage" value="" autocapitalize="off" />
+                            <input type="submit" value="${i18n().search_button}" class="search" />
+                            <input type="hidden" name="classgroup"  value="" autocapitalize="off" />
+                        </div>
+
                     </form>
                 </fieldset>
             </section> <!-- #search-home -->
