@@ -83,10 +83,15 @@
         <#include "footer.ftl">
 
     <script>
-        // set the 'limmit search' text and alignment
+        // set the 'limit search' text and alignment
 //        if  ( $('input.search-homepage').css('text-align') == "right" ) {
 //             $('input.search-homepage').attr("value","${i18n().limit_search} \u2192");
 //        }
+
+        // set the 'prompt search' text
+        if  ( $('input.search-homepage').css('text-align') == "right" ) {
+             $('input.search-homepage').attr("value","${i18n().prompt_search}");
+        }
 
         addRecent("pubs");
 
