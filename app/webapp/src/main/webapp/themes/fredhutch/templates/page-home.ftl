@@ -24,7 +24,7 @@
     <#-- supplies the faculty count to the js function that generates a random row number for the search query -->
         <@lh.facultyMemberCount  vClassGroups! />
         <#include "identity.ftl">
-
+        <#include "navigation.ftl">
         <#include "menu.ftl">
 
         <section id="search-home" role="region">
