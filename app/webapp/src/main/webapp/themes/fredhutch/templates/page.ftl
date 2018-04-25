@@ -10,7 +10,7 @@
 
     <body class="${bodyClasses!}" onload="${bodyOnload!}">
         <#include "identity.ftl">
-        <#include "search.ftl" >
+        <#-- include "search.ftl" in "menu.ftl" 04/25/18 -->
         <#include "menu.ftl">
 
 		<#-- VIVO OpenSocial Extension by UCSF -->
