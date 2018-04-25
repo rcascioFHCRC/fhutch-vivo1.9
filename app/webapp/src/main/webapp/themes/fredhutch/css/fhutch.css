@@ -630,6 +630,7 @@ ul#main-nav {
     min-height: 710px;
     background-color:white;
     padding-left: 24px;
+    padding-top:1em;
 }
 /* INTRO-BLURB ------>  */
 #intro {
