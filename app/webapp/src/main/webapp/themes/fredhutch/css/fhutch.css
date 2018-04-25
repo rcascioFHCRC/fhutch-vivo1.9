@@ -1114,14 +1114,15 @@ footer {
     margin: 0 auto;
     background-color: #fff;
     border-top: 2px #f8f8f8 solid;
+    height: 89px;    
 }
 footer div.fh-logo {
     background-image: url("http://gdurl.com/yG5T");
     background-repeat: no-repeat;
     position: relative;
     width: 240px;
-    top: auto;
-    left: auto;
+    top: 1em;
+    left: 2em;
 }
 footer p.copyright {
     float: left;
