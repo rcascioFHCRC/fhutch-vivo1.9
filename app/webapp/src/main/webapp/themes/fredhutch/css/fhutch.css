@@ -1111,8 +1111,6 @@ div#adjImgHeight {
 /* FOOTER------>  */
 footer {
     clear: both;
-    width: 100%;
-    height: 88px;
     margin: 0 auto;
     background-color: #fff;
     border-top: 2px #f8f8f8 solid;
