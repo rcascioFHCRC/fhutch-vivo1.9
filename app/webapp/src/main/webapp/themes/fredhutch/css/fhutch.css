@@ -940,6 +940,10 @@ ul#header-nav a {
 .link-label {
     margin-right: 42px;
 }
+#wrapper-search {
+    background-color:#f8f8f8;
+    clear:both;
+}
 /* BROWSE ------>  */
 ul#browse-classgroups a {
     padding-top: 3px;
