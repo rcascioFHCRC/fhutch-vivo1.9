@@ -8,7 +8,8 @@
         <span class="link-label"><a href="http://www.fredhutch.org/en/ways-to-give.html" target="_blank">Ways to Give</a></span>
     </div>
 </div>
-
+<!-- navy-container closed in navigation.ftl -->
+<div id="navy-container">
 <header id="branding" role="banner">
     <div class="fh-logo"><a title="Fred Hutchinson Cancer Research Center" target="_blank" href="http://www.fredhutch.org/en.html"><span class="displace">${siteName}</span></a></div>
     <div class="sci-pro"><a title="${i18n().identity_title}" href="${urls.home}"><span class="displace">${siteName}</span></a></div>
