@@ -10,3 +10,4 @@
         </#list>
     </ul>
 </nav>
+</div> <!-- #navy-container opened in identity.ftl -->
