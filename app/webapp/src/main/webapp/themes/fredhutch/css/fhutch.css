@@ -470,7 +470,6 @@ h1.vivo-logo a {
     height: 59px;
 }  */
 body {
-    background-color: #123054;
 }
 body.home {
     background-image: url("http://gdurl.com/WMXK");
@@ -640,6 +639,10 @@ ul#main-nav {
     padding-left: 24px;
     padding-top:1em;
 }
+body.home div#wrapper-content {
+    background-color:transparent;
+    padding-left: 0;
+}
 /* INTRO-BLURB ------>  */
 #intro {
     margin-left: auto;
@@ -680,6 +683,8 @@ ul.individual-urls-people li a {
     text-align:center;
     padding: 13px 0;
     background-color: #f8f8f8;
+    position: relative;
+    height: 300px;    
 }
 #scroll-ahead {
     background-image: url("http://gdurl.com/TL0p");
@@ -2113,6 +2118,7 @@ ul#individual-personInPosition h3 {
 }
 
 section#recent {
+    position:relative;
     margin-top: 2em;
     background-color: #ffffff;  
 }
