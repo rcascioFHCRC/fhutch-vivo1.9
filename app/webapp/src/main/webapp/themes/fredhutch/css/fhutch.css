@@ -959,6 +959,7 @@ ul#header-nav a {
 }
 #navy-container {
     background-color:#123054;
+    height: 150px;
 }
 /* BROWSE ------>  */
 ul#browse-classgroups a {
