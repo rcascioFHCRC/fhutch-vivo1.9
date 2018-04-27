@@ -957,6 +957,9 @@ ul#header-nav a {
     background-color:#f8f8f8;
     clear:both;
 }
+#navy-container {
+    background-color:#123054;
+}
 /* BROWSE ------>  */
 ul#browse-classgroups a {
     padding-top: 3px;
