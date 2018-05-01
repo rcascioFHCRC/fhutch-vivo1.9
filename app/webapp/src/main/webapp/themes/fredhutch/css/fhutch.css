@@ -876,7 +876,8 @@ p.external-auth a.blue:hover {
     display: inline-block;    
 }
 #search-home-field input.search {
-    background: url(../images/comm-search-icon.png) 0 0 no-repeat;
+    background: url(../images/comm-search-icon.png) 3px 3px no-repeat;
+    background-size: 90%;
     text-decoration: none;
     background-color: #f9fafa;
     color: transparent;
@@ -885,8 +886,8 @@ p.external-auth a.blue:hover {
     padding-left: 0;
     padding-top: 0;
     cursor: pointer;
-    width: 39px;
-    height: 42px;    
+    width: 43px;
+    height: 43px;    
 }
 input.search-home-vivo {
     float: left;
@@ -910,7 +911,7 @@ input.search-homepage {
     opacity: .5;
     height:41px;
     margin-left:40px;    
-    margin-right: 0;
+    margin-right: -4px;
     float: none;
     width: 698px;
 }
