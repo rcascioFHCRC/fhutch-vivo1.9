@@ -914,10 +914,10 @@ input.search-homepage {
 }
 
 .filter-default {
-        background: url(../images/filteredSearch.gif) 0 0 no-repeat;
+        background: url(../images/comm-filteredSearch.gif) 0 0 no-repeat;
 }
 .filter-active {
-        background: url(../images/filteredSearchActive.gif) 0 0 no-repeat;
+        background: url(../images/comm-filteredSearchActive.gif) 0 0 no-repeat;
 }
 #filter-search-nav {
         background-color: #EAEAEA;
