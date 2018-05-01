@@ -474,6 +474,7 @@ body {
 body.home {
     background-image: url(../images/comm-Homepage_FACES_1364x514.png);
     background-repeat: no-repeat;
+    background-size: 1464px;
 }
 div.sci-pro {
     background-image: url(../images/comm-scientific-profiles.png);
@@ -899,14 +900,14 @@ input.search-home-vivo {
 }
 a.filter-search {
     right: auto;
+    top: 2px;
 }
 input.search-homepage {
     border: 0;
     background-color: #f9fafa;
     background-position: right;
     opacity: .5;
-    text-align:right;
-    height:40px;
+    height:41px;
     margin-left:40px;    
     margin-right: 0;
     float: none;
@@ -922,6 +923,7 @@ input.search-homepage {
 #filter-search-nav {
         background-color: #EAEAEA;
         left: 63px;
+        top: 2px;
 }
 #filter-search-nav li {
         background-image: none;
