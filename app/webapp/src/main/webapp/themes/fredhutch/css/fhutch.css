@@ -876,6 +876,7 @@ p.external-auth a.blue:hover {
     display: inline-block;    
 }
 #search-home-field input.search {
+    background: url(../images/comm-search-icon.png) 0 0 no-repeat;
     text-decoration: none;
     background-color: #f9fafa;
     color: transparent;
