@@ -860,6 +860,7 @@ p.external-auth a.blue:hover {
     margin-left: auto;
     margin-right: auto;
     padding: 2em;
+    width: 810px;
 }
 #search-home h3 {
     padding: 0;
@@ -908,7 +909,8 @@ input.search-homepage {
     height:40px;
     margin-left:40px;    
     margin-right: 0;
-    float: none;    
+    float: none;
+    width: 698px;
 }
 
 .filter-default {
@@ -918,10 +920,7 @@ input.search-homepage {
         background: url(../images/filteredSearchActive.gif) 0 0 no-repeat;
 }
 #filter-search-nav {
-        background-color: #2d3535;
-        color: #fff;
-        background-color: #2d3535;
-        color: #fff;
+        background-color: #EAEAEA;
         left: 63px;
 }
 #filter-search-nav li {
@@ -929,15 +928,16 @@ input.search-homepage {
         padding-left: 0;
         margin-left: 0;
 }
-#filter-search-nav a.active,
 #stats p,
 p.request-account a,
 ul#header-nav a {
    color: #fff;
 }
 #filter-search-nav a {
-        border-bottom: 1px dotted #4f5656;
-        color: #89c348;
+        color: #123054;
+}
+filter-search-nav a.active {
+    text-decoration:underline;
 }
 /* COMMUNICATIONS-BRANDING ------>  */
 #universal-links-container {
@@ -957,9 +957,12 @@ ul#header-nav a {
     background-color:#f8f8f8;
     clear:both;
 }
-#navy-container {
+body.display > #navy-container {
     background-color:#123054;
     height: 150px;
+}
+body.home > #navy-container {
+    background-color: transparent;
 }
 /* BROWSE ------>  */
 ul#browse-classgroups a {
