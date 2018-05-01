@@ -472,11 +472,11 @@ h1.vivo-logo a {
 body {
 }
 body.home {
-    background-image: url("http://gdurl.com/WMXK");
+    background-image: url(../images/comm-Homepage_FACES_1364x514.png);
     background-repeat: no-repeat;
 }
 div.sci-pro {
-    background-image: url("http://gdurl.com/PrCe");
+    background-image: url(../images/comm-scientific-profiles.png);
     background-repeat: no-repeat;
     margin-top: 50px;
 }
@@ -486,7 +486,7 @@ div.sci-pro a {
     height: 59px;
 }
 div.fh-logo {
-    background-image: url("http://gdurl.com/OZ5x");
+    background-image: url(../images/comm-FredHutch-logo.png);
     background-repeat: no-repeat;
     position: absolute;
     top: 40px;
@@ -687,7 +687,7 @@ ul.individual-urls-people li a {
     height: 300px;    
 }
 #scroll-ahead {
-    background-image: url("http://gdurl.com/TL0p");
+    background-image: url(../images/comm-scroll-down-arrow.png);
     background-repeat: no-repeat;
     background-position: center bottom;
     padding: 10px 0 25px 0px;
@@ -1138,7 +1138,7 @@ footer {
     height: 89px;    
 }
 footer div.fh-logo {
-    background-image: url("http://gdurl.com/yG5T");
+    background-image: url(../images/comm-FredHutch-logo-footer.png);
     background-repeat: no-repeat;
     position: relative;
     width: 240px;
