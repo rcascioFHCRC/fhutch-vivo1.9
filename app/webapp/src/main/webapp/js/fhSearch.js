@@ -4,7 +4,7 @@ $(document).ready(function () {
            $(this).click(function(ev){
 
                $('a.active').removeClass('active');
-               $(this).addClass('active');
+               $(this).children('a').addClass('active');
 
            });
 
