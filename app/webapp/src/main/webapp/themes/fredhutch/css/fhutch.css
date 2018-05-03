@@ -580,14 +580,18 @@ input.search-vivo {
 }*/
 
 #search input[type=submit] {
-    padding:.5em .5em;
-    background:#89c348;
-    font-size: 15px;
-    color: white;
     border:0 none;
     cursor:pointer;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
+    background: url(../images/comm-search-icon.png) 3px 3px no-repeat;
+    background-size: 90%;
+    text-decoration: none;
+    background-color: white;
+    color: transparent;
+    font-size: 18px;
+    padding-left: 0;
+    padding-top: 0;
+    width: 43px;
+    height: 43px;
 }
 
 .searchTOC {
