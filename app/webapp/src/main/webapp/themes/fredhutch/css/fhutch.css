@@ -33,12 +33,13 @@ body {
 a {
     color: #207c7e;
 }
-
 a:hover {
     color:#22888A;
     text-decoration:underline;
 }
-
+p {
+    color:#123054;
+}
 h2 a:hover,
 h2 a:active,
 ul#header-nav a:link,
