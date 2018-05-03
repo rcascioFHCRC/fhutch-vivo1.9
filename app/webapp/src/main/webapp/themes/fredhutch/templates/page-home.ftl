@@ -28,7 +28,7 @@
         <#include "menu.ftl">
 
         <section id="search-home" role="region">
-                <div><span class="search-filter-text">Search: </span><span class="search-filter-selected">All</span></div>
+                <div class="search-filter-text"><span>Search: </span><span class="search-filter-selected">All</span></div>
 
                 <fieldset>
                     <legend>${i18n().search_form}</legend>
@@ -37,7 +37,7 @@
                             <span class="displace">${i18n().intro_filtersearch}</span>
                         </a>
                         <ul id="filter-search-nav">
-                            <li><a class="active" href="">${i18n().all_capitalized}</a></li>
+                            <li><a class="active" href="">All</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouppeople">People</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</a></li>
