@@ -367,7 +367,7 @@ form h2 {
 }
 form select {
    border: 0;
-   font-size: 14px;
+   font-size: 18px;
    padding: .5em;
    background: #fff;
    border: 1px solid #e0dfdf;
@@ -543,12 +543,13 @@ input.search-vivo {
     height:41px;
     margin-bottom: 0;
     margin-top: 0;
-    margin-right: 0;
+    margin-right: -4px;
     border-radius: 0;
     -moz-border-radius: 0;
     -webkit-border-radius: 0;
-    border: 1px solid darkgray;
-    border-right: none;    
+    border: 1px solid #e0dfdf;
+    border-right: none;
+    font-size:18px;
 }
 /*#search-field {
     width: 500px;
@@ -581,7 +582,7 @@ input.search-vivo {
 }*/
 
 #search input[type=submit] {
-    border: solid 1px darkgray;
+    border: solid 1px #e0dfdf;
     border-left: none;
     cursor:pointer;
     background: url(../images/comm-search-icon.png) 5px 5px no-repeat;
