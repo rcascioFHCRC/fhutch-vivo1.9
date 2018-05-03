@@ -938,10 +938,14 @@ ul#header-nav a {
    color: #fff;
 }
 #filter-search-nav a {
-        color: #123054;
+    color: #123054;
 }
-filter-search-nav a.active {
+#filter-search-nav a.active {
     text-decoration:underline;
+}
+.search-filter-text {
+    color:#f8f8f8;
+    padding-left:24px;
 }
 /* COMMUNICATIONS-BRANDING ------>  */
 #universal-links-container {
