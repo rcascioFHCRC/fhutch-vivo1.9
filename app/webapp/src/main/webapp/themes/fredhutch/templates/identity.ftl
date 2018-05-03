@@ -55,6 +55,7 @@
 
 
                 ${scripts.add('<script type="text/javascript" src="${urls.base}/js/userMenu/userMenuUtils.js"></script>')}
+                ${scripts.add('<script type="text/javascript" src="${urls.base}/js/fhSearch.js"></script>')}
 <#--
             <#else>
                 <li role="listitem"><a class="log-out" title="${i18n().menu_loginfull}" href="${urls.login}">${i18n().menu_login}</a></li> -->
