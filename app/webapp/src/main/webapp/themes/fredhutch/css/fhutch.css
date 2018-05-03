@@ -2149,28 +2149,22 @@ ul#individual-personInPosition h3 {
 section#recent {
     position:relative;
     margin-top: 2em;
-    background-color: #ffffff;  
+    background-color: #ffffff;
+    margin-left: 24px;
 }
 
 .home-box {
-    border: 1px solid #dce4e3;
     padding: 1em;
     padding-top: .25em;
     margin-bottom: 1em;
 }
 
 .home-box h1 {
-    font-size: 1.375em;
-    color: #064d68;
-    padding: .25em;
     margin-bottom: 1em;
-    border-bottom: 1px solid #dce4e3;
 }
 
 .home-box span.date {
     padding: 0 0.4em;
-    font-size: 0.8em;
-    background: #f4f4f4;
 }
 
 .home-box li {
@@ -2182,7 +2176,6 @@ section#recent {
 }
 
 #home-pubs {
-    width: 70%;
     margin-left: auto;
     margin-right: auto;
 }
