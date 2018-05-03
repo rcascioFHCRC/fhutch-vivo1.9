@@ -57,7 +57,7 @@ h1 {
 h2 {
     padding: 10px 0 12px 0;
     margin: 0;
-    font-size: 2rem;
+    font-size: 1.5rem;
     line-height: 1.5em;
 }
 h2 a:link,
@@ -1507,8 +1507,7 @@ article.property ul.property-list {
 .preferred {
     padding-top: .2em;
 }
-#individual-intro h1 {
-    font-size: 1.375em;
+h1 > span {
     color: #123054;
 }
 #individual-intro span.display-title,
@@ -1568,11 +1567,9 @@ h3.internal-auth {
 }
 #individual-info h2 {
     color: #123054;
-    font-size: 1em;
-    font-weight: bold;
 }
 #individual-info h3 {
-    line-height: 1.2em;
+    line-height: 1.25em;
     font-weight: bold;
 }
 ul#individual-personInPosition {
