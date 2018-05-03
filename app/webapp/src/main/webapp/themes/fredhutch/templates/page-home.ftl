@@ -28,7 +28,7 @@
         <#include "menu.ftl">
 
         <section id="search-home" role="region">
-                <h3><span class="search-filter-selected">filteredSearch</span></h3>
+                <div><span class="search-filter-text">Search: </span><span class="search-filter-selected">All</span></div>
 
                 <fieldset>
                     <legend>${i18n().search_form}</legend>
@@ -89,7 +89,7 @@
 //        }
 
         // set the 'prompt search' text
-        if  ( $('input.search-homepage').css('text-align') == "right" ) {
+        if  ( $('input.search-homepage').length ) {
              $('input.search-homepage').attr("value","${i18n().prompt_search}");
         }
 
