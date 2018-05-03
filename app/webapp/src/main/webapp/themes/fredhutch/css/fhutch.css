@@ -944,8 +944,11 @@ ul#header-nav a {
     text-decoration:underline;
 }
 .search-filter-text {
-    color:#f8f8f8;
     padding-left:24px;
+}
+.search-filter-text > span {
+    color:#f8f8f8;
+    font-size:22px;
 }
 /* COMMUNICATIONS-BRANDING ------>  */
 #universal-links-container {
