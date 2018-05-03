@@ -56,7 +56,7 @@ h1 {
 h2 {
     padding: 10px 0 12px 0;
     margin: 0;
-    font-size: 1.5rem;
+    font-size: 2rem;
     line-height: 1.5em;
 }
 h2 a:link,
@@ -539,15 +539,16 @@ ul#header-nav a.log-out {
     text-align:center;
 }
 input.search-vivo {
-    width: 500px;
-    height: 20px;
-    padding:.25em;
+    width: 698px;
+    height:41px;
     margin-bottom: 0;
     margin-top: 0;
     margin-right: 0;
     border-radius: 0;
     -moz-border-radius: 0;
-    -webkit-border-radius: 0;    
+    -webkit-border-radius: 0;
+    border: 1px solid darkgray;
+    border-right: none;    
 }
 /*#search-field {
     width: 500px;
@@ -580,18 +581,19 @@ input.search-vivo {
 }*/
 
 #search input[type=submit] {
-    border:0 none;
+    border: solid 1px darkgray;
+    border-left: none;
     cursor:pointer;
-    background: url(../images/comm-search-icon.png) 3px 3px no-repeat;
-    background-size: 90%;
+    background: url(../images/comm-search-icon.png) 5px 5px no-repeat;
+    background-size: 75%;
     text-decoration: none;
     background-color: white;
     color: transparent;
     font-size: 18px;
     padding-left: 0;
     padding-top: 0;
-    width: 43px;
-    height: 43px;
+    width: 45px;
+    height: 45px;
 }
 
 .searchTOC {
@@ -880,8 +882,8 @@ p.external-auth a.blue:hover {
     display: inline-block;    
 }
 #search-home-field input.search {
-    background: url(../images/comm-search-icon.png) 3px 3px no-repeat;
-    background-size: 90%;
+    background: url(../images/comm-search-icon.png) 5px 5px no-repeat;
+    background-size: 75%;
     text-decoration: none;
     background-color: #f9fafa;
     color: transparent;
@@ -2033,7 +2035,7 @@ span.tree-toggler {
 }
 
 #person-browse .name {
-    font-size: larger;
+    font-size: 2rem;
 }
 
 #person-browse .thumbnail {
