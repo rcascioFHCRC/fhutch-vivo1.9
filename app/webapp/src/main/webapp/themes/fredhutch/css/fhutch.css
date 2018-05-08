@@ -540,7 +540,7 @@ ul#header-nav a.log-out {
     text-align:center;
 }
 input.search-vivo {
-    width: 698px;
+    width: 689px;
     height:41px;
     margin-bottom: 0;
     margin-top: 0;
@@ -551,6 +551,7 @@ input.search-vivo {
     border: 1px solid #e0dfdf;
     border-right: none;
     font-size:18px;
+    padding-left:.5em;
 }
 /*#search-field {
     width: 500px;
