@@ -1949,6 +1949,7 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
 .ca-network img {
     width: 16px;
     height: 16px;
+}
 
 .ca-network a {
     color: #123054;
@@ -2185,6 +2186,7 @@ section#recent {
 }
 
 #home-pubs {
+    width:70%;
     margin-left: auto;
     margin-right: auto;
 }
