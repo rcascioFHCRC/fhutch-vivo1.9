@@ -540,7 +540,7 @@ fhd:FormerPosition  a owl:Class ;
 
 fhd:Clinician  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
-    rdfs:label "Clinician"@en-US .
+    rdfs:label "Clinical"@en-US .
 
 fhd:Emeritus  a owl:Class ;
     rdfs:subClassOf          vivo:Position ;
