@@ -890,7 +890,7 @@ p.external-auth a.blue:hover {
     background-color: #f9fafa;
     color: transparent;
     font-size: 18px;
-    border: none;
+    border-top: 1px solid white;
     padding-left: 0;
     padding-top: 0;
     cursor: pointer;
@@ -921,7 +921,8 @@ input.search-homepage {
     margin-left:40px;    
     margin-right: -4px;
     float: none;
-    width: 698px;
+    width: 689px;
+    padding-left:.5em;
 }
 
 .filter-default {
