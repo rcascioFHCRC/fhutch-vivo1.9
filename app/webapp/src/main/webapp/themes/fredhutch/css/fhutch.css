@@ -1296,7 +1296,7 @@ ul#individual-tools-people li a {
 /* VISUAL GRAPH------>  */
 .property-group,
 #menupage-intro {
-    width: 920px;
+    /*width: 920px;*/
     background: #fff;
 }
 #menupage-intro h2 {
@@ -1643,9 +1643,9 @@ section.property-group h2,
     color: #123054;
     font-weight: bold!important;
 }
-article.property {
+/*article.property {
     width: 852px;
-}
+}*/
 article.property h3 {
     background: #fafaf9;
     font-size: 1.063em;
@@ -1670,7 +1670,7 @@ li.nonSelectedGroupTab {
     background-color: #e9e9e9;
 }
 .propertyTabsList {
-    width:920px;
+    /*width:920px;*/
     margin-left:auto;
     margin-right:auto;
 }
