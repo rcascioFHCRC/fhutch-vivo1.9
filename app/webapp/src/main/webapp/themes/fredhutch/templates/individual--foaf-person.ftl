@@ -78,6 +78,7 @@
       <#if lca.statements[0]??>
         <#if (lca.statements[0].value) != "false">
           <li class="ca-network">
+          <img src="../images/network-icon.png">
           <#include "utils/coauthor-viz.ftl">
           </li>
         </#if>
