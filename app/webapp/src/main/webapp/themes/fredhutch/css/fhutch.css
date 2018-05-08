@@ -1645,6 +1645,9 @@ section.property-group h2,
     color: #123054;
     font-weight: bold!important;
 }
+section.property-group {
+    left:0;
+}
 /*article.property {
     width: 852px;
 }*/
@@ -1673,7 +1676,8 @@ li.nonSelectedGroupTab {
 }
 .propertyTabsList {
     /*width:920px;*/
-    margin-left:auto;
+    left:0;
+    margin-left:3%
     margin-right:auto;
 }
 /* MISCELLANEOUS ------>  */
@@ -1938,10 +1942,13 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
 
 
 .ca-network {
-    margin: 0 0 0 15px;
-    list-style: url(../../../images/network-icon.png);
+    margin: 0 2px 0 0;
+    list-style: none;
     line-height: 1.5em;
 }
+.ca-network img {
+    width: 16px;
+    height: 16px;
 
 .ca-network a {
     color: #123054;
