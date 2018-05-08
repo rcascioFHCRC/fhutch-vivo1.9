@@ -55,21 +55,21 @@
 
 
         <section id="intro" role="region">
-            <h1>Welcome to <strong>Fred Hutch Scientific Profiles</strong> website,<br /> a portal that enables collaboration among researchers.</h2>
+            <h1>Welcome to <strong>Fred Hutch Scientific Profiles</strong> website,<br /> a portal to the publications and CV data of our faculty.</h2>
         </section>
 
         <section id="fhsp-desc">
             <div id="scroll-ahead"><span>Scroll Ahead</span></div>
             <div id="fhcp-is">
                 <h1>Fred Hutch Scientific Profiles is:</h1>
-                <div class="fhcp-is-block"><h2>For Faculty</h2>
-                    <p>Need to update your faculty profile?<br/><a href="mailto:library@fredhutch.org">Click here</a> to find out how.</p>
+                <div class="fhcp-is-block"><h2>For Scientific Community</h2>
+                    <p>Prospective faculty and students can review credentials;<br/>FHCRC scientists can find collaborators.</p>
                 </div>
                 <div class="fhcp-is-block"><h2>For Industry Collaboration</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur elit.<br/><a href="#" target="_blank">Proin vulputate</a> sagittis metus.</p>
+                    <p>Businesses can search for collaborators<br/>via expertise terms.</p>
                 </div>
                 <div class="fhcp-is-block"><h2>For Journalists</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur elit.<br/>Proin <a href="#" target="_blank">vulputate sagittis metus</a>.</p>
+                    <p>Media can find background information and<br/>recent publications of faculty in the news.</p>
                 </div>
             </div>
         </section>        
