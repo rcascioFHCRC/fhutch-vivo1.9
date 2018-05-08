@@ -47,19 +47,6 @@
         </#if>
         <!-- Contact Info -->
         <ul id="contacts">
-            <!-- profile under construction? -->
-            <#assign cp = propertyGroups.getProperty(constructionProp)!>
-            <#if cp?has_content>
-              <#if cp.statements[0]??>
-                  <#if (cp.statements[0].value) != "false">
-                    <li class="under-construction">
-                      <span style="font-weight: bold; font-size: .97em; font-style: italic;">Profile Under Construction</span>
-                    </li>
-                  </#if>
-
-                </#if>
-            </#if>
-
             <#if vcardPhone?has_content>
                 <#if vcardPhone.statements?has_content>
                   <#list vcardPhone.statements as statement>
