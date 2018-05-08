@@ -1677,7 +1677,7 @@ li.nonSelectedGroupTab {
 .propertyTabsList {
     /*width:920px;*/
     left:0;
-    margin-left:3%;
+    margin-left:3%!important;
     margin-right:auto;
 }
 /* MISCELLANEOUS ------>  */
@@ -2186,7 +2186,6 @@ section#recent {
 }
 
 #home-pubs {
-    width:70%;
     margin-left: auto;
     margin-right: auto;
 }
