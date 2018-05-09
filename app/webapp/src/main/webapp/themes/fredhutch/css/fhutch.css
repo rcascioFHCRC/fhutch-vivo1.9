@@ -1940,43 +1940,33 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
     display: none;
 }*/
 
-
 .ca-network {
     margin: 0 2px 0 0;
     list-style: none;
-    line-height: 1.5em;
 }
 .ca-network img {
     width: 16px;
     height: 16px;
 }
-
 .ca-network a {
     color: #123054;
 }
-
 .pub-id-link {
     padding-right: 1em;
     font-size:smaller;
 }
-
 .pub-date {
     margin-left: .25em;
     font-size: smaller;
 }
-
-
 .pub-container .title, .pub-container .author-list {
     margin-top:.25em;
 }
-
 .pub-container .pub-ids  {
     margin-top: .25em;
 }
 
-
 /* org browse */
-
 
 div.org-browse-header.describe {
     font-size: larger;
@@ -2015,7 +2005,6 @@ span.tree-toggler {
     margin-left: 1em;
     color:#89c348;
 }
-
 
 .chevron::before {
     margin-top: 5px;
@@ -2093,15 +2082,13 @@ li.under-construction, .under-construction {
     min-height: 400px;
 }
 
-.clear
-{
+.clear {
     clear: both;
 }
 
 .img-circle {
     border-radius: 50%;
 }
-
 
 .alpha-browse ul {
     padding: 0;
