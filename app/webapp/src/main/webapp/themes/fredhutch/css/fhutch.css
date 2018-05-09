@@ -473,9 +473,10 @@ h1.vivo-logo a {
 body {
 }
 body.home {
-    background-image: url(../images/comm-Homepage_FACES_1364x514.png);
+    background-image: url(../images/comm-Homepage_FACES_1920x725.png);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
+    max-height:725px;
 }
 div.sci-pro {
     background-image: url(../images/comm-scientific-profiles.png);
