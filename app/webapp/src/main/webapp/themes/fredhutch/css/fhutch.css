@@ -28,8 +28,6 @@ body {
     margin: 0 auto;
     min-width: 1364px;
 }
-body {
-}
 a {
     color: #207c7e;
 }
@@ -37,8 +35,11 @@ a:hover {
     color:#22888A;
     text-decoration:underline;
 }
+li {
+    line-height:1.5em;
 p {
     color:#123054;
+    line-height:1.25em;
 }
 h2 a:hover,
 h2 a:active,
@@ -475,7 +476,6 @@ body {
 body.home {
     background-image: url(../images/comm-Homepage_FACES_1920x725.png);
     background-repeat: no-repeat;
-    background-size: cover;
     max-height:725px;
 }
 div.sci-pro {
@@ -1581,7 +1581,6 @@ h3.internal-auth {
     font-weight: bold;
 }
 ul#individual-personInPosition {
-    font-size: 1em;
     list-style: none;
 }
 ul#individual-personInPosition li {
