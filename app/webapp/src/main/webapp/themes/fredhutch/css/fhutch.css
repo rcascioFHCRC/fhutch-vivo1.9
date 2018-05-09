@@ -677,16 +677,19 @@ body.loggedIn #intro {
     padding: 0 24px 0 24px;
 }
 #intro a,
-#individual-intro ul.individual-urls li a,
 #revision-build-date h3,
 #terms h3,
 #visual-graph h5,
 .blue,
-p.forgot-password a,
+p.forgot-password a/*,
+ #individual-intro ul.individual-urls li a,
 ul#individual-personInPosition li a,
 ul.individual-urls li a,
-ul.individual-urls-people li a {
+ul.individual-urls-people li a */ {
     color: #123054
+}
+a span {
+    color:#207C7C;
 }
 /* HOME TEXT ------>  */
 #fhsp-desc {
@@ -1653,14 +1656,7 @@ section.property-group {
 }*/
 article.property h3 {
     background: #fafaf9;
-    font-size: 1.063em;
     color: #123054;
-    font-weight: bold;
-}
-article.property ul.property-list li.subclass h3 {
-    font-size: 1.063em;
-    color: #123054;
-    font-weight: bold;
 }
 article.property .data-property-statement {
     background: #fff;
@@ -2067,7 +2063,7 @@ span.tree-toggler {
 }
 
 #person-browse p.description, #person-browse ul.contact {
-    margin-top: .5em;
+    margin-top: 1.3em;
 }
 
 li.under-construction, .under-construction {
