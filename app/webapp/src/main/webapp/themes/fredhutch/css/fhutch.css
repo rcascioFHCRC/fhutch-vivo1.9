@@ -27,6 +27,7 @@ body {
     min-height: 100%; /* real browsers */
     margin: 0 auto;
     min-width: 1364px;
+    color:#123054;
 }
 a {
     color: #207c7e;
@@ -1522,7 +1523,6 @@ h1 > span {
 #individual-intro span.display-title,
 h1.fn .display-title {
     font-size: .825em;
-    color: #123054;
     border-left: 1px solid #a6b1b0;
 }
 ul#individual-tools {
@@ -1573,11 +1573,6 @@ h2#mainImage,
 #share-contact h2,
 h3.internal-auth {
     color: #123054;
-}
-#individual-info h1.fn {
-    font-size: 1.375em;
-    color: #595B5B;
-    line-height: 1.3em;
 }
 #individual-info h2 {
     color: #123054;
@@ -1696,10 +1691,7 @@ p.address-line {
     margin-bottom: 0.3em;
 }
 .listDateTime {
-    font-weight: bold;
-    padding: 0 0.4em;
-    font-size: 0.8em;
-    background: #f4f4f4;    
+    padding: 0 0.4em;   
 }
 /* EDITING DISPLAY------>  */
 .edit-individual {
@@ -1945,11 +1937,9 @@ div.donateButton a.donate_button:hover{background-color:#73ad33}
 }
 .pub-id-link {
     padding-right: 1em;
-    font-size:smaller;
 }
 .pub-date {
     margin-left: .25em;
-    font-size: smaller;
 }
 .pub-container .title, .pub-container .author-list {
     margin-top:.25em;
