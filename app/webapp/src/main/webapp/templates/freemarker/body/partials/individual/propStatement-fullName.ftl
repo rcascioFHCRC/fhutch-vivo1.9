@@ -26,7 +26,7 @@
 <#macro showEmail primaryEmail>
     <#if primaryEmail.statements?has_content>
         <#list primaryEmail.statements as statement>
-            <li class="person-contact"><img src="../images/emailIconSmall.gif"/>${statement.emailAddress!}</li>
+            <li class="person-contact"><img src="../images/emailIconSmall.gif"/><a href="mailto:${statement.emailAddress!}">${statement.emailAddress!}</a></li>
         </#list>
     </#if>
 </#macro>
