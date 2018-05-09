@@ -35,8 +35,10 @@ a:hover {
     color:#22888A;
     text-decoration:underline;
 }
-p {
+p, span {
     color:#123054;
+}
+p {
     line-height:1.25em;
 }
 li {
@@ -688,6 +690,9 @@ ul.individual-urls li a,
 ul.individual-urls-people li a */ {
     color: #123054
 }
+ul.individual-urls li a {
+    margin-left:5px;
+}
 a span {
     color:#207C7C;
 }
@@ -1216,9 +1221,6 @@ a.terms:hover,
 a.powered-by-vivo:hover {
     color: #4e5051;
     text-decoration: none;
-}
-p {
-    margin-bottom: 1.3em;
 }
 
 /* STYLED BUTTONS ------>  */
@@ -2101,6 +2103,7 @@ li.under-construction, .under-construction {
 }
 .person-contact img {
     margin-right: 4px;
+    width:16px;
 }
 
 li.embed-video {
