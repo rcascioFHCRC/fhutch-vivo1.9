@@ -470,19 +470,19 @@ class Person(BaseModel):
         vt.set(VCARD.telephone, Literal(self.phone))
         return g
 
-    def get_videos(self):
-        # URL regex from http://stackoverflow.com/a/6883094/758157
-        g = Graph()
-        if hasattr(self, "embeddedvideos"):
-            text = self.embeddedvideos
-            #for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
-            for link in text.split(';'):
-                cl = link.strip().replace('&quot;', "")
-                if cl == "":
-                    continue
-                g.add((self.uri, FHD.video, Literal(cl)))
-            return g
-        return g
+#    def get_videos(self):
+#        # URL regex from http://stackoverflow.com/a/6883094/758157
+#        g = Graph()
+#        if hasattr(self, "embeddedvideos"):
+#            text = self.embeddedvideos
+#            #for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
+#            for link in text.split(';'):
+#                cl = link.strip().replace('&quot;', "")
+#                if cl == "":
+#                    continue
+#                g.add((self.uri, FHD.video, Literal(cl)))
+#            return g
+#        return g
 
     def is_labPI(self):
         g = Graph()
