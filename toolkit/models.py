@@ -281,7 +281,7 @@ class Person(BaseModel):
                 logger.error("No type of link for {}".format(self.cid))
                 link_type = "Link"
             if link_type == "Video":
-                g.add((self.uri, FHD.video, Literal(link.href)))
+                # g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
             else:
                 link_label = None
