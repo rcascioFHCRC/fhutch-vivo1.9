@@ -13,6 +13,11 @@ aside,
 footer{
     display: block;
 }
+nav {
+	left: 593px;
+    right: auto;
+    position: absolute;	
+}
 time{
     font-weight: normal;
 }
@@ -456,7 +461,7 @@ hr.formDivider {
 
 /* HEADER ------>  */
 #branding {
-    position: absolute;
+    position: relative;
     margin: 0 auto;
     padding-left:32px;
 }
