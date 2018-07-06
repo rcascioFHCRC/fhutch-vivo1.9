@@ -10,7 +10,7 @@
 
     <body class="${bodyClasses!}" onload="${bodyOnload!}">
         <#include "identity.ftl">
-        <#include "navigation.ftl">	
+        <#-- <#include "navigation.ftl"> -->	
         <#include "search.ftl">
         <#include "menu.ftl">
 
