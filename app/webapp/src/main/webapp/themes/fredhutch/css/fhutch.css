@@ -456,8 +456,7 @@ hr.formDivider {
 
 /* HEADER ------>  */
 #branding {
-    position: relative;
-    float: left;
+    position: absolute;
     margin: 0 auto;
     padding-left:32px;
 }
@@ -486,6 +485,7 @@ div.sci-pro {
     background-image: url(../images/comm-scientific-profiles.png);
     background-repeat: no-repeat;
     margin-top: 50px;
+	position: absolute;	
 }
 div.sci-pro a {
     display: block;
@@ -497,7 +497,9 @@ div.fh-logo {
     background-repeat: no-repeat;
     position: absolute;
     top: 40px;
-    left: 1110px;
+    left: auto;
+	right: 0;
+	padding-right:32px;
     width: 239px;
 }
 div.fh-logo a {
@@ -985,6 +987,9 @@ ul#header-nav a {
 .link-label {
     margin-right: 42px;
 }
+span#first.link-label a {
+	font-family: Geogrotesque-SemiBoldIt;
+}
 #wrapper-search {
     background-color:#f8f8f8;
     clear:both;
@@ -992,6 +997,10 @@ ul#header-nav a {
 #navy-container {
     background-color:#123054;
     height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    position: relative;	
 }
 body.home > #navy-container {
     background-color: transparent;
