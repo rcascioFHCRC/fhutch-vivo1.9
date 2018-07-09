@@ -730,6 +730,9 @@ a span {
     float:left;
     background-color: #f8f8f8;    
 }
+.fhcp-is-block > h2 {
+	color: #123054;
+}
 /* LOG IN------>  */
 #login {
     float: right;
@@ -935,7 +938,7 @@ input.search-homepage {
     border: 0;
     background-color: #f9fafa;
     background-position: right;
-    opacity: .5;
+    /*opacity: .5;*/
     height:41px;
     margin-left:40px;    
     margin-right: -4px;
@@ -2152,6 +2155,10 @@ section#recent {
 
 .home-box h1 {
     margin-bottom: 1em;
+}
+
+.home-box > h1 {
+	color: #207c7e;	
 }
 
 .home-box span.date {
