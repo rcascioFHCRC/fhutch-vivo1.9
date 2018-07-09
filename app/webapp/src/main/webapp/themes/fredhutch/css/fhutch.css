@@ -907,7 +907,6 @@ p.external-auth a.blue:hover {
 }
 #search-home-field input.search {
     background: url(../images/comm-search-icon.png) 5px 5px no-repeat;
-    background-size: 75%;
     text-decoration: none;
     background-color: #f9fafa;
     color: transparent;
@@ -916,8 +915,8 @@ p.external-auth a.blue:hover {
     padding-left: 0;
     padding-top: 0;
     cursor: pointer;
-    width: 43px;
-    height: 43px;    
+    width: 50px;
+    height: 50px;    
 }
 input.search-home-vivo {
     float: left;
@@ -939,23 +938,28 @@ input.search-homepage {
     background-color: #f9fafa;
     background-position: right;
     /*opacity: .5;*/
-    height:41px;
+    height:48px;
     margin-left:40px;    
     margin-right: -4px;
     float: none;
     width: 689px;
     padding-left:.5em;
 }
+#search-homepage {
+	width: 900px;
+}
 
 .filter-default {
         background: url(../images/comm-filteredSearch.gif) 0 0 no-repeat;
+		background-size: 100%;		
 }
 .filter-active {
         background: url(../images/comm-filteredSearchActive.gif) 0 0 no-repeat;
+		background-size: 100%;		
 }
 #filter-search-nav {
         background-color: #EAEAEA;
-        left: 63px;
+        left: 70px;
         top: 2px;
 }
 #filter-search-nav li {
