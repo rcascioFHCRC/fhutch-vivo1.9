@@ -13,11 +13,6 @@ aside,
 footer{
     display: block;
 }
-nav {
-	left: 593px;
-    right: auto;
-    position: absolute;	
-}
 time{
     font-weight: normal;
 }
@@ -460,6 +455,11 @@ hr.formDivider {
 /* ------------------------------------------------->  */
 
 /* HEADER ------>  */
+header#branding nav {
+    left: 593px;
+    right: auto;
+    position: absolute;	
+}
 #branding {
     position: relative;
     margin: 0 auto;
@@ -1563,7 +1563,7 @@ h2#webpage {
 /* INDIVIDUAL INTRO - LEFT SIDE CONTENT ------>  */
 img.individual-photo {
     border: 7px solid #ebebeb;
-    width: 175px;
+    width: 225px;
 }
 .rdf-url {
     padding-top: .8em;
@@ -1605,6 +1605,9 @@ h3.internal-auth {
 }
 #individual-info h2 {
     color: #123054;
+}
+#individual-intro.person #individual-info {
+	width: auto;
 }
 ul#individual-personInPosition {
     list-style: none;
@@ -1667,9 +1670,8 @@ img.co-author {
 /* PROPERTY GROUP ------>  */
 section.property-group h2,
 #menupage-content h4 {
-    font-size: 1.25em;
-    color: #123054;
-    font-weight: bold!important;
+    font-size: 1.25em!important;
+    color: #123054!important;
 }
 section.property-group {
     left:0;
