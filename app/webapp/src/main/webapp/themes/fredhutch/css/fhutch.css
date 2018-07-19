@@ -669,7 +669,8 @@ body.home div#wrapper-content {
 #intro {
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: 50px;    
+    padding-top: 4em;
+    padding-bottom: 9em;	
 }
 body.loggedIn #intro {
     width: 98%;
