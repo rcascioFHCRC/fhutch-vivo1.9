@@ -11,7 +11,6 @@
                     <select name="classgroup">
                       <option value="">All</option>
                       <option value="http://vivoweb.org/ontology#vitroClassGrouppeople">People</option>
-                      <option value="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</option>
                       <option value="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</option>
                       <option value="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</option>
                     </select>
