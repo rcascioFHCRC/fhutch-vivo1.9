@@ -39,7 +39,6 @@
                         <ul id="filter-search-nav">
                             <li><a class="active" href="">All&nbsp;</a></li>
                             <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouppeople">People</a></li>
-                            <li role="listitem"><a href="" title="http://vivoweb.org/ontology#vitroClassGrouporganizations">Organizations</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGrouppublications">Publications</a></li>
                             <li role="listitem"><a href="" title="http://vivo.fredhutch.org/individual/vitroClassGroupexpertise">Expertise</a></li>                            
                         </ul>                        
@@ -53,26 +52,9 @@
                 </fieldset>
             </section> <!-- #search-home -->
 
-
         <section id="intro" role="region">
             <h1>Welcome to <strong>Fred Hutch Scientific Profiles</strong> website,<br /> a portal to the publications and CV data of our faculty.</h2>
         </section>
-
-        <section id="fhsp-desc">
-            <div id="scroll-ahead"><span>Scroll Ahead</span></div>
-            <div id="fhcp-is">
-                <h1>Fred Hutch Scientific Profiles is:</h1>
-                <div class="fhcp-is-block"><h2>For Scientific Community</h2>
-                    <p>Prospective faculty and students can review credentials;<br/>FHCRC scientists can find collaborators.</p>
-                </div>
-                <div class="fhcp-is-block"><h2>For Industry Collaboration</h2>
-                    <p>Businesses can search for collaborators<br/>via expertise terms.</p>
-                </div>
-                <div class="fhcp-is-block"><h2>For Journalists</h2>
-                    <p>Media can find background information and<br/>recent publications of faculty in the news.</p>
-                </div>
-            </div>
-        </section>        
 
         <section id="recent">
             <div class="home-box" id="home-pubs">
