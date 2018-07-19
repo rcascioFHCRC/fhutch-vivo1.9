@@ -1402,6 +1402,7 @@ ul#browse-classes {
     border-right: 0;
     background-color: #f1f2ee;
     margin-left:0;
+    min-height: 70px;
 }
 ul#browse-classes li,
 ul#vgraph-classes li {
