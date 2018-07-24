@@ -49,7 +49,7 @@
                     <ul>
                         <#list positions as pos>
                             <li>
-                            ${pos.title}, <a href="${pos.url}">${pos.orgName}</a><#if (pos.parentOrgName)?hasContent>, ${pos.parentOrgName}</#if>
+                            ${pos.title}, ${pos.orgName}<#if (pos.parentOrgName)?hasContent>, ${pos.parentOrgName}</#if>
                             </li>
                         </#list>
                     </ul>
