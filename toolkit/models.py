@@ -349,24 +349,24 @@ class Person(BaseModel):
         p.set(FHD.converisId, Literal(self.cid))
         if self._nickname is not None:
             p.set(FHD.nickname, Literal(self._nickname))
-        if hasattr(self, 'cfresint'):
-            value = scrub_html(self.cfresint)
-            p.set(VIVO.researchOverview, Literal(value))
+#        if hasattr(self, 'cfresint'):
+#            value = scrub_html(self.cfresint)
+#            p.set(VIVO.researchOverview, Literal(value))
         if hasattr(self, 'orcid'):
             p.set(FHD.orcid, Literal(self.orcid))
         # clinical interests
-        if hasattr(self, 'cfclinint'):
-            value = scrub_html(self.cfclinint)
-            p.set(FHD.clinicalInterest, Literal(value))
+#        if hasattr(self, 'cfclinint'):
+#            value = scrub_html(self.cfclinint)
+#            p.set(FHD.clinicalInterest, Literal(value))
         # brief description
-        if hasattr(self, 'briefdescription'):
-            p.set(FHD.briefDescription, Literal(self.briefdescription))
+#        if hasattr(self, 'briefdescription'):
+#            p.set(FHD.briefDescription, Literal(self.briefdescription))
         # profile under construction?
-        construction = "Yes"
-        if hasattr(self, 'underconstruction'):
-            if self.underconstruction['cid'] == '11289':
-                construction = "No"
-        p.set(FHD.underConstruction, Literal(construction))
+#        construction = "Yes"
+#        if hasattr(self, 'underconstruction'):
+#            if self.underconstruction['cid'] == '11289':
+#                construction = "No"
+#        p.set(FHD.underConstruction, Literal(construction))
 
         # Vcard individual
         vci_uri = URIRef(self.vcard_uri)
