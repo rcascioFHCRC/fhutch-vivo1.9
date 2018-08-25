@@ -3,28 +3,27 @@ package org.fredhutch.controller;
 /**
  * Organizational browse. Tree starting with top level org..
  */
+
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+import edu.cornell.mannlib.vitro.webapp.config.ConfigurationProperties;
+import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
+import edu.cornell.mannlib.vitro.webapp.controller.freemarker.FreemarkerHttpServlet;
+import edu.cornell.mannlib.vitro.webapp.controller.freemarker.UrlBuilder;
+import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.ResponseValues;
+import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.TemplateResponseValues;
+import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFServiceException;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.*;
+import org.fredhutch.utils.Config;
+
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.google.common.base.Charsets;
-import com.google.common.io.Resources;
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.*;
-import edu.cornell.mannlib.vitro.webapp.config.ConfigurationProperties;
-import edu.cornell.mannlib.vitro.webapp.controller.freemarker.FreemarkerHttpServlet;
-import edu.cornell.mannlib.vitro.webapp.controller.freemarker.UrlBuilder;
-import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFServiceException;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
-import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.ResponseValues;
-import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.TemplateResponseValues;
-
-import org.fredhutch.utils.Config;
 
 public class OrgBrowseController extends FreemarkerHttpServlet {
 

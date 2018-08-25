@@ -1,15 +1,15 @@
 package org.fredhutch.controller;
 
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Resource;
 import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.UrlBuilder;
 import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFServiceException;
 import edu.cornell.mannlib.vitro.webapp.rdfservice.ResultSetConsumer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jena.query.ParameterizedSparqlString;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Resource;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;

@@ -1,9 +1,5 @@
 package org.fredhutch.dataservice;
 
-import com.hp.hpl.jena.query.ParameterizedSparqlString;
-import com.hp.hpl.jena.query.QuerySolution;
-import com.hp.hpl.jena.rdf.model.Literal;
-import com.hp.hpl.jena.rdf.model.Resource;
 import edu.cornell.mannlib.vitro.webapp.config.ConfigurationProperties;
 import edu.cornell.mannlib.vitro.webapp.controller.VitroHttpServlet;
 import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
@@ -15,6 +11,9 @@ import edu.cornell.mannlib.vitro.webapp.visualization.collaborationutils.CoAutho
 import edu.cornell.mannlib.vitro.webapp.visualization.valueobjects.Collaborator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jena.query.ParameterizedSparqlString;
+import org.apache.jena.query.QuerySolution;
+import org.apache.jena.rdf.model.Literal;
 import org.fredhutch.utils.StoreUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -24,7 +23,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Iterator;
 
 
 

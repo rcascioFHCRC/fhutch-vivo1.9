@@ -2,8 +2,6 @@ package org.fredhutch.controller;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import com.hp.hpl.jena.query.*;
-import com.hp.hpl.jena.rdf.model.*;
 import edu.cornell.mannlib.vitro.webapp.controller.VitroRequest;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.FreemarkerHttpServlet;
 import edu.cornell.mannlib.vitro.webapp.controller.freemarker.UrlBuilder;
@@ -12,6 +10,11 @@ import edu.cornell.mannlib.vitro.webapp.controller.freemarker.responsevalues.Tem
 import edu.cornell.mannlib.vitro.webapp.rdfservice.RDFServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.jena.query.*;
+import org.apache.jena.rdf.model.Literal;
+import org.apache.jena.rdf.model.Model;
+import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.Resource;
 
 import java.io.IOException;
 import java.net.URL;
