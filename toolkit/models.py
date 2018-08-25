@@ -287,9 +287,7 @@ class Person(BaseModel):
                 link_label = None
                 if hasattr(link, "name"):
                     link_label = link.name
-                    logger.warning('link.name: %s.' % (link.name))
                 label = link_label or link_type
-                #logger.warning('Label: %s.' % (label))
                 # vcard URL
                 vcu_uri = D['vcard-url' + link.cid]
                 g.add((vcu_uri, RDF.type, VCARD.URL))
