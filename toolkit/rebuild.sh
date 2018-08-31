@@ -10,8 +10,11 @@ cd /opt/vivo/fhutch-vivo/toolkit
 source .env
 source venv/bin/activate
 
+# move last harvest from current to last
+mv data/current/*nt data/last/.
+
 # uri lookups
-python uri_index.py 
+python uri_index.py
 
 # people and positions
 python people.py
@@ -25,10 +28,13 @@ python publications.py
 python areas.py
 # journals
 python journals.py
-# education and training 
+# education and training
 python education_training.py
 # updated photos
 python pictures.py
+
+# sync and post additions and removals
+python process_changes.py
 
 # awards
 #python awards.py
