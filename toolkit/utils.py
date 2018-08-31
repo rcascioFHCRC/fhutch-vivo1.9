@@ -119,3 +119,9 @@ def days_ago(num):
     """
     dt = datetime.today() - timedelta(days=num)
     return "{}-{}-{}".format(dt.year, dt.month, dt.day)
+
+
+def serialize_g(g, name):
+    path = os.path.join("data", "current", "{}.nt".format(name))
+    g.serialize(destination=path, format="nt")
+    return path

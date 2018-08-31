@@ -8,7 +8,6 @@ $ python pictures all
 """
 
 import base64
-import csv
 import os
 import sys
 
@@ -16,11 +15,9 @@ from rdflib import Graph, Literal
 
 from converis import client, backend
 import log_setup
-
 from models import FHD
-from models import person_uri, BaseModel
-
-from utils import days_ago
+from models import person_uri, org_uri, BaseModel
+import utils
 
 logger = log_setup.get_logger()
 
@@ -110,7 +107,7 @@ def harvest_updates(days=2, test=False):
     Fetch updated pics and write to file.
     Default to days as 2 so that we get yesterday's date.
     """
-    updated_date = days_ago(days)
+    updated_date = utils.days_ago(days)
     logger.info("Harvesting updated pictures since {}.".format(updated_date))
     query = QUERY.replace("2000-01-01", updated_date)
     g = Graph()
@@ -122,7 +119,7 @@ def harvest_updates(days=2, test=False):
             if done > 10:
                 break
     if len(g) > 0:
-        backend.post_updates(NG, g)
+        utils.serialize_g(g, "photos")
         logger.info("Updated picture harvest complete. Updated: {}".format(done))
     else:
         logger.info("No updated pictures found.")

@@ -303,10 +303,10 @@ class Person(BaseModel):
         """
         Use nickname for first name if it's present per AMC.
         """
-        if self._nickname is not None:                           
+        if self._nickname is not None:
             l = u"{}, {}".format(self.cffamilynames, self._nickname)
         else:
-            l = u"{}, {}".format(self.cffamilynames, self._first)                             
+            l = u"{}, {}".format(self.cffamilynames, self._first)
             if hasattr(self, 'middlename'):
                 l += u" " + self.middlename
         return l
@@ -530,8 +530,8 @@ class Position(BaseModel):
             '12172': (FHD.Membership, 30),
             '6616737': (FHD.Affiliate, 30),
             '12703383': (FHD.Teaching, 40),
-            '6259451': (FHD.Emeritus, 40),		
-            '10933347': (FHD.Industry, 40),	
+            '6259451': (FHD.Emeritus, 40),
+            '10933347': (FHD.Industry, 40),
             '11035904': (FHD.ResearchAssociate, 40),
             '12170': (FHD.StaffScientist, 40),
         }
@@ -742,7 +742,6 @@ class Organization(BaseModel):
                 link_label = None
                 if hasattr(link, "name"):
                     link_label = link.name
-                    logger.warning('link.name: %s.' % (link.name))
                 label = link_label or link_type
                 if label == "Organization Site":
                     label = "Organization's Website"
@@ -1594,7 +1593,7 @@ class EducationTraining(BaseModel):
 
     def build_degree_label(self):
         label = self.degreetype['value']
-        if hasattr(self, "honorific"):	
+        if hasattr(self, "honorific"):
             honor = self.honorific['value']
             if honor is not None:
                 label += " (" + honor + ")"
@@ -1606,7 +1605,7 @@ class EducationTraining(BaseModel):
             label += ", " + concentration
         thesis = self._v("thesis")
         if thesis is not None:
-            label += ", " + thesis	
+            label += ", " + thesis
         org = self.get_assigned_by()
         if org is not None:
             label += ", " + org
@@ -1746,7 +1745,6 @@ class TeachingLecture(BaseModel):
                 link_label = None
                 if hasattr(link, "name"):
                     link_label = link.name
-                    logger.warning('link.name: %s.' % (link.name))
                 label = link_label or link_type
                 if label == "Organization Site":
                     label = "Organization's Website"
@@ -1809,7 +1807,7 @@ class TeachingLecture(BaseModel):
             self._v("nameofseries"),
             self._v("title"),
             self.related_event(),
-            self._v("departmentother"),		
+            self._v("departmentother"),
             self.related_org_label('LECT_has_ORGA')
         ]
         label = ", ".join([l for l in lb if l is not None])
@@ -1835,7 +1833,7 @@ class TeachingLecture(BaseModel):
             label,
             self.get_advisee(),
             self._v("adviseeother"),
-            self._v("academiclevel"),		
+            self._v("academiclevel"),
             self._v("departmentother"),
             self.related_org_label('LECT_has_ORGA')
         ]

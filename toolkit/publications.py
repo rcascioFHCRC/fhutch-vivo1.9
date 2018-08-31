@@ -1,38 +1,18 @@
 """
-Threaded fetch of publications.
+Fetch publications.
 """
-import logging
-import os
-import sys
-from collections import defaultdict
-from Queue import Queue
-from threading import Thread
+from rdflib import Graph
+from rdflib.namespace import RDF
 
 from converis import backend
 from converis import client
-from converis.namespaces import D, VIVO, CONVERIS
-
-# local models
+from converis.namespaces import VIVO, CONVERIS
+import utils
 import models
 import log_setup
-from utils import ThreadedHarvest
-
-from rdflib import Graph, Literal
-from rdflib.namespace import RDF
 
 logger = log_setup.get_logger()
 
-
-if os.environ.get('HTTP_CACHE') == "1":
-    import requests_cache
-    requests_cache.install_cache(
-       'converis',
-       backend='redis',
-       allowable_methods=('GET', 'PUT'))
-
-THREADS = int(os.environ.get('THREADS', 5))
-
-NG = "http://localhost/data/publications"
 
 QUERY = """
 <data xmlns="http://converis/ns/webservice">
@@ -57,74 +37,6 @@ QUERY = """
 </data>
 """
 
-def harvest_sets():
-    pq = """
-    <data xmlns="http://converis/ns/webservice">
-     <query>
-      <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-      <and>
-        <and>
-         <relation minCount="1" name="PUBL_has_CARD"/>
-        </and>
-        <and>
-         <attribute argument="{stop}" name="publYear" operator="lessequal"/>
-         <attribute argument="{start}" name="publYear" operator="greater"/>
-        </and>
-      </and>
-      </filter>
-     </query>
-    </data>
-    """
-    #ps = [(1940, 1985), (1985, 1995), (1995, 2000), (2000, 2005), (2005, 2010), (2010, 2012), (2012, 2014), (2014, 2016)]
-    ps = [(2005, 2010), (2010, 2016)]
-    for start, stop in ps:
-        logger.info("Harvesting pubs from {} to {}".format(start, stop))
-        query = pq.format(**dict(start=start, stop=stop))
-        pub_harvest(query)
-
-
-def harvest_service(num, harvest_q):
-    """thread worker function"""
-    while True:
-        cid = harvest_q.get()
-        logger.info('Worker: %s card: %s' % (num, cid))
-        process_pub_card(cid)
-        harvest_q.task_done()
-    return
-
-
-def run_pub_card_harvest(to_fetch):
-    num_fetch_threads = THREADS
-    harvest_queue = Queue()
-    # Set up some threads to fetch the enclosures
-    for i in range(num_fetch_threads):
-        worker = Thread(target=harvest_service, args=(i, harvest_queue,))
-        worker.setDaemon(True)
-        worker.start()
-
-    for card in to_fetch:
-        harvest_queue.put(card)
-
-    harvest_queue.join()
-    logger.info("Harvest complete")
-
-
-def process_pub_card(card):
-    """
-    Process publication card relations.
-    We should maybe just generate the authorship here too and eliminate the need
-    for the post-ingest query.
-    """
-    logger.info("Fetching pubs for card {}.".format(card))
-    g = Graph()
-    # Relate pub to card
-    for pub in client.get_related_entities('Publication', card, 'PUBL_has_CARD'):
-        pub_uri = models.pub_uri(pub.cid)
-        g.add((pub_uri, CONVERIS.pubCardId, Literal(card)))
-        g += client.to_graph(pub, models.Publication)
-    backend.sync_updates("http://localhost/data/pubs-card-{}".format(card), g)
-    return
-
 
 def generate_local_coauthor():
     """
@@ -134,6 +46,7 @@ def generate_local_coauthor():
     logger.info("Generating local coauthor flag.")
     g = models.create_local_coauthor_flag()
     backend.sync_updates("http://localhost/data/local-coauthors", g)
+
 
 def get_pub_cards(sample=False):
     logger.info("Getting publications cards.")
@@ -146,15 +59,6 @@ def get_pub_cards(sample=False):
                 break
         out.append(card)
     return out
-
-
-class PubHarvest(ThreadedHarvest):
-
-    def __init__(self, q, vmodel, threads=5):
-        self.query = q
-        self.vmodel = vmodel
-        self.graph = Graph()
-        self.threads = threads
 
 
 def pub_harvest():
@@ -175,67 +79,72 @@ def pub_harvest():
     </query>
     </data>
     """
+    pub_ids = []
     g = Graph()
     for item in client.filter_query(q):
         g += client.to_graph(item, models.Publication)
+        pub_ids.append(item.cid)
+        if len(pub_ids) >= 50:
+            break
     ng = "http://localhost/data/publications"
     backend.sync_updates(ng, g)
+    return pub_ids
 
 
-def threaded_pub_harvest():
-    ph = PubHarvest(QUERY, models.Publication)
-    ph.run_harvest()
-    logger.info("Publications harvest finished. Syncing to vstore")
-    ph.sync_updates(NG)
-
-
-def generate_authorships():
+def generate_authorships(pub_ids):
     """
-    Run SPARQL query to generate authorships by joining
-    on converis:pubCardId.
+    Query for publications that are related to a particular person.
     """
     g = Graph()
-    for person_uri, card_id in models.get_pub_cards():
-        for pub in client.get_related_ids('Publication', card_id, 'PUBL_has_CARD'):
-            pub_uri = models.pub_uri(pub)
-            uri = models.hash_uri("authorship", person_uri.toPython() + pub_uri.toPython())
+
+    q = """
+        <data xmlns="http://converis/ns/webservice">
+        <query>
+            <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
+                <return>
+                    <attributes>
+                    </attributes>
+                </return>
+                <and>
+                <relation name="PUBL_has_CARD">
+                    <relation relatedto="{}" name="PERS_has_CARD">
+                    </relation>
+                </relation>
+                </and>
+            </filter>
+        </query>
+        </data>
+    """
+    logger.info("Generating authorships.")
+
+    for cid, name in models.URL_IDX.items():
+        count = 0
+        for pc in client.filter_query(q.format(cid)):
+            if pc.cid not in pub_ids:
+                continue
+            uri = models.hash_uri('aship', pc.cid + cid)
+            person_uri = models.person_uri(cid)
+            pub_uri = models.pub_uri(pc.cid)
             g.add((uri, RDF.type, VIVO.Authorship))
             g.add((uri, VIVO.relates, person_uri))
             g.add((uri, VIVO.relates, pub_uri))
-    backend.sync_updates("http://localhost/data/authorship", g)
+            count += 1
+
+        logger.info("Found {} pubs for {}.".format(count, name))
+
+    utils.serialize_g(g, "authorship")
 
 
-def clear_pub_cards():
-    """
-    Delete all the pubs-cards named graphs.
-    """
-    # get pub cards
-    cards = get_pub_cards()
-    for card_uri, card in cards:
-        g = Graph()
-        backend.sync_updates("http://localhost/data/pubs-card-{}".format(card), g)
-
-
-def sample_harvest():
-    q = """
-    <data xmlns="http://converis/ns/webservice">
-     <query>
-      <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:sort="http://converis/ns/sortingengine">
-        <attribute operator="equals" argument="10347" name="Publication type"/>
-      </filter>
-     </query>
-    </data>
-    """
-    logger.info("Starting sample publications harvest.")
+def harvest_pubs():
+    pub_ids = []
+    logger.info("Harvesting publication entities.")
     g = Graph()
-    for item in client.filter_query(q):
+    for item in client.filter_query(QUERY):
         g += client.to_graph(item, models.Publication)
-    # print g.serialize(format="turtle")
-    # backend.sync_updates replaces the named graph with the incoming data - meaning any
-    # data in the system that's not in the incoming data will be deleted
-    # backend.post_updates will only update the entities that are in the incoming data - anything
-    # else is left as it is.
-    backend.sync_updates("http://localhost/data/sample-books", g)
+        pub_ids.append(item.cid)
+
+    utils.serialize_g(g, "publications")
+    return pub_ids
 
 
 def generate_orgs_to_pubs():
@@ -293,17 +202,17 @@ def generate_orgs_to_pubs():
             pub_uri = models.pub_uri(pub.cid)
             logger.debug("Orgs to pubs. Processing org {} pub {}.".format(oid, pub.cid))
             g.add((ouri, VIVO.relates, pub_uri))
-    backend.sync_updates("http://localhost/data/org-pubs", g)
+
+    utils.serialize_g(g, "org-pubs")
 
 
 def full_publication_harvest():
     logger.info("Starting publications harvest.")
-    threaded_pub_harvest()
-    logger.info("Generating authorships")
-    generate_authorships()
-    logger.info("Adding local coauthor flag.")
-    generate_local_coauthor()
-    logger.info("Pub harvest and authorship generation complete.")
+    pub_ids = harvest_pubs()
+    generate_authorships(pub_ids)
+    #logger.info("Adding local coauthor flag.")
+    # generate_local_coauthor()
+    # logger.info("Pub harvest and authorship generation complete.")
     logger.info("Relating orgs to publications.")
     generate_orgs_to_pubs()
 
