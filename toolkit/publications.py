@@ -3,6 +3,7 @@ Fetch publications.
 """
 from rdflib import Graph
 from rdflib.namespace import RDF
+import requests_cache
 
 from converis import backend
 from converis import client
@@ -12,6 +13,12 @@ import models
 import log_setup
 
 logger = log_setup.get_logger()
+
+
+requests_cache.install_cache(
+    'data/cache_converis',
+    allowable_methods=('GET', 'PUT')
+)
 
 
 QUERY = """
