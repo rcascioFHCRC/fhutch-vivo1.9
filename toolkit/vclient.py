@@ -24,6 +24,7 @@ def make_batch(size, graph):
         tmpg.add(trip)
         if (n > 0) and (n % size == 0):
             yield tmpg
+            tmpg = Graph()
     yield tmpg
 
 
