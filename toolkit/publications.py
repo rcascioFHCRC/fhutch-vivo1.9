@@ -1,6 +1,7 @@
 """
 Fetch publications.
 """
+
 from rdflib import Graph
 from rdflib.namespace import RDF
 import requests_cache
@@ -13,12 +14,6 @@ import models
 import log_setup
 
 logger = log_setup.get_logger()
-
-
-requests_cache.install_cache(
-    'data/cache_converis',
-    allowable_methods=('GET', 'PUT')
-)
 
 
 QUERY = """
@@ -52,7 +47,7 @@ def generate_local_coauthor():
     """
     logger.info("Generating local coauthor flag.")
     g = models.create_local_coauthor_flag()
-    backend.sync_updates("http://localhost/data/local-coauthors", g)
+    utils.serialize_g(g, "local-coauthors")
 
 
 def get_pub_cards(sample=False):
@@ -66,36 +61,6 @@ def get_pub_cards(sample=False):
                 break
         out.append(card)
     return out
-
-
-def pub_harvest():
-    q = """
-    <data xmlns="http://converis/ns/webservice">
-    <query>
-    <filter for="Publication" xmlns="http://converis/ns/filterengine" xmlns:ns2="http://converis/ns/sortingengine">
-    <and>
-        <and>
-            <relation direction="lefttoright" name="PUBL_has_CARD">
-                <relation direction="righttoleft"  name="PERS_has_CARD">
-                    <attribute argument="6019159" name="fhPersonType" operator="equals"/>
-                </relation>
-            </relation>
-        </and>
-    </and>
-    </filter>
-    </query>
-    </data>
-    """
-    pub_ids = []
-    g = Graph()
-    for item in client.filter_query(q):
-        g += client.to_graph(item, models.Publication)
-        pub_ids.append(item.cid)
-        if len(pub_ids) >= 50:
-            break
-    ng = "http://localhost/data/publications"
-    backend.sync_updates(ng, g)
-    return pub_ids
 
 
 def generate_authorships(pub_ids):
@@ -217,14 +182,12 @@ def full_publication_harvest():
     logger.info("Starting publications harvest.")
     pub_ids = harvest_pubs()
     generate_authorships(pub_ids)
-    #logger.info("Adding local coauthor flag.")
-    # generate_local_coauthor()
-    # logger.info("Pub harvest and authorship generation complete.")
+    logger.info("Adding local coauthor flag.")
+    generate_local_coauthor()
     logger.info("Relating orgs to publications.")
     generate_orgs_to_pubs()
+    logger.info("Pub harvest and authorship generation complete.")
 
 
 if __name__ == "__main__":
-    #sample_harvest()
     full_publication_harvest()
-    #generate_orgs_to_pubs()
