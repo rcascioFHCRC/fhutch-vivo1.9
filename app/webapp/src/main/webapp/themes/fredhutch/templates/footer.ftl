@@ -2,8 +2,11 @@
 
 </div> <!-- #wrapper-content -->
 
-<!-- Suppress Fred Hutch branded header and footer as per AMC, pending 09/06/17 meeting with Celeste/Susan -->
+
 <footer>
+    <div class="fh-logo"><a title="Fred Hutchinson Cancer Research Center" target="_blank" href="http://www.fredhutch.org/en.html"><span class="displace">${siteName}</span></a></div>
+
+<!-- Suppress Fred Hutch branded header and footer as per AMC, pending 09/06/17 meeting with Celeste/Susan -->
 <!--    <div class="column">
         <h3>Quick Links<a href="/en/about.html"></a></h3>
 

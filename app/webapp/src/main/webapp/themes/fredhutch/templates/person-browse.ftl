@@ -49,12 +49,12 @@
                     <ul>
                         <#list positions as pos>
                             <li>
-                            ${pos.title}, <a href="${pos.url}">${pos.orgName}</a><#if (pos.parentOrgName)?hasContent>, ${pos.parentOrgName}</#if>
+                            ${pos.title}, ${pos.orgName}<#if (pos.parentOrgName)?hasContent>, ${pos.parentOrgName}</#if>
                             </li>
                         </#list>
                     </ul>
                 </div>
-                <#if (person.description)?hasContent>
+<#--                <#if (person.description)?hasContent>
                     <p class="description">${person.description}</p>
                 </#if>
                 <#if (person.email)?hasContent || (person.phone)?hasContent || (person.links!?size > 0)>
@@ -74,7 +74,7 @@
                             </#list>
                         </#if>
                     </ul>
-                </#if>
+                </#if>-->
             </div>
             <div class="clear"></div>
             </#if>

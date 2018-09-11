@@ -21,22 +21,22 @@
     </#local>
     <#local linkedIndividual>
         <#if statement.org??>
-            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><a href="${profileUrl(statement.uri("org"))}" title="${i18n().organization_name}"><span itemprop="name">${statement.orgName}</span></a></span>
+            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">${statement.orgName}</span></span>
         <#else>
             <#-- This shouldn't happen, but we must provide for it -->
-            <a href="${profileUrl(statement.uri("position"))}" title="${i18n().missing_organization}">${i18n().missing_organization}</a>
+            ${i18n().missing_organization}
         </#if>
     </#local>
     <#-- The sparql query returns both the org's parent (middleOrg) and grandparent (outerOrg).
          We are currently displaying the parent and grandparent in the list view. -->
     <#local middleOrganization>
         <#if statement.middleOrg??>
-            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><a href="${profileUrl(statement.uri("middleOrg"))}" title="${i18n().middle_organization}"><span itemprop="name">${statement.middleOrgName!}</span></a></span>
+            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">${statement.middleOrgName!}</span></span>
         </#if>
     </#local>
     <#local outerOrganization>
         <#if statement.outerOrg??>
-            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><a href="${profileUrl(statement.uri("outerOrg"))}" title="${i18n().outer_organization}"><span itemprop="name">${statement.outerOrgName!}</span></a></span>
+            <span itemprop="worksFor" itemscope itemtype="http://schema.org/Organization"><span itemprop="name">${statement.outerOrgName!}</span></span>
         </#if>
     </#local>    
     <@s.join [ posTitle, linkedIndividual, middleOrganization, outerOrganization! ]/><span class="space"> </span>

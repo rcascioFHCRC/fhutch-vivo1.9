@@ -281,7 +281,7 @@ class Person(BaseModel):
                 logger.error("No type of link for {}".format(self.cid))
                 link_type = "Link"
             if link_type == "Video":
-                g.add((self.uri, FHD.video, Literal(link.href)))
+                # g.add((self.uri, FHD.video, Literal(link.href)))
                 continue
             else:
                 link_label = None
@@ -349,24 +349,24 @@ class Person(BaseModel):
         p.set(FHD.converisId, Literal(self.cid))
         if self._nickname is not None:
             p.set(FHD.nickname, Literal(self._nickname))
-        if hasattr(self, 'cfresint'):
-            value = scrub_html(self.cfresint)
-            p.set(VIVO.researchOverview, Literal(value))
+#        if hasattr(self, 'cfresint'):
+#            value = scrub_html(self.cfresint)
+#            p.set(VIVO.researchOverview, Literal(value))
         if hasattr(self, 'orcid'):
             p.set(FHD.orcid, Literal(self.orcid))
         # clinical interests
-        if hasattr(self, 'cfclinint'):
-            value = scrub_html(self.cfclinint)
-            p.set(FHD.clinicalInterest, Literal(value))
+#        if hasattr(self, 'cfclinint'):
+#            value = scrub_html(self.cfclinint)
+#            p.set(FHD.clinicalInterest, Literal(value))
         # brief description
-        if hasattr(self, 'briefdescription'):
-            p.set(FHD.briefDescription, Literal(self.briefdescription))
+#        if hasattr(self, 'briefdescription'):
+#            p.set(FHD.briefDescription, Literal(self.briefdescription))
         # profile under construction?
-        construction = "Yes"
-        if hasattr(self, 'underconstruction'):
-            if self.underconstruction['cid'] == '11289':
-                construction = "No"
-        p.set(FHD.underConstruction, Literal(construction))
+#        construction = "Yes"
+#        if hasattr(self, 'underconstruction'):
+#            if self.underconstruction['cid'] == '11289':
+#                construction = "No"
+#        p.set(FHD.underConstruction, Literal(construction))
 
         # Vcard individual
         vci_uri = URIRef(self.vcard_uri)
@@ -470,19 +470,19 @@ class Person(BaseModel):
         vt.set(VCARD.telephone, Literal(self.phone))
         return g
 
-    def get_videos(self):
-        # URL regex from http://stackoverflow.com/a/6883094/758157
-        g = Graph()
-        if hasattr(self, "embeddedvideos"):
-            text = self.embeddedvideos
-            #for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
-            for link in text.split(';'):
-                cl = link.strip().replace('&quot;', "")
-                if cl == "":
-                    continue
-                g.add((self.uri, FHD.video, Literal(cl)))
-            return g
-        return g
+#    def get_videos(self):
+#        # URL regex from http://stackoverflow.com/a/6883094/758157
+#        g = Graph()
+#        if hasattr(self, "embeddedvideos"):
+#            text = self.embeddedvideos
+#            #for link in re.findall('http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text):
+#            for link in text.split(';'):
+#                cl = link.strip().replace('&quot;', "")
+#                if cl == "":
+#                    continue
+#                g.add((self.uri, FHD.video, Literal(cl)))
+#            return g
+#        return g
 
     def is_labPI(self):
         g = Graph()

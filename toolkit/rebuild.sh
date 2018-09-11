@@ -21,21 +21,21 @@ python organizations.py
 python related_organizations.py
 # publications
 python publications.py
-# research areas
+# expertise
 python areas.py
 # journals
 python journals.py
-# awards
-python awards.py
-# educ 
+# education and training 
 python education_training.py
-# teaching and lecture
-python teaching.py
 # updated photos
 python pictures.py
-#service
-python service.py
 
+# awards
+#python awards.py
+# teaching and lecture
+#python teaching.py
+# service
+#python service.py
 # news
 #python news.py
 # trials
